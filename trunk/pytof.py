@@ -29,11 +29,12 @@ if __name__ == "__main__":
     class BadUsage: pass
     try:
         libraryPath = ''
+        xmlFileName = ''
         fs = False
         info = False
 
         # parse args
-        opts, args = getopt.getopt(sys.argv[1:], 'ifVhl:')
+        opts, args = getopt.getopt(sys.argv[1:], 'ifVhl:x:')
 
         for opt, val in opts:
             # be carefull with the elif
@@ -49,7 +50,8 @@ if __name__ == "__main__":
                 raise BadUsage
             elif opt == '-l':
                 libraryPath = val
-                # ... how to get a parameter
+            elif opt == '-x':
+                xmlFileName = val
             else:
                 _err_('Bad arg: %s' %(opt))
                 raise BadUsage
@@ -60,12 +62,12 @@ if __name__ == "__main__":
         albumName = sys.argv[-1]
 
         if info:
-            infos(albumName, libraryPath)
+            infos(albumName, libraryPath, xmlFileName)
         else:
             if fs:
-                makefs.main(albumName, libraryPath)
+                makefs.main(albumName, libraryPath, xmlFileName)
             else:
-                makepage.main(albumName, libraryPath)
+                makepage.main(albumName, libraryPath, xmlFileName)
 
     except (KeyboardInterrupt):
         _err_exit("Aborted by user")

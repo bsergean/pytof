@@ -26,7 +26,7 @@ def echo(s):
     sys.stdout.write(s)
     sys.stdout.flush()
 
-def main(albumName, libraryPath):
+def main(albumName, libraryPath, xmlFileName):
     """
     Just create a raw dir with all the picture from the album
     Will be used by scry after, for example.

@@ -32,9 +32,20 @@ class AlbumData(object):
         album = self.getAlbumByName(name)
         return album['KeyList']
 
-    def getPhotoFromId(self, id):
+    def getPhotoFromId(self, id, libraryPath = ''):
         p = self.data['Master Image List'][id]
-        return Photo(p['ImagePath'],
+        photoFileName = p['ImagePath']
+
+        if libraryPath:
+            try:
+                index = photoFileName.index('Originals')
+            except (ValueError):
+                _err_exit('Internal Error')
+
+            photoFileName = join(libraryPath, photoFileName[index:])
+            log(photoFileName)
+        
+        return Photo(photoFileName,
                      id,
                      p['Caption'],
                      p['Comment'],
@@ -71,10 +82,13 @@ class XmlItem(object):
 
 class AlbumDataParserError: pass
 class AlbumDataParser(object):
-    def __init__(self, xmlFileName=expanduser('~/Pictures/iPhoto Library/AlbumData.xml')):
+    def __init__(self,
+                 xmlFileDir = expanduser('~/Pictures/iPhoto Library'),
+                 xmlFileBaseName = 'AlbumData.xml'):
 
-        self.error = False
+        xmlFileName = join(xmlFileDir, xmlFileBaseName)
         if not exists(xmlFileName):
+            _err_('No xml file found at %s' %(xmlFileName))
             raise AlbumDataParserError
 
         self.xmlFile = file(xmlFileName, 'r')
@@ -135,18 +149,17 @@ class AlbumDataParser(object):
         return self.albumData
 
 
-def infos(albumName, libraryPath):
+def infos(albumName, libraryPath, xmlFileName):
     """
     FIXME: try to do something with albumName
     """
     log("Parsing AlbumData.xml")
-    if not libraryPath:
-        libraryPath = expanduser('~/Pictures/iPhoto Library')
-    xmlFileName = join(libraryPath, 'AlbumData.xml')
-
     try:
-        parser = AlbumDataParser(xmlFileName)
+        parser = AlbumDataParser(libraryPath, xmlFileName)
         data = parser.parse()
+        photos = data.getPicturesIdFromAlbumName(albumName)
+        for p in photos:
+            print p
     except(AlbumDataParserError):
         _err_exit("Problem parsing AlbumData.xml")
     
