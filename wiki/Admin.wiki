@@ -1,15 +1,3 @@
-#summary One-sentence summary of this page.
+#summary How to administer this project
 
-= Introduction =
-
-Add your content here.
-
-
-= Details =
-
-Have a look [http://code.google.com/hosting/faq.html here] !!
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+Here is the google code hosting [http://code.google.com/hosting/faq.html FAQ].
