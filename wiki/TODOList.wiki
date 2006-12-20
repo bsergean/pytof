@@ -8,20 +8,20 @@ Before we use the issues pages, just a small page with all our todo stuff.
 
 == Cleanup ==
 
-* Include everything but function or classes in a main() in the main file
-* Be able to export to a fs (to be used by scry next)
-* Have an option handler (getopt style)
-* Start to document the project (use Restructured Text for the format), also add pydoc markup (""" """)
-* Create a tar file with jpeg (/usr/local/include/*.h_from_jpeg_lib + /usr/local/lib/libjpeg.a) is enough)
-* Makes pyphoto a valid python module. Add a setup.py plus the files needed to do so.
-* Check the date thing (with the Apple timestamp computed from year 2001) with Mathieu
+ * Include everything but function or classes in a main() in the main file
+ * Be able to export to a fs (to be used by scry next)
+ * Have an option handler (getopt style)
+ * Start to document the project (use Restructured Text for the format), also add pydoc markup (""" """)
+ * Create a tar file with jpeg (/usr/local/include/*.h_from_jpeg_lib + /usr/local/lib/libjpeg.a) is enough)
+ * Makes pyphoto a valid python module. Add a setup.py plus the files needed to do so.
+ * Check the date thing (with the Apple timestamp computed from year 2001) with Mathieu
 
-* Update the dir, don't recreate the whole thing.
-* Have a config file with the name of the place where we want to export our stuff (a python file, see orm)
-* The default output dir should be something like _~/public_html/pyphoto/{Album1 or album name (Hawai)}_
+ * Update the dir, don't recreate the whole thing.
+ * Have a config file with the name of the place where we want to export our stuff (a python file, see orm)
+ * The default output dir should be something like _~/public_html/pyphoto/{Album1 or album name (Hawai)}_
 
-* Have an export to tar, or tar.gz when people want to upload their content to a remote site.
-* Create an index.html file containing links to the multiple html files, (should be an option, maybe the user want to have all thumbnails in the same html page).
+ * Have an export to tar, or tar.gz when people want to upload their content to a remote site.
+ * Create an index.html file containing links to the multiple html files, (should be an option, maybe the user want to have all thumbnails in the same html page).
 
 == Defensive code ==
 
