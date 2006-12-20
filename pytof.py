@@ -20,6 +20,7 @@ from os.path import expanduser
 from albumdataparser import AlbumDataParser
 import os, sys, getopt
 from utils import _err_, _err_exit, help
+import makepage, makefs
 
 __version__ = '0.0.1'
 
