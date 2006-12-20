@@ -17,7 +17,7 @@ __author__ = 'Benjamin Sergeant'
 __dependencies__ = []
 
 from os.path import expanduser
-from albumdataparser import AlbumDataParser
+from albumdataparser import AlbumDataParser, infos
 import os, sys, getopt
 from utils import _err_, _err_exit, help
 import makepage, makefs
@@ -30,33 +30,42 @@ if __name__ == "__main__":
     try:
         libraryPath = ''
         fs = False
+        info = False
 
         # parse args
-        if len(sys.argv) < 2:
-            _err_('missing albumName argument')
-            raise BadUsage
-        albumName = sys.argv[-1]
-        
-        opts, args = getopt.getopt(sys.argv[1:], 'fVhl:')
+        opts, args = getopt.getopt(sys.argv[1:], 'ifVhl:')
 
         for opt, val in opts:
-            if opt == '-h':
-                raise BadUsage
-            if opt == '-f':
+            # be carefull with the elif
+            # when you change param order ...
+            if opt == '-i':
+                info = True
+            elif opt == '-f':
                 fs = True
-            if opt == '-V':
+            elif opt == '-V':
                 print 'pytof version %s' % (__version__)
-                sys.exit(0)                             
+                sys.exit(0)
+            elif opt == '-h':
+                raise BadUsage
             elif opt == '-l':
                 libraryPath = val
                 # ... how to get a parameter
             else:
+                _err_('Bad arg: %s' %(opt))
                 raise BadUsage
 
-        if (fs):
-            makefs.main(albumName, libraryPath)
+        if len(sys.argv) < 2:
+            _err_('missing albumName argument')
+            raise BadUsage
+        albumName = sys.argv[-1]
+
+        if info:
+            infos(albumName, libraryPath)
         else:
-            makepage.main(albumName, libraryPath)
+            if fs:
+                makefs.main(albumName, libraryPath)
+            else:
+                makepage.main(albumName, libraryPath)
 
     except (KeyboardInterrupt):
         _err_exit("Aborted by user")
@@ -69,6 +78,7 @@ usage : python <program>.py <options> AlbumName
 OPTIONS | -l <dir> : iPhoto library path
         | -v : display pytof version
         | -h : display this text
+        | -i : print info about the collection
         | -f : extract album photo to a dir and stop
         """,
                        __revision__,
