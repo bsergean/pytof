@@ -1,11 +1,5 @@
 #summary Our todo list
 
-= Introduction =
-
-Before we use the issues pages, just a small page with all our todo stuff.
-
-= TODO List =
-
 == Cleanup ==
 
  * Include everything but function or classes in a main() in the main file
