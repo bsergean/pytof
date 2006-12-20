@@ -9,7 +9,7 @@
 #
 #*****************************************************************************
 
-from os.path import expanduser
+from os.path import expanduser, exists
 from xml.parsers.expat import ParserCreate, ExpatError
 from photo import Photo
 
@@ -71,6 +71,11 @@ class XmlItem(object):
 
 class AlbumDataParser(object):
     def __init__(self, xmlFileName=expanduser('~/Pictures/iPhoto Library/AlbumData.xml')):
+
+        self.error = False
+        if not exists(xmlFileName):
+            self.error = True
+            return
         self.xmlFile = file(xmlFileName, 'r')
         self.elemList = []
         self.lastItemData = ''
