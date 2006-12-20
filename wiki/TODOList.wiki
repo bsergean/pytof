@@ -11,7 +11,7 @@ Before we use the issues pages, just a small page with all our todo stuff.
  * Include everything but function or classes in a main() in the main file
  * Be able to export to a fs (to be used by scry next)
  * Have an option handler (getopt style)
- * Start to document the project (use Restructured Text for the format), also add pydoc markup (""" """)
+ * Start to document the project (use Restructured Text for the format), also add pydoc markup
  * Create a tar file with jpeg (/usr/local/include/*.h_from_jpeg_lib + /usr/local/lib/libjpeg.a) is enough)
  * Makes pyphoto a valid python module. Add a setup.py plus the files needed to do so.
  * Check the date thing (with the Apple timestamp computed from year 2001) with Mathieu
@@ -25,16 +25,16 @@ Before we use the issues pages, just a small page with all our todo stuff.
 
 == Defensive code ==
 
-* Check that PIL install support jpeg at runtime before crashing.
-* Create the out dir if no such thing exist
+ * Check that PIL install support jpeg at runtime before crashing.
+ * Create the out dir if no such thing exist
 
 == Testing ==
 
-* Unit testing: Add xml tests files (small library with, and our big libraries)
-* Multiple templates for the html export: Option to choose the css or the template look.  
+ * Unit testing: Add xml tests files (small library with, and our big libraries)
+ * Multiple templates for the html export: Option to choose the css or the template look.  
 
 == Long term ==
 
-* Create an installer
-* ncurses (geek mode) or pyobjc user interface 
-* Have an option to make a whole library backup (fs export for every gallery)
+ * Create an installer
+ * ncurses (geek mode) or pyobjc user interface 
+ * Have an option to make a whole library backup (fs export for every gallery)
