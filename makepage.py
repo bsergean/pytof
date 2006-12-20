@@ -12,6 +12,7 @@
 # Main file.
 #
 
+from os.path import expanduser
 from albumdataparser import AlbumDataParser
 import os, sys
 
@@ -63,10 +64,11 @@ def makePhotoPage(photo, linkBack):
     page.writePage()
     return page.fileName
 
-def main():
+def main(albumName, libraryPath):
     echo("Parsing AlbumData.xml")
-    albumName = sys.argv[1]
-    parser = AlbumDataParser()
+    if not libraryPath: libraryPath = expanduser('~/Pictures/iPhoto Library')
+    xmlFileName=os.path.join(libraryPath, 'AlbumData.xml')
+    parser = AlbumDataParser(xmlFileName)
     data = parser.parse()
     photos = data.getPicturesIdFromAlbumName(albumName)
     echo("\t[DONE]\n")
@@ -122,9 +124,13 @@ if __name__ == "__main__":
     class BadUsage: pass
     try:
 
+        libraryPath = ''
+
         # parse args
+        albumName = sys.argv[-1]
+        
         import getopt
-        opts, args = getopt.getopt(sys.argv[1:], 'Vhd:')
+        opts, args = getopt.getopt(sys.argv[1:], 'Vhl:')
 
         for opt, val in opts:
             if opt == '-h':
@@ -132,13 +138,13 @@ if __name__ == "__main__":
             if opt == '-V':
                 print 'pytof version %s' % (__version__)
                 sys.exit(0)                             
-            elif opt == '-d':
-                dir = val
+            elif opt == '-l':
+                libraryPath = val
                 # ... how to get a parameter
             else:
                 raise BadUsage
        
-        main()
+        main(albumName, libraryPath)
 
     except (KeyboardInterrupt):
         _err_exit("Aborted by user")
@@ -147,7 +153,7 @@ if __name__ == "__main__":
         print """ 
 makepage.py : Export iPhoto library to html pages
 usage : python makepage.py <options> AlbumName
-OPTIONS | -d <dir> : FIXME does nothing
+OPTIONS | -l <dir> : iPhoto library path
         | -v : display pytof version
         | -h : display this text
 
