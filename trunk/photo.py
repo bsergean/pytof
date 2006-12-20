@@ -9,8 +9,12 @@
 #
 #*****************************************************************************
 
-import Image
 import sys, os, time
+try:
+    import Image
+except:
+    print 'Install PIL first: see http://code.google.com/p/pytof/wiki/Install'
+    sys.exit(1)
 
 
 class Photo(object):

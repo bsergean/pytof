@@ -15,6 +15,7 @@
 from albumdataparser import AlbumDataParser
 import os, sys
 
+version = '0.0.1'
 
 class WebPage(object):
     def __init__(self, fileName, title):
@@ -123,14 +124,17 @@ if __name__ == "__main__":
 
         # parse args
         import getopt
-        opts, args = getopt.getopt(sys.argv[1:], 'hfid:e:')
+        opts, args = getopt.getopt(sys.argv[1:], 'vhd:')
 
         for opt, val in opts:
             if opt == '-h':
                 raise BadUsage
+            if opt == '-v':
+                print 'pytof version %s' % (__version)
+                sys.exit(0)                             
             elif opt == '-d':
                 dir = val
-                s = "Usefull to know how to grab a dir : %s\n" %(dir)
+                # ... how to get a parameter
             else:
                 raise BadUsage
        
