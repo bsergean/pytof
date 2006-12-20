@@ -1,0 +1,9 @@
+#summary User help
+
+Here is a sample output from a simple use of pytof.
+
+{{{
+[bsergean@amanda trunk]$ python makepage.py Berkeley
+Parsing AlbumData.xml   [DONE]
+Writing pictures 100%   DONE
+}}}
