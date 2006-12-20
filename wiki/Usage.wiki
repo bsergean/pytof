@@ -1,5 +1,26 @@
 #summary User help
 
+The main interface for now is makepage.py
+
+{{{
+[bsergean@amanda trunk]$ python makepage.py -h      
+ 
+makepage.py : Export iPhoto library to html pages
+usage : python makepage.py <options> AlbumName
+OPTIONS | -d <dir> : FIXME does nothing
+        | -h : display this text
+
+OTHERS
+        
+DEPENDENCIES
+        PIL, libjpeg, Cocaine
+
+HISTORY
+        Mathieu made this program a while ago, and put it in sourceforge
+        a while after. Benjamin got rid of the CVS error messages, and put
+        it on google code.
+}}}
+
 Here is a sample output from a simple use of pytof.
 
 {{{
