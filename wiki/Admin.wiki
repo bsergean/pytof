@@ -37,6 +37,8 @@ A    trunk/albumdataparser.py
 Checked out revision 15.
 }}}
 
+If you want to edit the wiki offline, it's possible as the wiki is under subversion also. Didn't do it yet but should be simple to figure out the svn path from [http://pytof.googlecode.com/svn/wiki/ that].
+
 == Wiki ==
 
 Quote from the FAQ:
