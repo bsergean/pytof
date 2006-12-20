@@ -8,11 +8,11 @@
 #
 #*****************************************************************************
 #
-# Main file.
+# fs
 #
 
 __revision__ = '$Id: miscutils.py,v 1.17 2005/04/27 16:24:16 bsergean Exp $  (C) 2004 GPL'
-__author__ = 'Mathieu Robin'
+__author__ = 'Benjamin Sergeant'
 __dependencies__ = []
 
 from os.path import expanduser
@@ -77,53 +77,6 @@ def main(albumNamei, libraryPath):
     curPage.addCode("</div>")
     curPage.writePage()
 
-def _err_msg(msg):
-    sys.stderr.write("%s: %s\n" % (os.path.basename(sys.argv[0]), msg))
-
-def _err_exit(msg):
-    sys.stderr.write("%s: %s\n" % (os.path.basename(sys.argv[0]), msg))
-    sys.exit(1)
-
 if __name__ == "__main__":
-
-    class BadUsage: pass
-    try:
-        libraryPath = ''
-    
-        # parse args
-        if len(sys.argv) < 2:
-            _err_('missing albumName argument')
-            raise BadUsage
-        albumName = sys.argv[-1]
-        
-        opts, args = getopt.getopt(sys.argv[1:], 'Vhl:')
-
-        for opt, val in opts:
-            if opt == '-h':
-                raise BadUsage
-            if opt == '-V':
-                print 'pytof version %s' % (__version__)
-                sys.exit(0)                             
-            elif opt == '-l':
-                libraryPath = val
-                # ... how to get a parameter
-            else:
-                raise BadUsage
-       
-        main(albumName, libraryPath)
-
-    except (KeyboardInterrupt):
-        _err_exit("Aborted by user")
-
-    except (getopt.error, BadUsage):
-        help(""" 
-%s : Export iPhoto library to raw dirs
-
-usage : python <program>.py <options> AlbumName
-OPTIONS | -l <dir> : iPhoto library path
-        | -v : display pytof version
-        | -h : display this text
-        """,
-                       __revision__,
-                       __dependencies__,
-                       __author__)
+    print 'foobar'
+    # add unit tests here ?
