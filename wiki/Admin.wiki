@@ -38,7 +38,10 @@ Checked out revision 15.
 }}}
 
 If you want to edit the wiki offline, it's possible as the wiki is under subversion also. Didn't do it yet but should be simple to figure out the svn path from [http://pytof.googlecode.com/svn/wiki/ that].
-I just did that, you simply have to replace trunk with wiki ...
+I just did that, you simply have to replace trunk with wiki ... the big bonnus
+is that you can use your prefered editor to do that, and edit several files at
+a time, fast, without the need to save (and wait) if you want to switch to
+another wiki page.
 
 == Wiki ==
 
