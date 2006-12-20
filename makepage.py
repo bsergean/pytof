@@ -15,7 +15,7 @@
 from albumdataparser import AlbumDataParser
 import os, sys
 
-version = '0.0.1'
+__version__ = '0.0.1'
 
 class WebPage(object):
     def __init__(self, fileName, title):
@@ -124,13 +124,13 @@ if __name__ == "__main__":
 
         # parse args
         import getopt
-        opts, args = getopt.getopt(sys.argv[1:], 'vhd:')
+        opts, args = getopt.getopt(sys.argv[1:], 'Vhd:')
 
         for opt, val in opts:
             if opt == '-h':
                 raise BadUsage
-            if opt == '-v':
-                print 'pytof version %s' % (__version)
+            if opt == '-V':
+                print 'pytof version %s' % (__version__)
                 sys.exit(0)                             
             elif opt == '-d':
                 dir = val
@@ -148,6 +148,7 @@ if __name__ == "__main__":
 makepage.py : Export iPhoto library to html pages
 usage : python makepage.py <options> AlbumName
 OPTIONS | -d <dir> : FIXME does nothing
+        | -v : display pytof version
         | -h : display this text
 
 OTHERS
