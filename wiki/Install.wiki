@@ -18,7 +18,7 @@ $ sudo cp *.h /usr/local/include
 $ sudo cp libjpeg.a /usr/local/lib
 }}}
 
-== [http://www.pythonware.com/products/pil/ PIL] ==
+== PIL ==
 
 Grab the source code [http://effbot.org/downloads/Imaging-1.1.6.tar.gz here], extract it and from the PIL main dir, issue that:
 
