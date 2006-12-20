@@ -6,7 +6,9 @@ Here is the google code hosting [http://code.google.com/hosting/faq.html FAQ].
 
 == Subversion ==
 
-Here is how I imported the source code
+=== Importing ===
+
+Here is how I imported the source code:
 
 {{{
 [bsergean@flanders pytof]$ svn import https://pytof.googlecode.com/svn/trunk --username bsergean
@@ -19,6 +21,20 @@ Adding         svn-commit.tmp
 Adding         albumdataparser.py
 
 Committed revision 13.
+}}}
+
+=== Check out ===
+
+{{{
+[bsergean@flanders src]$ svn co https://pytof.googlecode.com/svn/trunk
+Authentication realm: <https://pytof.googlecode.com:443> Google Code Subversion Repository
+Password for 'bsergean':
+A    trunk/photo.py
+A    trunk/makepage.py
+A    trunk/README.txt
+A    trunk/svn-commit.tmp
+A    trunk/albumdataparser.py
+Checked out revision 15.
 }}}
 
 == Wiki ==
