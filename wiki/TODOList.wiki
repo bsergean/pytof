@@ -18,7 +18,7 @@ Before we use the issues pages, just a small page with all our todo stuff.
 
  * Update the dir, don't recreate the whole thing.
  * Have a config file with the name of the place where we want to export our stuff (a python file, see orm)
- * The default output dir should be something like _~/public_html/pyphoto/{Album1 or album name (Hawai)}_
+ * The default output dir should be something like ~/public_html/pyphoto/(Album1 or album name (Hawai))
 
  * Have an export to tar, or tar.gz when people want to upload their content to a remote site.
  * Create an index.html file containing links to the multiple html files, (should be an option, maybe the user want to have all thumbnails in the same html page).
