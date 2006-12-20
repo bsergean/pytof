@@ -1,0 +1,33 @@
+#summary Installation
+
+== Introduction ==
+
+For thumbnails creation pytof rely on the python imaging library, which itself rely on the libjpeg for low level jpeg handling. Both of them should be installed, and the process is quite simple.
+
+== libjpeg ==
+
+We should provide a tar file compiled on a MacTel with Tiger soon with the right file.
+Grab that [ftp://ftp.uu.net/graphics/jpeg/jpegsrc.v6b.tar.gz here]. I had a bad experience with the default configure, so I had to manually copy the header and the static library to /usr/local. You may have to download the developper tools from the main Apple website, but I think there's a default gcc there and it's all you need.
+
+{{{
+$ tar zxf jpegsrc.v6b.tar.gz
+$ cd jpeg-6b
+$ ./configure
+$ sudo mkdir -p /usr/local/{include,lib}
+$ sudo cp *.h /usr/local/include
+$ sudo cp libjpeg.a /usr/local/lib
+}}}
+
+== [http://www.pythonware.com/products/pil/ PIL] ==
+
+Grab the source code [http://effbot.org/downloads/Imaging-1.1.6.tar.gz here], extract it and from the PIL main dir, issue that:
+
+{{{
+sudo python setup.py install
+}}}
+
+You should be good to go, and ready to play with pytof !!
+
+== One click Installer ==
+
+Of course in the near future we'd like to make a nice OS X package, so that no-one would have to experience tar and configure nice moments ...
