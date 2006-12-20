@@ -1,3 +1,22 @@
 #summary How to administer this project
 
+== General ==
+
 Here is the google code hosting [http://code.google.com/hosting/faq.html FAQ].
+
+== Subversion ==
+
+Here is how I imported the source code
+
+<pre>
+[bsergean@flanders pytof]$ svn import https://pytof.googlecode.com/svn/trunk --username bsergean
+Authentication realm: <https://pytof.googlecode.com:443> Google Code Subversion Repository
+Password for 'bsergean':
+Adding         photo.py
+Adding         makepage.py
+Adding         README.txt
+Adding         svn-commit.tmp
+Adding         albumdataparser.py
+
+Committed revision 13.
+</pre>
