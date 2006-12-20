@@ -12,7 +12,7 @@
 from os.path import expanduser, exists, join
 from xml.parsers.expat import ParserCreate, ExpatError
 from photo import Photo
-from utils import _err_
+from utils import _err_, _err_exit, log
 
 class AlbumData(object):
     def __init__(self, data):
@@ -135,16 +135,20 @@ class AlbumDataParser(object):
         return self.albumData
 
 
-def info(albumName, libraryPath):
+def infos(albumName, libraryPath):
     """
     FIXME: try to do something with albumName
     """
-    echo("Parsing AlbumData.xml")
+    log("Parsing AlbumData.xml")
     if not libraryPath:
         libraryPath = expanduser('~/Pictures/iPhoto Library')
-    xmlFileName = os.path.join(libraryPath, 'AlbumData.xml')
-    parser = AlbumDataParser(xmlFileName)
-    data = parser.parse()
+    xmlFileName = join(libraryPath, 'AlbumData.xml')
+
+    try:
+        parser = AlbumDataParser(xmlFileName)
+        data = parser.parse()
+    except(AlbumDataParserError):
+        _err_exit("Problem parsing AlbumData.xml")
     
 
 if __name__ == '__main__':
