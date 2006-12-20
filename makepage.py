@@ -71,6 +71,9 @@ def main():
     echo("\t[DONE]\n")
 
     outputPath = 'out'
+    if not os.path.exists(outputPath):
+        os.makedirs(outputPath)
+
     dirs = ['photos', 'preview', 'thumbs']
     os.chdir(outputPath)
     if not os.path.exists(albumName):
