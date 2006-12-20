@@ -9,10 +9,10 @@
 #
 #*****************************************************************************
 
-from os.path import expanduser, exists
+from os.path import expanduser, exists, join
 from xml.parsers.expat import ParserCreate, ExpatError
 from photo import Photo
-
+from utils import _err_
 
 class AlbumData(object):
     def __init__(self, data):
@@ -69,13 +69,14 @@ class XmlItem(object):
         else:
             raise ExpatError, "Type \"%s\" not supported" % type
 
+class AlbumDataParserError: pass
 class AlbumDataParser(object):
     def __init__(self, xmlFileName=expanduser('~/Pictures/iPhoto Library/AlbumData.xml')):
 
         self.error = False
         if not exists(xmlFileName):
-            self.error = True
-            return
+            raise AlbumDataParserError
+
         self.xmlFile = file(xmlFileName, 'r')
         self.elemList = []
         self.lastItemData = ''
@@ -133,6 +134,18 @@ class AlbumDataParser(object):
         p.ParseFile(self.xmlFile)
         return self.albumData
 
+
+def info(albumName, libraryPath):
+    """
+    FIXME: try to do something with albumName
+    """
+    echo("Parsing AlbumData.xml")
+    if not libraryPath:
+        libraryPath = expanduser('~/Pictures/iPhoto Library')
+    xmlFileName = os.path.join(libraryPath, 'AlbumData.xml')
+    parser = AlbumDataParser(xmlFileName)
+    data = parser.parse()
+    
 
 if __name__ == '__main__':
     adp = AlbumDataParser()
