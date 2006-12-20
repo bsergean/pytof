@@ -119,7 +119,7 @@ if __name__ == "__main__":
         help(""" 
 %s : Export iPhoto library to raw dirs
 
-usage : python makepage.py <options> AlbumName
+usage : python <program>.py <options> AlbumName
 OPTIONS | -l <dir> : iPhoto library path
         | -v : display pytof version
         | -h : display this text
