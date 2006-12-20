@@ -12,7 +12,7 @@ Before we use the issues pages, just a small page with all our todo stuff.
  * Be able to export to a fs (to be used by scry next)
  * Have an option handler (getopt style)
  * Start to document the project (use Restructured Text for the format), also add pydoc markup
- * Create a tar file with jpeg (/usr/local/include/\*.h_from_jpeg_lib + /usr/local/lib/libjpeg.a) is enough)
+ * Create a tar file with jpeg (/usr/local/include/all header files from the jpeg lib + /usr/local/lib/libjpeg.a) is enough)
  * Makes pyphoto a valid python module. Add a setup.py plus the files needed to do so.
  * Check the date thing (with the Apple timestamp computed from year 2001) with Mathieu
 
