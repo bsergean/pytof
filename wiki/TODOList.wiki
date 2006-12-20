@@ -9,11 +9,9 @@
  * Create a tar file with jpeg (/usr/local/include/all header files from the jpeg lib + /usr/local/lib/libjpeg.a) is enough)
  * Makes pyphoto a valid python module. Add a setup.py plus the files needed to do so.
  * Check the date thing (with the Apple timestamp computed from year 2001) with Mathieu
-
  * Update the dir, don't recreate the whole thing.
  * Have a config file with the name of the place where we want to export our stuff (a python file, see orm)
  * The default output dir should be something like ~/public_html/pyphoto/(Album1 or album name (Hawai))
-
  * Have an export to tar, or tar.gz when people want to upload their content to a remote site.
  * Create an index.html file containing links to the multiple html files, (should be an option, maybe the user want to have all thumbnails in the same html page).
 
