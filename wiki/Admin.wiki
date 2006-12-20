@@ -55,5 +55,8 @@ What syntax are you using in the wiki?
 == Editors ==
 
 Mathieu uses Eclipse with the pydev module, and Benjamin wants to learn vim ...
-but needs multiple viewports as explained
-[http://applications.linux.com/article.pl?sid=06/05/04/1544258&tid=13 here].
+
+=== vim ===
+
+ * [http://applications.linux.com/article.pl?sid=06/05/04/1544258&tid=13 viewports].
+ * [http://www.vim.org/tips/tip.php?tip_id=135 buffers].
