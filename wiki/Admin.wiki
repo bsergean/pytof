@@ -8,7 +8,7 @@ Here is the google code hosting [http://code.google.com/hosting/faq.html FAQ].
 
 Here is how I imported the source code
 
-<pre>
+{{{
 [bsergean@flanders pytof]$ svn import https://pytof.googlecode.com/svn/trunk --username bsergean
 Authentication realm: <https://pytof.googlecode.com:443> Google Code Subversion Repository
 Password for 'bsergean':
@@ -19,4 +19,13 @@ Adding         svn-commit.tmp
 Adding         albumdataparser.py
 
 Committed revision 13.
-</pre>
+}}}
+
+== Wiki ==
+
+Quote from the FAQ:
+{{{
+What syntax are you using in the wiki?
+    Our wiki syntax is inspired by the MoinMoin wiki syntax, and is more or less a subset of it. We've found that MoinMoin is one of the most popular open source wikis and provides a clean syntax for users. 
+    Specific examples of how to use the wiki syntax are shown in the "Wiki Markup Help" box on the right-hand side of the wiki page creation and editing pages.
+}}}
