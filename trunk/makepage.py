@@ -17,7 +17,7 @@ __author__ = 'Mathieu Robin'
 __dependencies__ = []
 
 from os.path import expanduser
-from albumdataparser import AlbumDataParser
+from albumdataparser import AlbumDataParser, AlbumDataParserError
 import os, sys, getopt
 from utils import _err_, _err_exit, help
 
@@ -71,13 +71,17 @@ def makePhotoPage(photo, linkBack):
     return page.fileName
 
 def main(albumName, libraryPath):
-    echo("Parsing AlbumData.xml")
     if not libraryPath: libraryPath = expanduser('~/Pictures/iPhoto Library')
     xmlFileName=os.path.join(libraryPath, 'AlbumData.xml')
-    parser = AlbumDataParser(xmlFileName)
-    data = parser.parse()
-    photos = data.getPicturesIdFromAlbumName(albumName)
-    echo("\t[DONE]\n")
+
+    try:
+        echo("Parsing AlbumData.xml")
+        parser = AlbumDataParser(xmlFileName)
+        data = parser.parse()
+        photos = data.getPicturesIdFromAlbumName(albumName)
+        echo("\t[DONE]\n")
+    except(AlbumDataParserError):
+        _err_exit("Problem parsing AlbumData.xml")
 
     outputPath = 'out'
     if not os.path.exists(outputPath):

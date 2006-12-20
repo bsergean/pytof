@@ -173,7 +173,22 @@ def GetArtistAndAlbumFromMusicDirectoryName(dir = None):
     Album = ArtistAndAlbum[len(Artist)+3:]
 
     return Artist, Album
-    
+
+# see http://www.nedbatchelder.com/blog/200410.html#e20041003T074926
+def _functionId(nFramesUp):
+        """ Create a string naming the function n frames up on the stack.
+        """
+        co = sys._getframe(nFramesUp+1).f_code
+        return "%s (%s @ %d)" % (co.co_name, co.co_filename, co.co_firstlineno)
+
+def notYetImplemented():
+        """ Call this function to indicate that a method isn't implemented yet.
+        """
+        raise Exception("Not yet implemented: %s" % _functionId(1))
+
+def complicatedFunctionFromTheFuture():
+        notYetImplemented()
+
 if __name__ == "__main__":
     # FIXME : Add tests here
     print posixpath('/mnt/data/mp3/Red Hot Chili Peppers/Red Hot Chili Peppers - Blood Sugar Sex Magik/08 - The Righteous & The Wicked.mp3')
