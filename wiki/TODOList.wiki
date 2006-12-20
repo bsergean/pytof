@@ -17,12 +17,14 @@
 
 == Admin ==
 
- * Figure out how to make subversion store the password on Linux :)
+ * Figure out how to make subversion store the password on Linux
+ * Try to add an alpha version and make it downloadable in the Download tab.
 
 == Defensive code ==
 
  * Check that PIL install support jpeg at runtime before crashing.
- * Create the out dir if no such thing exist
+ * Create the out dir if no such thing exist (done)
+ * Conf: have a param to set where is the AlbumData.xml (maybe not in Picture/iPhoto)
 
 == Testing ==
 
