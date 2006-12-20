@@ -19,7 +19,7 @@ __dependencies__ = []
 from os.path import expanduser
 from albumdataparser import AlbumDataParser, AlbumDataParserError
 import os, sys, getopt
-from utils import _err_, _err_exit, help
+from utils import _err_, _err_exit, help, log
 
 
 __version__ = '0.0.1'
@@ -70,13 +70,10 @@ def makePhotoPage(photo, linkBack):
     page.writePage()
     return page.fileName
 
-def main(albumName, libraryPath):
-    if not libraryPath: libraryPath = expanduser('~/Pictures/iPhoto Library')
-    xmlFileName=os.path.join(libraryPath, 'AlbumData.xml')
-
+def main(albumName, libraryPath, xmlFileName):
     try:
         echo("Parsing AlbumData.xml")
-        parser = AlbumDataParser(xmlFileName)
+        parser = AlbumDataParser(libraryPath, xmlFileName)
         data = parser.parse()
         photos = data.getPicturesIdFromAlbumName(albumName)
         echo("\t[DONE]\n")
@@ -104,7 +101,7 @@ def main(albumName, libraryPath):
     echo("Writing pictures 00%")
     c = 0
     for id in photos:
-        photo = data.getPhotoFromId(id)
+        photo = data.getPhotoFromId(id, libraryPath)
         photo.saveCopy(dirs[0])
         photo.makePreview(dirs[1], 640)
         photo.makeThumbnail(dirs[2])
