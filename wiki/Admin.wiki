@@ -51,3 +51,9 @@ What syntax are you using in the wiki?
     Our wiki syntax is inspired by the MoinMoin wiki syntax, and is more or less a subset of it. We've found that MoinMoin is one of the most popular open source wikis and provides a clean syntax for users. 
     Specific examples of how to use the wiki syntax are shown in the "Wiki Markup Help" box on the right-hand side of the wiki page creation and editing pages.
 }}}
+
+== Editors ==
+
+Mathieu uses Eclipse with the pydev module, and Benjamin wants to learn vim ...
+but needs multiple viewports as explained
+[http://applications.linux.com/article.pl?sid=06/05/04/1544258&tid=13 here].
