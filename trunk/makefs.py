@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
 # -*- python -*-
-# $Id: makepage.py 36 2006-12-20 15:53:26Z bsergean $
 #
 #*****************************************************************************
 #
@@ -12,9 +11,14 @@
 # Main file.
 #
 
+__revision__ = '$Id: miscutils.py,v 1.17 2005/04/27 16:24:16 bsergean Exp $  (C) 2004 GPL'
+__author__ = 'Mathieu Robin'
+__dependencies__ = []
+
 from os.path import expanduser
 from albumdataparser import AlbumDataParser
-import os, sys
+import os, sys, getopt
+from utils import _err_, _err_exit, help
 
 __version__ = '0.0.1'
 
@@ -73,6 +77,9 @@ def main(albumNamei, libraryPath):
     curPage.addCode("</div>")
     curPage.writePage()
 
+def _err_msg(msg):
+    sys.stderr.write("%s: %s\n" % (os.path.basename(sys.argv[0]), msg))
+
 def _err_exit(msg):
     sys.stderr.write("%s: %s\n" % (os.path.basename(sys.argv[0]), msg))
     sys.exit(1)
@@ -84,9 +91,11 @@ if __name__ == "__main__":
         libraryPath = ''
     
         # parse args
+        if len(sys.argv) < 2:
+            _err_('missing albumName argument')
+            raise BadUsage
         albumName = sys.argv[-1]
         
-        import getopt
         opts, args = getopt.getopt(sys.argv[1:], 'Vhl:')
 
         for opt, val in opts:
@@ -107,20 +116,14 @@ if __name__ == "__main__":
         _err_exit("Aborted by user")
 
     except (getopt.error, BadUsage):
-        print """ 
-makepage.py : Export iPhoto library to html pages
+        help(""" 
+%s : Export iPhoto library to raw dirs
+
 usage : python makepage.py <options> AlbumName
 OPTIONS | -l <dir> : iPhoto library path
         | -v : display pytof version
         | -h : display this text
-
-OTHERS
-        
-DEPENDENCIES
-        PIL, libjpeg, Cocaine
-
-HISTORY
-        Mathieu made this program a while ago, and put it in sourceforge
-        a while after. Benjamin got rid of the CVS error messages, and put
-        it on google code.
-"""
+        """,
+                       __revision__,
+                       __dependencies__,
+                       __author__)

@@ -9,12 +9,16 @@
 #
 #*****************************************************************************
 
+__revision__ = '$Id$  (C) 2004 GPL'
+__author__ = 'Mathieu Robin'
+__dependencies__ = ['Image']
+
 import sys, os, time
-try:
-    import Image
-except:
-    print 'Install PIL first: see http://code.google.com/p/pytof/wiki/Install'
-    sys.exit(1)
+import utils
+
+utils.TryToImport(__dependencies__)
+for mod in __dependencies__:
+    exec 'import ' + mod
 
 
 class Photo(object):
