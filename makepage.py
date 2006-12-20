@@ -1,3 +1,17 @@
+#!/usr/bin/env python
+# -*- coding: iso-8859-1 -*-
+# -*- python -*-
+# $Id: pyfind.py 29 2006-12-12 20:47:34Z bsergean $
+#
+#*****************************************************************************
+#
+# See LICENSE file for licensing and to see where does some code come from
+#
+#*****************************************************************************
+#
+# Main file.
+#
+
 from albumdataparser import AlbumDataParser
 import os, sys
 
