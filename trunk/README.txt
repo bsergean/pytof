@@ -1,2 +1,2 @@
 Usage:
-python makepage.py AlbumName
+Call pytof -h to list switches.
