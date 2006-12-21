@@ -30,11 +30,12 @@ if __name__ == "__main__":
     try:
         libraryPath = ''
         xmlFileName = ''
+        albumName = ''
         fs = False
         info = False
 
         # parse args
-        opts, args = getopt.getopt(sys.argv[1:], 'ifVhl:x:')
+        opts, args = getopt.getopt(sys.argv[1:], 'ifVhl:x:a:')
 
         for opt, val in opts:
             # be carefull with the elif
@@ -52,14 +53,15 @@ if __name__ == "__main__":
                 libraryPath = val
             elif opt == '-x':
                 xmlFileName = val
+            elif opt == '-a':
+                albumName = val
             else:
                 _err_('Bad arg: %s' %(opt))
                 raise BadUsage
 
-        if len(sys.argv) < 2:
+        if not albumName:
             _err_('missing albumName argument')
             raise BadUsage
-        albumName = sys.argv[-1]
 
         if info:
             infos(albumName, libraryPath, xmlFileName)
