@@ -1,4 +1,4 @@
-#summary User help
+﻿#summary User help
 
 The main interface for now is makepage.py
 
@@ -24,9 +24,10 @@ HISTORY
 Here is a sample output from a simple use of pytof.
 
 {{{
-[bsergean@amanda trunk]$ python makepage.py Berkeley
+[bsergean@flanders trunk]$ ./pytof.py -l /media/photos/iPhoto\ Library -x AlbumData.xml -a Berkeley
+output dir is /home/bsergean/tmp
 Parsing AlbumData.xml   [DONE]
-Writing pictures 100%   DONE
+Writing pictures 100%   [DONE]
 }}}
 
 And here is what it did create (we should use tree but it's not installed on this damned Mac ;)
