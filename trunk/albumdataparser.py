@@ -77,6 +77,11 @@ class XmlItem(object):
             self.value = True
         elif self.type == 'false':
             self.value = False
+        elif self.type == 'Date':
+            # 2005-08-08T06:03:54Z
+            # Format used by old iPhoto version
+            log(self.value)
+            sys.exit(0)
         else:
             raise ExpatError, "Type \"%s\" not supported" % type
 
@@ -112,7 +117,8 @@ class AlbumDataParser(object):
                 elem = {}
             elif name in ['plist', 'array']:
                 elem = []
-            elif name in ['key', 'string', 'integer', 'real', 'true', 'false']:
+            elif name in ['key', 'string', 'integer', 'real', 'true', 'false',
+            'Date']:
                 elem = XmlItem(name)
             else:
                 raise ExpatError, "Element \"%s\" not supported" % name
