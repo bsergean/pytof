@@ -12,11 +12,11 @@
 # Main file.
 #
 
-__revision__ = '$Id$  (C) 2004 GPL'
+__revision__ = '$Id$  (C) 2006 GPL'
 __author__ = 'Mathieu Robin'
 __dependencies__ = []
 
-from os.path import expanduser
+from os.path import expanduser, join, exists
 from albumdataparser import AlbumDataParser, AlbumDataParserError
 import os, sys, getopt
 from utils import _err_, _err_exit, help, log
@@ -27,6 +27,7 @@ __version__ = '0.0.1'
 class WebPage(object):
     def __init__(self, fileName, title):
         self.fileName = fileName  + ".html"
+        log(self.fileName)
         self.title = title
         self.code = ''
 
@@ -70,7 +71,7 @@ def makePhotoPage(photo, linkBack):
     page.writePage()
     return page.fileName
 
-def main(albumName, libraryPath, xmlFileName):
+def main(albumName, outputDir, libraryPath, xmlFileName):
     try:
         echo("Parsing AlbumData.xml")
         parser = AlbumDataParser(libraryPath, xmlFileName)
@@ -80,22 +81,24 @@ def main(albumName, libraryPath, xmlFileName):
     except(AlbumDataParserError):
         _err_exit("Problem parsing AlbumData.xml")
 
-    outputPath = 'out'
-    if not os.path.exists(outputPath):
-        os.makedirs(outputPath)
+    topDir = join(outputDir, 'out')
+    leafDirs = ['photos', 'preview', 'thumbs']
+    dirs = []
+    for leafDir in leafDirs:
+        Dir = join(topDir, leafDir)
+        dirs.append(Dir)
+        if not os.path.exists(Dir):
+            try:
+                os.makedirs(Dir)
+            except (error):
+                _err_exit('Cannot create %s' %(Dir))
+            
 
-    dirs = ['photos', 'preview', 'thumbs']
-    os.chdir(outputPath)
-    if not os.path.exists(albumName):
-	os.makedirs(albumName)
-        os.chdir(albumName)
-        for dir in dirs:
-            if not os.path.exists(dir): 
-		os.mkdir(dir)
+    # FIXME: copy CSS also
 
     picsPerPage = 6 ** 2
     pageCounter = 1
-    curPage = WebPage("page%2d" % pageCounter, albumName)
+    curPage = WebPage(join(topDir, "page%2d" % pageCounter), albumName)
     curPage.addCode("<div class=\"square\">")
     
     echo("Writing pictures 00%")
@@ -118,7 +121,7 @@ def main(albumName, libraryPath, xmlFileName):
             
         echo("\b\b\b%2d%%" % ((100 * c) / len(photos)))
 
-    echo("\b\b\b\b\tDONE\n")
+    echo("\b\b\b\b\t[DONE]\n")
     curPage.addCode("</div>")
     curPage.writePage()
 

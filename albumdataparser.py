@@ -158,6 +158,7 @@ def infos(albumName, libraryPath, xmlFileName):
         parser = AlbumDataParser(libraryPath, xmlFileName)
         data = parser.parse()
         photos = data.getPicturesIdFromAlbumName(albumName)
+        log('Photos ids')
         for p in photos:
             print p
     except(AlbumDataParserError):
