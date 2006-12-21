@@ -14,9 +14,9 @@ __author__ = 'Mathieu Robin'
 __dependencies__ = ['Image']
 
 import sys, os, time
-import utils
+from utils import TryToImport, log 
 
-utils.TryToImport(__dependencies__)
+TryToImport(__dependencies__)
 for mod in __dependencies__:
     exec 'import ' + mod
 
@@ -42,6 +42,7 @@ class Photo(object):
         return os.path.basename(self.fileName).split('.')[-1].lower()
 
     def saveCopy(self, path):
+        log(path)
         self.imagePath = os.path.join(path, self.getBaseName() + '.' +
                                         self.getFileType())
         input = file(self.fileName, 'r')

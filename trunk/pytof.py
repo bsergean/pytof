@@ -12,7 +12,7 @@
 # Main file.
 #
 
-__revision__ = '$Id: makepage.py 42 2006-12-20 19:43:06Z bsergean $  (C) 2004 GPL'
+__revision__ = '$Id: makepage.py 42 2006-12-20 19:43:06Z bsergean $  (C) 2006 GPL'
 __author__ = 'Benjamin Sergeant'
 __dependencies__ = []
 
@@ -31,11 +31,12 @@ if __name__ == "__main__":
         libraryPath = ''
         xmlFileName = ''
         albumName = ''
+        outputDir = '/tmp'
         fs = False
         info = False
 
         # parse args
-        opts, args = getopt.getopt(sys.argv[1:], 'ifVhl:x:a:')
+        opts, args = getopt.getopt(sys.argv[1:], 'ifVhl:x:a:o:')
 
         for opt, val in opts:
             # be carefull with the elif
@@ -55,6 +56,8 @@ if __name__ == "__main__":
                 xmlFileName = val
             elif opt == '-a':
                 albumName = val
+            elif opt == '-o':
+                outputDir = val
             else:
                 _err_('Bad arg: %s' %(opt))
                 raise BadUsage
@@ -69,7 +72,7 @@ if __name__ == "__main__":
             if fs:
                 makefs.main(albumName, libraryPath, xmlFileName)
             else:
-                makepage.main(albumName, libraryPath, xmlFileName)
+                makepage.main(albumName, outputDir, libraryPath, xmlFileName)
 
     except (KeyboardInterrupt):
         _err_exit("Aborted by user")
@@ -80,6 +83,7 @@ if __name__ == "__main__":
 
 usage : python <program>.py <options> AlbumName
 OPTIONS | -l <dir> : iPhoto library path
+        | -o <dir> : output dir (default to /tmp)
         | -v : display pytof version
         | -h : display this text
         | -i : print info about the collection
