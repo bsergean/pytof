@@ -31,7 +31,11 @@ if __name__ == "__main__":
         libraryPath = ''
         xmlFileName = ''
         albumName = ''
-        outputDir = '/tmp'
+
+        import tempfile
+        # mktemp has to be called once for tempdir to be initalized !!
+        tempfile.mktemp()
+        outputDir = tempfile.tempdir
         fs = False
         info = False
 
@@ -65,6 +69,8 @@ if __name__ == "__main__":
         if not albumName:
             _err_('missing albumName argument')
             raise BadUsage
+
+        print 'output dir is %s' % (outputDir)
 
         if info:
             infos(albumName, libraryPath, xmlFileName)
