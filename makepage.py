@@ -19,8 +19,8 @@ __dependencies__ = []
 from os.path import expanduser, join, exists
 from albumdataparser import AlbumDataParser, AlbumDataParserError
 import os, sys, getopt
-from utils import _err_, _err_exit, help, log
-
+from utils import _err_, _err_exit, help, log, echo
+from shutil import copy
 
 __version__ = '0.0.1'
 
@@ -60,10 +60,6 @@ class WebPage(object):
         out.write(self.getFooter())
         out.close()
 
-def echo(s):
-    sys.stdout.write(s)
-    sys.stdout.flush()
-
 def makePhotoPage(photo, linkBack):
     page = WebPage(photo.id, photo.title)
     page.addCodeLine('<div class="square"><a href="%s"><img class="prev" src="%s" /></a></div>'
@@ -94,7 +90,12 @@ def main(albumName, outputDir, libraryPath, xmlFileName):
                 _err_exit('Cannot create %s' %(Dir))
             
 
-    # FIXME: copy CSS also
+    # FIXME: share will be in the pytof home dir
+    cssfile = 'style.css'
+    cssfilename = join('share', cssfile)
+    if not exists(cssfilename):
+        _err_('No css file was found: HTML files look and feel will be bad')
+    copy(cssfilename, join(topDir, cssfile))
 
     picsPerPage = 6 ** 2
     pageCounter = 1

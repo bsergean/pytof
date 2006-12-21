@@ -14,6 +14,10 @@ __author__ = 'Benjamin Sergeant'
 import sys
 import os
 
+def echo(s):
+    sys.stdout.write(s)
+    sys.stdout.flush()
+
 def _err_exit(msg):
     """ to exit from program on an error with a formated message """
     sys.stderr.write("%s: %s\n" % (os.path.basename(sys.argv[0]), msg))
