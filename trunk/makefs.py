@@ -34,7 +34,7 @@ def main(albumName, topDir, xmlData):
     nb_photos = len(photos)
     cur = 1
 
-    sys.stderr.write("Check mp3\n")
+    sys.stderr.write("Writing pictures\n")
     for id in photos:
         photo = xmlData.getPhotoFromId(id)
         photo.saveCopy(topDir)
