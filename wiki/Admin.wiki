@@ -60,3 +60,13 @@ Mathieu uses Eclipse with the pydev module, and Benjamin wants to learn vim ...
 
  * [http://applications.linux.com/article.pl?sid=06/05/04/1544258&tid=13 viewports].
  * [http://www.vim.org/tips/tip.php?tip_id=135 buffers].
+
+== Tools ==
+
+Some tools were added in the tools directory.
+
+ * svn2cl.pl produce a nice changelog from the svn directory
+{{{
+[100drine@gnocchi trunk]$ svn log . | perl tools/svn2cl.pl > ChangeLog
+}}}
+ * deps/install.sh is the script which compile and install the deps
