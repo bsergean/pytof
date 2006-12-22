@@ -67,17 +67,10 @@ def makePhotoPage(photo, linkBack):
     page.writePage()
     return page.fileName
 
-def main(albumName, outputDir, libraryPath, xmlFileName):
-    try:
-        echo("Parsing AlbumData.xml")
-        parser = AlbumDataParser(libraryPath, xmlFileName)
-        data = parser.parse()
-        photos = data.getPicturesIdFromAlbumName(albumName)
-        echo("\t[DONE]\n")
-    except(AlbumDataParserError):
-        _err_exit("Problem parsing AlbumData.xml")
+def main(albumName, topDir, xmlData):
 
-    topDir = join(outputDir, 'out')
+    data = xmlData
+
     leafDirs = ['photos', 'preview', 'thumbs']
     dirs = []
     for leafDir in leafDirs:
@@ -88,7 +81,6 @@ def main(albumName, outputDir, libraryPath, xmlFileName):
                 os.makedirs(Dir)
             except (error):
                 _err_exit('Cannot create %s' %(Dir))
-            
 
     # FIXME: share will be in the pytof home dir
     cssfile = 'style.css'
@@ -104,8 +96,9 @@ def main(albumName, outputDir, libraryPath, xmlFileName):
     
     echo("Writing pictures 00%")
     c = 0
+    photos = data.getPicturesIdFromAlbumName(albumName)
     for id in photos:
-        photo = data.getPhotoFromId(id, libraryPath)
+        photo = data.getPhotoFromId(id)
         photo.saveCopy(dirs[0])
         photo.makePreview(dirs[1], 640)
         photo.makeThumbnail(dirs[2])
