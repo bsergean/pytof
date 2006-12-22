@@ -34,7 +34,7 @@ def main(albumName, libraryPath, xmlFileName, info, fs):
     except(AlbumDataParserError):
         _err_exit("Problem parsing AlbumData.xml")
 
-    topDir = join(join(outputDir, 'out'), albumName)
+    topDir = join(outputDir, 'out', albumName)
     try:
         if not exists(topDir):
             os.makedirs(topDir)

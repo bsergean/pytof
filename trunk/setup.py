@@ -15,31 +15,32 @@ from distutils.core import setup
 
 def main():
 
-    roundup_scripts = 'scripts/pytof.py'
-    installdatafiles = [
-        'share/style.css',
-    ]
+    # data files
+    # http://docs.python.org/dist/node13.html
+
+    setup(
+        name = "pytof",
+        version = '0.0.2',
+        description = "Exports album from iPhoto Libraries",
+        long_description = '''In this release
+        ===============
     
-    setup_args = {
-        'name': "pytof",
-        'version': '0.0.2',
-        'description': "Exports album from iPhoto Libraries",
-        'long_description':
-'''In this release
-===============
-
-Fixed in 0.0.2:
-
-''',
-        'author': "Benjamin Sergeant",
-        'author_email': "bsergean@gmail.com",
-        'url': 'http://code.google.com/p/pytof/',
-
-        'scripts': roundup_scripts,
-        'data_files':  installdatafiles
-
-    }
-    setup(**setup_args)
+        Fixed in 0.0.2:
+        
+        A lot :)
+        
+        ''',
+        author = "Mathieu Robin",
+        author_email = "mathieu.robin@gmail.com",
+        maintainer = 'Benjamin Sergeant',
+        maintainer_email = 'bsergean@gmail.com',
+        url = 'http://code.google.com/p/pytof/',
+        cmdclass = {},
+        packages = ['pytof'],
+        classifiers = [],
+        scripts = ['scripts/pytof.py'],
+        data_files = [ ('share', ['share/style.css']) ]
+        )
 
 if __name__ == '__main__':
     main()
