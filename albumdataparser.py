@@ -92,9 +92,13 @@ class XmlItem(object):
 class AlbumDataParserError: pass
 class AlbumDataParser(object):
     def __init__(self,
-                 xmlFileDir = expanduser('~/Pictures/iPhoto Library'),
-                 xmlFileBaseName = 'AlbumData.xml'):
-
+                 xmlFileDir,
+                 xmlFileBaseName):
+        if not xmlFileDir:
+            xmlFileDir = expanduser('~/Pictures/iPhoto Library')
+        if not xmlFileBaseName:
+            xmlFileBaseName = 'AlbumData.xml'
+    
         xmlFileName = join(xmlFileDir, xmlFileBaseName)
         if not exists(xmlFileName):
             _err_('No xml file found at %s' %(xmlFileName))
