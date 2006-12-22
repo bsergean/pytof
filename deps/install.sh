@@ -1,4 +1,5 @@
 #!/bin/sh
+# http://code.google.com/p/pytof/wiki/Install
 
 # JPEG
 if test ! -f /usr/local/lib/libjpeg.a ; then
