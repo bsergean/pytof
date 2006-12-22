@@ -32,17 +32,17 @@ class AlbumData(object):
         album = self.getAlbumByName(name)
         return album['KeyList']
 
-    def getPhotoFromId(self, id, libraryPath = ''):
+    def getPhotoFromId(self, id):
         p = self.data['Master Image List'][id]
         photoFileName = p['ImagePath']
 
-        if libraryPath:
+        if self.libraryPath:
             try:
                 index = photoFileName.index('Originals')
             except (ValueError):
                 _err_exit('Internal Error')
 
-            photoFileName = join(libraryPath, photoFileName[index:])
+            photoFileName = join(self.libraryPath, photoFileName[index:])
             log(photoFileName)
         
         return Photo(photoFileName,
@@ -58,6 +58,10 @@ class AlbumData(object):
             res.append(self.getPhotoFromId(pic))
         return res
 
+    def info(self, name):
+        photos = data.getPicturesIdFromAlbumName(name)
+        for id in photos:
+            print id
 
 class XmlItem(object):
     def __init__(self, type):
@@ -153,22 +157,6 @@ class AlbumDataParser(object):
         p.CharacterDataHandler = char_data
         p.ParseFile(self.xmlFile)
         return self.albumData
-
-
-def infos(albumName, libraryPath, xmlFileName):
-    """
-    FIXME: try to do something with albumName
-    """
-    log("Parsing AlbumData.xml")
-    try:
-        parser = AlbumDataParser(libraryPath, xmlFileName)
-        data = parser.parse()
-        photos = data.getPicturesIdFromAlbumName(albumName)
-        log('Photos ids')
-        for p in photos:
-            print p
-    except(AlbumDataParserError):
-        _err_exit("Problem parsing AlbumData.xml")
     
 
 if __name__ == '__main__':

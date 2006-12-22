@@ -15,10 +15,8 @@ __revision__ = '$Id: miscutils.py,v 1.17 2005/04/27 16:24:16 bsergean Exp $  (C)
 __author__ = 'Benjamin Sergeant'
 __dependencies__ = []
 
-from os.path import expanduser, exists, join
-from albumdataparser import AlbumDataParser
-import os, sys, getopt
-from utils import _err_, _err_exit, help, notYetImplemented
+from albumdataparser import AlbumData
+import os, sys
 
 __version__ = '0.0.1'
 
@@ -26,9 +24,24 @@ def echo(s):
     sys.stdout.write(s)
     sys.stdout.flush()
 
-def main(albumName, libraryPath, xmlFileName):
+def main(albumName, topDir, xmlData):
     """
     Just create a raw dir with all the picture from the album
     Will be used by scry after, for example.
     """
-    notYetImplemented()
+
+    photos = xmlData.getPicturesIdFromAlbumName(albumName)
+    nb_photos = len(photos)
+    cur = 1
+
+    sys.stderr.write("Check mp3\n")
+    for id in photos:
+        photo = xmlData.getPhotoFromId(id)
+        photo.saveCopy(topDir)
+
+        s = "\r%f %% - (%d processed out of %d) " \
+            % (100 * float(cur) / float(nb_photos), cur, nb_photos)
+        sys.stderr.write(s)
+        cur += 1
+
+    sys.stderr.write('\n')

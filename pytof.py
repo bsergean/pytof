@@ -16,13 +16,41 @@ __revision__ = '$Id: makepage.py 42 2006-12-20 19:43:06Z bsergean $  (C) 2006 GP
 __author__ = 'Benjamin Sergeant'
 __dependencies__ = []
 
-from os.path import expanduser
-from albumdataparser import AlbumDataParser, infos
+from os.path import expanduser, join, exists
+from albumdataparser import AlbumDataParser, AlbumDataParserError
 import os, sys, getopt
-from utils import _err_, _err_exit, help
+from utils import _err_, _err_exit, help, echo
 import makepage, makefs
 
 __version__ = '0.0.1'
+
+def main(albumName, libraryPath, xmlFileName, info, fs):
+    try:
+        echo("Parsing AlbumData.xml")
+        parser = AlbumDataParser(libraryPath, xmlFileName)
+        xmlData = parser.parse()
+        xmlData.libraryPath = libraryPath
+        echo("\t[DONE]\n")
+    except(AlbumDataParserError):
+        _err_exit("Problem parsing AlbumData.xml")
+
+    topDir = join(join(outputDir, 'out'), albumName)
+    try:
+        if not exists(topDir):
+            os.makedirs(topDir)
+    except (os.error):
+        _err_exit('Cannot create %s' %(topDir))
+
+    print 'output dir is %s' % (topDir)
+
+    if info:
+        data.info(albumName)
+    else:
+        if fs:
+            makefs.main(albumName, topDir, xmlData)
+        else:
+            makepage.main(albumName, topDir, xmlData)
+
 
 if __name__ == "__main__":
 
@@ -70,15 +98,7 @@ if __name__ == "__main__":
             _err_('missing albumName argument')
             raise BadUsage
 
-        print 'output dir is %s' % (outputDir)
-
-        if info:
-            infos(albumName, libraryPath, xmlFileName)
-        else:
-            if fs:
-                makefs.main(albumName, libraryPath, xmlFileName)
-            else:
-                makepage.main(albumName, outputDir, libraryPath, xmlFileName)
+        main(albumName, libraryPath, xmlFileName, info, fs)
 
     except (KeyboardInterrupt):
         _err_exit("Aborted by user")
@@ -87,8 +107,9 @@ if __name__ == "__main__":
         help(""" 
 %s : Export iPhoto library
 
-usage : python <program>.py <options> AlbumName
-OPTIONS | -l <dir> : iPhoto library path
+usage : python pytof.py <options>
+OPTIONS | -a <name> : album name
+        | -l <dir> : iPhoto library path
         | -o <dir> : output dir (default to /tmp)
         | -v : display pytof version
         | -h : display this text
