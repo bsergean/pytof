@@ -25,6 +25,16 @@ class AlbumData(object):
                 return album
         raise Error, "Album \"%s\" not in iPhoto Library" % name
 
+    def getAlbumList(self):
+        albums = []
+        for album in self.data['List of Albums']:
+            a = album['AlbumName']
+            # FIXME: maybe there's a better way of filtering
+            # (another meta data saying it's a book ...)
+            if not a.endswith('Book'):
+                albums.append(a)
+        return albums
+
     def getPicturePathFromId(self, id):
         return self.data['Master Image List'][id]['ImagePath']
 
@@ -123,7 +133,7 @@ class AlbumDataParser(object):
         self.elemList = []
         self.lastItemData = ''
         self.keys = []
-        self.albumData = None
+        self.albumData = None        
 
     def addItem(self, item):
             list = self.elemList[-1]
