@@ -16,6 +16,9 @@ __revision__ = '$Id: makepage.py 42 2006-12-20 19:43:06Z bsergean $  (C) 2006 GP
 __author__ = 'Benjamin Sergeant'
 __dependencies__ = []
 
+import sys
+sys.path.insert(1, '../pytof')
+
 from os.path import expanduser, join, exists
 from albumdataparser import AlbumDataParser, AlbumDataParserError
 import os, sys, getopt

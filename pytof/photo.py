@@ -13,6 +13,8 @@ __revision__ = '$Id$  (C) 2004 GPL'
 __author__ = 'Mathieu Robin'
 __dependencies__ = ['Image']
 
+from os.path import join
+from shutil import copy
 import sys, os, time
 from utils import TryToImport, log 
 
@@ -43,11 +45,9 @@ class Photo(object):
 
     def saveCopy(self, path):
         log(path)
-        self.imagePath = os.path.join(path, self.getBaseName() + '.' +
-                                        self.getFileType())
-        input = file(self.fileName, 'r')
-        output = file(self.imagePath, 'w')
-        output.write(input.read())
+        self.imagePath = join(path, self.getBaseName() + '.'
+                              + self.getFileType())
+        copy(self.fileName, self.imagePath)
 
     def makeThumbnail(self, path, size=100):
         width = self.image.size[0]

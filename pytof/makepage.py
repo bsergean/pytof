@@ -60,8 +60,8 @@ class WebPage(object):
         out.write(self.getFooter())
         out.close()
 
-def makePhotoPage(photo, linkBack):
-    page = WebPage(photo.id, photo.title)
+def makePhotoPage(photo, linkBack, topDir):
+    page = WebPage(join(topDir, photo.id), photo.title)
     page.addCodeLine('<div class="square"><a href="%s"><img class="prev" src="%s" /></a></div>'
         % (linkBack, photo.prevPath))
     page.writePage()
@@ -87,10 +87,15 @@ def main(albumName, topDir, xmlData):
     cssfilename = join('share', cssfile)
     if not exists(cssfilename):
         _err_('No css file was found: HTML files look and feel will be bad')
-    copy(cssfilename, join(topDir, cssfile))
+    else:
+        # FIXME: where do we get that install path ...
+        copy(cssfilename, join(topDir, cssfile))
 
     picsPerPage = 6 ** 2
     pageCounter = 1
+
+    log(topDir)
+    
     curPage = WebPage(join(topDir, "page%2d" % pageCounter), albumName)
     curPage.addCode("<div class=\"square\">")
     
@@ -102,7 +107,7 @@ def main(albumName, topDir, xmlData):
         photo.saveCopy(dirs[0])
         photo.makePreview(dirs[1], 640)
         photo.makeThumbnail(dirs[2])
-        photoPageName = makePhotoPage(photo, curPage.fileName)
+        photoPageName = makePhotoPage(photo, curPage.fileName, topDir)
         curPage.addCode("<a href=\"%s\"><img src=\"%s\" class=\"thumb\"/></a>" %
                         (photoPageName, photo.thumbPath))
         c += 1
