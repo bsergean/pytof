@@ -22,8 +22,9 @@ sys.path.insert(1, '../pytof')
 from os.path import expanduser, join, exists
 from albumdataparser import AlbumDataParser, AlbumDataParserError
 import os, sys, getopt
-from utils import _err_, _err_exit, help, echo
+from utils import _err_, _err_exit, help, echo, getConfDirPath, log
 import makepage, makefs
+from cPickle import dump, load
 
 __version__ = '0.0.1'
 
@@ -31,8 +32,29 @@ def main(albumName, libraryPath, xmlFileName, info, fs):
     try:
         echo("Parsing AlbumData.xml")
         parser = AlbumDataParser(libraryPath, xmlFileName)
-        xmlData = parser.parse()
-        xmlData.libraryPath = libraryPath
+        # can we use the cached xml content ?
+
+        pickleFilename = join(getConfDirPath(), 'xmlData.pickle')
+        log(pickleFilename)
+
+        #try to load our stuff from the cache if the xml wasn't modified
+        #FIXME
+        
+        cached = False
+        if cached:
+            pickleFd = open(pickleFilename)
+            xmlData = load(pickleFd)
+            pickleFd.close()
+        else:
+            xmlData = parser.parse()
+            xmlData.libraryPath = libraryPath
+
+        # writing the cached data to a file
+        if cached:
+            pickleFd = open(pickleFilename, 'w')
+            dump(xmlData, pickleFd, 2)
+            pickleFd.close()
+        
         echo("\t[DONE]\n")
     except(AlbumDataParserError):
         _err_exit("Problem parsing AlbumData.xml")
@@ -47,7 +69,7 @@ def main(albumName, libraryPath, xmlFileName, info, fs):
     print 'output dir is %s' % (topDir)
 
     if info:
-        data.info(albumName)
+        print ('\n').join(xmlData.getAlbumList())
     else:
         if fs:
             makefs.main(albumName, topDir, xmlData)
