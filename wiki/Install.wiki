@@ -9,6 +9,8 @@ For thumbnails creation pytof rely on the python imaging library, which itself r
 The sources for the open source project were added to our sources in the deps
 directory.  A simple *install.sh* script can be found in the deps directory.
 To have a verbose output, run it like:
+If you get pytof throught subversion you'll get those sources for free,
+otherwise download them from the download page.
 
 {{{
 sh -x install.sh
