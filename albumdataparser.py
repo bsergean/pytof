@@ -17,6 +17,7 @@ from utils import _err_, _err_exit, log
 class AlbumData(object):
     def __init__(self, data):
         self.data = data
+        self.libraryPath = ''
 
     def getAlbumByName(self, name):
         for album in self.data['List of Albums']:
@@ -38,13 +39,20 @@ class AlbumData(object):
 
         if self.libraryPath:
             try:
-                index = photoFileName.index('Originals')
+                # FIXME:
+                if 'Originals' in photoFileName:
+                    index = photoFileName.index('Originals')
+                    photoFileName = join(self.libraryPath, photoFileName[index:])
             except (ValueError):
-                _err_exit('Internal Error')
+                # probably panther iPhoto, there is no Original in the filenam
+                print self.libraryPath
+                _err_exit('Internal Error: cannot handle %s' %(photoFileName))
 
-            photoFileName = join(self.libraryPath, photoFileName[index:])
             log(photoFileName)
-        
+
+        if not p.has_key('DateAsTimerInterval'):
+            p['DateAsTimerInterval'] = ''
+            
         return Photo(photoFileName,
                      id,
                      p['Caption'],
@@ -81,11 +89,18 @@ class XmlItem(object):
             self.value = True
         elif self.type == 'false':
             self.value = False
-        elif self.type == 'Date':
+        elif self.type == 'date':
             # 2005-08-08T06:03:54Z
             # Format used by old iPhoto version
-            log(self.value)
-            sys.exit(0)
+            # man strftime will give you the %V meaning
+            # %F is not implemented in Panther python
+            # gave up with strptime ... using regexp instead
+            # self.value = time.strptime(val, '%y-%m-%d-T%TZ')
+
+            import re, datetime
+            T = re.compile('(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)Z').findall(val)[0]
+            tup = tuple ([ int(i) for i in T ])
+            self.value = datetime.datetime(*tup)
         else:
             raise ExpatError, "Type \"%s\" not supported" % type
 
@@ -125,8 +140,7 @@ class AlbumDataParser(object):
                 elem = {}
             elif name in ['plist', 'array']:
                 elem = []
-            elif name in ['key', 'string', 'integer', 'real', 'true', 'false',
-            'Date']:
+            elif name in ['key', 'string', 'integer', 'real', 'true', 'false', 'date']:
                 elem = XmlItem(name)
             else:
                 raise ExpatError, "Element \"%s\" not supported" % name
@@ -141,7 +155,7 @@ class AlbumDataParser(object):
                 self.addItem(item)
             elif name == 'array':
                 self.addItem(item)
-            elif name in ['key', 'string', 'integer', 'real', 'true', 'false']:
+            elif name in ['key', 'string', 'integer', 'real', 'true', 'false', 'date']:
                 item.setValue(self.lastItemData)
                 if name == 'key':
                     self.keys.append(item.value)
