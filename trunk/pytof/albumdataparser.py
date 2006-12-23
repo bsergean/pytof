@@ -33,8 +33,12 @@ class AlbumData(object):
             # FIXME: maybe there's a better way of filtering
             # (another meta data saying it's a book ...)
             if not a.endswith('Book'):
-                albums.append(a)
-        return albums
+                albums.append( [int(album['PhotoCount']), a] )
+
+        # to sort by date, we would have to compute the date mean of
+        # an album ... so we sort by the bigger album for now
+        albums.sort()
+        return [album[1] for album in albums]
 
     def getPicturePathFromId(self, id):
         return self.data['Master Image List'][id]['ImagePath']
