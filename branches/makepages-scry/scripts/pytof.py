@@ -85,15 +85,11 @@ def main(albumName, libraryPath, xmlFileName, outputDir, info, fs):
 if __name__ == "__main__":
 
     try:
-        # those needs to be 
-        #libraryPath = ''
-        #xmlFileName = ''
-        #albumName = ''
-        #outputDir = ''
-
-        import tempfile
+        from tempfile import mktemp
+        import tempfile # FIXME: is there a way to get tempdir value
+        # without import tempfile ?
         # mktemp has to be called once for tempdir to be initalized !!
-        tempfile.mktemp()
+        mktemp()
 
         # parse args
         usage = "usage: python %prog <options>"
