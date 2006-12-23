@@ -128,6 +128,7 @@ def main(albumName, topDir, xmlData):
         sys.stderr.write(s)
         c += 1
 
+    sys.stderr.write('\n')
     curPage.writePage()
 
 if __name__ == "__main__":

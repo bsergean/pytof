@@ -127,7 +127,10 @@ def TryToImport(modules):
             sys.exit(1)
 
 def help(str, revision, dependencies, author):
-    """ print a nice page (which is the actual man page too) """
+    """
+    print a nice page (which is the actual man page too)
+    deprecated since we use the optparse class
+    """
 
     # extract miscutils from a rcs id like
     # $Id$  (C) 2004 GPL'
