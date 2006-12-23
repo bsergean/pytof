@@ -39,19 +39,34 @@ class WebPage(object):
 
     def getHeader(self):
         return '''
-    <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 TRANSITIONAL//EN">
-    <html>
-    <head>
-    <title>%s</title>
-    <link href="../style.css" rel="stylesheet" type="text/css">
-    </head>
-    <body>''' % self.title
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 TRANSITIONAL//EN">
+<html>
+<head>
+<title>%s</title>
+<link href="/home/bsergean/src/pytof/branches/makepages-scry/share/scry.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<table cellpadding="5" cellspacing="0" width="85%%" border="0" align="center">
+  <tr>
+    <td id="t_main" width="100%%" colspan="2">
+      <div class="images">
+''' % self.title
 
     def getFooter(self):
         return '''
-    </body>
-    </html>
-    '''
+      </div>
+    </td>
+  </tr>
+  
+  <tr>
+    <td align="left"></td>
+    <td align="right"></td>
+  </tr>
+</table>
+       
+</body>
+</html>
+'''
 
     def writePage(self):
         out = file(self.fileName, 'w')
@@ -82,8 +97,7 @@ def main(albumName, topDir, xmlData):
             except (error):
                 _err_exit('Cannot create %s' %(Dir))
 
-    # FIXME: share will be in the pytof home dir
-    cssfile = 'style.css'
+    cssfile = 'scry.css'
     cssfilename = join('share', cssfile)
     if not exists(cssfilename):
         _err_('No css file was found: HTML files look and feel will be bad')
@@ -91,37 +105,29 @@ def main(albumName, topDir, xmlData):
         # FIXME: where do we get that install path ...
         copy(cssfilename, join(topDir, cssfile))
 
-    picsPerPage = 6 ** 2
-    pageCounter = 1
-
     log(topDir)
     
-    curPage = WebPage(join(topDir, "page%2d" % pageCounter), albumName)
-    curPage.addCode("<div class=\"square\">")
+    curPage = WebPage(join(topDir, 'index'), albumName)
     
-    echo("Writing pictures 00%")
-    c = 0
+    sys.stderr.write("Writing pictures\n")
+    c = 1
     photos = data.getPicturesIdFromAlbumName(albumName)
+    nb_photos = len(photos)
     for id in photos:
         photo = data.getPhotoFromId(id)
         photo.saveCopy(dirs[0])
         photo.makePreview(dirs[1], 640)
         photo.makeThumbnail(dirs[2])
         photoPageName = makePhotoPage(photo, curPage.fileName, topDir)
-        curPage.addCode("<a href=\"%s\"><img src=\"%s\" class=\"thumb\"/></a>" %
+        curPage.addCode("<a href=\"%s\"><img src=\"%s\" alt=\"toto.jpg\" border=\"0\"/></a>" %
                         (photoPageName, photo.thumbPath))
-        c += 1
-        if c % picsPerPage == 0 and c < len(photos):
-            curPage.addCode("</div>")
-            curPage.writePage()
-            pageCounter += 1
-            curPage = WebPage("page%2d" % pageCounter, albumName)
-            curPage.addCode("<div class=\"square\">")
-            
-        echo("\b\b\b%2d%%" % ((100 * c) / len(photos)))
 
-    echo("\b\b\b\b\t[DONE]\n")
-    curPage.addCode("</div>")
+        # progress
+        s = "\r%f %% - (%d processed out of %d) " \
+            % (100 * float(c) / float(nb_photos), c, nb_photos)
+        sys.stderr.write(s)
+        c += 1
+
     curPage.writePage()
 
 if __name__ == "__main__":
