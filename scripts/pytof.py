@@ -122,7 +122,7 @@ if __name__ == "__main__":
                 _err_('Bad arg: %s' %(opt))
                 raise BadUsage
 
-        if not albumName:
+        if not albumName and not info:
             _err_('missing albumName argument')
             raise BadUsage
 
