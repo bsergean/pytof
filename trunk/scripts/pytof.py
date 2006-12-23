@@ -33,6 +33,8 @@ __version__ = '0.0.1'
 
 def main(albumName, libraryPath, xmlFileName, info, fs):
     try:
+	# generate the config file
+	getConfFilePath()
         echo("Parsing AlbumData.xml")
         parser = AlbumDataParser(libraryPath, xmlFileName)
         xmlFileName = parser.xmlFileName
@@ -53,10 +55,9 @@ def main(albumName, libraryPath, xmlFileName, info, fs):
             xmlData.libraryPath = libraryPath
 
         # writing the cached data to a file
-        if cached:
-            pickleFd = open(pickleFilename, 'w')
-            dump(xmlData, pickleFd, 2)
-            pickleFd.close()
+        pickleFd = open(pickleFilename, 'w')
+        dump(xmlData, pickleFd)
+        pickleFd.close()
         
         echo("\t[DONE]\n")
     except(AlbumDataParserError):
