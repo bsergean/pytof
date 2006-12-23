@@ -75,10 +75,104 @@ class WebPage(object):
         out.write(self.getFooter())
         out.close()
 
+# http://docs.python.org/tut/node11.html
+class PhotoWebPage(WebPage):
+    
+    def __init__(self, fileName, title, home):
+        WebPage.__init__(self, fileName, title)
+
+        # home is `basename home` instead
+        self.home = os.path.basename(home)
+    
+    def getHeader(self):
+        return '''
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 TRANSITIONAL//EN">
+<html>
+<head>
+<title>%s</title>
+<link href="/home/bsergean/src/pytof/branches/makepages-scry/share/scry.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<table cellpadding="5" cellspacing="0" width="85%%" border="0" align="center">
+  <tr>
+    <td align="left">
+ <a href="%s">home</a> </td>
+  </tr>
+</table>
+
+
+<table cellpadding="5" cellspacing="0" width="85%%" border="0" align="center">
+  <tr>
+    <td id="t_main" width="100%%" colspan="2">
+      <div class="images">
+''' % (self.title, self.home)
+
+    def getFooter(self):
+        return '''
+      </div>
+    </td>
+  </tr>
+  
+  <tr>
+    <td align="left"></td>
+    <td align="right"></td>
+  </tr>
+</table>
+       
+</body>
+</html>
+'''
+
+    def addSkeleton(self, photo, original):
+        self.addCodeLine(
+            '''
+            
+     <table align="center" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td width="100%%" colspan="3" align="center">
+            <div class="images">
+
+            <img src="%s" alt="img_0912.jpg" />
+            <br />
+            FIXME: photo_name.jpg here:
+            <br />
+            <a href="%s">Original picture: FIXME: Dimensions, FIXME: Size KB</a>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+
+          <td width="30%%" align="left" valign="bottom">
+            <div class="images">
+<a style="text-decoration: none;" href="prev.jpg"><img src="prev.jpg" alt="previous" /><br />&lt; previous</a>            </div>
+          </td>
+          <td width="40%%" align="middle" valign="bottom">
+
+            <p> FIXME: here we should put the photo metadata
+            </p>
+
+          </td>
+          <td width="30%%" align="right" valign="bottom">
+            <div class="images">
+<a style="text-decoration: none;" href="next.jpg"><img src="next.jpg" alt="next" /><br />&lt; next</a>            </div>
+          </td>
+        </tr>
+      </table>
+      ''' % (photo, original))
+
+
 def makePhotoPage(photo, linkBack, topDir):
-    page = WebPage(join(topDir, photo.id), photo.title)
-    page.addCodeLine('<div class="square"><a href="%s"><img class="prev" src="%s" /></a></div>'
-        % (linkBack, photo.prevPath))
+    '''
+    Should have a next and back with thumbnails
+    '''
+    page = PhotoWebPage(join(topDir, photo.id), photo.title, linkBack)
+    #page.addCodeLine('<div class="square"><a href="%s"><img class="prev" src="%s" /></a></div>'
+    #    % (linkBack, photo.prevPath))
+
+    page.addSkeleton(photo.prevPath,
+                     join('photos', photo.id + '.jpg')) # fixme: check extension
     page.writePage()
     return page.fileName
 

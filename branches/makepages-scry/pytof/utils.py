@@ -92,6 +92,14 @@ def GetTmpFileDescriptorAndFileName():
     filedescriptor = open(filename, 'w')
     return filedescriptor, filename 
 
+def GetTmpDir():
+    """ get the os tmp dir """
+    from tempfile import mktemp
+    import tempfile # FIXME: is there a way to get tempdir value
+    # without import tempfile ?
+    # mktemp has to be called once for tempdir to be initalized !!
+    mktemp()
+    return tempfile.tempdir
 
 def ListCurrentDirFileFromExt(ext):
     """ list file matching extension from a list

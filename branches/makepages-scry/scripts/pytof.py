@@ -22,7 +22,7 @@ sys.path.insert(1, '../pytof')
 from os.path import expanduser, join, exists
 from albumdataparser import AlbumDataParser, AlbumDataParserError
 import os, sys
-from utils import _err_, _err_exit, help, echo, log
+from utils import _err_, _err_exit, help, echo, log, GetTmpDir
 from configFile import getConfDirPath, getConfFilePath, canUseCache
 import makepage, makefs
 from cPickle import dump, load
@@ -85,12 +85,6 @@ def main(albumName, libraryPath, xmlFileName, outputDir, info, fs):
 if __name__ == "__main__":
 
     try:
-        from tempfile import mktemp
-        import tempfile # FIXME: is there a way to get tempdir value
-        # without import tempfile ?
-        # mktemp has to be called once for tempdir to be initalized !!
-        mktemp()
-
         # parse args
         usage = "usage: python %prog <options>"
         parser = OptionParser(usage=usage)
@@ -100,7 +94,7 @@ if __name__ == "__main__":
                           help="Print info about the collection [default = %default]")
         parser.add_option("-f", "--file-system",
                           action="store_true", dest="fs", default=False,
-                          help="Extract album photo to a dir and stop")
+                          help="Extract album photo to OUTPUTDIR and stop")
         parser.add_option("-V", "--version",
                           action="store_true", dest="version", default=False,
                           help="display version")
@@ -110,8 +104,8 @@ if __name__ == "__main__":
                           help="The iPhoto library XML file name"),
         parser.add_option("-a", "--album", dest="albumName", default='',
                           help="The iPhoto library album to process"),
-        parser.add_option("-o", "--output", dest="outputDir", default=tempfile.tempdir,
-                          help="The output directory"),
+        parser.add_option("-o", "--output", dest="outputDir", default=GetTmpDir(),
+                          help="The output directory [%default + out/ALBUMNAME]"),
 
         options, args = parser.parse_args()
 

@@ -14,10 +14,23 @@ __author__ = 'Benjamin Sergeant'
 import sys
 sys.path.insert(1, '../pytof')
 
+import os
 from os import remove
-from makepage import WebPage
+from utils import GetTmpDir
+from makepage import WebPage, PhotoWebPage
 
 if __name__ == "__main__":
 
-    wp = WebPage('out', 'testpage')
+    foo = os.path.join(GetTmpDir(), 'foo')
+    bar = os.path.join(GetTmpDir(), 'bar')
+
+    wp = WebPage(foo, 'testpage')
     wp.writePage()
+
+    wp = PhotoWebPage(bar, 'bar', 'home.html')
+    wp.addSkeleton('back.jpg', 'original.jpg')
+    wp.writePage()
+
+    # here we could try to fetch the photo link from the page
+    # and compare the size to check that
+    # original_size > medium_size > thumbnail_size
