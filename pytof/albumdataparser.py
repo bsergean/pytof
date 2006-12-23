@@ -9,6 +9,7 @@
 #
 #*****************************************************************************
 
+import os
 from os.path import expanduser, exists, join
 from xml.parsers.expat import ParserCreate, ExpatError
 from photo import Photo
@@ -53,6 +54,11 @@ class AlbumData(object):
                 if 'Originals' in photoFileName:
                     index = photoFileName.index('Originals')
                     photoFileName = join(self.libraryPath, photoFileName[index:])
+                else:
+                    # iPhoto 2 (Panther)
+                    suffix = photoFileName.split('iPhotoLibrary' + os.sep)[1]
+                    photoFileName = join(self.libraryPath, suffix)
+                    
             except (ValueError):
                 # probably panther iPhoto, there is no Original in the filenam
                 print self.libraryPath
