@@ -43,6 +43,15 @@ is that you can use your prefered editor to do that, and edit several files at
 a time, fast, without the need to save (and wait) if you want to switch to
 another wiki page.
 
+=== Branching ===
+
+See this [http://svnbook.red-bean.com/en/1.1/ch04s02.html note] from the subversion book. The following command create a branch, and . has to be under subversion (the previous command won't work, check the one from the Source Tab. Then commit and start working in your branch by _cding_ there.
+
+{{{
+[bsergean@marge1 pytof]$ svn copy trunk/ branches/makepages-scry
+A         branches/makepages-scry
+}}}
+
 == Wiki ==
 
 Quote from the FAQ:
@@ -70,3 +79,5 @@ Some tools were added in the tools directory.
 [100drine@gnocchi trunk]$ svn log . | perl tools/svn2cl.pl > ChangeLog
 }}}
  * deps/install.sh is the script which compile and install the deps
+
+
