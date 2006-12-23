@@ -11,6 +11,7 @@
 __revision__ = '$Id$  (C) 2004 GPL'
 __author__ = 'Benjamin Sergeant'
 
+from os.path import expanduser, join, exists
 import sys
 import os
 
@@ -200,16 +201,6 @@ def log(msg):
         # the error message from an exception), to print it
         outfd.write(str(msg) + '\n')
         outfd.flush()
-
-def getConfDirPath():
-    # Creating conf dir
-    try:
-        confDir = os.path.join(os.environ["HOME"],'.pytof')
-        if not os.path.exists(confDir):
-            os.makedirs(confDir)
-        return confDir
-    except(os.error):
-        _err_exit('Cannot create %s' %(confDir))
 
 if __name__ == "__main__":
     # FIXME : Add tests here

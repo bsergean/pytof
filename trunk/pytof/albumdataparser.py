@@ -129,6 +129,7 @@ class AlbumDataParser(object):
             _err_('No xml file found at %s' %(xmlFileName))
             raise AlbumDataParserError
 
+        self.xmlFileName = xmlFileName
         self.xmlFile = file(xmlFileName, 'r')
         self.elemList = []
         self.lastItemData = ''
