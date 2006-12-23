@@ -22,25 +22,28 @@ sys.path.insert(1, '../pytof')
 from os.path import expanduser, join, exists
 from albumdataparser import AlbumDataParser, AlbumDataParserError
 import os, sys, getopt
-from utils import _err_, _err_exit, help, echo, getConfDirPath, log
+from utils import _err_, _err_exit, help, echo, log
+from configFile import getConfDirPath, getConfFilePath, canUseCache
 import makepage, makefs
 from cPickle import dump, load
+from ConfigParser import RawConfigParser
 
+# FIXME: (see issue 11)
 __version__ = '0.0.1'
 
 def main(albumName, libraryPath, xmlFileName, info, fs):
     try:
         echo("Parsing AlbumData.xml")
         parser = AlbumDataParser(libraryPath, xmlFileName)
+        xmlFileName = parser.xmlFileName
         # can we use the cached xml content ?
 
         pickleFilename = join(getConfDirPath(), 'xmlData.pickle')
         log(pickleFilename)
 
-        #try to load our stuff from the cache if the xml wasn't modified
-        #FIXME
-        
-        cached = False
+        # try to load our stuff from the cache if the xml wasn't modified
+        cached = canUseCache(xmlFileName)
+
         if cached:
             pickleFd = open(pickleFilename)
             xmlData = load(pickleFd)
