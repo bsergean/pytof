@@ -111,9 +111,9 @@ class XmlItem(object):
             self.value = False
         elif self.type == 'date':
             # 2005-08-08T06:03:54Z
-            # Format used by old iPhoto version
-            # man strftime will give you the %V meaning
-            # %F is not implemented in Panther python
+            # Format used by old Panther iPhoto version 2
+            # %V and %F should be enough according to
+            # strftime man page
             # gave up with strptime ... using regexp instead
             # self.value = time.strptime(val, '%y-%m-%d-T%TZ')
 
@@ -136,7 +136,7 @@ class AlbumDataParser(object):
     
         xmlFileName = join(xmlFileDir, xmlFileBaseName)
         if not exists(xmlFileName):
-            _err_('No xml file found at %s' %(xmlFileName))
+            _err_('\nNo xml file found at %s' %(xmlFileName))
             raise AlbumDataParserError
 
         self.xmlFileName = xmlFileName

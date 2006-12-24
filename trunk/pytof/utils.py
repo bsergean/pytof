@@ -92,6 +92,14 @@ def GetTmpFileDescriptorAndFileName():
     filedescriptor = open(filename, 'w')
     return filedescriptor, filename 
 
+def GetTmpDir():
+    """ get the os tmp dir """
+    from tempfile import mktemp
+    import tempfile # FIXME: is there a way to get tempdir value
+    # without import tempfile ?
+    # mktemp has to be called once for tempdir to be initalized !!
+    mktemp()
+    return tempfile.tempdir
 
 def ListCurrentDirFileFromExt(ext):
     """ list file matching extension from a list
@@ -127,7 +135,10 @@ def TryToImport(modules):
             sys.exit(1)
 
 def help(str, revision, dependencies, author):
-    """ print a nice page (which is the actual man page too) """
+    """
+    print a nice page (which is the actual man page too)
+    deprecated since we use the optparse class
+    """
 
     # extract miscutils from a rcs id like
     # $Id$  (C) 2004 GPL'
@@ -195,7 +206,7 @@ def complicatedFunctionFromTheFuture():
         notYetImplemented()
         
 outfd = sys.stderr
-#outfd = open('/tmp/message', 'w')
+outfd = open('/tmp/message', 'w')
 def log(msg):
         # we have to cast some type ('instance',
         # the error message from an exception), to print it
