@@ -28,7 +28,7 @@ if __name__ == "__main__":
     wp.writePage()
 
     wp = PhotoWebPage(bar, 'bar', 'home.html')
-    wp.addSkeleton(12, 12, 'back.jpg', 'original',
+    wp.addSkeleton(12, 12, 1000, 'back.jpg', 'original',
                    'prev', 'pv_prev', 'next', 'pv_next')
     wp.writePage()
 
