@@ -177,7 +177,8 @@ def makePhotoPage(photo, linkBack, topDir, prev, next):
     size = photo.sizeKB
 
     # addSkeleton probably needs some cleanup ...
-    page.addSkeleton(width, height, size, photo.prevPath,
+    page.addSkeleton(width, height, size,
+                     join('preview', 'pv_' + photo.id + '.jpg'),
                      join('photos', photo.id + '.jpg'),
                      prev.id + '.html',
                      join('thumbs',   'th_' + prev.id + '.jpg'),
