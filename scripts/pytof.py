@@ -21,17 +21,18 @@ sys.path.insert(1, '../pytof')
 
 from os.path import expanduser, join, exists
 from albumdataparser import AlbumDataParser, AlbumDataParserError
-import os, sys, getopt
-from utils import _err_, _err_exit, help, echo, log
+import os, sys
+from utils import _err_, _err_exit, help, echo, log, GetTmpDir
 from configFile import getConfDirPath, getConfFilePath, canUseCache
 import makepage, makefs
 from cPickle import dump, load
 from ConfigParser import RawConfigParser
+from optparse import OptionParser
 
 # FIXME: (see issue 11)
 __version__ = '0.0.1'
 
-def main(albumName, libraryPath, xmlFileName, info, fs):
+def main(albumName, libraryPath, xmlFileName, outputDir, info, fs):
     try:
 	# generate the config file
 	getConfFilePath()
@@ -83,68 +84,41 @@ def main(albumName, libraryPath, xmlFileName, info, fs):
 
 if __name__ == "__main__":
 
-    class BadUsage: pass
     try:
-        libraryPath = ''
-        xmlFileName = ''
-        albumName = ''
-
-        import tempfile
-        # mktemp has to be called once for tempdir to be initalized !!
-        tempfile.mktemp()
-        outputDir = tempfile.tempdir
-        fs = False
-        info = False
-
         # parse args
-        opts, args = getopt.getopt(sys.argv[1:], 'ifVhl:x:a:o:')
+        usage = "usage: python %prog <options>"
+        parser = OptionParser(usage=usage)
+        
+        parser.add_option("-i", "--info",
+                          action="store_true", dest="info", default=False,
+                          help="Print info about the collection [default = %default]")
+        parser.add_option("-f", "--file-system",
+                          action="store_true", dest="fs", default=False,
+                          help="Extract album photo to OUTPUTDIR and stop")
+        parser.add_option("-V", "--version",
+                          action="store_true", dest="version", default=False,
+                          help="display version")
+        parser.add_option("-l", "--library", dest="libraryPath", default='',
+                          help="The iPhoto library directory path"),
+        parser.add_option("-x", "--xml-file", dest="xmlFileName", default='',
+                          help="The iPhoto library XML file name"),
+        parser.add_option("-a", "--album", dest="albumName", default='',
+                          help="The iPhoto library album to process"),
+        parser.add_option("-o", "--output", dest="outputDir", default=GetTmpDir(),
+                          help="The output directory [%default + out/ALBUMNAME]"),
 
-        for opt, val in opts:
-            # be carefull with the elif
-            # when you change param order ...
-            if opt == '-i':
-                info = True
-            elif opt == '-f':
-                fs = True
-            elif opt == '-V':
-                print 'pytof version %s' % (__version__)
-                sys.exit(0)
-            elif opt == '-h':
-                raise BadUsage
-            elif opt == '-l':
-                libraryPath = val
-            elif opt == '-x':
-                xmlFileName = val
-            elif opt == '-a':
-                albumName = val
-            elif opt == '-o':
-                outputDir = val
-            else:
-                _err_('Bad arg: %s' %(opt))
-                raise BadUsage
+        options, args = parser.parse_args()
 
-        if not albumName and not info:
-            _err_('missing albumName argument')
-            raise BadUsage
+        if options.version:
+            print 'pytof version %s' % (__version__)
+            
+        if not options.albumName and not options.info:
+            _err_exit('missing albumName argument')
 
-        main(albumName, libraryPath, xmlFileName, info, fs)
+        main(options.albumName, options.libraryPath,
+             options.xmlFileName, options.outputDir,
+             options.info, options.fs)
 
     except (KeyboardInterrupt):
-        _err_exit("Aborted by user")
-
-    except (getopt.error, BadUsage):
-        help(""" 
-%s : Export iPhoto library
-
-usage : python pytof.py <options>
-OPTIONS | -a <name> : album name
-        | -l <dir> : iPhoto library path
-        | -o <dir> : output dir (default to /tmp)
-        | -v : display pytof version
-        | -h : display this text
-        | -i : print info about the collection
-        | -f : extract album photo to a dir and stop
-        """,
-                       __revision__,
-                       __dependencies__,
-                       __author__)
+        # we should delete the target dir.
+        _err_exit("\nAborted by user")
