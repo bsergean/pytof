@@ -28,7 +28,8 @@ if __name__ == "__main__":
     wp.writePage()
 
     wp = PhotoWebPage(bar, 'bar', 'home.html')
-    wp.addSkeleton('back.jpg', 'original.jpg')
+    wp.addSkeleton(12, 12, 'back.jpg', 'original',
+                   'prev', 'pv_prev', 'next', 'pv_next')
     wp.writePage()
 
     # here we could try to fetch the photo link from the page

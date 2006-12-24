@@ -13,7 +13,7 @@ __revision__ = '$Id$  (C) 2004 GPL'
 __author__ = 'Mathieu Robin'
 __dependencies__ = ['Image']
 
-from os.path import join
+from os.path import join, getsize, basename
 from shutil import copy
 import sys, os, time
 from utils import TryToImport, log 
@@ -37,11 +37,15 @@ class Photo(object):
         self.thumbPath = None
         self.prevPath = None
 
+        self.width = self.image.size[0]
+        self.height = self.image.size[1]
+        self.sizeKB = getsize(self.fileName) / 1024
+
     def getBaseName(self):
         return str(self.id)
 
     def getFileType(self):
-        return os.path.basename(self.fileName).split('.')[-1].lower()
+        return basename(self.fileName).split('.')[-1].lower()
 
     def saveCopy(self, path):
         log(path)

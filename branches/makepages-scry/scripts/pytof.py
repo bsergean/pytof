@@ -120,4 +120,5 @@ if __name__ == "__main__":
              options.info, options.fs)
 
     except (KeyboardInterrupt):
+        # we should delete the target dir.
         _err_exit("\nAborted by user")

@@ -16,7 +16,7 @@ __revision__ = '$Id$  (C) 2006 GPL'
 __author__ = 'Mathieu Robin'
 __dependencies__ = []
 
-from os.path import expanduser, join, exists
+from os.path import expanduser, join, exists, basename
 from albumdataparser import AlbumDataParser, AlbumDataParserError
 import os, sys, getopt
 from utils import _err_, _err_exit, help, log, echo
@@ -124,7 +124,8 @@ class PhotoWebPage(WebPage):
 </html>
 '''
 
-    def addSkeleton(self, photo, original):
+    def addSkeleton(self, width, height, size, photo, original,
+                    prev, th_prev, next, th_next):
         self.addCodeLine(
             '''
             
@@ -135,9 +136,9 @@ class PhotoWebPage(WebPage):
 
             <img src="%s" alt="img_0912.jpg" />
             <br />
-            FIXME: photo_name.jpg here:
+            %s
             <br />
-            <a href="%s">Original picture: FIXME: Dimensions, FIXME: Size KB</a>
+            <a href="%s">Original picture: %d x %d, %d KB</a>
             </div>
           </td>
         </tr>
@@ -146,24 +147,24 @@ class PhotoWebPage(WebPage):
 
           <td width="30%%" align="left" valign="bottom">
             <div class="images">
-<a style="text-decoration: none;" href="prev.jpg"><img src="prev.jpg" alt="previous" /><br />&lt; previous</a>            </div>
+<a style="text-decoration: none;" href="%s"><img src="%s" alt="previous" /><br />&lt; previous</a>            </div>
           </td>
           <td width="40%%" align="middle" valign="bottom">
 
-            <p> FIXME: here we should put the photo metadata
+            <p> Cannot retrieve the photo metadata
             </p>
 
           </td>
           <td width="30%%" align="right" valign="bottom">
             <div class="images">
-<a style="text-decoration: none;" href="next.jpg"><img src="next.jpg" alt="next" /><br />&lt; next</a>            </div>
+<a style="text-decoration: none;" href="%s"><img src="%s" alt="next" /><br />next &gt; </a>            </div>
           </td>
         </tr>
       </table>
-      ''' % (photo, original))
+      ''' % (photo, basename(photo), original, width, height, size, prev, th_prev, next, th_next))
 
 
-def makePhotoPage(photo, linkBack, topDir):
+def makePhotoPage(photo, linkBack, topDir, prev, next):
     '''
     Should have a next and back with thumbnails
     '''
@@ -171,8 +172,18 @@ def makePhotoPage(photo, linkBack, topDir):
     #page.addCodeLine('<div class="square"><a href="%s"><img class="prev" src="%s" /></a></div>'
     #    % (linkBack, photo.prevPath))
 
-    page.addSkeleton(photo.prevPath,
-                     join('photos', photo.id + '.jpg')) # fixme: check extension
+    width = photo.width
+    height = photo.height
+    size = photo.sizeKB
+
+    # addSkeleton probably needs some cleanup ...
+    page.addSkeleton(width, height, size, photo.prevPath,
+                     join('photos', photo.id + '.jpg'),
+                     prev.id + '.html',
+                     join('thumbs',   'th_' + prev.id + '.jpg'),
+                     next.id + '.html',
+                     join('thumbs',   'th_' + next.id + '.jpg'),
+                     ) # fixme: check extension
     page.writePage()
     return page.fileName
 
@@ -207,12 +218,21 @@ def main(albumName, topDir, xmlData):
     c = 1
     photos = data.getPicturesIdFromAlbumName(albumName)
     nb_photos = len(photos)
-    for id in photos:
+    for i in xrange(nb_photos):
+
+        id = photos[i]
         photo = data.getPhotoFromId(id)
+        prev = data.getPhotoFromId(photos[i-1])
+        try:
+            next = data.getPhotoFromId(photos[i+1])
+        except (IndexError):
+            next = data.getPhotoFromId(photos[0])
+        
         photo.saveCopy(dirs[0])
         photo.makePreview(dirs[1], 640)
         photo.makeThumbnail(dirs[2])
-        photoPageName = makePhotoPage(photo, curPage.fileName, topDir)
+        photoPageName = makePhotoPage(photo, curPage.fileName, topDir,
+                                      prev, next)
         curPage.addCode("<a href=\"%s\"><img src=\"%s\" alt=\"toto.jpg\" border=\"0\"/></a>" %
                         (photoPageName, photo.thumbPath))
 
