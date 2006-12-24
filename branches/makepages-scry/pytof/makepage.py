@@ -43,7 +43,7 @@ class WebPage(object):
 <html>
 <head>
 <title>%s</title>
-<link href="/home/bsergean/src/pytof/branches/makepages-scry/share/scry.css" rel="stylesheet" type="text/css">
+<link href="../scry.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <table cellpadding="5" cellspacing="0" width="85%%" border="0" align="center">
@@ -90,7 +90,7 @@ class PhotoWebPage(WebPage):
 <html>
 <head>
 <title>%s</title>
-<link href="/home/bsergean/src/pytof/branches/makepages-scry/share/scry.css" rel="stylesheet" type="text/css">
+<link href="../scry.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
@@ -204,12 +204,14 @@ def main(albumName, topDir, xmlData):
                 _err_exit('Cannot create %s' %(Dir))
 
     cssfile = 'scry.css'
-    cssfilename = join('share', cssfile)
+    # FIXME: how do we get the package install path, to retrieve
+    # the resource dir next ...quick hack for now
+    cssfilename = join(os.pardir, 'share', cssfile)
+    log(cssfilename)
     if not exists(cssfilename):
         _err_('No css file was found: HTML files look and feel will be bad')
     else:
-        # FIXME: where do we get that install path ...
-        copy(cssfilename, join(topDir, cssfile))
+        copy(cssfilename, join(topDir, os.pardir, cssfile))
 
     log(topDir)
     
@@ -235,7 +237,8 @@ def main(albumName, topDir, xmlData):
         photoPageName = makePhotoPage(photo, curPage.fileName, topDir,
                                       prev, next)
         curPage.addCode("<a href=\"%s\"><img src=\"%s\" alt=\"toto.jpg\" border=\"0\"/></a>" %
-                        (photoPageName, photo.thumbPath))
+                        (photo.id + '.html',
+                         join('thumbs',   'th_' + photo.id + '.jpg')))
 
         # progress
         s = "\r%f %% - (%d processed out of %d) " \
