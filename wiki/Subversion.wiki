@@ -1,12 +1,31 @@
-﻿
-== In the branch ==
+﻿#labels Phase-Implementation
+Some dev notes working with subversion, based on the branch section in the subversion book.
+
+= Working with features branches =
+
+Here I describe how I worked on a new feature in a separate branch, to keep trunk stable, and how I merged this work to trunk then. The temporary branch, useless after the merge, was deleted.
+
+== Branch creation ==
+
+ * You can use the `copy` command to copy the trunk to a branch.
+ * You can now work there.
+
+== Merge ==
+
+=== Find out the branch the branch revision ===
+
+Within the branch, just type:
 
 {{{
 [bsergean@marge1 makepages-scry]$ svn up .
 At revision 85.
 }}}
 
-== Find out when the branch was created, using subversion ==
+Every work should be checked in.
+
+=== Find out when the branch was created, using subversion log ===
+
+If you haven't used a check in comment to mark that, subversion can help you to do that.
 
 {{{
 [bsergean@marge1 makepages-scry]$ svn log --verbose --stop-on-copy
@@ -88,7 +107,9 @@ created a branch to work on the scry-like exporting
 ------------------------------------------------------------------------
 }}}
 
-dry-run, from the trunk:
+So the branch was created at revision *75*. 
+
+=== dry-run merge, from the trunk ===
 
 {{{
 [bsergean@marge1 trunk]$ svn merge --dry-run -r 75:85 https://pytof.googlecode.com/svn/branches/makepages-scry
@@ -105,7 +126,11 @@ U    scripts/pytof.py
 U    setup.py
 }}}
 
-== Create branch fom trunk ==
+Check that everything works, then remove the dry run option to do the actual merge.
+
+= Create release branch =
+
+== Working branch ==
 
 {{{
 [bsergean@marge1 pytof]$ svn copy trunk/ branches/0.0.2
@@ -135,6 +160,8 @@ Committed revision 87.
 
 == Create tag from branch ==
 
+Then you tag, or snapshot the release branch, and you can create a package from that snaphot. Ya shall not work there, it's just used for release engineering. All work should be done in the branch.
+
 {{{
 [bsergean@marge1 pytof]$ svn copy branches/0.0.2 tags/0.0.2
 A         tags/0.0.2
@@ -145,3 +172,4 @@ Adding         tags/0.0.2
 
 Committed revision 88.
 }}}
+
