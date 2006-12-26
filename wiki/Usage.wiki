@@ -31,69 +31,70 @@ Parsing AlbumData.xml   [DONE]
 Writing pictures 100%   [DONE]
 }}}
 
-And here is what it did create (we should use tree but it's not installed on this damned Mac ;)
+And here is what it did create:
 
 {{{
-[bsergean@amanda trunk]$ find out/Berkeley/
-out/Berkeley/
-out/Berkeley//132.html
-out/Berkeley//133.html
-out/Berkeley//134.html
-out/Berkeley//135.html
-out/Berkeley//136.html
-out/Berkeley//137.html
-out/Berkeley//138.html
-out/Berkeley//139.html
-out/Berkeley//140.html
-out/Berkeley//141.html
-out/Berkeley//73.html
-out/Berkeley//74.html
-out/Berkeley//75.html
-out/Berkeley//76.html
-out/Berkeley//page 1.html
-out/Berkeley//photos
-out/Berkeley//photos/132.jpg
-out/Berkeley//photos/133.jpg
-out/Berkeley//photos/134.jpg
-out/Berkeley//photos/135.jpg
-out/Berkeley//photos/136.jpg
-out/Berkeley//photos/137.jpg
-out/Berkeley//photos/138.jpg
-out/Berkeley//photos/139.jpg
-out/Berkeley//photos/140.jpg
-out/Berkeley//photos/141.jpg
-out/Berkeley//photos/73.jpg
-out/Berkeley//photos/74.jpg
-out/Berkeley//photos/75.jpg
-out/Berkeley//photos/76.jpg
-out/Berkeley//preview
-out/Berkeley//preview/pv_132.jpg
-out/Berkeley//preview/pv_133.jpg
-out/Berkeley//preview/pv_134.jpg
-out/Berkeley//preview/pv_135.jpg
-out/Berkeley//preview/pv_136.jpg
-out/Berkeley//preview/pv_137.jpg
-out/Berkeley//preview/pv_138.jpg
-out/Berkeley//preview/pv_139.jpg
-out/Berkeley//preview/pv_140.jpg
-out/Berkeley//preview/pv_141.jpg
-out/Berkeley//preview/pv_73.jpg
-out/Berkeley//preview/pv_74.jpg
-out/Berkeley//preview/pv_75.jpg
-out/Berkeley//preview/pv_76.jpg
-out/Berkeley//thumbs
-out/Berkeley//thumbs/th_132.jpg
-out/Berkeley//thumbs/th_133.jpg
-out/Berkeley//thumbs/th_134.jpg
-out/Berkeley//thumbs/th_135.jpg
-out/Berkeley//thumbs/th_136.jpg
-out/Berkeley//thumbs/th_137.jpg
-out/Berkeley//thumbs/th_138.jpg
-out/Berkeley//thumbs/th_139.jpg
-out/Berkeley//thumbs/th_140.jpg
-out/Berkeley//thumbs/th_141.jpg
-out/Berkeley//thumbs/th_73.jpg
-out/Berkeley//thumbs/th_74.jpg
-out/Berkeley//thumbs/th_75.jpg
-out/Berkeley//thumbs/th_76.jpg
+|-- 132.html
+|-- 133.html
+|-- 134.html
+|-- 135.html
+|-- 136.html
+|-- 137.html
+|-- 138.html
+|-- 139.html
+|-- 140.html
+|-- 141.html
+|-- 73.html
+|-- 74.html
+|-- 75.html
+|-- 76.html
+|-- index.html.html
+|-- page 1.html
+|-- photos
+|   |-- 132.jpg
+|   |-- 133.jpg
+|   |-- 134.jpg
+|   |-- 135.jpg
+|   |-- 136.jpg
+|   |-- 137.jpg
+|   |-- 138.jpg
+|   |-- 139.jpg
+|   |-- 140.jpg
+|   |-- 141.jpg
+|   |-- 73.jpg
+|   |-- 74.jpg
+|   |-- 75.jpg
+|   `-- 76.jpg
+|-- preview
+|   |-- pv_132.jpg
+|   |-- pv_133.jpg
+|   |-- pv_134.jpg
+|   |-- pv_135.jpg
+|   |-- pv_136.jpg
+|   |-- pv_137.jpg
+|   |-- pv_138.jpg
+|   |-- pv_139.jpg
+|   |-- pv_140.jpg
+|   |-- pv_141.jpg
+|   |-- pv_73.jpg
+|   |-- pv_74.jpg
+|   |-- pv_75.jpg
+|   `-- pv_76.jpg
+`-- thumbs
+    |-- th_132.jpg
+    |-- th_133.jpg
+    |-- th_134.jpg
+    |-- th_135.jpg
+    |-- th_136.jpg
+    |-- th_137.jpg
+    |-- th_138.jpg
+    |-- th_139.jpg
+    |-- th_140.jpg
+    |-- th_141.jpg
+    |-- th_73.jpg
+    |-- th_74.jpg
+    |-- th_75.jpg
+    `-- th_76.jpg
+
+3 directories, 58 files
 }}}
