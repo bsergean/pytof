@@ -3,14 +3,23 @@
 The main interface for now is pytof.py, and it's text based.
 
 {{{
-usage : python pytof.py <options>
-OPTIONS | -a <name> : album name
-        | -l <dir> : iPhoto library path
-        | -o <dir> : output dir (default to /tmp)
-        | -v : display pytof version
-        | -h : display this text
-        | -i : print info about the collection
-        | -f : extract album photo to a dir and stop
+[bsergean@marge1 scripts]$ python pytof.py -h
+usage: python pytof.py <options>
+
+options:
+  -h, --help            show this help message and exit
+  -i, --info            Print info about the collection [default = False]
+  -f, --file-system     Extract album photo to OUTPUTDIR and stop
+  -V, --version         display version
+  -l LIBRARYPATH, --library=LIBRARYPATH
+                        The iPhoto library directory path
+  -x XMLFILENAME, --xml-file=XMLFILENAME
+                        The iPhoto library XML file name
+  -a ALBUMNAME, --album=ALBUMNAME
+                        The iPhoto library album to process
+  -o OUTPUTDIR, --output=OUTPUTDIR
+                        The output directory [/home/bsergean/tmp +
+                        out/ALBUMNAME]
 }}}
 
 Here is a sample output from a simple use of pytof.
