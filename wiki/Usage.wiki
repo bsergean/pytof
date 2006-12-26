@@ -1,4 +1,4 @@
-﻿#summary User help
+#summary User help
 
 The main interface for now is pytof.py, and it's text based.
 
