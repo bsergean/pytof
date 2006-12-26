@@ -1,0 +1,821 @@
+﻿#summary Automatically generated changelog
+
+{{{
+------------------------------------------------------------------------
+r96 | bsergean | 2006-12-26 16:50:08 -0500 (Tue, 26 Dec 2006) | 1 line
+Changed paths:
+   A /trunk/pytof/EXIF.py
+   M /trunk/pytof/makepage.py
+   M /trunk/pytof/photo.py
+   A /trunk/test/EXIFTest.py
+   M /trunk/test/WebPageTest.py
+
+add some EXIF infos reporting in the per photo webpage
+------------------------------------------------------------------------
+r91 | bsergean | 2006-12-24 18:53:45 -0500 (Sun, 24 Dec 2006) | 1 line
+Changed paths:
+   A /trunk/deps/EXIF
+   A /trunk/deps/EXIF/EXIF.py
+   A /trunk/deps/EXIF/exiftool
+
+add exif utilities as deps
+------------------------------------------------------------------------
+r87 | bsergean | 2006-12-24 00:09:11 -0500 (Sun, 24 Dec 2006) | 1 line
+Changed paths:
+   A /branches/0.0.2 (from /trunk:77)
+   R /branches/0.0.2/pytof/albumdataparser.py (from /trunk/pytof/albumdataparser.py:86)
+   R /branches/0.0.2/pytof/makepage.py (from /trunk/pytof/makepage.py:86)
+   R /branches/0.0.2/pytof/photo.py (from /trunk/pytof/photo.py:86)
+   R /branches/0.0.2/pytof/utils.py (from /trunk/pytof/utils.py:86)
+   R /branches/0.0.2/scripts/pytof.py (from /trunk/scripts/pytof.py:86)
+   R /branches/0.0.2/setup.py (from /trunk/setup.py:86)
+   A /branches/0.0.2/share/scry (from /trunk/share/scry:86)
+   A /branches/0.0.2/share/scry.css (from /trunk/share/scry.css:86)
+   A /branches/0.0.2/test/WebPageTest.py (from /trunk/test/WebPageTest.py:86)
+   A /branches/0.0.2/tools/googlecode-upload.py (from /trunk/tools/googlecode-upload.py:86)
+   M /trunk/setup.py
+
+create 0.0.2 branch
+------------------------------------------------------------------------
+r86 | bsergean | 2006-12-23 22:16:42 -0500 (Sat, 23 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/pytof/albumdataparser.py
+   M /trunk/pytof/makepage.py
+   M /trunk/pytof/photo.py
+   M /trunk/pytof/utils.py
+   M /trunk/scripts/pytof.py
+   M /trunk/setup.py
+   A /trunk/share/scry (from /branches/makepages-scry/share/scry:85)
+   R /trunk/share/scry/PhotoPage.html (from /branches/makepages-scry/share/scry/PhotoPage.html:85)
+   A /trunk/share/scry.css (from /branches/makepages-scry/share/scry.css:85)
+   A /trunk/test/WebPageTest.py (from /branches/makepages-scry/test/WebPageTest.py:85)
+   A /trunk/tools/googlecode-upload.py (from /branches/makepages-scry/tools/googlecode-upload.py:85)
+
+merged scry branch work to trunk
+------------------------------------------------------------------------
+r73 | bsergean | 2006-12-23 02:32:13 -0500 (Sat, 23 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/pytof/albumdataparser.py
+
+info listing is sorting by the bigger album
+------------------------------------------------------------------------
+r72 | bsergean | 2006-12-23 02:19:58 -0500 (Sat, 23 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/pytof/albumdataparser.py
+
+fix for remote iPhoto 2 library
+------------------------------------------------------------------------
+r71 | bsergean | 2006-12-22 21:11:21 -0500 (Fri, 22 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/scripts/pytof.py
+
+we should always pickle-dump our content
+------------------------------------------------------------------------
+r70 | bsergean | 2006-12-22 21:09:36 -0500 (Fri, 22 Dec 2006) | 1 line
+Changed paths:
+   A /trunk/deps/flickr
+   A /trunk/deps/flickr/flickr.py
+   A /trunk/share/flickr.key
+
+add flickr stuff
+------------------------------------------------------------------------
+r69 | bsergean | 2006-12-22 20:58:52 -0500 (Fri, 22 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/scripts/pytof.py
+
+info do not need an album name
+------------------------------------------------------------------------
+r68 | bsergean | 2006-12-22 20:33:43 -0500 (Fri, 22 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/pytof/albumdataparser.py
+   A /trunk/pytof/configFile.py
+   M /trunk/pytof/utils.py
+   M /trunk/scripts/pytof.py
+   A /trunk/test/ConfigParserTest.py
+
+Fix issue 8
+------------------------------------------------------------------------
+r67 | bsergean | 2006-12-22 17:53:55 -0500 (Fri, 22 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/pytof/albumdataparser.py
+   M /trunk/pytof/utils.py
+   M /trunk/scripts/pytof.py
+
+Fixed issue 1
+------------------------------------------------------------------------
+r66 | bsergean | 2006-12-22 15:30:02 -0500 (Fri, 22 Dec 2006) | 1 line
+Changed paths:
+   D /trunk/makefs.py
+   A /trunk/pytof/makefs.py (from /trunk/makefs.py:62)
+   M /trunk/pytof/makepage.py
+   M /trunk/pytof/photo.py
+   M /trunk/scripts/pytof.py
+
+preview webpage were created in current directory
+------------------------------------------------------------------------
+r65 | bsergean | 2006-12-22 14:59:00 -0500 (Fri, 22 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/MANIFEST.in
+   D /trunk/albumdataparser.py
+   D /trunk/makepage.py
+   D /trunk/photo.py
+   A /trunk/pytof
+   A /trunk/pytof/__init__.py
+   A /trunk/pytof/albumdataparser.py (from /trunk/albumdataparser.py:62)
+   A /trunk/pytof/makepage.py (from /trunk/makepage.py:62)
+   A /trunk/pytof/photo.py (from /trunk/photo.py:62)
+   A /trunk/pytof/utils.py (from /trunk/utils.py:62)
+   M /trunk/scripts/pytof.py
+   M /trunk/setup.py
+   D /trunk/utils.py
+
+Working on issue 6
+------------------------------------------------------------------------
+r64 | bsergean | 2006-12-22 14:12:30 -0500 (Fri, 22 Dec 2006) | 1 line
+Changed paths:
+   D /trunk/VERSION
+
+Working on issue 6
+------------------------------------------------------------------------
+r63 | bsergean | 2006-12-22 14:12:07 -0500 (Fri, 22 Dec 2006) | 1 line
+Changed paths:
+   A /trunk/MANIFEST.in
+   A /trunk/VERSION
+   D /trunk/pytof.py
+   A /trunk/scripts
+   A /trunk/scripts/pytof.py (from /trunk/pytof.py:62)
+   A /trunk/setup.py
+
+Working on issue 6
+------------------------------------------------------------------------
+r62 | bsergean | 2006-12-22 12:03:03 -0500 (Fri, 22 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/albumdataparser.py
+   M /trunk/makefs.py
+
+hackish way to fix Issue 3
+------------------------------------------------------------------------
+r61 | bsergean | 2006-12-22 10:28:48 -0500 (Fri, 22 Dec 2006) | 1 line
+Changed paths:
+   A /trunk/ChangeLog
+   M /trunk/albumdataparser.py
+   A /trunk/tools
+   A /trunk/tools/svn2cl.pl
+
+default parameter better handling
+------------------------------------------------------------------------
+r59 | bsergean | 2006-12-21 22:43:15 -0500 (Thu, 21 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/deps/install.sh
+
+add an url for doc
+------------------------------------------------------------------------
+r57 | bsergean | 2006-12-21 20:55:14 -0500 (Thu, 21 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/albumdataparser.py
+   M /trunk/makefs.py
+   M /trunk/makepage.py
+   M /trunk/pytof.py
+
+fix issue 10
+------------------------------------------------------------------------
+r56 | bsergean | 2006-12-21 12:45:26 -0500 (Thu, 21 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/albumdataparser.py
+
+tracking issue 3
+------------------------------------------------------------------------
+r53 | bsergean | 2006-12-20 20:15:53 -0500 (Wed, 20 Dec 2006) | 1 line
+Changed paths:
+   D /trunk/out
+   A /trunk/share
+   A /trunk/share/style.css
+
+tree cleanup
+------------------------------------------------------------------------
+r52 | bsergean | 2006-12-20 20:15:24 -0500 (Wed, 20 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/makepage.py
+   M /trunk/pytof.py
+   M /trunk/utils.py
+
+copy css file to the output dir
+------------------------------------------------------------------------
+r51 | bsergean | 2006-12-20 19:56:33 -0500 (Wed, 20 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/albumdataparser.py
+   M /trunk/makepage.py
+   M /trunk/photo.py
+   M /trunk/pytof.py
+   M /trunk/utils.py
+
+new flags to output to another dir: default is /tmp
+------------------------------------------------------------------------
+r50 | bsergean | 2006-12-20 19:02:55 -0500 (Wed, 20 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/README.txt
+   M /trunk/pytof.py
+
+albumName is mandatory arg
+------------------------------------------------------------------------
+r49 | bsergean | 2006-12-20 18:58:53 -0500 (Wed, 20 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/albumdataparser.py
+   M /trunk/makefs.py
+   M /trunk/makepage.py
+   M /trunk/pytof.py
+
+add some defensive tests
+------------------------------------------------------------------------
+r48 | bsergean | 2006-12-20 18:19:48 -0500 (Wed, 20 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/albumdataparser.py
+   M /trunk/pytof.py
+   M /trunk/utils.py
+
+add some defensive tests
+------------------------------------------------------------------------
+r47 | bsergean | 2006-12-20 18:02:37 -0500 (Wed, 20 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/albumdataparser.py
+   M /trunk/makefs.py
+   M /trunk/makepage.py
+   M /trunk/utils.py
+
+more defensive
+------------------------------------------------------------------------
+r46 | mathieu.robin | 2006-12-20 15:02:20 -0500 (Wed, 20 Dec 2006) | 1 line
+Changed paths:
+   A /trunk/out
+   A /trunk/out/style.css
+
+
+------------------------------------------------------------------------
+r45 | bsergean | 2006-12-20 15:01:08 -0500 (Wed, 20 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/albumdataparser.py
+   M /trunk/pytof.py
+
+add some tests
+------------------------------------------------------------------------
+r44 | bsergean | 2006-12-20 14:56:48 -0500 (Wed, 20 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/makefs.py
+   M /trunk/makepage.py
+   A /trunk/pytof.py
+
+add a common front-end
+------------------------------------------------------------------------
+r43 | bsergean | 2006-12-20 14:47:14 -0500 (Wed, 20 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/AUTHORS
+
+typo
+------------------------------------------------------------------------
+r42 | bsergean | 2006-12-20 14:43:06 -0500 (Wed, 20 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/makefs.py
+   M /trunk/makepage.py
+
+typo
+------------------------------------------------------------------------
+r41 | bsergean | 2006-12-20 14:38:48 -0500 (Wed, 20 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/makefs.py
+   M /trunk/makepage.py
+   M /trunk/photo.py
+   A /trunk/utils.py
+
+use a utils class, try to factorize some stuff
+------------------------------------------------------------------------
+r40 | bsergean | 2006-12-20 11:35:35 -0500 (Wed, 20 Dec 2006) | 1 line
+Changed paths:
+   A /trunk/makefs.py
+
+added a skeleton for fs export
+------------------------------------------------------------------------
+r39 | bsergean | 2006-12-20 11:31:12 -0500 (Wed, 20 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/makepage.py
+
+fix issue 2
+------------------------------------------------------------------------
+r36 | bsergean | 2006-12-20 10:53:26 -0500 (Wed, 20 Dec 2006) | 2 lines
+Changed paths:
+   M /trunk/makepage.py
+
+Problem with display version
+
+------------------------------------------------------------------------
+r35 | bsergean | 2006-12-20 10:42:57 -0500 (Wed, 20 Dec 2006) | 1 line
+Changed paths:
+   A /trunk/deps/install.sh
+
+add simple script to build deps
+------------------------------------------------------------------------
+r33 | bsergean | 2006-12-20 10:22:30 -0500 (Wed, 20 Dec 2006) | 1 line
+Changed paths:
+   A /trunk/deps
+   A /trunk/deps/Imaging-1.1.6
+   A /trunk/deps/Imaging-1.1.6/BUILDME
+   A /trunk/deps/Imaging-1.1.6/CHANGES
+   A /trunk/deps/Imaging-1.1.6/CONTENTS
+   A /trunk/deps/Imaging-1.1.6/Docs
+   A /trunk/deps/Imaging-1.1.6/Docs/effbot.css
+   A /trunk/deps/Imaging-1.1.6/Docs/index.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.ArgImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.BdfFontFile.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.BmpImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.BufrStubImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.ContainerIO.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.CurImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.DcxImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.EpsImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.ExifTags.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.FitsStubImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.FliImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.FontFile.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.FpxImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.GbrImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.GdImageFile.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.GifImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.GimpGradientFile.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.GimpPaletteFile.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.GribStubImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.Hdf5StubImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.IcnsImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.IcoImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.ImImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.Image.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.ImageChops.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.ImageColor.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.ImageDraw.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.ImageEnhance.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.ImageFile.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.ImageFileIO.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.ImageFilter.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.ImageFont.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.ImageGL.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.ImageGrab.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.ImageOps.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.ImagePalette.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.ImagePath.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.ImageSequence.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.ImageStat.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.ImageTk.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.ImageTransform.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.ImageWin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.ImtImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.IptcImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.JpegImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.McIdasImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.MicImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.MpegImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.MspImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.OleFileIO.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.PSDraw.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.PaletteFile.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.PalmImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.PcdImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.PcfFontFile.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.PcxImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.PdfImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.PixarImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.PngImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.PpmImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.PsdImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.SgiImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.SpiderImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.SunImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.TarIO.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.TgaImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.TiffImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.TiffTags.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.WalImageFile.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.WmfImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.XVThumbImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.XbmImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Docs/pythondoc-PIL.XpmImagePlugin.html
+   A /trunk/deps/Imaging-1.1.6/Images
+   A /trunk/deps/Imaging-1.1.6/Images/courB08.bdf
+   A /trunk/deps/Imaging-1.1.6/Images/courB08.pbm
+   A /trunk/deps/Imaging-1.1.6/Images/courB08.pil
+   A /trunk/deps/Imaging-1.1.6/Images/lena.gif
+   A /trunk/deps/Imaging-1.1.6/Images/lena.jpg
+   A /trunk/deps/Imaging-1.1.6/Images/lena.ppm
+   A /trunk/deps/Imaging-1.1.6/MANIFEST
+   A /trunk/deps/Imaging-1.1.6/PIL
+   A /trunk/deps/Imaging-1.1.6/PIL/ArgImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/BdfFontFile.py
+   A /trunk/deps/Imaging-1.1.6/PIL/BmpImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/BufrStubImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/ContainerIO.py
+   A /trunk/deps/Imaging-1.1.6/PIL/CurImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/DcxImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/EpsImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/ExifTags.py
+   A /trunk/deps/Imaging-1.1.6/PIL/FitsStubImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/FliImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/FontFile.py
+   A /trunk/deps/Imaging-1.1.6/PIL/FpxImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/GbrImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/GdImageFile.py
+   A /trunk/deps/Imaging-1.1.6/PIL/GifImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/GimpGradientFile.py
+   A /trunk/deps/Imaging-1.1.6/PIL/GimpPaletteFile.py
+   A /trunk/deps/Imaging-1.1.6/PIL/GribStubImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/Hdf5StubImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/IcnsImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/IcoImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/ImImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/Image.py
+   A /trunk/deps/Imaging-1.1.6/PIL/ImageChops.py
+   A /trunk/deps/Imaging-1.1.6/PIL/ImageColor.py
+   A /trunk/deps/Imaging-1.1.6/PIL/ImageDraw.py
+   A /trunk/deps/Imaging-1.1.6/PIL/ImageDraw2.py
+   A /trunk/deps/Imaging-1.1.6/PIL/ImageEnhance.py
+   A /trunk/deps/Imaging-1.1.6/PIL/ImageFile.py
+   A /trunk/deps/Imaging-1.1.6/PIL/ImageFileIO.py
+   A /trunk/deps/Imaging-1.1.6/PIL/ImageFilter.py
+   A /trunk/deps/Imaging-1.1.6/PIL/ImageFont.py
+   A /trunk/deps/Imaging-1.1.6/PIL/ImageGL.py
+   A /trunk/deps/Imaging-1.1.6/PIL/ImageGrab.py
+   A /trunk/deps/Imaging-1.1.6/PIL/ImageMath.py
+   A /trunk/deps/Imaging-1.1.6/PIL/ImageMode.py
+   A /trunk/deps/Imaging-1.1.6/PIL/ImageOps.py
+   A /trunk/deps/Imaging-1.1.6/PIL/ImagePalette.py
+   A /trunk/deps/Imaging-1.1.6/PIL/ImagePath.py
+   A /trunk/deps/Imaging-1.1.6/PIL/ImageQt.py
+   A /trunk/deps/Imaging-1.1.6/PIL/ImageSequence.py
+   A /trunk/deps/Imaging-1.1.6/PIL/ImageStat.py
+   A /trunk/deps/Imaging-1.1.6/PIL/ImageTk.py
+   A /trunk/deps/Imaging-1.1.6/PIL/ImageTransform.py
+   A /trunk/deps/Imaging-1.1.6/PIL/ImageWin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/ImtImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/IptcImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/JpegImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/McIdasImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/MicImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/MpegImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/MspImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/OleFileIO.py
+   A /trunk/deps/Imaging-1.1.6/PIL/PSDraw.py
+   A /trunk/deps/Imaging-1.1.6/PIL/PaletteFile.py
+   A /trunk/deps/Imaging-1.1.6/PIL/PalmImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/PcdImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/PcfFontFile.py
+   A /trunk/deps/Imaging-1.1.6/PIL/PcxImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/PdfImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/PixarImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/PngImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/PpmImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/PsdImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/SgiImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/SpiderImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/SunImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/TarIO.py
+   A /trunk/deps/Imaging-1.1.6/PIL/TgaImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/TiffImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/TiffTags.py
+   A /trunk/deps/Imaging-1.1.6/PIL/WalImageFile.py
+   A /trunk/deps/Imaging-1.1.6/PIL/WmfImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/XVThumbImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/XbmImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/XpmImagePlugin.py
+   A /trunk/deps/Imaging-1.1.6/PIL/__init__.py
+   A /trunk/deps/Imaging-1.1.6/PIL.pth
+   A /trunk/deps/Imaging-1.1.6/README
+   A /trunk/deps/Imaging-1.1.6/Sane
+   A /trunk/deps/Imaging-1.1.6/Sane/CHANGES
+   A /trunk/deps/Imaging-1.1.6/Sane/README
+   A /trunk/deps/Imaging-1.1.6/Sane/_sane.c
+   A /trunk/deps/Imaging-1.1.6/Sane/demo_numarray.py
+   A /trunk/deps/Imaging-1.1.6/Sane/demo_pil.py
+   A /trunk/deps/Imaging-1.1.6/Sane/sane.py
+   A /trunk/deps/Imaging-1.1.6/Sane/sanedoc.txt
+   A /trunk/deps/Imaging-1.1.6/Sane/setup.py
+   A /trunk/deps/Imaging-1.1.6/Scripts
+   A /trunk/deps/Imaging-1.1.6/Scripts/README
+   A /trunk/deps/Imaging-1.1.6/Scripts/enhancer.py
+   A /trunk/deps/Imaging-1.1.6/Scripts/explode.py
+   A /trunk/deps/Imaging-1.1.6/Scripts/gifmaker.py
+   A /trunk/deps/Imaging-1.1.6/Scripts/image2py.py
+   A /trunk/deps/Imaging-1.1.6/Scripts/painter.py
+   A /trunk/deps/Imaging-1.1.6/Scripts/pilconvert.py
+   A /trunk/deps/Imaging-1.1.6/Scripts/pildriver.py
+   A /trunk/deps/Imaging-1.1.6/Scripts/pilfile.py
+   A /trunk/deps/Imaging-1.1.6/Scripts/pilfont.py
+   A /trunk/deps/Imaging-1.1.6/Scripts/pilprint.py
+   A /trunk/deps/Imaging-1.1.6/Scripts/player.py
+   A /trunk/deps/Imaging-1.1.6/Scripts/thresholder.py
+   A /trunk/deps/Imaging-1.1.6/Scripts/viewer.py
+   A /trunk/deps/Imaging-1.1.6/Tk
+   A /trunk/deps/Imaging-1.1.6/Tk/booster.txt
+   A /trunk/deps/Imaging-1.1.6/Tk/install.txt
+   A /trunk/deps/Imaging-1.1.6/Tk/pilbitmap.txt
+   A /trunk/deps/Imaging-1.1.6/Tk/tkImaging.c
+   A /trunk/deps/Imaging-1.1.6/_imaging.c
+   A /trunk/deps/Imaging-1.1.6/_imagingft.c
+   A /trunk/deps/Imaging-1.1.6/_imagingmath.c
+   A /trunk/deps/Imaging-1.1.6/_imagingtk.c
+   A /trunk/deps/Imaging-1.1.6/decode.c
+   A /trunk/deps/Imaging-1.1.6/display.c
+   A /trunk/deps/Imaging-1.1.6/doctest.py
+   A /trunk/deps/Imaging-1.1.6/encode.c
+   A /trunk/deps/Imaging-1.1.6/libImaging
+   A /trunk/deps/Imaging-1.1.6/libImaging/Access.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/Antialias.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/Bands.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/Bit.h
+   A /trunk/deps/Imaging-1.1.6/libImaging/BitDecode.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/Blend.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/Chops.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/Convert.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/ConvertYCbCr.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/Copy.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/Crc32.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/Crop.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/Dib.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/Draw.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/Effects.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/EpsEncode.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/Except.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/File.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/Fill.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/Filter.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/FliDecode.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/Geometry.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/GetBBox.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/Gif.h
+   A /trunk/deps/Imaging-1.1.6/libImaging/GifDecode.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/GifEncode.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/HexDecode.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/Histo.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/ImDib.h
+   A /trunk/deps/Imaging-1.1.6/libImaging/ImPlatform.h
+   A /trunk/deps/Imaging-1.1.6/libImaging/Imaging.h
+   A /trunk/deps/Imaging-1.1.6/libImaging/Jpeg.h
+   A /trunk/deps/Imaging-1.1.6/libImaging/JpegDecode.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/JpegEncode.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/Lzw.h
+   A /trunk/deps/Imaging-1.1.6/libImaging/LzwDecode.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/Matrix.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/ModeFilter.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/MspDecode.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/Negative.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/Offset.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/Pack.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/PackDecode.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/Palette.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/Paste.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/PcdDecode.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/PcxDecode.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/PcxEncode.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/Point.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/Quant.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/Quant.h
+   A /trunk/deps/Imaging-1.1.6/libImaging/QuantDefines.h
+   A /trunk/deps/Imaging-1.1.6/libImaging/QuantHash.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/QuantHash.h
+   A /trunk/deps/Imaging-1.1.6/libImaging/QuantHeap.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/QuantHeap.h
+   A /trunk/deps/Imaging-1.1.6/libImaging/QuantTypes.h
+   A /trunk/deps/Imaging-1.1.6/libImaging/RankFilter.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/Raw.h
+   A /trunk/deps/Imaging-1.1.6/libImaging/RawDecode.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/RawEncode.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/Storage.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/SunRleDecode.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/TgaRleDecode.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/Unpack.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/UnpackYCC.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/XbmDecode.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/XbmEncode.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/Zip.h
+   A /trunk/deps/Imaging-1.1.6/libImaging/ZipDecode.c
+   A /trunk/deps/Imaging-1.1.6/libImaging/ZipEncode.c
+   A /trunk/deps/Imaging-1.1.6/map.c
+   A /trunk/deps/Imaging-1.1.6/outline.c
+   A /trunk/deps/Imaging-1.1.6/path.c
+   A /trunk/deps/Imaging-1.1.6/selftest.py
+   A /trunk/deps/Imaging-1.1.6/setup.py
+   A /trunk/deps/jpeg-6b
+   A /trunk/deps/jpeg-6b/README
+   A /trunk/deps/jpeg-6b/ansi2knr.1
+   A /trunk/deps/jpeg-6b/ansi2knr.c
+   A /trunk/deps/jpeg-6b/cderror.h
+   A /trunk/deps/jpeg-6b/cdjpeg.c
+   A /trunk/deps/jpeg-6b/cdjpeg.h
+   A /trunk/deps/jpeg-6b/change.log
+   A /trunk/deps/jpeg-6b/cjpeg.1
+   A /trunk/deps/jpeg-6b/cjpeg.c
+   A /trunk/deps/jpeg-6b/ckconfig.c
+   A /trunk/deps/jpeg-6b/coderules.doc
+   A /trunk/deps/jpeg-6b/config.guess
+   A /trunk/deps/jpeg-6b/config.sub
+   A /trunk/deps/jpeg-6b/configure
+   A /trunk/deps/jpeg-6b/djpeg.1
+   A /trunk/deps/jpeg-6b/djpeg.c
+   A /trunk/deps/jpeg-6b/example.c
+   A /trunk/deps/jpeg-6b/filelist.doc
+   A /trunk/deps/jpeg-6b/install-sh
+   A /trunk/deps/jpeg-6b/install.doc
+   A /trunk/deps/jpeg-6b/jcapimin.c
+   A /trunk/deps/jpeg-6b/jcapistd.c
+   A /trunk/deps/jpeg-6b/jccoefct.c
+   A /trunk/deps/jpeg-6b/jccolor.c
+   A /trunk/deps/jpeg-6b/jcdctmgr.c
+   A /trunk/deps/jpeg-6b/jchuff.c
+   A /trunk/deps/jpeg-6b/jchuff.h
+   A /trunk/deps/jpeg-6b/jcinit.c
+   A /trunk/deps/jpeg-6b/jcmainct.c
+   A /trunk/deps/jpeg-6b/jcmarker.c
+   A /trunk/deps/jpeg-6b/jcmaster.c
+   A /trunk/deps/jpeg-6b/jcomapi.c
+   A /trunk/deps/jpeg-6b/jconfig.bcc
+   A /trunk/deps/jpeg-6b/jconfig.cfg
+   A /trunk/deps/jpeg-6b/jconfig.dj
+   A /trunk/deps/jpeg-6b/jconfig.doc
+   A /trunk/deps/jpeg-6b/jconfig.mac
+   A /trunk/deps/jpeg-6b/jconfig.manx
+   A /trunk/deps/jpeg-6b/jconfig.mc6
+   A /trunk/deps/jpeg-6b/jconfig.sas
+   A /trunk/deps/jpeg-6b/jconfig.st
+   A /trunk/deps/jpeg-6b/jconfig.vc
+   A /trunk/deps/jpeg-6b/jconfig.vms
+   A /trunk/deps/jpeg-6b/jconfig.wat
+   A /trunk/deps/jpeg-6b/jcparam.c
+   A /trunk/deps/jpeg-6b/jcphuff.c
+   A /trunk/deps/jpeg-6b/jcprepct.c
+   A /trunk/deps/jpeg-6b/jcsample.c
+   A /trunk/deps/jpeg-6b/jctrans.c
+   A /trunk/deps/jpeg-6b/jdapimin.c
+   A /trunk/deps/jpeg-6b/jdapistd.c
+   A /trunk/deps/jpeg-6b/jdatadst.c
+   A /trunk/deps/jpeg-6b/jdatasrc.c
+   A /trunk/deps/jpeg-6b/jdcoefct.c
+   A /trunk/deps/jpeg-6b/jdcolor.c
+   A /trunk/deps/jpeg-6b/jdct.h
+   A /trunk/deps/jpeg-6b/jddctmgr.c
+   A /trunk/deps/jpeg-6b/jdhuff.c
+   A /trunk/deps/jpeg-6b/jdhuff.h
+   A /trunk/deps/jpeg-6b/jdinput.c
+   A /trunk/deps/jpeg-6b/jdmainct.c
+   A /trunk/deps/jpeg-6b/jdmarker.c
+   A /trunk/deps/jpeg-6b/jdmaster.c
+   A /trunk/deps/jpeg-6b/jdmerge.c
+   A /trunk/deps/jpeg-6b/jdphuff.c
+   A /trunk/deps/jpeg-6b/jdpostct.c
+   A /trunk/deps/jpeg-6b/jdsample.c
+   A /trunk/deps/jpeg-6b/jdtrans.c
+   A /trunk/deps/jpeg-6b/jerror.c
+   A /trunk/deps/jpeg-6b/jerror.h
+   A /trunk/deps/jpeg-6b/jfdctflt.c
+   A /trunk/deps/jpeg-6b/jfdctfst.c
+   A /trunk/deps/jpeg-6b/jfdctint.c
+   A /trunk/deps/jpeg-6b/jidctflt.c
+   A /trunk/deps/jpeg-6b/jidctfst.c
+   A /trunk/deps/jpeg-6b/jidctint.c
+   A /trunk/deps/jpeg-6b/jidctred.c
+   A /trunk/deps/jpeg-6b/jinclude.h
+   A /trunk/deps/jpeg-6b/jmemansi.c
+   A /trunk/deps/jpeg-6b/jmemdos.c
+   A /trunk/deps/jpeg-6b/jmemdosa.asm
+   A /trunk/deps/jpeg-6b/jmemmac.c
+   A /trunk/deps/jpeg-6b/jmemmgr.c
+   A /trunk/deps/jpeg-6b/jmemname.c
+   A /trunk/deps/jpeg-6b/jmemnobs.c
+   A /trunk/deps/jpeg-6b/jmemsys.h
+   A /trunk/deps/jpeg-6b/jmorecfg.h
+   A /trunk/deps/jpeg-6b/jpegint.h
+   A /trunk/deps/jpeg-6b/jpeglib.h
+   A /trunk/deps/jpeg-6b/jpegtran.1
+   A /trunk/deps/jpeg-6b/jpegtran.c
+   A /trunk/deps/jpeg-6b/jquant1.c
+   A /trunk/deps/jpeg-6b/jquant2.c
+   A /trunk/deps/jpeg-6b/jutils.c
+   A /trunk/deps/jpeg-6b/jversion.h
+   A /trunk/deps/jpeg-6b/libjpeg.doc
+   A /trunk/deps/jpeg-6b/ltconfig
+   A /trunk/deps/jpeg-6b/ltmain.sh
+   A /trunk/deps/jpeg-6b/makcjpeg.st
+   A /trunk/deps/jpeg-6b/makdjpeg.st
+   A /trunk/deps/jpeg-6b/makeapps.ds
+   A /trunk/deps/jpeg-6b/makefile.ansi
+   A /trunk/deps/jpeg-6b/makefile.bcc
+   A /trunk/deps/jpeg-6b/makefile.cfg
+   A /trunk/deps/jpeg-6b/makefile.dj
+   A /trunk/deps/jpeg-6b/makefile.manx
+   A /trunk/deps/jpeg-6b/makefile.mc6
+   A /trunk/deps/jpeg-6b/makefile.mms
+   A /trunk/deps/jpeg-6b/makefile.sas
+   A /trunk/deps/jpeg-6b/makefile.unix
+   A /trunk/deps/jpeg-6b/makefile.vc
+   A /trunk/deps/jpeg-6b/makefile.vms
+   A /trunk/deps/jpeg-6b/makefile.wat
+   A /trunk/deps/jpeg-6b/makelib.ds
+   A /trunk/deps/jpeg-6b/makeproj.mac
+   A /trunk/deps/jpeg-6b/makljpeg.st
+   A /trunk/deps/jpeg-6b/maktjpeg.st
+   A /trunk/deps/jpeg-6b/makvms.opt
+   A /trunk/deps/jpeg-6b/rdbmp.c
+   A /trunk/deps/jpeg-6b/rdcolmap.c
+   A /trunk/deps/jpeg-6b/rdgif.c
+   A /trunk/deps/jpeg-6b/rdjpgcom.1
+   A /trunk/deps/jpeg-6b/rdjpgcom.c
+   A /trunk/deps/jpeg-6b/rdppm.c
+   A /trunk/deps/jpeg-6b/rdrle.c
+   A /trunk/deps/jpeg-6b/rdswitch.c
+   A /trunk/deps/jpeg-6b/rdtarga.c
+   A /trunk/deps/jpeg-6b/structure.doc
+   A /trunk/deps/jpeg-6b/testimg.bmp
+   A /trunk/deps/jpeg-6b/testimg.jpg
+   A /trunk/deps/jpeg-6b/testimg.ppm
+   A /trunk/deps/jpeg-6b/testimgp.jpg
+   A /trunk/deps/jpeg-6b/testorig.jpg
+   A /trunk/deps/jpeg-6b/testprog.jpg
+   A /trunk/deps/jpeg-6b/transupp.c
+   A /trunk/deps/jpeg-6b/transupp.h
+   A /trunk/deps/jpeg-6b/usage.doc
+   A /trunk/deps/jpeg-6b/wizard.doc
+   A /trunk/deps/jpeg-6b/wrbmp.c
+   A /trunk/deps/jpeg-6b/wrgif.c
+   A /trunk/deps/jpeg-6b/wrjpgcom.1
+   A /trunk/deps/jpeg-6b/wrjpgcom.c
+   A /trunk/deps/jpeg-6b/wrppm.c
+   A /trunk/deps/jpeg-6b/wrrle.c
+   A /trunk/deps/jpeg-6b/wrtarga.c
+
+add deps to src
+------------------------------------------------------------------------
+r32 | bsergean | 2006-12-20 01:44:09 -0500 (Wed, 20 Dec 2006) | 1 line
+Changed paths:
+   A /trunk/AUTHORS
+
+add authors file
+------------------------------------------------------------------------
+r29 | bsergean | 2006-12-20 01:34:57 -0500 (Wed, 20 Dec 2006) | 1 line
+Changed paths:
+   A /trunk/test
+   A /trunk/test/README
+   A /trunk/test/data
+   A /trunk/test/data/AlbumData_gnocchi.xml
+
+added dir for unit testing
+------------------------------------------------------------------------
+r28 | bsergean | 2006-12-20 01:28:11 -0500 (Wed, 20 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/makepage.py
+   M /trunk/photo.py
+
+protect against failed import
+------------------------------------------------------------------------
+r24 | bsergean | 2006-12-19 22:14:14 -0500 (Tue, 19 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/albumdataparser.py
+   M /trunk/makepage.py
+   M /trunk/photo.py
+
+set rcs id
+------------------------------------------------------------------------
+r22 | bsergean | 2006-12-19 22:08:42 -0500 (Tue, 19 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/makepage.py
+
+create out dir if it does not exist
+------------------------------------------------------------------------
+r18 | bsergean | 2006-12-19 21:58:33 -0500 (Tue, 19 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/makepage.py
+
+added a big main file and a arg parser mechanism
+------------------------------------------------------------------------
+r17 | bsergean | 2006-12-19 21:47:47 -0500 (Tue, 19 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/albumdataparser.py
+   M /trunk/makepage.py
+   M /trunk/photo.py
+   D /trunk/svn-commit.tmp
+
+Add license notices
+------------------------------------------------------------------------
+r13 | bsergean | 2006-12-19 21:27:44 -0500 (Tue, 19 Dec 2006) | 2 lines
+Changed paths:
+   A /trunk/README.txt
+   A /trunk/albumdataparser.py
+   A /trunk/makepage.py
+   A /trunk/photo.py
+   A /trunk/svn-commit.tmp
+
+Initial import
+
+------------------------------------------------------------------------
+r1 | (no author) | 2006-12-19 20:29:26 -0500 (Tue, 19 Dec 2006) | 1 line
+Changed paths:
+   A /branches
+   A /tags
+   A /trunk
+
+Initial directory structure.
+------------------------------------------------------------------------
+}}}
