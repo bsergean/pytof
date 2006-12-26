@@ -124,7 +124,7 @@ class PhotoWebPage(WebPage):
 </html>
 '''
 
-    def addSkeleton(self, width, height, size, photo, original,
+    def addSkeleton(self, width, height, size, exif_infos, photo, original,
                     prev, th_prev, next, th_next):
         self.addCodeLine(
             '''
@@ -151,7 +151,7 @@ class PhotoWebPage(WebPage):
           </td>
           <td width="40%%" align="middle" valign="bottom">
 
-            <p> Cannot retrieve the photo metadata
+            <p> %s
             </p>
 
           </td>
@@ -161,7 +161,8 @@ class PhotoWebPage(WebPage):
           </td>
         </tr>
       </table>
-      ''' % (photo, basename(photo), original, width, height, size, prev, th_prev, next, th_next))
+      ''' % (photo, basename(photo), original, width, height,
+             size, prev, th_prev, ('</br>').join(exif_infos), next, th_next))
 
 
 def makePhotoPage(photo, linkBack, topDir, prev, next):
@@ -175,9 +176,10 @@ def makePhotoPage(photo, linkBack, topDir, prev, next):
     width = photo.width
     height = photo.height
     size = photo.sizeKB
+    exif_infos = photo.exif_infos
 
     # addSkeleton probably needs some cleanup ...
-    page.addSkeleton(width, height, size,
+    page.addSkeleton(width, height, size, exif_infos,
                      join('preview', 'pv_' + photo.id + '.jpg'),
                      join('photos', photo.id + '.jpg'),
                      prev.id + '.html',
