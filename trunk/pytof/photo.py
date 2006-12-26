@@ -16,11 +16,39 @@ __dependencies__ = ['Image']
 from os.path import join, getsize, basename
 from shutil import copy
 import sys, os, time
-from utils import TryToImport, log 
+from utils import TryToImport, log
+from EXIF import process_file
 
 TryToImport(__dependencies__)
 for mod in __dependencies__:
     exec 'import ' + mod
+
+def EXIF_tags(fn):
+    # FIXME: strip some keys for speed-up instead of
+    # returning the whole list of tags
+    # see EXIF notes
+    # if tag not in ('JPEGThumbnail', 'TIFFThumbnail', 'Filename',
+    #                        'EXIF MakerNote'):
+    # after some timing test there's no speedup ... kept for reference
+    # it may be faster to hook a new method in EXIF to just lookup some values
+    #
+    # We should do a better timing with the timeit module (in EXIFTest.py
+    #
+    f = open(fn, 'rb')
+    tags = process_file(f)
+    for t in ['JPEGThumbnail', 'TIFFThumbnail', 'Filename', 'EXIF MakerNote']:
+        if tags.has_key(t):
+            del tags[t]
+    f.close()
+    return tags
+
+def EXIF_infos(fn):
+    tags = EXIF_tags(fn)
+    infos = []
+    infos.append('Model: %s' % str(tags.get('Image Model', 'Unknown')))
+    infos.append('Date: %s' % tags.get('EXIF DateTimeOriginal', 'Unknown'))
+    infos.append('Flash: %s' % tags.get('EXIF Flash', 'Unknown'))
+    return infos
 
 
 class Photo(object):
@@ -40,6 +68,7 @@ class Photo(object):
         self.width = self.image.size[0]
         self.height = self.image.size[1]
         self.sizeKB = getsize(self.fileName) / 1024
+        self.exif_infos = EXIF_infos(self.fileName)
 
     def getBaseName(self):
         return str(self.id)
