@@ -24,6 +24,8 @@ from shutil import copy
 
 __version__ = '0.0.1'
 
+cssfile = 'scry.css'
+
 class WebPage(object):
     def __init__(self, fileName, title):
         self.fileName = fileName  + ".html"
@@ -205,7 +207,6 @@ def main(albumName, topDir, xmlData):
             except (error):
                 _err_exit('Cannot create %s' %(Dir))
 
-    cssfile = 'scry.css'
     # FIXME: how do we get the package install path, to retrieve
     # the resource dir next ...quick hack for now
     cssfilename = join(os.pardir, 'share', cssfile)
