@@ -57,7 +57,7 @@ class ftpUploader(FTP):
     def upload(self, file):
         fd = open(file)
         # be carefull to leave a space between STOR and the filename
-        self.storbinary('STOR ' + file, fd)
+        self.storbinary('STOR ' + basename(file), fd)
         fd.close()
 
     def lsdir(self, path):

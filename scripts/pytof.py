@@ -30,11 +30,19 @@ from ConfigParser import RawConfigParser
 from optparse import OptionParser
 import tarfile
 from shutil import rmtree
+from ftp import ftpUploader
+from getpass import getuser, unix_getpass
 
 # FIXME: (see issue 11)
 __version__ = '0.0.1'
 
-def main(albumName, libraryPath, xmlFileName, outputDir, info, fs, tar):
+def getStringFromConsole(text, default = ''):
+    value = raw_input('%s[%s]:' %(text, default))
+    if not value:
+        return default
+    return value
+
+def main(albumName, libraryPath, xmlFileName, outputDir, info, fs, tar, ftp):
     try:
 	# generate the config file
 	getConfFilePath()
@@ -93,7 +101,27 @@ def main(albumName, libraryPath, xmlFileName, outputDir, info, fs, tar):
                     tarball.add(makepage.cssfile)
                 tarball.close()
                 os.chdir(pwd)
-                print 'output tarball is %s' % (join(outputDir, 'out', albumName + '.tar'))
+                tarballFilename = join(outputDir, 'out', albumName + '.tar')
+                print 'output tarball is %s' % (tarballFilename)
+
+            if ftp:
+                # localhost is a preference for test
+                # FIXME: store those values in the conf file
+                host = getStringFromConsole('Host', 'localhost')
+                user = getStringFromConsole('User', getuser())
+                passwd = unix_getpass()
+                
+                # FIXME: we should have a remote dir pref
+                # remotedir = getStringFromConsole('remotedir')
+                
+                ftpU = ftpUploader(host, user, passwd)
+                if tar:
+                    ftpU.upload(tarballFilename)
+                else:
+                    # we'll have to mirror a whole dir
+                    if not fs:
+                        ftpU.upload(makepage.cssfile)
+                    ftpU.mirror(topDir)
 
     except (KeyboardInterrupt):
         # we should delete the target dir.
@@ -138,7 +166,10 @@ if __name__ == "__main__":
                       help="The iPhoto library directory path"),
     parser.add_option("-x", "--xml-file", dest="xmlFileName", default='',
                       help="The iPhoto library XML file name"),
-    
+    parser.add_option("-u", "--ftp-upload",
+                      action="store_true", dest="ftp", default=False,
+                      help="Upload pytof output to a ftp site")
+
     options, args = parser.parse_args()
     
     if options.version:
@@ -149,5 +180,5 @@ if __name__ == "__main__":
             
     main(options.albumName, options.libraryPath,
          options.xmlFileName, options.outputDir,
-         options.info, options.fs, options.tar)
+         options.info, options.fs, options.tar, options.ftp)
 
