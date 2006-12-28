@@ -14,17 +14,10 @@ __author__ = 'Benjamin Sergeant'
 import sys
 sys.path.insert(1, '../pytof')
 
-import os
-from os import remove
-from utils import GetTmpDir
-from photo import EXIF_infos, EXIF_tags
-
-def prune(tag, key):
-    return str(tag[key])[0:-1]
+# grabbed from http://www.onlamp.com/pub/a/python/2005/06/02/logging.html
+import logging
 
 if __name__ == "__main__":
-
-    import logging
 
     #create logger
     logger = logging.getLogger("simple_example")
