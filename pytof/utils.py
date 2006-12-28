@@ -11,9 +11,11 @@
 __revision__ = '$Id$  (C) 2004 GPL'
 __author__ = 'Benjamin Sergeant'
 
-from os.path import expanduser, join, exists
+from os.path import expanduser, join, exists, basename
 import sys
 import os
+
+sys.path.insert(1, '../deps/ftputil-2.2')
 
 def echo(s):
     sys.stdout.write(s)
@@ -27,6 +29,11 @@ def _err_exit(msg):
 def _err_(msg):
     """ print a formated message on error """
     sys.stderr.write("%s: %s\n" % (os.path.basename(sys.argv[0]), msg))
+
+def maybemakedirs(path):
+    if not exists(path):
+        os.makedirs(path)
+
 
 def posixpath(d):
     """
@@ -208,10 +215,11 @@ def complicatedFunctionFromTheFuture():
 outfd = sys.stderr
 outfd = open('/tmp/message', 'w')
 def log(msg):
-        # we have to cast some type ('instance',
-        # the error message from an exception), to print it
+        ''' We have to cast some type: instance,
+        the error message from an exception, to print all inputs'''
         outfd.write(str(msg) + '\n')
         outfd.flush()
+
 
 if __name__ == "__main__":
     # FIXME : Add tests here
