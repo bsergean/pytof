@@ -20,6 +20,7 @@ from os.path import join, basename
 from utils import GetTmpDir, maybemakedirs
 
 import stat
+# stolen and adapted from shutils rmtree
 def my_rmtree(path):
     try:
         names = os.listdir(path)
@@ -55,8 +56,11 @@ if __name__ == "__main__":
     tmpftpfile = 'b'
     create(tmpftpfile, 'youcoulele')
 
+    # this test needs the ftp password to be stored
+    # in the PASSWD env variable
     passwd = os.environ.get('PASSWD', '')
     if not passwd:
+        print 'no password in $PASSWD'
         sys.exit(1)
     else:
         print 'start ftp connection'
