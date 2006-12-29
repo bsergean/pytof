@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
 # -*- python -*-
-# $Id: makepage.py 42 2006-12-20 19:43:06Z bsergean $
+# $Id$
 #
 #*****************************************************************************
 #
@@ -12,21 +12,24 @@
 # Main file.
 #
 
-__revision__ = '$Id: makepage.py 42 2006-12-20 19:43:06Z bsergean $  (C) 2006 GPL'
+__revision__ = '$Id$  (C) 2006 GPL'
 __author__ = 'Benjamin Sergeant'
 __dependencies__ = []
 
 import sys
 sys.path.insert(1, '../pytof')
 
+from log import loggers
+# FIXME: find a way to get the file name in python
+logger = loggers['pytof']
+
 from os.path import expanduser, join, exists
 from albumdataparser import AlbumDataParser, AlbumDataParserError
 import os, sys
 from utils import _err_, _err_exit, help, echo, log, GetTmpDir
-from configFile import getConfDirPath, getConfFilePath, canUseCache
+from configFile import configHandler
 import makepage, makefs
 from cPickle import dump, load
-from ConfigParser import RawConfigParser
 from optparse import OptionParser
 import tarfile
 from shutil import rmtree
@@ -45,20 +48,20 @@ def getStringFromConsole(text, default = ''):
 def main(albumName, libraryPath, xmlFileName, outputDir, info, fs, tar, ftp):
     try:
 	# generate the config file
-	getConfFilePath()
+	conf = configHandler()
+        if not conf.ok:
+            _err_exit('Problem with the config file')
+        
         echo("Parsing AlbumData.xml")
         parser = AlbumDataParser(libraryPath, xmlFileName)
         xmlFileName = parser.xmlFileName
         # can we use the cached xml content ?
 
-        pickleFilename = join(getConfDirPath(), 'xmlData.pickle')
-        log(pickleFilename)
-
         # try to load our stuff from the cache if the xml wasn't modified
-        cached = canUseCache(xmlFileName)
+        cached = conf.canUseCache(xmlFileName)
 
         if cached:
-            pickleFd = open(pickleFilename)
+            pickleFd = open(conf.pickleFilename)
             xmlData = load(pickleFd)
             pickleFd.close()
         else:
@@ -66,7 +69,7 @@ def main(albumName, libraryPath, xmlFileName, outputDir, info, fs, tar, ftp):
             xmlData.libraryPath = libraryPath
 
         # writing the cached data to a file
-        pickleFd = open(pickleFilename, 'w')
+        pickleFd = open(conf.pickleFilename, 'w')
         dump(xmlData, pickleFd)
         pickleFd.close()
         
@@ -105,28 +108,44 @@ def main(albumName, libraryPath, xmlFileName, outputDir, info, fs, tar, ftp):
                 print 'output tarball is %s' % (tarballFilename)
 
             if ftp:
-                # localhost is a preference for test
-                # FIXME: store those values in the conf file
-                host = getStringFromConsole('Host', 'localhost')
-                user = getStringFromConsole('User', getuser())
-                passwd = unix_getpass()
-                
-                # FIXME: we should have a remote dir pref
-                # remotedir = getStringFromConsole('remotedir')
-                
+
+                logger.debug('Entering ftp code')
+                fromConfig = False
+                if conf.hasFtpParams():
+                    print 'Get params from cache ?'
+                    answer = getStringFromConsole('Use last ftp parameters', 'y')
+                    if answer == 'y':
+                        host, user, passwd, remoteDir = conf.getFtpParams()
+                        fromConfig = True        
+
+                if not fromConfig:
+                    # localhost is a preference for test
+                    # FIXME: store those values in the conf file
+                    host = getStringFromConsole('Host', 'localhost')
+                    user = getStringFromConsole('User', getuser())
+                    passwd = unix_getpass()
+                    remoteDir = getStringFromConsole('Remote Directory', '')
+                                
                 ftpU = ftpUploader(host, user, passwd)
+                if remoteDir:
+                    if ftpU.exists(remoteDir):
+                        ftpU.cwd(remoteDir)
+                    else:
+                        log('remote dir %s does not exist' % remoteDir)
+
+                conf.setFtpParams(host, user, passwd, remoteDir)
+                
                 if tar:
                     ftpU.upload(tarballFilename)
                 else:
-                    # we'll have to mirror a whole dir
+                    # we'll have to mirror the whole dir
                     if not fs:
                         ftpU.upload(makepage.cssfile)
                     ftpU.mirror(topDir)
 
     except (KeyboardInterrupt):
-        # we should delete the target dir.
-        if not info:
 
+        if not info:
             if not fs:
                 # os.remove(makepage.cssfile)
                 # we should remove the css file if there aren't
