@@ -15,14 +15,14 @@ import sys
 sys.path.insert(1, '../pytof')
 
 from os import remove
-from configFile import canUseCache, getConfFilePath
+from configFile import configHandler
 
 if __name__ == "__main__":
 
-    confFilename = getConfFilePath()
-    remove(confFilename)
+    conf = configHandler()
+    remove(conf.confFilename)
     
     xmlFileName = 'data/AlbumData_gnocchi.xml'
-    
-    assert canUseCache(xmlFileName) == False
-    assert canUseCache(xmlFileName) == True
+
+    # this test is bad, we should basically copy some pytof.py code here
+    # to do a real caching test (generate the cache the first time, then use it).

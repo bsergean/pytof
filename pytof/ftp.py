@@ -14,23 +14,12 @@ __author__ = 'Benjamin Sergeant'
 # FIXME: init all loggers in a single place
 
 ####
-#    Logging
+#    Logging (FIXME: factorize that)
 ####
 
-import logging
-logger = logging.getLogger('ftpUploader')
-logger.setLevel(logging.DEBUG)
-#create console handler and set level to debug
-ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG)
-#create formatter
-formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-#add formatter to ch
-ch.setFormatter(formatter)
-#add ch to logger
-logger.addHandler(ch)
-
-
+from log import loggers
+# FIXME: find a way to get the file name in python
+logger = loggers['ftp']
 
 from ftplib import FTP
 from os.path import join, basename
