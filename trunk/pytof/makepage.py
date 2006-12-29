@@ -24,7 +24,8 @@ from shutil import copy
 
 __version__ = '0.0.1'
 
-cssfile = 'scry.css'
+css = 'scry.css'
+cssfile = join(os.pardir, 'share', css)
 
 class WebPage(object):
     def __init__(self, fileName, title):
@@ -209,12 +210,11 @@ def main(albumName, topDir, xmlData):
 
     # FIXME: how do we get the package install path, to retrieve
     # the resource dir next ...quick hack for now
-    cssfilename = join(os.pardir, 'share', cssfile)
-    log(cssfilename)
-    if not exists(cssfilename):
+    log(cssfile)
+    if not exists(cssfile):
         _err_('No css file was found: HTML files look and feel will be bad')
     else:
-        copy(cssfilename, join(topDir, os.pardir, cssfile))
+        copy(cssfile, join(topDir, os.pardir, css))
 
     log(topDir)
     
@@ -232,6 +232,7 @@ def main(albumName, topDir, xmlData):
         try:
             next = data.getPhotoFromId(photos[i+1])
         except (IndexError):
+            # ok I know it's crappy programming :)
             next = data.getPhotoFromId(photos[0])
         
         photo.saveCopy(dirs[0])

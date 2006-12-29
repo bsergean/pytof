@@ -21,10 +21,12 @@ from log import loggers
 # FIXME: find a way to get the file name in python
 logger = loggers['ftp']
 
-from ftplib import FTP
+from ftplib import FTP, error_temp
 from os.path import join, basename
-from os import walk, sep, chdir
-from sys import exit
+from os import walk, sep, chdir, rmdir, getcwd, listdir, lstat, mkdir, makedirs
+from sys import exit, exc_info
+from stat import S_ISDIR, S_ISLNK
+from utils import notYetImplemented
 
 class ftpUploader(FTP):
     '''
@@ -33,25 +35,37 @@ class ftpUploader(FTP):
     '''
 
     def infos(self):
-        logger.info('Remote current dir is %s' % self.pwd())
-
-    def ls(self):
-        for f in self.nlst('', '-a')[2:]:
-            yield f
+        logger.info('Remote current ftp identification: %s' % self.getwelcome())
 
     def exists(self, fn):
-        ''' Test whether file exist in the current remote dir '''
-        return basename(fn) in self.ls()
+        ''' Test whether file exist '''
+        logger.debug('Does %s exists' % fn)
+        try:
+            def callback(line): pass
+            self.dir('-a %s' % fn, callback)
+            return True
+        except error_temp:
+            return False
 
     def upload(self, file):
+        ''' Caution: no error handling '''
         fd = open(file)
         # be carefull to leave a space between STOR and the filename
         self.storbinary('STOR ' + basename(file), fd)
         fd.close()
 
-    def lsdir(self, path):
+    def upload(self, src, tget):
+        ''' Caution: no error handling '''
+        fd = open(src)
+        # be carefull to leave a space between STOR and the filename
+        self.storbinary('STOR ' + tget, fd)
+        fd.close()
 
-        print path
+    def lsdir(self, path):
+        ''' List files within the "path" directory
+        We use the non-standard -a to get filename
+        starting with a dot (like .bashrc)'''
+        logger.debug('lsdir %s' % path)
 
         lines = []
         def callback(line):
@@ -59,128 +73,71 @@ class ftpUploader(FTP):
 
         self.dir('-a %s' % path, callback)
 
-        dirs  = []
         files = []
         for l in lines:
+            # need to do a better job here since there
+            # may be a problem with file containing whitespace
             fn = l.split()[8]
             if l.startswith('d'):
-
-                # FIXME: check with sym link also.
-                
-                # need to do a better job here since there
-                # may be a problem with whitespace dir
-                dirs.append( fn )
+                # FIXME: check with symlinks also.                
+                files.append( (fn, 'Directory') )
             else:
-                files.append( fn )
+                files.append( (fn, 'Regular File') )
 
-        return dirs[2:], files
-        
+        return files[2:]
+
     def rmtree(self, path):
+        if not self.exists(path): return
+        self.rmtree_r(path)
         
-        dirs, files = self.lsdir(path)
+    def rmtree_r(self, path):
+        ''' Caution: This method depends on lsdir which may be buggy (symlinks)
+        Recursive, inspired from shutil.rmtree
+        '''
+        files = self.lsdir(path)
+        logger.debug(files)
 
-        for dir in dirs:
-            fullpath = join(path, dir)
-            self.rmtree(fullpath)
-        
-        for f in files:
+        for f, fileType in files:
             fullpath = join(path, f)
-            print 'remove file', fullpath
-            self.delete(fullpath)
 
-        try:
-            if path:
-                print 'remove dir', os.rmdir(path)
-                self.rmd(path)
-        except: pass
+            if fileType == 'Directory':
+                logger.info('recurse on %s' % fullpath)
+                self.rmtree_r(fullpath)
+            else:
+                logger.info('remove file %s' % fullpath)
+                self.delete(fullpath)
 
+        if path:
+            logger.info('remove dir %s' % path)
+            self.rmd(path)
 
-    def mirror(self, dirname):
-        logger.info('mirror (%s)' % dirname)
-        remoteDirname = basename(dirname)
+    def cp_rf(self, src, tget):
+        src_basename = basename(src)
+        full_tget = join(tget, src_basename)
+        self.rmtree(full_tget)
+        self.mkd(full_tget)
+        self.mirror_r(src, full_tget)
 
-        # be carefull, we'll overwrite it:
-        # FIXME: add a user input and a force option
-        if self.exists(remoteDirname):
-            logger.info('Remove dir %s' % remoteDirname)
-            self.rmtree(remoteDirname)
+    def mirror_r(self, src, tget):
+        ''' Recursive version '''
+        assert basename(src.rstrip(sep)) == \
+               basename(tget.rstrip(sep))
 
-        #sys.exit(0)
+        names = listdir(src)
+        print names
 
-        logger.info('Create remote dir %s' % remoteDirname)
-        self.mkd(remoteDirname)
-
-        logger.info('chdir to remote dir %s' % remoteDirname)
-        self.cwd(remoteDirname)
-
-        walkdir = dirname
-        for path, subdirs, files in walk(walkdir):
-            #print path, subdirs, files
-
-            chdir(path)
-
-            if path != walkdir:
-                self.cwd(path.split(walkdir + sep)[1])
-            
-            for d in subdirs:
-                if not self.exists(d):
-                    self.mkd(d)
-
-            for f in files:
-                self.upload(f)
-
-
-
-########
-#       Kept for memory but not used anymore
-########
-
-#from ftputil import FTPHost
-#
-#class ftpUploader_fromftputil(FTPHost):
-#
-#    def infos(self):
-#        logger.info('Remote current dir is %s' % self.getcwd())
-#
-#    def exists(self, fn):
-#        ''' Test whether file exist in the current remote dir '''
-#        return basename(fn) in self.listdir('.')
-#
-#    def force_rmtree(self, dirname):
-#        ''' rmtree does not seems to work, use our own '''
-#        for path, subdirs, files in self.walk(dirname):
-#            print path, subdirs, files
-#
-#    def mirror(self, dirname):
-#        logger.info('mirror (%s)' % dirname)
-#        remoteDirname = basename(dirname)
-#
-#        # be carefull, we'll overwrite it:
-#        # FIXME: add a user input and a force option
-#        if self.exists(remoteDirname):
-#            logger.info('Remove dir %s' % remoteDirname)
-#            self.rmdir(remoteDirname)
-#
-#        logger.info('Create remote dir %s' % remoteDirname)
-#        self.mkdir(remoteDirname)
-#
-#        logger.info('chdir to remote dir %s' % remoteDirname)
-#        self.chdir(remoteDirname)
-#
-#        walkdir = dirname
-#        # FIXME: hardcoded value
-#        walkdir = '/home/bsergean/tmp'
-#        for path, subdirs, files in os.walk(walkdir):
-#            print path, subdirs, files
-#
-#            os.chdir(path)
-#
-#            if path != walkdir:
-#                self.chdir(path.split(walkdir + os.sep)[1])
-#            
-#            for d in subdirs:
-#                if not self.exists(d):
-#                    self.mkdir(d)
-#
-#            for f in files:
-#                self.upload(f, f)
+        for name in names:
+            fullname = join(src, name)
+            r_fullname = join(tget, name)
+            try:
+                mode = lstat(fullname).st_mode
+            except: pass
+            if S_ISDIR(mode):
+                mkdir(r_fullname)
+                self.mirror_r(fullname, r_fullname)
+            elif S_ISLNK(mode):
+                # FIXME
+                #notYetImplemented()
+                pass
+            else:
+                self.upload(fullname, r_fullname)
