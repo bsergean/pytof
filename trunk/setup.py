@@ -18,9 +18,10 @@ def main():
     # data files
     # http://docs.python.org/dist/node13.html
 
+    __version__ = open('VERSION').read()
     setup(
         name = "pytof",
-        version = '0.0.2',
+        version = __version__,
         description = "Exports album from iPhoto Libraries",
         long_description = '''In this release
         ===============

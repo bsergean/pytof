@@ -37,7 +37,7 @@ from ftp import ftpUploader
 from getpass import getuser, unix_getpass
 
 # FIXME: (see issue 11)
-__version__ = '0.0.1'
+__version__ = open('../VERSION').read()
 
 def getStringFromConsole(text, default = ''):
     value = raw_input('%s[%s]:' %(text, default))
@@ -112,7 +112,6 @@ def main(albumName, libraryPath, xmlFileName, outputDir, info, fs, tar, ftp):
                 logger.debug('Entering ftp code')
                 fromConfig = False
                 if conf.hasFtpParams():
-                    print 'Get params from cache ?'
                     answer = getStringFromConsole('Use last ftp parameters', 'y')
                     if answer == 'y':
                         host, user, passwd, remoteDir = conf.getFtpParams()
@@ -193,6 +192,7 @@ if __name__ == "__main__":
     
     if options.version:
         print 'pytof version %s' % (__version__)
+        sys.exit(0)
         
     if not options.albumName and not options.info:
         _err_exit('missing albumName argument')
