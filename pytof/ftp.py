@@ -11,12 +11,6 @@
 __revision__ = '$Id$  (C) 2004 GPL'
 __author__ = 'Benjamin Sergeant'
 
-# FIXME: init all loggers in a single place
-
-####
-#    Logging (FIXME: factorize that)
-####
-
 from log import loggers
 # FIXME: find a way to get the file name in python
 logger = loggers['ftp']
@@ -62,9 +56,11 @@ class ftpUploader(FTP):
         fd.close()
 
     def lsdir(self, path):
-        ''' List files within the "path" directory
+        '''
+        List files within the "path" directory
         We use the non-standard -a to get filename
-        starting with a dot (like .bashrc)'''
+        starting with a dot (like .bashrc)
+        '''
         logger.debug('lsdir %s' % path)
 
         lines = []
@@ -91,7 +87,8 @@ class ftpUploader(FTP):
         self.rmtree_r(path)
         
     def rmtree_r(self, path):
-        ''' Caution: This method depends on lsdir which may be buggy (symlinks)
+        '''
+        Caution: This method depends on lsdir which may be buggy (symlinks)
         Recursive, inspired from shutil.rmtree
         '''
         files = self.lsdir(path)
@@ -120,11 +117,8 @@ class ftpUploader(FTP):
 
     def mirror_r(self, src, tget):
         ''' Recursive version '''
-        assert basename(src.rstrip(sep)) == \
-               basename(tget.rstrip(sep))
-
         names = listdir(src)
-        print names
+        logger.debug(names)
 
         for name in names:
             fullname = join(src, name)
