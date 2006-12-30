@@ -15,12 +15,12 @@ from log import loggers
 # FIXME: find a way to get the file name in python
 logger = loggers['ftp']
 
-from ftplib import FTP, error_temp
 from os.path import join, basename
 from os import walk, sep, chdir, rmdir, getcwd, listdir, lstat, mkdir, makedirs
 from sys import exit, exc_info
 from stat import S_ISDIR, S_ISLNK
 from utils import notYetImplemented
+from ftplib import FTP, error_temp
 
 class ftpUploader(FTP):
     '''

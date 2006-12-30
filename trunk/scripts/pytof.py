@@ -23,7 +23,7 @@ from log import loggers
 # FIXME: find a way to get the file name in python
 logger = loggers['pytof']
 
-from os.path import expanduser, join, exists, basename, isabs
+from os.path import expanduser, join, exists, basename, isabs, walk
 from albumdataparser import AlbumDataParser, AlbumDataParserError
 import os, sys
 from utils import _err_, _err_exit, help, echo, log, GetTmpDir
@@ -36,6 +36,7 @@ from shutil import rmtree
 from ftp import ftpUploader
 from ftplib import error_perm
 from getpass import getuser, unix_getpass
+from zipfile import ZipFile, ZIP_DEFLATED
 
 # FIXME: (see issue 11)
 __version__ = open('../VERSION').read()
@@ -46,7 +47,7 @@ def getStringFromConsole(text, default = ''):
         return default
     return value
 
-def main(albumName, libraryPath, xmlFileName, outputDir, info, fs, tar, ftp):
+def main(albumName, libraryPath, xmlFileName, outputDir, info, fs, tar, zip, ftp):
     try:
 	# generate the config file
 	conf = configHandler()
@@ -106,7 +107,22 @@ def main(albumName, libraryPath, xmlFileName, outputDir, info, fs, tar, ftp):
                     tarball.add(makepage.cssfile)
                 tarball.close()
                 tarballFilename = join(outputDir, 'out', albumName + '.tar')
-                print 'output tarball is %s' % (tarballFilename)
+                logger.info('output tarball is %s' % (tarballFilename))
+
+            if zip:
+                def visit (z, dirname, names):
+                    for name in names:
+                        path = os.path.normpath(os.path.join(dirname, name))
+                        if os.path.isfile(path):
+                            z.write(path, path)
+                            logger.info("adding '%s'" % path)
+                
+                zip_filename = topDir + '.zip'
+                z = ZipFile(zip_filename, "w",
+                            compression=ZIP_DEFLATED)
+                walk(topDir, visit, z)
+                z.close()
+                logger.info('output zipfile is %s' % (zip_filename))
 
             if ftp:
 
@@ -188,6 +204,9 @@ if __name__ == "__main__":
     parser.add_option("-t", "--tar-archive",
                       action="store_true", dest="tar", default=False,
                       help="Create a tar archive from the exported datas")
+    parser.add_option("-z", "--zip-archive",
+                      action="store_true", dest="zip", default=False,
+                      help="Create a tar archive from the exported datas")
     parser.add_option("-V", "--version",
                       action="store_true", dest="version", default=False,
                       help="display version")
@@ -210,5 +229,5 @@ if __name__ == "__main__":
             
     main(options.albumName, options.libraryPath,
          options.xmlFileName, options.outputDir,
-         options.info, options.fs, options.tar, options.ftp)
+         options.info, options.fs, options.tar, options.zip, options.ftp)
 
