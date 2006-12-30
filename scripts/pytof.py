@@ -104,7 +104,9 @@ def main(albumName, libraryPath, xmlFileName, outputDir, info, fs, tar, zip, ftp
                 tarball.add(albumName)
                 os.chdir(pwd)
                 if not fs:
-                    tarball.add(makepage.cssfile)
+                    # FIXME: maybe pb here: see zip section
+                    tarball.add(makepage.cssfile,
+                                basename(makepage.cssfile))
                 tarball.close()
                 tarballFilename = join(outputDir, 'out', albumName + '.tar')
                 logger.info('output tarball is %s' % (tarballFilename))
@@ -114,13 +116,21 @@ def main(albumName, libraryPath, xmlFileName, outputDir, info, fs, tar, zip, ftp
                     for name in names:
                         path = os.path.normpath(os.path.join(dirname, name))
                         if os.path.isfile(path):
-                            z.write(path, path)
+                            # strip topDir from the fn in archive
+                            # and replace by the album name
+                            filename_in_archive = path.replace(topDir, albumName)
+                            z.write(path, filename_in_archive)
                             logger.info("adding '%s'" % path)
                 
                 zip_filename = topDir + '.zip'
                 z = ZipFile(zip_filename, "w",
                             compression=ZIP_DEFLATED)
                 walk(topDir, visit, z)
+
+                if not fs:
+                    z.write(makepage.cssfile,
+                            basename(makepage.cssfile))
+                
                 z.close()
                 logger.info('output zipfile is %s' % (zip_filename))
 
