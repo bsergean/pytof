@@ -18,14 +18,17 @@ def main():
     # data files
     # http://docs.python.org/dist/node13.html
 
-    __version__ = open('VERSION').read()
+    __version__ = open('VERSION').read().strip()
     setup(
         name = "pytof",
         version = __version__,
         description = "Exports album from iPhoto Libraries",
         long_description = '''In this release
         ===============
-    
+	New in 0.0.1:
+	- Enhancements: (Issues 15, 17, 19, 21)
+	- Defects: (Issues 11, 13)
+
         New in 0.0.2:
         
         - better navigation, makepage output looks almost like scry now

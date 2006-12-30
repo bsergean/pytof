@@ -39,7 +39,7 @@ from getpass import getuser, unix_getpass
 from zipfile import ZipFile, ZIP_DEFLATED
 
 # FIXME: (see issue 11)
-__version__ = open('../VERSION').read()
+__version__ = open('../VERSION').read().strip()
 
 def getStringFromConsole(text, default = ''):
     value = raw_input('%s[%s]:' %(text, default))
