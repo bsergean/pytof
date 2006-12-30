@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
 # -*- python -*-
-# $Id$
-#
 #*****************************************************************************
 #
 # See LICENSE file for licensing and to see where does some code come from
@@ -79,7 +77,8 @@ def main(albumName, libraryPath, xmlFileName, outputDir, info, fs, tar, zip, ftp
     except(AlbumDataParserError):
         _err_exit("Problem parsing AlbumData.xml")
 
-    topDir = join(outputDir, 'out', albumName)
+    up = 'pytof'
+    topDir = join(outputDir, up, albumName)
     try:
         if not exists(topDir):
             os.makedirs(topDir)
@@ -99,7 +98,7 @@ def main(albumName, libraryPath, xmlFileName, outputDir, info, fs, tar, zip, ftp
 
             if tar:
                 pwd = os.getcwd()
-                os.chdir(join(outputDir, 'out'))
+                os.chdir(join(outputDir, up))
                 tarball = tarfile.open(albumName + '.tar', 'w')
                 tarball.add(albumName)
                 os.chdir(pwd)
@@ -108,7 +107,7 @@ def main(albumName, libraryPath, xmlFileName, outputDir, info, fs, tar, zip, ftp
                     tarball.add(makepage.cssfile,
                                 basename(makepage.cssfile))
                 tarball.close()
-                tarballFilename = join(outputDir, 'out', albumName + '.tar')
+                tarballFilename = join(outputDir, up, albumName + '.tar')
                 logger.info('output tarball is %s' % (tarballFilename))
 
             if zip:
