@@ -23,7 +23,7 @@ from log import loggers
 # FIXME: find a way to get the file name in python
 logger = loggers['pytof']
 
-from os.path import expanduser, join, exists
+from os.path import expanduser, join, exists, basename, isabs
 from albumdataparser import AlbumDataParser, AlbumDataParserError
 import os, sys
 from utils import _err_, _err_exit, help, echo, log, GetTmpDir
@@ -34,6 +34,7 @@ from optparse import OptionParser
 import tarfile
 from shutil import rmtree
 from ftp import ftpUploader
+from ftplib import error_perm
 from getpass import getuser, unix_getpass
 
 # FIXME: (see issue 11)
@@ -100,10 +101,10 @@ def main(albumName, libraryPath, xmlFileName, outputDir, info, fs, tar, ftp):
                 os.chdir(join(outputDir, 'out'))
                 tarball = tarfile.open(albumName + '.tar', 'w')
                 tarball.add(albumName)
+                os.chdir(pwd)
                 if not fs:
                     tarball.add(makepage.cssfile)
                 tarball.close()
-                os.chdir(pwd)
                 tarballFilename = join(outputDir, 'out', albumName + '.tar')
                 print 'output tarball is %s' % (tarballFilename)
 
@@ -119,28 +120,38 @@ def main(albumName, libraryPath, xmlFileName, outputDir, info, fs, tar, ftp):
 
                 if not fromConfig:
                     # localhost is a preference for test
-                    # FIXME: store those values in the conf file
                     host = getStringFromConsole('Host', 'localhost')
                     user = getStringFromConsole('User', getuser())
                     passwd = unix_getpass()
-                    remoteDir = getStringFromConsole('Remote Directory', '')
-                                
-                ftpU = ftpUploader(host, user, passwd)
-                if remoteDir:
-                    if ftpU.exists(remoteDir):
-                        ftpU.cwd(remoteDir)
-                    else:
-                        log('remote dir %s does not exist' % remoteDir)
+                    remoteDir = getStringFromConsole('Remote directory', '')
+                    if not isabs(remoteDir):
+                        logger.error('Sorry: the remote drectory has to be an absolute path')
+                        remoteDir = ''
 
+                try:
+                    ftpU = ftpUploader(host, user, passwd)
+                except (error_perm):
+                    logger.error('Incorrect ftp credentials')
+                    sys.exit(1)
+                if remoteDir:
+                    if not ftpU.exists(remoteDir):
+                        log('remote dir %s does not exist' % remoteDir)
+                        remoteDir = ftpU.pwd()
+                else:
+                    remoteDir = ftpU.pwd()
                 conf.setFtpParams(host, user, passwd, remoteDir)
                 
                 if tar:
-                    ftpU.upload(tarballFilename)
+                    ftpU.upload(tarballFilename,
+                                join(remoteDir, basename(tarballFilename)))
                 else:
                     # we'll have to mirror the whole dir
                     if not fs:
-                        ftpU.upload(makepage.cssfile)
-                    ftpU.mirror(topDir)
+                        logger.debug('upload css')
+                        ftpU.upload(makepage.cssfile,
+                                    join(remoteDir, basename(makepage.cssfile)))
+                    ftpU.cp_rf(topDir,
+                               remoteDir)
 
     except (KeyboardInterrupt):
 
