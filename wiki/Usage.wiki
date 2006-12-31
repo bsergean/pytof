@@ -8,18 +8,20 @@ usage: python pytof.py <options>
 
 options:
   -h, --help            show this help message and exit
-  -i, --info            Print info about the collection [default = False]
-  -f, --file-system     Extract album photo to OUTPUTDIR and stop
-  -V, --version         display version
-  -l LIBRARYPATH, --library=LIBRARYPATH
-                        The iPhoto library directory path
-  -x XMLFILENAME, --xml-file=XMLFILENAME
-                        The iPhoto library XML file name
-  -a ALBUMNAME, --album=ALBUMNAME
+  -aALBUMNAME, --album=ALBUMNAME
                         The iPhoto library album to process
-  -o OUTPUTDIR, --output=OUTPUTDIR
-                        The output directory [/home/bsergean/tmp +
-                        out/ALBUMNAME]
+  -i, --info            Print info about the collection [default = %default]
+  -oOUTPUTDIR, --output=OUTPUTDIR
+                        The output directory [%default + out/ALBUMNAME]
+  -f, --file-system     Extract album photo to OUTPUTDIR and stop
+  -t, --tar-archive     Create a tar archive from the exported datas
+  -z, --zip-archive     Create a tar archive from the exported datas
+  -V, --version         display version
+  -lLIBRARYPATH, --library=LIBRARYPATH
+                        The iPhoto library directory path
+  -xXMLFILENAME, --xml-file=XMLFILENAME
+                        The iPhoto library XML file name
+  -u, --ftp-upload      Upload pytof output to a ftp site
 }}}
 
 Here is a sample output from a simple use of pytof.
