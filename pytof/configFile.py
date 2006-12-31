@@ -22,6 +22,13 @@ from ConfigParser import RawConfigParser
 
 class configHandler:
 
+    template = '''
+[Internals]
+xmlTimestamp=0
+
+[ftp]
+'''
+
     def __init__(self):
 
         self.ok = False
@@ -50,13 +57,7 @@ class configHandler:
             # FIXME: this file may contains password, it has to be
             # created in 600 mode (os.chmod ?)
             confFd = open(confFilename, 'w')
-            content = '''
-[Internals]
-xmlTimestamp=0
-
-[ftp]
-'''
-            confFd.write(content)
+            confFd.write(self.template)
             confFd.close()
 
         self.confFilename = confFilename
