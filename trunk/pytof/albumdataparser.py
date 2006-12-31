@@ -16,6 +16,7 @@ from photo import Photo
 from utils import _err_, _err_exit, log
 from time import strptime
 
+class AlbumDataError: pass
 class AlbumData(object):
     def __init__(self, data):
         self.data = data
@@ -25,7 +26,7 @@ class AlbumData(object):
         for album in self.data['List of Albums']:
             if album['AlbumName'] == name:
                 return album
-        raise Error, "Album \"%s\" not in iPhoto Library" % name
+        raise AlbumDataError, "Album \"%s\" not in iPhoto Library" % name
 
     def getAlbumList(self):
         albums = []
