@@ -81,3 +81,16 @@ Some tools were added in the tools directory.
 }}}
  * deps/install.sh is the script which compile and install the deps
 
+== Downloads ==
+
+With the script that google provide, you can do it from the command line. By default it won't be a featured download thought.
+
+{{{
+[bsergean@marge1 tools]$ python googlecode-upload.py -s 'Add the strip option to send emails with light gallery' -u bsergean -p pytof /home/bsergean/src/pytof/tags/0.2.0/dist/pytof-0.2.0.tar.gz
+Please enter your googlecode.com password.
+Note that this is NOT your main Gmail account password!
+Password:
+The file was uploaded successfully.
+URL: http://pytof.googlecode.com/files/pytof-0.2.0.tar.gz
+}}}
+
