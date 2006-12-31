@@ -14,6 +14,7 @@ from os.path import expanduser, exists, join
 from xml.parsers.expat import ParserCreate, ExpatError
 from photo import Photo
 from utils import _err_, _err_exit, log
+from time import strptime
 
 class AlbumData(object):
     def __init__(self, data):
@@ -110,17 +111,11 @@ class XmlItem(object):
         elif self.type == 'false':
             self.value = False
         elif self.type == 'date':
-            # 2005-08-08T06:03:54Z
-            # Format used by old Panther iPhoto version 2
-            # %V and %F should be enough according to
-            # strftime man page
-            # gave up with strptime ... using regexp instead
-            # self.value = time.strptime(val, '%y-%m-%d-T%TZ')
-
-            import re, datetime
-            T = re.compile('(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)Z').findall(val)[0]
-            tup = tuple ([ int(i) for i in T ])
-            self.value = datetime.datetime(*tup)
+            # if I put this import in the global scopre I have an error ... ???:
+            # self.value = datetime(*strptime(val, '%Y-%m-%dT%H:%M:%SZ')[:5])
+            # UnboundLocalError: local variable 'datetime' referenced before assignment
+            from datetime import datetime
+            self.value = datetime(*strptime(val, '%Y-%m-%dT%H:%M:%SZ')[:5])
         else:
             raise ExpatError, "Type \"%s\" not supported" % type
 
@@ -207,3 +202,24 @@ if __name__ == '__main__':
     print
     for f in data.getPictureFilesFromAlbumName('Test'):
         print f
+
+
+
+
+
+
+
+# Code snipets kept for memory
+
+# 2005-08-08T06:03:54Z
+# Format used by old Panther iPhoto version 2
+# %V and %F should be enough according to
+# strftime man page
+# gave up with strptime ... using regexp instead
+# self.value = time.strptime(val, '%y-%m-%d-T%TZ')
+
+# import re, datetime
+# T = re.compile('(\d*)-(\d*)-(\d*)T(\d*):(\d*):(\d*)Z').findall(val)[0]
+# tup = tuple ([ int(i) for i in T ])
+# self.value = datetime.datetime(*tup)
+            
