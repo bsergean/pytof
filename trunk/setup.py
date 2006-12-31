@@ -25,6 +25,13 @@ def main():
         description = "Exports album from iPhoto Libraries",
         long_description = '''In this release
         ===============
+
+	New in 0.2.0:
+
+        Now you can generate *light* galleries, which means that you can strip the originals pictures. Those galleries are smaller and can easily be sent by email (with some limits of course :).
+
+        - Enhancements: (Issues 16, 20)
+
 	New in 0.0.1:
 	- Enhancements: (Issues 15, 17, 19, 21)
 	- Defects: (Issues 11, 13)
