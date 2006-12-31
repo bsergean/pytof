@@ -45,7 +45,8 @@ def getStringFromConsole(text, default = ''):
         return default
     return value
 
-def main(albumName, libraryPath, xmlFileName, outputDir, info, fs, tar, zip, ftp):
+def main(albumName, libraryPath, xmlFileName, outputDir,
+         info, fs, tar, zip, ftp, strip_originals):
     try:
 	# generate the config file
 	conf = configHandler()
@@ -94,7 +95,7 @@ def main(albumName, libraryPath, xmlFileName, outputDir, info, fs, tar, zip, ftp
             if fs:
                 makefs.main(albumName, topDir, xmlData)
             else:
-                makepage.main(albumName, topDir, xmlData)
+                makepage.main(albumName, topDir, xmlData, strip_originals)
 
             if tar:
                 pwd = os.getcwd()
@@ -226,6 +227,9 @@ if __name__ == "__main__":
     parser.add_option("-u", "--ftp-upload",
                       action="store_true", dest="ftp", default=False,
                       help="Upload pytof output to a ftp site")
+    parser.add_option("-s", "--strip-originals",
+                      action="store_true", dest="strip_originals", default=False,
+                      help="Remove the originals from the generated gallery Gallery will be way smaller")
 
     options, args = parser.parse_args()
     
@@ -238,5 +242,6 @@ if __name__ == "__main__":
             
     main(options.albumName, options.libraryPath,
          options.xmlFileName, options.outputDir,
-         options.info, options.fs, options.tar, options.zip, options.ftp)
+         options.info, options.fs, options.tar,
+         options.zip, options.ftp, options.strip_originals)
 
