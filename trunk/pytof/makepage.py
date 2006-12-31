@@ -25,6 +25,16 @@ from shutil import copy
 css = 'scry.css'
 cssfile = join(os.pardir, 'share', css)
 
+commercial = '''
+<table cellpadding="5" cellspacing="0" width="85%%" border="0" align="center">
+  <tr>
+    <td align="right">
+      Powered by <a href="http://code.google.com/p/pytof/">pytof</a>
+    </td>
+  </tr>
+</table 
+'''
+
 class WebPage(object):
     def __init__(self, fileName, title):
         self.fileName = fileName  + ".html"
@@ -64,10 +74,12 @@ class WebPage(object):
     <td align="right"></td>
   </tr>
 </table>
+
+%s
        
 </body>
 </html>
-'''
+''' % commercial
 
     def writePage(self):
         out = file(self.fileName, 'w')
@@ -112,7 +124,7 @@ class PhotoWebPage(WebPage):
           </td>
         </tr>
         </table>
-        '''
+'''
     
     def __init__(self, fileName, title, home):
         WebPage.__init__(self, fileName, title)
@@ -154,11 +166,14 @@ class PhotoWebPage(WebPage):
     <td align="left"></td>
     <td align="right"></td>
   </tr>
+
+%s
+  
 </table>
        
 </body>
 </html>
-'''
+''' % commercial
 
     def addSkeleton(self, dico):
         self.addCodeLine(self.skeleton_template % dico)
