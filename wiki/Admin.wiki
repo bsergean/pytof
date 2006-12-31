@@ -64,7 +64,7 @@ What syntax are you using in the wiki?
 
 == Editors ==
 
-Mathieu uses Eclipse with the pydev module, and Benjamin wants to learn vim ...
+Mathieu uses Eclipse with the pydev module, and Benjamin wants to learn vim. But as he's developping on Linux he's only using emacs actually ... anyway when debugging on the Mac those vim links are usefull.
 
 === vim ===
 
@@ -93,4 +93,3 @@ Password:
 The file was uploaded successfully.
 URL: http://pytof.googlecode.com/files/pytof-0.2.0.tar.gz
 }}}
-
