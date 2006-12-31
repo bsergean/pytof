@@ -3,6 +3,7 @@
 == General ==
 
 Here is the google code hosting [http://code.google.com/hosting/faq.html FAQ].
+If ou have ideas on how the service could be better, add notes [http://code.google.com/p/support/issues/list here].
 
 == Subversion ==
 
@@ -79,5 +80,4 @@ Some tools were added in the tools directory.
 [100drine@gnocchi trunk]$ svn log . | perl tools/svn2cl.pl > ChangeLog
 }}}
  * deps/install.sh is the script which compile and install the deps
-
 
