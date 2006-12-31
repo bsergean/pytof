@@ -16,6 +16,10 @@ __revision__ = '$Id$  (C) 2006 GPL'
 __author__ = 'Mathieu Robin'
 __dependencies__ = []
 
+from log import loggers
+# FIXME: find a way to get the file name in python
+logger = loggers['makepage']
+
 from os.path import expanduser, join, exists, basename
 from albumdataparser import AlbumDataParser, AlbumDataParserError
 import os, sys, getopt
@@ -125,7 +129,40 @@ class PhotoWebPage(WebPage):
         </tr>
         </table>
 '''
-    
+
+    skeleton_template_originals_stripped = '''
+        <table align="center" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td width="100%%" colspan="3" align="center">
+            <div class="images">
+
+            <img src="%(preview)s" alt="img_0912.jpg" />
+            <br />
+            %(preview_filename)s
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+
+          <td width="30%%" align="left" valign="bottom">
+            <div class="images">
+<a style="text-decoration: none;" href="%(prev)s"><img src="%(prev_thumb)s" alt="previous" /><br />&lt; previous</a>            </div>
+          </td>
+          <td width="40%%" align="middle" valign="bottom">
+
+            <p> %(exif_infos)s
+            </p>
+
+          </td>
+          <td width="30%%" align="right" valign="bottom">
+            <div class="images">
+<a style="text-decoration: none;" href="%(next)s"><img src="%(next_thumb)s" alt="next" /><br />next &gt; </a>            </div>
+          </td>
+        </tr>
+        </table>
+'''
+
     def __init__(self, fileName, title, home):
         WebPage.__init__(self, fileName, title)
 
@@ -175,10 +212,14 @@ class PhotoWebPage(WebPage):
 </html>
 ''' % commercial
 
-    def addSkeleton(self, dico):
-        self.addCodeLine(self.skeleton_template % dico)
+    def addSkeleton(self, dico, strip_originals):
+        template = self.skeleton_template
+        if strip_originals:
+            template = self.skeleton_template_originals_stripped
+            
+        self.addCodeLine(template % dico)
 
-def makePhotoPage(photo, linkBack, topDir, prev, next):
+def makePhotoPage(photo, linkBack, topDir, prev, next, strip_originals):
         '''
         Should have a next and back with thumbnails
         '''
@@ -199,11 +240,13 @@ def makePhotoPage(photo, linkBack, topDir, prev, next):
         dico['next'] = next.id + '.html'
         dico['next_thumb'] = join('thumbs',   'th_' + next.id + '.jpg')
 
-        page.addSkeleton(dico)
+        page.addSkeleton(dico, strip_originals)
         page.writePage()
         return page.fileName
 
-def main(albumName, topDir, xmlData):
+def main(albumName, topDir, xmlData, strip_originals):
+
+    logger.info('strip_originals = %s' % strip_originals)
 
     data = xmlData
 
@@ -244,12 +287,13 @@ def main(albumName, topDir, xmlData):
         except (IndexError):
             # ok I know it's crappy programming :)
             next = data.getPhotoFromId(photos[0])
-        
-        photo.saveCopy(dirs[0])
+
+        if not strip_originals:
+            photo.saveCopy(dirs[0])
         photo.makePreview(dirs[1], 640)
         photo.makeThumbnail(dirs[2])
         photoPageName = makePhotoPage(photo, curPage.fileName, topDir,
-                                      prev, next)
+                                      prev, next, strip_originals)
         curPage.addCode("<a href=\"%s\"><img src=\"%s\" alt=\"toto.jpg\" border=\"0\"/></a>" %
                         (photo.id + '.html',
                          join('thumbs',   'th_' + photo.id + '.jpg')))
