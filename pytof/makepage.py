@@ -185,16 +185,6 @@ def makePhotoPage(photo, linkBack, topDir, prev, next):
         dico['next_thumb'] = join('thumbs',   'th_' + next.id + '.jpg')
 
         page.addSkeleton(dico)
-    
-        # addSkeleton probably needs some cleanup ...
-        #    page.addSkeleton(width, height, size, exif_infos,
-        #                     join('preview', 'pv_' + photo.id + '.jpg'),
-        #                     join('photos', photo.id + '.jpg'),
-        #                     prev.id + '.html',
-        #                     join('thumbs',   'th_' + prev.id + '.jpg'),
-        #                     next.id + '.html',
-        #                     join('thumbs',   'th_' + next.id + '.jpg'),
-        #                     ) # fixme: check extension
         page.writePage()
         return page.fileName
 
@@ -257,19 +247,3 @@ def main(albumName, topDir, xmlData):
 
     sys.stderr.write('\n')
     curPage.writePage()
-
-if __name__ == "__main__":
-    print 'foobar'
-    # add unit tests here ?
-
-
-
-
-
-
-
-    
-#    def addSkeleton(self, width, height, size, exif_infos, photo, original,
-#                    prev, th_prev, next, th_next):
-#(photo, basename(photo), original, width, height,
-# size, prev, th_prev, ('</br>').join(exif_infos), next, th_next))
