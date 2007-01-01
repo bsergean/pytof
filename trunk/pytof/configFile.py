@@ -8,7 +8,7 @@
 #
 #*****************************************************************************
 
-__revision__ = '$Id: utils.py 67 2006-12-22 22:53:55Z bsergean $  (C) 2004 GPL'
+__revision__ = '$Id$  (C) 2004 GPL'
 __author__ = 'Benjamin Sergeant'
 
 from log import loggers
@@ -23,6 +23,8 @@ from ConfigParser import RawConfigParser
 class configHandler:
 
     template = '''
+[library]
+
 [Internals]
 xmlTimestamp=0
 
@@ -87,6 +89,49 @@ xmlTimestamp=0
         for l in open(confFilename):
             print l
 
+    # library path
+    def hasLibraryPath(self):
+        return self.config.has_option('library', 'libraryPath')
+
+    def getLibraryPath(self):
+        return self.config.get('library', 'libraryPath')
+
+    def setLibraryPath(self, libraryPath):
+        # we have to create a ftp section ...
+        logger.debug('setLibraryPath')
+        self.Open()        
+        self.config.set('library', 'libraryPath', libraryPath)
+        self.Close()
+
+    # xml filename
+    def hasXmlFileName(self):
+        return self.config.has_option('library', 'xmlFileName')
+
+    def getXmlFileName(self):
+        return self.config.get('library', 'xmlFileName')
+
+    def setXmlFileName(self, xmlFileName):
+        # we have to create a ftp section ...
+        logger.debug('setXmlFileName')
+        self.Open()        
+        self.config.set('library', 'xmlFileName', xmlFileName)
+        self.Close()
+
+    # output directory
+    def hasOutputDir(self):
+        return self.config.has_option('library', 'outputDir')
+
+    def getOutputDir(self):
+        return self.config.get('library', 'outputDir')
+
+    def setOutputDir(self, outputDir):
+        # we have to create a ftp section ...
+        logger.debug('setOutputDir')
+        self.Open()
+        self.config.set('library', 'outputDir', outputDir)
+        self.Close()
+
+    # ftp params
     def hasFtpParams(self):
         return self.config.has_option('ftp', 'host') and \
                self.config.has_option('ftp', 'user') and \

@@ -48,16 +48,33 @@ def getStringFromConsole(text, default = ''):
 def main(albumName, libraryPath, xmlFileName, outputDir,
          info, fs, tar, zip, ftp, strip_originals):
     try:
-	# generate the config file
+	# init the config file
 	conf = configHandler()
         if not conf.ok:
             _err_exit('Problem with the config file')
-        
+
+        # config file parameters
+        if conf.hasLibraryPath() and not libraryPath:
+            libraryPath = conf.getLibraryPath()
+        else:
+            conf.setLibraryPath(libraryPath)
+
+        if conf.hasXmlFileName() and not xmlFileName:
+            xmlFileName = conf.getXmlFileName()
+        else:
+            conf.setXmlFileName(xmlFileName)
+
+        if outputDir == GetTmpDir():
+            if conf.hasOutputDir():
+                outputDir = conf.getOutputDir()
+        else:
+            conf.setOutputDir(outputDir)            
+
         echo("Parsing AlbumData.xml")
         parser = AlbumDataParser(libraryPath, xmlFileName)
         xmlFileName = parser.xmlFileName
-        # can we use the cached xml content ?
 
+        # can we use the cached xml content ?
         # try to load our stuff from the cache if the xml wasn't modified
         cached = conf.canUseCache(xmlFileName)
 
