@@ -16,7 +16,7 @@ from photo import Photo
 from utils import _err_, _err_exit, log
 from time import strptime
 
-class AlbumDataError: pass
+class AlbumDataError(Exception): pass
 class AlbumData(object):
     def __init__(self, data):
         self.data = data
