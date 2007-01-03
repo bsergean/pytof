@@ -9,9 +9,14 @@
 #
 #*****************************************************************************
 
-__revision__ = '$Id$  (C) 2004 GPL'
+__revision__ = '$Id$  (C) 2006 GPL'
 __author__ = 'Mathieu Robin'
 __dependencies__ = ['Image']
+
+from log import loggers
+import logging
+# FIXME: find a way to get the file name in python
+logger = loggers['photo']
 
 from os.path import join, getsize, basename
 from shutil import copy
@@ -42,17 +47,13 @@ def EXIF_tags(fn):
     f.close()
     return tags
 
-def EXIF_infos(fn):
-    tags = EXIF_tags(fn)
-    infos = []
-    infos.append('Model: %s' % str(tags.get('Image Model', 'Unknown')))
-    infos.append('Date: %s' % tags.get('EXIF DateTimeOriginal', 'Unknown'))
-    infos.append('Flash: %s' % tags.get('EXIF Flash', 'Unknown'))
-    return infos
 
 
 class Photo(object):
     def __init__(self, fileName, id=None, title='', comment='', date=''):
+
+        logger.setLevel(logging.INFO)
+        
         self.image = Image.open(fileName)
         self.fileName = fileName
         if id == None:
@@ -64,11 +65,21 @@ class Photo(object):
         self.imagePath = None
         self.thumbPath = None
         self.prevPath = None
+        self.rotation = None
 
         self.width = self.image.size[0]
         self.height = self.image.size[1]
         self.sizeKB = getsize(self.fileName) / 1024
-        self.exif_infos = EXIF_infos(self.fileName)
+        self.exif_infos = self.EXIF_infos()
+
+    def EXIF_infos(self):
+        tags = EXIF_tags(self.fileName)
+        self.rotation = str(tags.get('Image Orientation', 'Unknown'))
+        infos = []
+        infos.append('Model: %s' % str(tags.get('Image Model', 'Unknown')))
+        infos.append('Date: %s' % tags.get('EXIF DateTimeOriginal', 'Unknown'))
+        infos.append('Flash: %s' % tags.get('EXIF Flash', 'Unknown'))        
+        return infos
 
     def getBaseName(self):
         return str(self.id)
@@ -83,6 +94,7 @@ class Photo(object):
         copy(self.fileName, self.imagePath)
 
     def makeThumbnail(self, path, size=100):
+        ''' Thumb can be created to a relative path '''
         width = self.image.size[0]
         height = self.image.size[1]
         if width > height:
@@ -98,7 +110,15 @@ class Photo(object):
                                  width - xOffset,
                                  height - yOffset))
         thumb = thumb.resize((size, size), Image.ANTIALIAS)
+
+        if self.rotation == 'Rotated 90 CW':
+            logger.info('makeThumbnail: Rotate')
+            thumb = thumb.rotate(-90)
+        else:
+            logger.debug('makeThumbnail: Do not rotate')
+        
         self.thumbPath = os.path.join(path, 'th_' + self.getBaseName() + '.jpg')
+        logger.debug('thumb will be %s', self.thumbPath)
         thumb.save(self.thumbPath, quality=80)
 
     def makePreview(self, path, maxDim=800):
@@ -117,6 +137,13 @@ class Photo(object):
             out = self.image.resize((newWidth, newHeight), Image.ANTIALIAS)
         else:
             out = self.image
+
+        if self.rotation == 'Rotated 90 CW':
+            logger.info('makePreview: Rotate')
+            out = out.rotate(-90)
+        else:
+            logger.debug('makePreview: Do not rotate')
+            
         self.prevPath = os.path.join(path, 'pv_' + self.getBaseName() + '.jpg')
         out.save(self.prevPath, quality=95)
 
