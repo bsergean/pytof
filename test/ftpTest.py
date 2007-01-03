@@ -52,7 +52,11 @@ class FTP_TC(unittest.TestCase):
             sys.exit(1)
         else:
             print 'start ftp connection'
+            
         self.ftp = ftpUploader('localhost', getuser(), passwd)
+        #self.ftp = ftpUploader('snoball.corp.adobe.com', getuser(), passwd)
+        self.ftp.infos()
+        self.pwd = self.ftp.pwd()
 
     def tearDown(self):
         rmtree(self.tempdir)
