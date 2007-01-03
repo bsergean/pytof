@@ -17,6 +17,7 @@ __author__ = 'Mathieu Robin'
 __dependencies__ = []
 
 from log import loggers
+import logging
 # FIXME: find a way to get the file name in python
 logger = loggers['makepage']
 
@@ -245,7 +246,7 @@ def makePhotoPage(photo, linkBack, topDir, prev, next, strip_originals):
         return page.fileName
 
 def main(albumName, topDir, xmlData, strip_originals, fromDir):
-
+    logger.setLevel(logging.INFO)
     logger.info('strip_originals = %s' % strip_originals)
 
     data = xmlData
@@ -282,7 +283,7 @@ def main(albumName, topDir, xmlData, strip_originals, fromDir):
     for i in xrange(nb_photos):
 
         id = photos[i]
-        logger.info('processing photo %s' % id)
+        logger.debug('processing photo %s' % id)
         
         photo = data.getPhotoFromId(id)
         prev = data.getPhotoFromId(photos[i-1])

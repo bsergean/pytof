@@ -19,7 +19,7 @@ import unittest
 import os
 from ftp import ftpUploader
 from os.path import join, basename, isdir
-from os import listdir, lstat, remove, chdir, walk, mkdir
+from os import listdir, lstat, remove, chdir, mkdir
 from stat import S_ISDIR
 from utils import GetTmpDir, maybemakedirs
 from shutil import copy, rmtree
