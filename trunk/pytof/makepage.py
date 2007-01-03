@@ -21,7 +21,7 @@ from log import loggers
 logger = loggers['makepage']
 
 from os.path import expanduser, join, exists, basename
-from albumdataparser import AlbumDataParser, AlbumDataParserError
+from albumdataparser import AlbumDataParser, AlbumDataParserError, AlbumDataFromDir
 import os, sys, getopt
 from utils import _err_, _err_exit, help, log, echo
 from shutil import copy
@@ -244,11 +244,13 @@ def makePhotoPage(photo, linkBack, topDir, prev, next, strip_originals):
         page.writePage()
         return page.fileName
 
-def main(albumName, topDir, xmlData, strip_originals):
+def main(albumName, topDir, xmlData, strip_originals, fromDir):
 
     logger.info('strip_originals = %s' % strip_originals)
 
     data = xmlData
+    if fromDir:
+        data = AlbumDataFromDir(fromDir)
 
     leafDirs = ['photos', 'preview', 'thumbs']
     dirs = []

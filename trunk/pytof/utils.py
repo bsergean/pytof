@@ -108,15 +108,15 @@ def GetTmpDir():
     mktemp()
     return tempfile.tempdir
 
-def ListCurrentDirFileFromExt(ext):
+def ListCurrentDirFileFromExt(ext, path):
     """ list file matching extension from a list
     in the current directory
     emulate a `ls *.{(',').join(ext)` with ext in both upper and downcase}"""
     import glob
     extfiles = []
     for e in ext:
-        extfiles.extend(glob.glob('*' + e))
-        extfiles.extend(glob.glob('*' + e.swapcase()))
+        extfiles.extend(glob.glob(join(path,'*' + e)))
+        extfiles.extend(glob.glob(join(path,'*' + e.swapcase())))
 
     return extfiles
 
