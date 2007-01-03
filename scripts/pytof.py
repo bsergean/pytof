@@ -21,7 +21,7 @@ from log import loggers
 # FIXME: find a way to get the file name in python
 logger = loggers['pytof']
 
-from os.path import expanduser, join, exists, basename, isabs, walk
+from os.path import expanduser, join, exists, basename, isabs, walk, isdir
 from albumdataparser import AlbumDataParser, AlbumDataParserError
 import os, sys
 from utils import _err_, _err_exit, help, echo, log, GetTmpDir
@@ -35,6 +35,7 @@ from ftp import ftpUploader
 from ftplib import error_perm
 from getpass import getuser, unix_getpass
 from zipfile import ZipFile, ZIP_DEFLATED
+from string import rstrip
 
 # FIXME: (see issue 11)
 __version__ = open('../VERSION').read().strip()
@@ -46,54 +47,61 @@ def getStringFromConsole(text, default = ''):
     return value
 
 def main(albumName, libraryPath, xmlFileName, outputDir,
-         info, fs, tar, zip, ftp, strip_originals):
-    try:
-	# init the config file
-	conf = configHandler()
-        if not conf.ok:
-            _err_exit('Problem with the config file')
-
-        # config file parameters
-        if conf.hasLibraryPath() and not libraryPath:
-            libraryPath = conf.getLibraryPath()
-        else:
-            conf.setLibraryPath(libraryPath)
-
-        if conf.hasXmlFileName() and not xmlFileName:
-            xmlFileName = conf.getXmlFileName()
-        else:
-            conf.setXmlFileName(xmlFileName)
-
-        if outputDir == GetTmpDir():
-            if conf.hasOutputDir():
-                outputDir = conf.getOutputDir()
-        else:
-            conf.setOutputDir(outputDir)            
-
-        echo("Parsing AlbumData.xml")
-        parser = AlbumDataParser(libraryPath, xmlFileName)
-        xmlFileName = parser.xmlFileName
-
-        # can we use the cached xml content ?
-        # try to load our stuff from the cache if the xml wasn't modified
-        cached = conf.canUseCache(xmlFileName)
-
-        if cached:
-            pickleFd = open(conf.pickleFilename)
-            xmlData = load(pickleFd)
-            pickleFd.close()
-        else:
-            xmlData = parser.parse()
-            xmlData.libraryPath = libraryPath
-
-        # writing the cached data to a file
-        pickleFd = open(conf.pickleFilename, 'w')
-        dump(xmlData, pickleFd)
-        pickleFd.close()
+         info, fs, tar, zip, ftp, strip_originals, fromDir):
+    # init the config file
+    conf = configHandler()
+    if not conf.ok:
+        _err_exit('Problem with the config file')
         
-        echo("\t[DONE]\n")
-    except(AlbumDataParserError):
-        _err_exit("Problem parsing AlbumData.xml")
+    # config file parameters
+    if conf.hasLibraryPath() and not libraryPath:
+        libraryPath = conf.getLibraryPath()
+    else:
+        conf.setLibraryPath(libraryPath)
+        
+    if conf.hasXmlFileName() and not xmlFileName:
+        xmlFileName = conf.getXmlFileName()
+    else:
+        conf.setXmlFileName(xmlFileName)
+
+    if outputDir == GetTmpDir():
+        if conf.hasOutputDir():
+            outputDir = conf.getOutputDir()
+    else:
+        conf.setOutputDir(outputDir)            
+
+    if not fromDir:
+        try:
+            echo("Parsing AlbumData.xml")
+            parser = AlbumDataParser(libraryPath, xmlFileName)
+            xmlFileName = parser.xmlFileName
+            
+            # can we use the cached xml content ?
+            # try to load our stuff from the cache if the xml wasn't modified
+            cached = conf.canUseCache(xmlFileName)
+            
+            if cached:
+                pickleFd = open(conf.pickleFilename)
+                xmlData = load(pickleFd)
+                pickleFd.close()
+            else:
+                xmlData = parser.parse()
+                xmlData.libraryPath = libraryPath
+
+            # writing the cached data to a file
+            pickleFd = open(conf.pickleFilename, 'w')
+            dump(xmlData, pickleFd)
+            pickleFd.close()
+                
+            echo("\t[DONE]\n")
+
+        except(AlbumDataParserError):
+            _err_exit("Problem parsing AlbumData.xml")
+    else:
+        logger.info('generate gallery from photos in %s dir' % fromDir)
+        xmlData = None
+        albumName = basename(rstrip(fromDir, '/'))
+        logger.info('albumName is %s' % albumName)
 
     up = 'pytof'
     topDir = join(outputDir, up, albumName)
@@ -112,7 +120,7 @@ def main(albumName, libraryPath, xmlFileName, outputDir,
             if fs:
                 makefs.main(albumName, topDir, xmlData)
             else:
-                makepage.main(albumName, topDir, xmlData, strip_originals)
+                makepage.main(albumName, topDir, xmlData, strip_originals, fromDir)
 
             if tar:
                 pwd = os.getcwd()
@@ -247,18 +255,25 @@ if __name__ == "__main__":
     parser.add_option("-s", "--strip-originals",
                       action="store_true", dest="strip_originals", default=False,
                       help="Remove the originals from the generated gallery Gallery will be way smaller")
+    parser.add_option("-d", "--from-directory", dest="fromDir", default='',
+                      help="The directory path for the gallery. Do not interact with iPhoto"),
 
     options, args = parser.parse_args()
     
     if options.version:
         print 'pytof version %s' % (__version__)
         sys.exit(0)
-        
-    if not options.albumName and not options.info:
+
+    if options.info: pass
+    elif options.fromDir:
+        if not isdir(options.fromDir):
+            _err_exit('Not a directory: %s' % options.fromDir)
+    elif not options.albumName:
         _err_exit('missing albumName argument')
             
     main(options.albumName, options.libraryPath,
          options.xmlFileName, options.outputDir,
          options.info, options.fs, options.tar,
-         options.zip, options.ftp, options.strip_originals)
+         options.zip, options.ftp, options.strip_originals,
+         options.fromDir)
 

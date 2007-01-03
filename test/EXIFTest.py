@@ -22,6 +22,13 @@ from photo import EXIF_infos, EXIF_tags
 def prune(tag, key):
     return str(tag[key])[0:-1]
 
+def print_tags(file):
+    tags = EXIF_tags(file)
+    for i in tags:
+        if i not in ('JPEGThumbnail', 'TIFFThumbnail', 'Filename'):
+            print '%s: %s' % (i, tags[i])
+
+
 if __name__ == "__main__":
 
     exim1 = os.path.join('data', 'exim1.jpg')
@@ -33,10 +40,8 @@ if __name__ == "__main__":
     # print all tags
     verbose = False
     if verbose:
-        for i in k:
-            if i not in ('JPEGThumbnail', 'TIFFThumbnail', 'Filename'):
-                print '%s: %s' % (i, tags[i])
-
+        print_tags(exim1)
+        
     assert prune(tags, 'Image Model') == 'PENTAX Optio S5i'
     assert prune(tags, 'Image Make') == 'PENTAX Corporation'
 
@@ -44,3 +49,11 @@ if __name__ == "__main__":
     assert str(tags['EXIF Flash']) == 'Off'
 
     print ('\n').join(EXIF_infos(exim1))
+
+    exim2 = os.path.join('data', 'Rotated_90_CW_thumb.jpg')
+    
+
+    print_tags(exim2)
+    # looks like PIL remove
+    keys = {}
+    keys['Image Orientation'] = 'Rotated 90 CW'

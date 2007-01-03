@@ -9,12 +9,47 @@
 #
 #*****************************************************************************
 
+from log import loggers
+import logging
+# FIXME: find a way to get the file name in python
+logger = loggers['albumdataparser']
+
 import os
-from os.path import expanduser, exists, join
+from os.path import expanduser, exists, join, split, splitext, basename
 from xml.parsers.expat import ParserCreate, ExpatError
 from photo import Photo
-from utils import _err_, _err_exit, log
+from utils import _err_, _err_exit, log, ListCurrentDirFileFromExt
 from time import strptime
+from glob import glob
+
+class AlbumDataFromDir(object):
+    def __init__(self, path):
+
+        logger.setLevel(logging.INFO)
+        
+        self.path = path
+        self.albumList = ListCurrentDirFileFromExt('jpg', self.path)
+        logger.debug('pictures: %s' % self.albumList)
+        
+        self.picturesIds = {}
+        for p in self.albumList:
+            id = splitext(split(p)[1])[0]
+            self.picturesIds[id] = p
+        logger.debug('pictures id: %s' % self.picturesIds)
+
+    def getPicturesIdFromAlbumName(self, name):
+        return self.picturesIds.keys()
+
+    def getAlbumByName(self, name):
+        return basename(split(self.path)[0])
+
+    def getPhotoFromId(self, id):
+        # FIXME: this None list is so nice.
+        return Photo(self.picturesIds[id],
+                     id,
+                     None,
+                     None,
+                     None)
 
 class AlbumDataError(Exception): pass
 class AlbumData(object):
