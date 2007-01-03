@@ -1,0 +1,200 @@
+#!/usr/bin/python
+#
+# 20-JAN-02 CEC Originally written.
+# 29-JAN-02 CEC Actually used PrintMap to avoid KeyErrors when a tag is in
+#               a template but doesn't exist.  It was defined before, but
+#               not used.
+# 27-OCT-02 JSL Modified to accept directories
+#
+
+import os
+import sys
+import glob
+import getopt
+import EXIF
+
+manual="""
+NAME
+    exiftool - decode EXIF headers in JPEGs or TIFFs from digital cameras
+
+SYNOPSIS
+    exiftool [options] <files | directories> ...
+
+DESCRIPTION
+    Most digital cameras store additional information about each image
+    directly within each file. This information is located in the so-called
+    EXIF header and contains such things as exposure time, f-stop, "film"
+    speed, etc.
+
+    This tool decodes this information, and either prints it using a
+    template, stores it in a file, or renames the file according to the
+    date and time the image was taken.
+
+OPTIONS
+    -r              Rename files according to EXIF date.
+
+    -f <file>       Specify template file.  Within the template, the value
+                    of a tag can be printed by using the following syntax:
+
+                            %(<tagname>)s
+
+                    e.g. %(Image Model)s will report the camera model which
+                    produced the file. For a list of the tagnames that can
+                    be used, you can use the -v option.  If this option is
+                    omitted, a default template is used.
+
+                    Note that this can be used to write HTML files, with a
+                    properly designed template file.
+
+    -v              Verbose output. This reports all EXIF tags that are
+                    found in the file.
+
+    -i <ext>        Write information from each image file to an individual
+                    file with an extension of <ext>, e.g. "-i txt"
+                    specifies that information from "foo.jpg" is written to
+                    "foo.txt".  If the special name "stdout" is used, the
+                    output is written to stdout.
+
+    -t              Extract thumbnail, if any.  If file is named "foo.tif"
+                    and the thumbnail is in JPEG format, the thumbnail will
+                    be named "foo_thumb.jpg"
+
+AUTHOR
+    Gene Cash
+"""
+
+# default template
+template="""
+EXIF information in "%(Filename)s"
+          Camera: %(Image Make)s %(Image Model)s
+            Date: %(EXIF DateTimeOriginal)s
+      Image size: %(EXIF ExifImageWidth)sx%(EXIF ExifImageLength)s pixels
+   Exposure Time: %(EXIF ExposureTime)s
+        Aperture: f/%(EXIF FNumber)s
+Exposure Program: %(EXIF ExposureProgram)s
+   Exposure Bias: %(EXIF ExposureBiasValue)s
+   Metering Mode: %(EXIF MeteringMode)s
+           Flash: %(EXIF Flash)s
+    Focal Length: %(EXIF FocalLength)s
+"""
+
+# handle missing tags gracefully
+class PrintMap:
+    def __init__(self, map):
+    	self.map=map
+        
+    def __getitem__(self, key):
+    	return self.map.get(key, '???')
+
+# convert date to string that's a legal filename
+# "2001:03:31 12:27:36" becomes "2001-03-31_12-27-36"
+def date2file(d):
+    d=str(d)
+    d=d.replace(' ', '_')
+    d=d.replace(':', '-')
+    return d
+
+# start of main code
+if len(sys.argv) == 1:
+    print manual
+    sys.exit()
+
+# parse options
+try:
+    optlist, args=getopt.getopt(sys.argv[1:], 'f:i:rtv')
+except:
+    print manual
+    sys.exit()
+     
+opts={}
+for i in optlist:
+    opts[i[0]]=i[1]
+
+# list parsed tage
+verbose=0
+if opts.has_key('-v'):
+    verbose=1
+
+# rename file according to date
+rename=0
+if opts.has_key('-r'):
+    rename=1
+
+# extract thumbnail
+thumb=0
+if opts.has_key('-t'):
+    thumb=1
+
+# template file
+if opts.has_key('-f'):
+    template=open(opts['-f']).read()
+
+# extension
+ext=None
+if opts.has_key('-i'):
+    ext=opts['-i']
+
+# process all files/directories given
+files=[]
+for i in args:
+    if os.path.isdir(i):
+        files=files+(glob.glob(os.path.join(i,'*.*')))
+    elif os.path.isfile(i):
+        files.append(i)
+for path_name in files:
+    dir_name, file_name=os.path.split(path_name)
+    photo_name, photo_ext=os.path.splitext(file_name)
+    f=open(path_name, 'rb')
+    tags=EXIF.process_file(f)
+    
+    # rename file according to date
+    if rename and tags.has_key('EXIF DateTimeOriginal'):
+        new_name=date2file(tags['EXIF DateTimeOriginal'])
+        os.rename(path_name, os.path.join(dir_name, new_name)+photo_ext)
+        photo_name=new_name
+        file_name=photo_name+photo_ext
+    
+    # write extracted thumbnail
+    if thumb:
+        if tags.has_key('JPEGThumbnail'):
+            thumb_name=os.path.join(dir_name, photo_name)+'_thumb.jpg'
+            open(thumb_name, 'wb').write(tags['JPEGThumbnail'])
+        if tags.has_key('TIFFThumbnail'):
+            thumb_name=os.path.join(dir_name, photo_name)+'_thumb.tif'
+            open(thumb_name, 'wb').write(tags['TIFFThumbnail'])
+
+    tags['Filename']=file_name
+    if verbose:
+        # print raw tags, sorted by name
+        k=tags.keys()
+        k.sort()
+        # determine length of longest tag name
+        cols=max(map(len, k))
+        # print file name first
+        print '%*s: %s' % (cols, 'Filename', tags['Filename'])
+
+        # print all tags
+        for i in k:
+            if i not in ('JPEGThumbnail', 'TIFFThumbnail', 'Filename'):
+                print '%*s: %s' % (cols, i, tags[i])
+
+        # thumbnail information
+        print '%*s:' % (cols, 'Includes JPEG thumbnail'),
+        if tags.has_key('JPEGThumbnail'):
+            print 'Yes'
+        else:
+            print 'No'
+        print '%*s:' % (cols, 'Includes TIFF thumbnail'),
+        if tags.has_key('TIFFThumbnail'):
+            print 'Yes'
+        else:
+            print 'No'
+        print
+
+    # print info using template
+    if ext:
+        if ext == 'stdout':
+            print template % PrintMap(tags)
+        else:
+            out_name=os.path.join(dir_name, photo_name)+'.'+ext
+            open(out_name, 'wb').write(template % PrintMap(tags))
