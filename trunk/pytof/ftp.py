@@ -73,10 +73,12 @@ class ftpUploader(FTP):
         for l in lines:
             # need to do a better job here since there
             # may be a problem with file containing whitespace
+            logger.debug('Current line: %s' % l)
             fn = l.split()[8]
             if l.startswith('d'):
-                # FIXME: check with symlinks also.                
                 files.append( (fn, 'Directory') )
+            elif l.startswith('l'):
+                files.append( (fn, 'Symbolic link') )                
             else:
                 files.append( (fn, 'Regular File') )
 
@@ -100,7 +102,7 @@ class ftpUploader(FTP):
             if fileType == 'Directory':
                 logger.info('recurse on %s' % fullpath)
                 self.rmtree_r(fullpath)
-            else:
+            elif fileType == 'Regular File'
                 logger.info('remove file %s' % fullpath)
                 self.delete(fullpath)
 
