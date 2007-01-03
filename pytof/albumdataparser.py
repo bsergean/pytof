@@ -38,7 +38,10 @@ class AlbumDataFromDir(object):
         logger.debug('pictures id: %s' % self.picturesIds)
 
     def getPicturesIdFromAlbumName(self, name):
-        return self.picturesIds.keys()
+        keys = self.picturesIds.keys()
+        keys.sort()
+        logger.info('keys: %s' % keys)
+        return keys
 
     def getAlbumByName(self, name):
         return basename(split(self.path)[0])

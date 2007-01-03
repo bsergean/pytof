@@ -282,6 +282,8 @@ def main(albumName, topDir, xmlData, strip_originals, fromDir):
     for i in xrange(nb_photos):
 
         id = photos[i]
+        logger.info('processing photo %s' % id)
+        
         photo = data.getPhotoFromId(id)
         prev = data.getPhotoFromId(photos[i-1])
         try:
