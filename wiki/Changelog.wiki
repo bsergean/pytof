@@ -1,6 +1,254 @@
-﻿#summary Automatically generated changelog
+#summary Automatically generated changelog
 
 {{{
+------------------------------------------------------------------------
+r135 | bsergean | 2007-01-03 16:14:34 -0500 (Wed, 03 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/ftp.py
+   M /trunk/test/ftpTest.py
+
+some log to debug the ftp problems
+------------------------------------------------------------------------
+r133 | bsergean | 2007-01-03 15:11:14 -0500 (Wed, 03 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/VERSION
+
+new version number
+------------------------------------------------------------------------
+r132 | bsergean | 2007-01-03 15:09:47 -0500 (Wed, 03 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/makepage.py
+   M /trunk/pytof/photo.py
+   M /trunk/test/EXIFTest.py
+   M /trunk/test/ftpTest.py
+
+Fix issue 25
+------------------------------------------------------------------------
+r131 | bsergean | 2007-01-03 13:20:57 -0500 (Wed, 03 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/VERSION
+   M /trunk/pytof/albumdataparser.py
+   M /trunk/pytof/makepage.py
+
+Fix issue 26
+------------------------------------------------------------------------
+r130 | bsergean | 2007-01-02 23:00:34 -0500 (Tue, 02 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/albumdataparser.py
+   M /trunk/pytof/makepage.py
+   M /trunk/pytof/utils.py
+   M /trunk/scripts/pytof.py
+   M /trunk/test/EXIFTest.py
+
+add a new fromDir option
+------------------------------------------------------------------------
+r129 | bsergean | 2007-01-02 17:14:16 -0500 (Tue, 02 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/albumdataparser.py
+
+exception class should inherit Exception
+------------------------------------------------------------------------
+r126 | bsergean | 2006-12-31 19:42:38 -0500 (Sun, 31 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/pytof/configFile.py
+   M /trunk/scripts/pytof.py
+
+Fix issue 9
+------------------------------------------------------------------------
+r123 | bsergean | 2006-12-31 14:03:38 -0500 (Sun, 31 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/setup.py
+
+add release info to the setup.py file
+------------------------------------------------------------------------
+r121 | bsergean | 2006-12-31 13:49:02 -0500 (Sun, 31 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/VERSION
+   M /trunk/pytof/albumdataparser.py
+
+new version number
+------------------------------------------------------------------------
+r120 | bsergean | 2006-12-31 13:40:27 -0500 (Sun, 31 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/pytof/makepage.py
+   M /trunk/scripts/pytof.py
+
+Fixed isssue 20
+------------------------------------------------------------------------
+r119 | bsergean | 2006-12-31 13:20:29 -0500 (Sun, 31 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/pytof/makepage.py
+
+Fixed issue 16
+------------------------------------------------------------------------
+r118 | bsergean | 2006-12-31 13:05:50 -0500 (Sun, 31 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/pytof/makepage.py
+
+Strip dummy comments
+------------------------------------------------------------------------
+r117 | bsergean | 2006-12-31 13:04:51 -0500 (Sun, 31 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/pytof/makepage.py
+   M /trunk/test/WebPageTest.py
+
+Implement issue 18 comment 2
+------------------------------------------------------------------------
+r116 | bsergean | 2006-12-31 12:38:48 -0500 (Sun, 31 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/pytof/albumdataparser.py
+   M /trunk/pytof/configFile.py
+
+clean way to parse a date
+------------------------------------------------------------------------
+r113 | bsergean | 2006-12-30 12:44:35 -0500 (Sat, 30 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/scripts/pytof.py
+
+small factorization
+------------------------------------------------------------------------
+r112 | bsergean | 2006-12-30 12:40:24 -0500 (Sat, 30 Dec 2006) | 1 line
+Changed paths:
+   D /tags/0.0.2/deps
+   D /tags/0.1.0/deps
+   D /trunk/deps/ftputil-2.2
+   A /trunk/gui
+   A /trunk/gui/samples
+   A /trunk/gui/samples/ClassBrowser
+   A /trunk/gui/samples/ClassBrowser/classes.nib
+   A /trunk/gui/samples/ClassBrowser/info.nib
+   A /trunk/gui/samples/ClassBrowser/objects.nib
+   A /trunk/gui/samples/ClassBrowser.py
+   A /trunk/gui/samples/setup.py
+
+removed unused deps and deps from tag branches
+------------------------------------------------------------------------
+r110 | bsergean | 2006-12-29 22:58:30 -0500 (Fri, 29 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/VERSION
+   M /trunk/scripts/pytof.py
+   M /trunk/setup.py
+
+minor build system stuff
+------------------------------------------------------------------------
+r109 | bsergean | 2006-12-29 22:45:28 -0500 (Fri, 29 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/scripts/pytof.py
+
+pb with css file in both zip and tar mode, plus zip files were created with absolute path inside, so they were not usable
+------------------------------------------------------------------------
+r108 | bsergean | 2006-12-29 22:27:26 -0500 (Fri, 29 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/pytof/ftp.py
+   M /trunk/scripts/pytof.py
+
+Fix issue 21
+------------------------------------------------------------------------
+r107 | bsergean | 2006-12-29 22:05:15 -0500 (Fri, 29 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/pytof/ftp.py
+   M /trunk/scripts/pytof.py
+   M /trunk/test/ftpTest.py
+
+ftp support seems ok
+------------------------------------------------------------------------
+r106 | bsergean | 2006-12-29 18:50:03 -0500 (Fri, 29 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/pytof/ftp.py
+   M /trunk/pytof/makepage.py
+   M /trunk/test/ftpTest.py
+
+add some ftp unit tests
+------------------------------------------------------------------------
+r105 | bsergean | 2006-12-28 23:09:17 -0500 (Thu, 28 Dec 2006) | 1 line
+Changed paths:
+   A /trunk/VERSION
+   M /trunk/scripts/pytof.py
+   M /trunk/setup.py
+
+fix issue 11
+------------------------------------------------------------------------
+r104 | bsergean | 2006-12-28 23:00:52 -0500 (Thu, 28 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/pytof/configFile.py
+   M /trunk/pytof/ftp.py
+   A /trunk/pytof/log.py
+   M /trunk/scripts/pytof.py
+   M /trunk/test/ConfigParserTest.py
+
+add a log module and ftp parameters are stored into config file
+------------------------------------------------------------------------
+r103 | bsergean | 2006-12-28 12:00:54 -0500 (Thu, 28 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/pytof/ftp.py
+   M /trunk/scripts/pytof.py
+   M /trunk/test/ftpTest.py
+
+ftp almost working, see issue 17
+------------------------------------------------------------------------
+r102 | bsergean | 2006-12-27 23:32:05 -0500 (Wed, 27 Dec 2006) | 1 line
+Changed paths:
+   A /trunk/pytof/ftp.py
+   M /trunk/pytof/utils.py
+   A /trunk/test/ftpTest.py
+   M /trunk/test/loggingTest.py
+
+some ftp code to be used soon
+------------------------------------------------------------------------
+r101 | bsergean | 2006-12-27 14:33:37 -0500 (Wed, 27 Dec 2006) | 2 lines
+Changed paths:
+   A /trunk/deps/ftputil-2.2
+   A /trunk/deps/ftputil-2.2/MANIFEST
+   A /trunk/deps/ftputil-2.2/PKG-INFO
+   A /trunk/deps/ftputil-2.2/README.html
+   A /trunk/deps/ftputil-2.2/README.txt
+   A /trunk/deps/ftputil-2.2/VERSION
+   A /trunk/deps/ftputil-2.2/__init__.py
+   A /trunk/deps/ftputil-2.2/_mock_ftplib.py
+   A /trunk/deps/ftputil-2.2/_test_base.py
+   A /trunk/deps/ftputil-2.2/_test_ftp_path.py
+   A /trunk/deps/ftputil-2.2/_test_ftp_stat.py
+   A /trunk/deps/ftputil-2.2/_test_ftp_stat_cache.py
+   A /trunk/deps/ftputil-2.2/_test_ftputil.py
+   A /trunk/deps/ftputil-2.2/default.css
+   A /trunk/deps/ftputil-2.2/ftp_error.py
+   A /trunk/deps/ftputil-2.2/ftp_file.py
+   A /trunk/deps/ftputil-2.2/ftp_path.py
+   A /trunk/deps/ftputil-2.2/ftp_stat.py
+   A /trunk/deps/ftputil-2.2/ftp_stat_cache.py
+   A /trunk/deps/ftputil-2.2/ftputil.html
+   A /trunk/deps/ftputil-2.2/ftputil.py
+   A /trunk/deps/ftputil-2.2/ftputil.txt
+   A /trunk/deps/ftputil-2.2/ftputil_ru_utf8.txt
+   A /trunk/deps/ftputil-2.2/ftputil_version.py
+   A /trunk/deps/ftputil-2.2/lrucache.py
+   A /trunk/deps/ftputil-2.2/setup.py
+
+Add ftputil, a convenient wrapper around ftplib
+
+------------------------------------------------------------------------
+r100 | bsergean | 2006-12-27 13:52:41 -0500 (Wed, 27 Dec 2006) | 1 line
+Changed paths:
+   A /trunk/test/loggingTest.py
+
+add logging unit test
+------------------------------------------------------------------------
+r99 | bsergean | 2006-12-26 18:02:18 -0500 (Tue, 26 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/scripts/pytof.py
+   M /trunk/test/ConfigParserTest.py
+   M /trunk/test/EXIFTest.py
+   M /trunk/test/WebPageTest.py
+
+Fix issue 13
+------------------------------------------------------------------------
+r98 | bsergean | 2006-12-26 17:20:26 -0500 (Tue, 26 Dec 2006) | 1 line
+Changed paths:
+   M /trunk/pytof/makepage.py
+   M /trunk/scripts/pytof.py
+   A /trunk/tools/changelog.sh
+
+solved issue 15
 ------------------------------------------------------------------------
 r96 | bsergean | 2006-12-26 16:50:08 -0500 (Tue, 26 Dec 2006) | 1 line
 Changed paths:
