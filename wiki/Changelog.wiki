@@ -1,4 +1,5 @@
 #summary Automatically generated changelog
+#labels Featured,Phase-Implementation
 
 {{{
 ------------------------------------------------------------------------
