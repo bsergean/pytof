@@ -1,4 +1,5 @@
 #summary User help
+#labels Featured,Phase-Deploy
 
 The main interface for now is pytof.py, and it's text based.
 
