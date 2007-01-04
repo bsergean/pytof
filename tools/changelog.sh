@@ -9,6 +9,7 @@ tget=../wiki/Changelog.wiki
 
 cat > $tget <<EOF
 #summary Automatically generated changelog
+#labels Featured,Phase-Implementation
 
 {{{
 EOF
