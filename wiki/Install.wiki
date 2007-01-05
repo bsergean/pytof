@@ -1,11 +1,27 @@
 #summary Installation
-#labels Featured
+#labels Featured,Phase-Deploy
 
 == Introduction ==
 
 For thumbnails creation pytof rely on the python imaging library, which itself rely on the libjpeg for low level jpeg handling. Both of them should be installed, and the process is quite simple.
 
-== Automatic ==
+== Install using prepackaged binaries ==
+
+=== Mac ===
+
+I'm sure fink has a prepackaged PIL.
+
+=== Linux ===
+
+Under mandriva the package name is python-imaging.
+
+=== Solaris ===
+
+Installing [http://www.blastwave.org/packages/pil PIL] using [http://www.blastwave.org blastwave] will  do all the job for you.
+
+== Install from sources ==
+
+=== Automatic ===
 
 The sources for the open source project were added to our sources in the deps
 directory.  A simple *install.sh* script can be found in the deps directory.
@@ -15,11 +31,11 @@ otherwise download them from the download page.
 
 You'll just have to enter your account password as it calls sudo sometimes.
 
-== Manual ==
+=== Manual ===
 
 Maybe install.sh won't work for you, so here are the steps to follow.
 
-=== libjpeg ===
+==== libjpeg ====
 
 We should provide a tar file compiled on a MacTel with Tiger soon with the right file.
 Grab that [ftp://ftp.uu.net/graphics/jpeg/jpegsrc.v6b.tar.gz here]. I had a bad experience with the default configure, so I had to manually copy the header and the static library to /usr/local. You may have to download the developper tools from the main Apple website, but I think there's a default gcc there and it's all you need.
@@ -33,7 +49,7 @@ $ sudo cp *.h /usr/local/include
 $ sudo cp libjpeg.a /usr/local/lib
 }}}
 
-== PIL ==
+==== PIL ====
 
 Grab the source code [http://effbot.org/downloads/Imaging-1.1.6.tar.gz here], extract it and from the PIL main dir, issue that:
 
