@@ -19,6 +19,14 @@ Under mandriva the package name is python-imaging.
 
 Installing [http://www.blastwave.org/packages/pil PIL] using [http://www.blastwave.org blastwave] will  do all the job for you.
 
+=== Windows ===
+
+ * Install [http://www.python.org/ftp/python/2.4.4/python-2.4.4.msi python] 
+ * Install [http://effbot.org/downloads/PIL-1.1.6.win32-py2.4.exe PIL]
+ * For now there is no GUI so you'll have to type commands in a terminal. To
+get a nice experience you should install [http://www.cygwin.com/mirrors.html
+cygwin] which comes with [http://www.gnu.org/software/bash/ bash].
+ 
 == Install from sources ==
 
 === Automatic ===
