@@ -102,7 +102,7 @@ class ftpUploader(FTP):
             if fileType == 'Directory':
                 logger.info('recurse on %s' % fullpath)
                 self.rmtree_r(fullpath)
-            elif fileType == 'Regular File'
+            elif fileType == 'Regular File':
                 logger.info('remove file %s' % fullpath)
                 self.delete(fullpath)
 
