@@ -13,7 +13,7 @@ __author__ = 'Benjamin Sergeant'
 
 from log import loggers
 # FIXME: find a way to get the file name in python
-logger = loggers['configFile']
+logger = loggers['config']
 
 from os.path import expanduser, join, exists
 import os, sys, getopt
