@@ -15,11 +15,11 @@ import logging
 
 pytofModules = ['pytof.py',
                 'albumdataparser.py',
-                'configFile.py',
+                'config.py',
                 'ftp.py',
                 'makepage.py',
                 'utils.py',
-                'EXIF.py',
+                'exif.py',
                 'makefs.py',
                 'photo.py']
 
