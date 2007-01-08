@@ -37,7 +37,7 @@ xmlTimestamp=0
 
         try:
             # FIXME: should use ~ char instead
-            confDir = join(os.environ["HOME"],'.pytof')
+            confDir = join(expanduser('~'),'.pytof')
             if not exists(confDir):
                 os.makedirs(confDir)
             self.confDir = confDir
