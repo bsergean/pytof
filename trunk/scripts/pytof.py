@@ -159,6 +159,10 @@ def main(albumName, libraryPath, xmlFileName, outputDir,
                 z.close()
                 logger.info('output zipfile is %s' % (zip_filename))
 
+            if not info and not fs:
+                import webbrowser
+                webbrowser.open('file://' + join(topDir, 'index.html'))
+                
             if ftp:
 
                 logger.debug('Entering ftp code')
