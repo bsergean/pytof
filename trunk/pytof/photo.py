@@ -22,7 +22,7 @@ from os.path import join, getsize, basename
 from shutil import copy
 import sys, os, time
 from utils import TryToImport, log
-from EXIF import process_file
+from exif import process_file
 
 TryToImport(__dependencies__)
 for mod in __dependencies__:
