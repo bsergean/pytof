@@ -11,12 +11,9 @@
 __revision__ = '$Id$  (C) 2004 GPL'
 __author__ = 'Benjamin Sergeant'
 
-import sys
-sys.path.insert(1, '../pytof')
-
 import unittest
 
-import os
+import os, sys
 from ftp import ftpUploader
 from os.path import join, basename, isdir
 from os import listdir, lstat, remove, chdir, mkdir
@@ -36,7 +33,7 @@ def diff(a, b):
     exitCode = os.system('diff %s %s' % (a, b))
     return exitCode == 0
 
-class FTP_TC(unittest.TestCase):
+class FTPTest(unittest.TestCase):
     '''
     This test case needs a local ftp server, and you to set
     the PASSWD env variable to your local account password
@@ -107,7 +104,4 @@ class FTP_TC(unittest.TestCase):
         self.ftp.mkd(cloneDir)
         self.ftp.mirror_r(topDir, cloneDir)
         self.assert_(diff(topDir, cloneDir))
-        
-if __name__ == "__main__":
-    unittest.main()
 

@@ -11,18 +11,15 @@
 __revision__ = '$Id$  (C) 2006 GPL'
 __author__ = 'Benjamin Sergeant'
 
-import sys
-sys.path.insert(1, '../pytof')
-
-import unittest
-import os
 from os import remove, walk, chdir, getcwd
-from utils import GetTmpDir
-from photo import Photo
-from photo import EXIF_tags
+from os.path import join
+from photo import EXIF_tags, Photo
 from shutil import copy, rmtree
 from tempfile import mkdtemp, mktemp
-from os.path import join
+from utils import GetTmpDir
+import os, sys
+import unittest
+
 
 def prune(tag, key):
     return str(tag[key])[0:-1]
@@ -42,7 +39,7 @@ def print_tags(file):
         if i not in ('JPEGThumbnail', 'TIFFThumbnail', 'Filename'):
             print '%s: %s' % (i, tags[i])
 
-class EXIF_TC(unittest.TestCase):
+class TestEXIF(unittest.TestCase):
     '''
     This test needs some pictures in the data directory
     '''
@@ -61,7 +58,6 @@ class EXIF_TC(unittest.TestCase):
             print_tags(self.exim1)
               
     def test_exim1_assert_values(self):
-
         tags = EXIF_tags(self.exim1)
         self.assert_( prune(tags, 'Image Model') == 'PENTAX Optio S5i' )
         self.assert_( prune(tags, 'Image Make') == 'PENTAX Corporation' )
@@ -70,8 +66,11 @@ class EXIF_TC(unittest.TestCase):
         self.assert_( str(tags['EXIF Flash']) == 'Off' )
 
         photo = Photo(self.exim1)
-        print ('\n').join(photo.EXIF_infos())
-
+        infos = photo.EXIF_infos()
+        self.assertEquals("Model: PENTAX Optio S5i ", infos[0])
+        self.assertEquals("Date: 2005:04:10 17:52:16", infos[1])
+        self.assertEquals("Flash: Off", infos[2])
+        
     def test_exif_stripped_picture(self):
         # Nothing will be printed since PIL remove the exif infos
         # on this data picture
@@ -82,8 +81,7 @@ class EXIF_TC(unittest.TestCase):
         key = 'Image Orientation'
         value = 'Rotated 90 CW'
         valueFromFile = str(get_key(self.exim3, key))
-        print 'valueFromFile =', valueFromFile
-        self.assert_ (valueFromFile == value)
+        self.assertEquals(value, valueFromFile)
 
     def _auto_rotate_thanks_to_exif(self, thumb = True):
 
