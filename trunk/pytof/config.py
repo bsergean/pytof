@@ -31,13 +31,13 @@ xmlTimestamp=0
 [ftp]
 '''
 
-    def __init__(self):
+    def __init__(self, confDir=None):
 
         self.ok = False
 
         try:
-            # FIXME: should use ~ char instead
-            confDir = join(expanduser('~'),'.pytof')
+            if confDir == None:
+                confDir = join(expanduser('~'),'.pytof')
             if not exists(confDir):
                 os.makedirs(confDir)
             self.confDir = confDir
