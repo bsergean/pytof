@@ -11,18 +11,14 @@
 __revision__ = '$Id$  (C) 2004 GPL'
 __author__ = 'Benjamin Sergeant'
 
-import sys
-sys.path.insert(1, '../pytof')
-
+from config import configHandler
 from os import remove
-from configFile import configHandler
+from unittest import TestCase
 
-if __name__ == "__main__":
 
-    conf = configHandler()
-    remove(conf.confFilename)
+class TestConfigHandler(TestCase):
+    def testInit(self):
+        conf = configHandler('data/conf')
+        self.assertEquals("data/conf/pytof.ini", conf.confFilename)
     
-    xmlFileName = 'data/AlbumData_gnocchi.xml'
-
-    # this test is bad, we should basically copy some pytof.py code here
-    # to do a real caching test (generate the cache the first time, then use it).
+    # TODO: Write a more complex pytof.ini file to test everything
