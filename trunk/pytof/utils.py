@@ -212,14 +212,6 @@ def notYetImplemented():
 def complicatedFunctionFromTheFuture():
         notYetImplemented()
         
-outfd = sys.stderr
-outfd = open('/tmp/message', 'w')
-def log(msg):
-        ''' We have to cast some type: instance,
-        the error message from an exception, to print all inputs'''
-        outfd.write(str(msg) + '\n')
-        outfd.flush()
-
 
 if __name__ == "__main__":
     # FIXME : Add tests here
