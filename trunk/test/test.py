@@ -1,3 +1,16 @@
+#!/usr/bin/env python
+# -*- coding: iso-8859-1 -*-
+# -*- python -*-
+#
+#*****************************************************************************
+#
+# See LICENSE file for licensing and to see where does some code come from
+#
+#*****************************************************************************
+
+__revision__ = '$Id$  (C) 2007 GPL'
+__author__ = 'Mathieu Robin'
+
 import sys, time
 import unittest
 
