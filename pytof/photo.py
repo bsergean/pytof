@@ -71,6 +71,7 @@ class Photo(object):
         self.height = self.image.size[1]
         self.sizeKB = getsize(self.fileName) / 1024
         self.exif_infos = self.EXIF_infos()
+        self.date = date
 
     def EXIF_infos(self):
         tags = EXIF_tags(self.fileName)
@@ -100,11 +101,11 @@ class Photo(object):
         if width > height:
             xOffset = (width - height) / 2
             yOffset = 0
-            cropLength = height
+            #not used: cropLength = height
         else:
             xOffset = 0
             yOffset = (height - width) / 2
-            cropLength = width
+            #not used: cropLength = width
         thumb = self.image.crop((xOffset,
                                  yOffset,
                                  width - xOffset,

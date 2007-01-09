@@ -13,7 +13,6 @@
 
 __revision__ = '$Id: miscutils.py,v 1.17 2005/04/27 16:24:16 bsergean Exp $  (C) 2004 GPL'
 __author__ = 'Benjamin Sergeant'
-__dependencies__ = []
 
 from albumdataparser import AlbumData
 import os, sys
@@ -35,8 +34,8 @@ def main(albumName, topDir, xmlData):
     cur = 1
 
     sys.stderr.write("Writing pictures\n")
-    for id in photos:
-        photo = xmlData.getPhotoFromId(id)
+    for pic_id in photos:
+        photo = xmlData.getPhotoFromId(pic_id)
         photo.saveCopy(topDir)
 
         s = "\r%f %% - (%d processed out of %d) " \
