@@ -16,9 +16,10 @@ from log import loggers
 logger = loggers['config']
 
 from os.path import expanduser, join, exists
-import os, sys, getopt
-from utils import _err_, _err_exit, help, echo, log
+import os, sys
+from utils import _err_, _err_exit, echo, log
 from ConfigParser import RawConfigParser
+from shutil import copy
 
 class configHandler:
 
@@ -85,9 +86,9 @@ xmlTimestamp=0
 
     def Print(self):
         ''' Print the config file on stdout '''
-        if not self.ok: return # FIXME: add error message 
-        for l in open(confFilename):
-            print l
+        if not self.ok: return # FIXME: add error message
+        if os.name == 'posix' or os.name == 'mac':
+            copy(self.confFilename, '/dev/stdout')
 
     # library path
     def hasLibraryPath(self):

@@ -134,14 +134,14 @@ see http://...
 
 def TryToImport(modules):
     """ try to import modules from a list """
-    for mod in modules:
+    for module in modules:
         try:
-            exec 'import '+ mod
+            exec 'import '+ module
         except (ImportError):
-            print pytof_modules[mod]
+            print pytof_modules[module]
             sys.exit(1)
 
-def help(str, revision, dependencies, author):
+def automaticHelp(str, revision, dependencies, author):
     """
     print a nice page (which is the actual man page too)
     deprecated since we use the optparse class
@@ -163,7 +163,7 @@ AUTHOR
         (', ').join(dependencies),
         author)
 
-class BadYear: pass
+class BadYear(Exception): pass
 def CorrectYear(year):
     """ A year for music is correct if it is between now and 1500 """
     import datetime
@@ -176,19 +176,19 @@ def CorrectYear(year):
         raise BadYear
 
 ## useless but kept for memory
-class BadMusicDirectoryName: pass
-def GetArtistAndAlbumFromMusicDirectoryName(dir = None):
+class BadMusicDirectoryName(Exception): pass
+def GetArtistAndAlbumFromMusicDirectoryName(directory = None):
     """ A dir for music is correct if it is of the form :
     /<Artist>/<Artist> - <Album>/
     """
-    if not dir:
-        dir = os.getcwd()
-    dir = os.path.abspath(dir)
-    if not '-' in dir:
+    if not directory:
+        directory = os.getcwd()
+    directory = os.path.abspath(dir)
+    if not '-' in directory:
         raise BadMusicDirectoryName
 
-    ArtistAndAlbum = os.path.basename(dir)
-    Artist = os.path.basename(os.path.dirname(dir))
+    ArtistAndAlbum = os.path.basename(directory)
+    Artist = os.path.basename(os.path.dirname(directory))
 
     if Artist != ArtistAndAlbum[0:len(Artist)]:
         raise BadMusicDirectoryName

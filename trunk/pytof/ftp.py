@@ -17,7 +17,7 @@ logger = loggers['ftp']
 
 from os.path import join, basename
 from os import walk, sep, chdir, rmdir, getcwd, listdir, lstat, mkdir, makedirs
-from sys import exit, exc_info
+from sys import exc_info
 from stat import S_ISDIR, S_ISLNK
 from utils import notYetImplemented
 from ftplib import FTP, error_temp
@@ -41,18 +41,13 @@ class ftpUploader(FTP):
         except error_temp:
             return False
 
-    def upload(self, file):
-        ''' Caution: no error handling '''
-        fd = open(file)
-        # be carefull to leave a space between STOR and the filename
-        self.storbinary('STOR ' + basename(file), fd)
-        fd.close()
-
-    def upload(self, src, tget):
+    def upload(self, src, tget = None):
         ''' Caution: no error handling '''
         fd = open(src)
         # be carefull to leave a space between STOR and the filename
-        self.storbinary('STOR ' + tget, fd)
+        if not tget:
+            target = basename(src)
+        self.storbinary('STOR ' + target, fd)
         fd.close()
 
     def lsdir(self, path):

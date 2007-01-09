@@ -24,7 +24,7 @@ logger = loggers['pytof']
 from os.path import expanduser, join, exists, basename, isabs, walk, isdir
 from albumdataparser import AlbumDataParser, AlbumDataParserError
 import os, sys
-from utils import _err_, _err_exit, help, echo, log, GetTmpDir
+from utils import _err_, _err_exit, echo, log, GetTmpDir
 from config import configHandler
 import makepage, makefs
 from cPickle import dump, load

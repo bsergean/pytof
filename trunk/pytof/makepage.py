@@ -14,7 +14,6 @@
 
 __revision__ = '$Id$  (C) 2006 GPL'
 __author__ = 'Mathieu Robin'
-__dependencies__ = []
 
 from log import loggers
 import logging
@@ -23,8 +22,8 @@ logger = loggers['makepage']
 
 from os.path import expanduser, join, exists, basename
 from albumdataparser import AlbumDataParser, AlbumDataParserError, AlbumDataFromDir
-import os, sys, getopt
-from utils import _err_, _err_exit, help, log, echo
+import os, sys
+from utils import _err_, _err_exit, log, echo
 from shutil import copy
 
 css = 'scry.css'
@@ -261,7 +260,7 @@ def main(albumName, topDir, xmlData, strip_originals, fromDir):
         if not os.path.exists(Dir):
             try:
                 os.makedirs(Dir)
-            except (error):
+            except (os.error):
                 _err_exit('Cannot create %s' %(Dir))
 
     # FIXME: how do we get the package install path, to retrieve
@@ -282,10 +281,10 @@ def main(albumName, topDir, xmlData, strip_originals, fromDir):
     nb_photos = len(photos)
     for i in xrange(nb_photos):
 
-        id = photos[i]
-        logger.debug('processing photo %s' % id)
+        pic_id = photos[i]
+        logger.debug('processing photo %s' % pic_id)
         
-        photo = data.getPhotoFromId(id)
+        photo = data.getPhotoFromId(pic_id)
         prev = data.getPhotoFromId(photos[i-1])
         try:
             next = data.getPhotoFromId(photos[i+1])
@@ -297,8 +296,13 @@ def main(albumName, topDir, xmlData, strip_originals, fromDir):
             photo.saveCopy(dirs[0])
         photo.makePreview(dirs[1], 640)
         photo.makeThumbnail(dirs[2])
-        photoPageName = makePhotoPage(photo, curPage.fileName, topDir,
-                                      prev, next, strip_originals)
+
+        # FIXME: makePhotoPage return photoPageName which shoule be
+        # modified to HTML/123.html. We would only have to create
+        # a dir HTML, change the links in the index to HTML/123.html
+        # and create the per page file in HTML/123.html
+        makePhotoPage(photo, curPage.fileName, topDir,
+                      prev, next, strip_originals)
         curPage.addCode("<a href=\"%s\"><img src=\"%s\" alt=\"toto.jpg\" border=\"0\"/></a>" %
                         (photo.id + '.html',
                          join('thumbs',   'th_' + photo.id + '.jpg')))

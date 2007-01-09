@@ -33,8 +33,8 @@ class AlbumDataFromDir(object):
         
         self.picturesIds = {}
         for p in self.albumList:
-            id = splitext(split(p)[1])[0]
-            self.picturesIds[id] = p
+            pic_id = splitext(split(p)[1])[0]
+            self.picturesIds[pic_id] = p
         logger.debug('pictures id: %s' % self.picturesIds)
 
     def getPicturesIdFromAlbumName(self, name):
@@ -46,10 +46,10 @@ class AlbumDataFromDir(object):
     def getAlbumByName(self, name):
         return basename(split(self.path)[0])
 
-    def getPhotoFromId(self, id):
+    def getPhotoFromId(self, pic_id):
         # FIXME: this None list is so nice.
-        return Photo(self.picturesIds[id],
-                     id,
+        return Photo(self.picturesIds[pic_id],
+                     pic_id,
                      None,
                      None,
                      None)
@@ -80,16 +80,15 @@ class AlbumData(object):
         albums.sort()
         return [album[1] for album in albums]
 
-    def getPicturePathFromId(self, id):
-        return self.data['Master Image List'][id]['ImagePath']
+    def getPicturePathFromId(self, pic_id):
+        return self.data['Master Image List'][pic_id]['ImagePath']
 
     def getPicturesIdFromAlbumName(self, name):
-        res = []
         album = self.getAlbumByName(name)
         return album['KeyList']
 
-    def getPhotoFromId(self, id):
-        p = self.data['Master Image List'][id]
+    def getPhotoFromId(self, pic_id):
+        p = self.data['Master Image List'][pic_id]
         photoFileName = p['ImagePath']
 
         if self.libraryPath:
@@ -114,7 +113,7 @@ class AlbumData(object):
             p['DateAsTimerInterval'] = ''
             
         return Photo(photoFileName,
-                     id,
+                     pic_id,
                      p['Caption'],
                      p['Comment'],
                      p['DateAsTimerInterval'])
@@ -127,9 +126,9 @@ class AlbumData(object):
         return res
 
     def info(self, name):
-        photos = data.getPicturesIdFromAlbumName(name)
-        for id in photos:
-            print id
+        photos = self.getPicturesIdFromAlbumName(name)
+        for pic_id in photos:
+            print pic_id
 
 class XmlItem(object):
     def __init__(self, type):
@@ -158,7 +157,7 @@ class XmlItem(object):
         else:
             raise ExpatError, "Type \"%s\" not supported" % type
 
-class AlbumDataParserError: pass
+class AlbumDataParserError(Exception): pass
 class AlbumDataParser(object):
     def __init__(self,
                  xmlFileDir,
@@ -181,11 +180,11 @@ class AlbumDataParser(object):
         self.albumData = None        
 
     def addItem(self, item):
-            list = self.elemList[-1]
-            if str(list.__class__) == "<type 'dict'>":
-                list[self.keys.pop()] = item
-            elif str(list.__class__) == "<type 'list'>":
-                list.append(item)
+            liste = self.elemList[-1]
+            if str(liste.__class__) == "<type 'dict'>":
+                liste[self.keys.pop()] = item
+            elif str(liste.__class__) == "<type 'list'>":
+                liste.append(item)
             else:
                 raise ExpatError, list.__class__
 
@@ -231,23 +230,6 @@ class AlbumDataParser(object):
         p.ParseFile(self.xmlFile)
         return self.albumData
     
-
-if __name__ == '__main__':
-    adp = AlbumDataParser()
-    data = adp.parse()
-    alb = data.getAlbumByName("Test")
-    print alb['Album Type']
-    print alb['KeyList']
-    print
-    for f in data.getPictureFilesFromAlbumName('Test'):
-        print f
-
-
-
-
-
-
-
 # Code snipets kept for memory
 
 # 2005-08-08T06:03:54Z
