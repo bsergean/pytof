@@ -63,8 +63,9 @@ if __name__ == '__main__':
         print "ERROR: " + msg
         sys.exit(2)
     
-    testModules = ('config_test', 'exif_test', 'ftp_test',
-                   'log_test', 'makepage_test', 'utils_test')
+    from glob import glob
+    from os.path import splitext
+    testModules = tuple( [splitext(i)[0] for i in glob('*_test.py')] )
 
     profileOut = None
     for option, arg in options:
