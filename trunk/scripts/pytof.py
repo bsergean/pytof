@@ -25,7 +25,7 @@ from os.path import expanduser, join, exists, basename, isabs, walk, isdir
 from albumdataparser import AlbumDataParser, AlbumDataParserError
 import os, sys
 from utils import _err_, _err_exit, help, echo, log, GetTmpDir
-from configFile import configHandler
+from config import configHandler
 import makepage, makefs
 from cPickle import dump, load
 from optparse import OptionParser
@@ -83,16 +83,15 @@ def main(albumName, libraryPath, xmlFileName, outputDir,
             if cached:
                 pickleFd = open(conf.pickleFilename)
                 xmlData = load(pickleFd)
-                pickleFd.close()
             else:
                 xmlData = parser.parse()
                 xmlData.libraryPath = libraryPath
 
-            # writing the cached data to a file
-            pickleFd = open(conf.pickleFilename, 'w')
-            dump(xmlData, pickleFd)
+                # writing the cached data to a file
+                pickleFd = open(conf.pickleFilename, 'w')
+                dump(xmlData, pickleFd)
+            
             pickleFd.close()
-                
             echo("\t[DONE]\n")
 
         except(AlbumDataParserError):
