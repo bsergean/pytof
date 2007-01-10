@@ -67,17 +67,14 @@ def runTests(testModules=None, profileOut=None, coverageOutDir=None):
 
     if coverageOutDir is not None:
         coverage.stop()
-        modules = os.listdir('../pytof/')
-        for m in modules:
-            if m == "__init__.py" or not m.endswith(".py"):
-                modules.remove(m)
+        modules = glob('../pytof/*.py')
+        modules.remove('../pytof/__init__.py')
                 
         for module in modules:
-            if not module.endswith("__init__.py"):
-                f, s, m, mf = coverage.analysis(module)
-                out = file(os.path.join(coverageOutDir, os.path.basename(f)+'.html'), 'wb')
-                colorize.colorize_file(f, outstream=out, not_covered=mf)
-                out.close()
+            f, s, m, mf = coverage.analysis(module)
+            out = file(os.path.join(coverageOutDir, os.path.basename(f)+'.html'), 'wb')
+            colorize.colorize_file(f, outstream=out, not_covered=mf)
+            out.close()
         print
         coverageReportTxt = file(os.path.join(coverageOutDir, "coverage.txt"), 'w')
         coverage.report(modules, show_missing=False, omit_prefixes=['__'], file=coverageReportTxt) 
