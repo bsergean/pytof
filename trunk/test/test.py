@@ -11,8 +11,12 @@
 __revision__ = '$Id$  (C) 2007 GPL'
 __author__ = 'Mathieu Robin'
 
-import sys, time
+import sys
+import os
+import time
 import unittest
+from glob import glob
+import coverage, colorize
 
 if 'check' in sys.argv[1:]:
     __pychecker__ = 'no-deprecated no-miximport'
@@ -41,7 +45,11 @@ class Profiler(object):
         return totalTime
     
 
-def runTests(testModules=None, profileOut=None):
+def runTests(testModules=None, profileOut=None, coverageOutDir=None):
+    if coverageOutDir is not None:
+        coverage.erase()
+        coverage.start()
+        
     alltests = unittest.TestLoader().loadTestsFromNames(testModules)
     
     if profileOut is not None:
@@ -50,24 +58,49 @@ def runTests(testModules=None, profileOut=None):
         results.reverse()
         for result in results:
             profileOut.write("%s  \t%3.6f\n" % (result[1], result[0]))
+            print "Profiling information written in " + profileOut.name
         profileOut.close()
     
     unittest.TextTestRunner().run(alltests)
 
+    if coverageOutDir is not None:
+        coverage.stop()
+        modules = os.listdir('../pytof/')
+        for m in modules:
+            if m == "__init__.py" or not m.endswith(".py"):
+                modules.remove(m)
+                
+        for module in modules:
+            if not module.endswith("__init__.py"):
+                f, s, m, mf = coverage.analysis(module)
+                out = file(os.path.join(coverageOutDir, os.path.basename(f)+'.html'), 'wb')
+                colorize.colorize_file(f, outstream=out, not_covered=mf)
+                out.close()
+        print
+        coverageReportTxt = file(os.path.join(coverageOutDir, "coverage.txt"), 'w')
+        coverage.report(modules, show_missing=False, omit_prefixes=['__'], file=coverageReportTxt) 
+        coverageReportTxt.close()
+        coverage.report(modules, show_missing=False, omit_prefixes=['__'])
+        coverage.erase()
+        
+        coverageReportTxt.close()
+        print
+        print "Coverage information updated in " + coverageOutDir
+        print
+        
 
 if __name__ == '__main__':
     import getopt
     try:
-        options, args = getopt.getopt(sys.argv[1:], 't:p:', [])
+        options, args = getopt.getopt(sys.argv[1:], 't:pc', [])
     except getopt.GetoptError, (msg, opt):
         print "ERROR: " + msg
         sys.exit(2)
     
-    from glob import glob
-    from os.path import splitext
-    testModules = tuple( [splitext(i)[0] for i in glob('*_test.py')] )
+    testModules = tuple( [os.path.splitext(i)[0] for i in glob('*_test.py')] )
 
     profileOut = None
+    coverageOutDir = None
     for option, arg in options:
         if option == "-t":
             names = arg.split(',')
@@ -76,7 +109,12 @@ if __name__ == '__main__':
                 testModules += (name,)
         elif option == "-p":
             if arg == "":
-                arg = "profile.txt"
+                arg = "output/profile.txt"
             profileOut = file(arg, 'w')
-    runTests(testModules, profileOut)
+        elif option == "-c":
+            if arg == "":
+                arg = "output/coverage/"
+            coverageOutDir = arg
+
+    runTests(testModules, profileOut, coverageOutDir)
     
