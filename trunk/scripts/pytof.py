@@ -24,7 +24,7 @@ logger = loggers['pytof']
 from os.path import expanduser, join, exists, basename, isabs, walk, isdir
 from albumdataparser import AlbumDataParser, AlbumDataParserError
 import os, sys
-from utils import _err_, _err_exit, echo, log, GetTmpDir
+from utils import _err_, _err_exit, echo, GetTmpDir
 from config import configHandler
 import makepage, makefs
 from cPickle import dump, load
@@ -189,7 +189,7 @@ def main(albumName, libraryPath, xmlFileName, outputDir,
                     sys.exit(1)
                 if remoteDir:
                     if not ftpU.exists(remoteDir):
-                        log('remote dir %s does not exist' % remoteDir)
+                        logger.info('remote dir %s does not exist' % remoteDir)
                         remoteDir = ftpU.pwd()
                 else:
                     remoteDir = ftpU.pwd()
@@ -224,6 +224,12 @@ def main(albumName, libraryPath, xmlFileName, outputDir,
 
 
 if __name__ == "__main__":
+    # Import Psyco if available
+    try:
+        import psyco
+        psyco.full()
+    except ImportError:
+        pass
 
     # parse args
     usage = "usage: python %prog <options>"

@@ -42,6 +42,7 @@ commercial = '''
 class WebPage(object):
     def __init__(self, fileName, title):
         self.fileName = fileName  + ".html"
+        logger.info(self.fileName)
         self.title = title
         self.code = ''
 
@@ -264,13 +265,13 @@ def main(albumName, topDir, xmlData, strip_originals, fromDir):
 
     # FIXME: how do we get the package install path, to retrieve
     # the resource dir next ...quick hack for now
-    log(cssfile)
+    logger.info(cssfile)
     if not exists(cssfile):
         _err_('No css file was found: HTML files look and feel will be bad')
     else:
         copy(cssfile, join(topDir, os.pardir, css))
 
-    log(topDir)
+    logger.info(topDir)
     
     curPage = WebPage(join(topDir, 'index'), albumName)
     

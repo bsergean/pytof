@@ -62,7 +62,7 @@ def main():
         packages = ['pytof'],
         classifiers = [],
         scripts = ['scripts/pytof.py'],
-        data_files = [ ('share', ['share/scry.css']) ]
+        data_files = [ ('share', ['share/scry.css']), ('VERSION') ]
         )
 
 if __name__ == '__main__':
