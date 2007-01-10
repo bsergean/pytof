@@ -18,7 +18,7 @@ import os
 from os.path import expanduser, exists, join, split, splitext, basename
 from xml.parsers.expat import ParserCreate, ExpatError
 from photo import Photo
-from utils import _err_, _err_exit, log, ListCurrentDirFileFromExt
+from utils import _err_, _err_exit, ListCurrentDirFileFromExt
 from time import strptime
 from glob import glob
 

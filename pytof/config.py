@@ -17,7 +17,7 @@ logger = loggers['config']
 
 from os.path import expanduser, join, exists
 import os, sys
-from utils import _err_, _err_exit, echo, log
+from utils import _err_, _err_exit, echo
 from ConfigParser import RawConfigParser
 from shutil import copy
 
@@ -66,8 +66,6 @@ xmlTimestamp=0
         self.confFilename = confFilename
 
         self.pickleFilename = join(self.confDir, 'xmlData.pickle')
-        log(self.pickleFilename)
-
         self.Load()
         self.ok = True
 
