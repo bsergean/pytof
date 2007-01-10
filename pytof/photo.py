@@ -89,7 +89,7 @@ class Photo(object):
         return basename(self.fileName).split('.')[-1].lower()
 
     def saveCopy(self, path):
-        log(path)
+        logger.info(path)
         self.imagePath = join(path, self.getBaseName() + '.'
                               + self.getFileType())
         copy(self.fileName, self.imagePath)

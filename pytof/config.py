@@ -56,7 +56,7 @@ xmlTimestamp=0
 
         if not exist or size == 0:
             # create it
-            log('Create brand new config file')
+            logger.info('Create brand new config file')
             # FIXME: this file may contains password, it has to be
             # created in 600 mode (os.chmod ?)
             confFd = open(confFilename, 'w')
@@ -66,6 +66,7 @@ xmlTimestamp=0
         self.confFilename = confFilename
 
         self.pickleFilename = join(self.confDir, 'xmlData.pickle')
+        logger.info(self.pickleFilename)
         self.Load()
         self.ok = True
 
@@ -160,10 +161,10 @@ xmlTimestamp=0
             xmlTimestamp = self.config.get('Internals', 'xmlTimestamp')
             statinfo = os.stat(xmlFileName).st_mtime
             if statinfo == int(xmlTimestamp):
-                log('Caching')
+                logger.info('Caching')
                 cache = True
             else:
-                log('Not caching')
+                logger.info('Not caching')
                 self.Open()
                 self.config.set('Internals', 'xmlTimestamp', statinfo)
                 self.Close()

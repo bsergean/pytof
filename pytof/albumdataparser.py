@@ -107,7 +107,7 @@ class AlbumData(object):
                 print self.libraryPath
                 _err_exit('Internal Error: cannot handle %s' %(photoFileName))
 
-            log(photoFileName)
+            logger.info(photoFileName)
 
         if not p.has_key('DateAsTimerInterval'):
             p['DateAsTimerInterval'] = ''
