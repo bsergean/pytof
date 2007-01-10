@@ -104,8 +104,8 @@ class TestEXIF(unittest.TestCase):
         else:
             photo.makePreview(tgetDir)
 
-        for d in walk(self.tempdir):
-            print d
+        #for d in walk(self.tempdir):
+        #    print d
 
         # uncomment to get this picture and check it (I use the handy xv)
         #copy(photo.thumbPath, '/tmp/thumb.jpg')
