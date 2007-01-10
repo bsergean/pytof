@@ -23,7 +23,7 @@ logger = loggers['makepage']
 from os.path import expanduser, join, exists, basename
 from albumdataparser import AlbumDataParser, AlbumDataParserError, AlbumDataFromDir
 import os, sys
-from utils import _err_, _err_exit, log, echo
+from utils import _err_, _err_exit, echo
 from shutil import copy
 
 css = 'scry.css'
@@ -42,7 +42,6 @@ commercial = '''
 class WebPage(object):
     def __init__(self, fileName, title):
         self.fileName = fileName  + ".html"
-        log(self.fileName)
         self.title = title
         self.code = ''
 

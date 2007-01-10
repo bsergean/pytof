@@ -21,7 +21,7 @@ logger = loggers['photo']
 from os.path import join, getsize, basename
 from shutil import copy
 import sys, os, time
-from utils import TryToImport, log
+from utils import TryToImport
 from exif import process_file
 
 TryToImport(__dependencies__)
@@ -113,7 +113,7 @@ class Photo(object):
         thumb = thumb.resize((size, size), Image.ANTIALIAS)
 
         if self.rotation == 'Rotated 90 CW':
-            logger.info('makeThumbnail: Rotate')
+            logger.debug('makeThumbnail: Rotate')
             thumb = thumb.rotate(-90)
         else:
             logger.debug('makeThumbnail: Do not rotate')
@@ -140,10 +140,10 @@ class Photo(object):
             out = self.image
 
         if self.rotation == 'Rotated 90 CW':
-            logger.info('makePreview: Rotate')
+            logger.debug('makePreview: Rotate')
             out = out.rotate(-90)
         else:
-            logger.debug('makePreview: Do not rotate')
+            logger.deug('makePreview: Do not rotate')
             
         self.prevPath = os.path.join(path, 'pv_' + self.getBaseName() + '.jpg')
         out.save(self.prevPath, quality=95)
