@@ -15,7 +15,7 @@ PROFILING (with -p):
 * Saves profiling information in a file. If not specified, defaults to "output/profile.txt".
 
 COVERAGE (with -c):
-* Create a test coverage report. If not specified, the files are created in the "output/coverage/" directory.
+* Create a test coverage report. If not specified, the files are created in the "output/coverage/" directory. If the directory doesn't exist, it is created automatically.
 * Coverage has to be run on the full test suite and without profiling (i.e. it is incompatible with the -t and -p options)
 * Code that is not executed with test suite appears highlighted in red in the HTML.
 

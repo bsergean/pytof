@@ -47,6 +47,8 @@ class Profiler(object):
 
 def runTests(testModules=None, profileOut=None, coverageOutDir=None):
     if coverageOutDir is not None:
+        if not os.path.exists(coverageOutDir):
+            os.makedirs(coverageOutDir)
         coverage.erase()
         coverage.start()
         
