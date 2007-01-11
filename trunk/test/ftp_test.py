@@ -48,7 +48,6 @@ class FTPTest(unittest.TestCase):
         passwd = os.environ.get('PASSWD', '')
         if not passwd:
             print 'no password in $PASSWD'
-            sys.exit(1)
         else:
             print 'start ftp connection'
             
