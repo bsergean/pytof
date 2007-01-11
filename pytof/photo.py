@@ -143,7 +143,7 @@ class Photo(object):
             logger.debug('makePreview: Rotate')
             out = out.rotate(-90)
         else:
-            logger.deug('makePreview: Do not rotate')
+            logger.debug('makePreview: Do not rotate')
             
         self.prevPath = os.path.join(path, 'pv_' + self.getBaseName() + '.jpg')
         out.save(self.prevPath, quality=95)
