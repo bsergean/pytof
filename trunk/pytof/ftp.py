@@ -20,7 +20,7 @@ from os import walk, sep, chdir, rmdir, getcwd, listdir, lstat, mkdir, makedirs
 from sys import exc_info
 from stat import S_ISDIR, S_ISLNK
 from utils import notYetImplemented
-from ftplib import FTP, error_temp
+from ftplib import FTP, error_temp, all_errors
 
 class ftpUploader(FTP):
     '''
@@ -28,11 +28,22 @@ class ftpUploader(FTP):
     For ftp commands explanations see http://www.nsftools.com/tips/RawFTP.htm
     '''
 
+    def __init__(self, host, user, password):
+        ''' TODO: trap error: (111, \'Connection refused\') '''
+        self.ok = False
+        try:
+            FTP.__init__(self, host, user, password)
+            self.ok
+        except all_errors, msg:
+            logger.error(msg)
+
     def infos(self):
+        if not self.ok: return
         logger.info('Remote current ftp identification: %s' % self.getwelcome())
 
     def exists(self, fn):
         ''' Test whether file exist '''
+        if not self.ok: return
         logger.debug('Does %s exists' % fn)
         try:
             def callback(line): pass
@@ -43,6 +54,7 @@ class ftpUploader(FTP):
 
     def upload(self, src, tget = None):
         ''' Caution: no error handling '''
+        if not self.ok: return
         fd = open(src)
         # be carefull to leave a space between STOR and the filename
         if not tget:
@@ -56,6 +68,7 @@ class ftpUploader(FTP):
         We use the non-standard -a to get filename
         starting with a dot (like .bashrc)
         '''
+        if not self.ok: return
         logger.debug('lsdir %s' % path)
 
         lines = []
@@ -80,6 +93,7 @@ class ftpUploader(FTP):
         return files[2:]
 
     def rmtree(self, path):
+        if not self.ok: return
         if not self.exists(path): return
         self.rmtree_r(path)
         
@@ -88,6 +102,7 @@ class ftpUploader(FTP):
         Caution: This method depends on lsdir which may be buggy (symlinks)
         Recursive, inspired from shutil.rmtree
         '''
+        if not self.ok: return
         files = self.lsdir(path)
         logger.debug(files)
 
@@ -106,6 +121,7 @@ class ftpUploader(FTP):
             self.rmd(path)
 
     def cp_rf(self, src, tget):
+        if not self.ok: return
         src_basename = basename(src)
         full_tget = join(tget, src_basename)
         self.rmtree(full_tget)
@@ -114,6 +130,7 @@ class ftpUploader(FTP):
 
     def mirror_r(self, src, tget):
         ''' Recursive version '''
+        if not self.ok: return
         names = listdir(src)
         logger.debug(names)
 
