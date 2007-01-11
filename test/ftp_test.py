@@ -34,11 +34,13 @@ def diff(a, b):
     exitCode = os.system('diff %s %s' % (a, b))
     return exitCode == 0
 
-class FTPTest(unittest.TestCase):
+# FIXME: both class should inherit from the same class for factorization
+
+class FTPTestLocal(unittest.TestCase):
     '''
     This test case needs a local ftp server, and you to set
     the PASSWD env variable to your local account password
-    run it like PASSWD=blabla python ftpTest.py
+    run it like PASSWD=blabla python test.py -t ftp_test.FTPTestLocal
     '''
 
     def setUp(self):
@@ -48,14 +50,12 @@ class FTPTest(unittest.TestCase):
         passwd = os.environ.get('PASSWD', '')
         if not passwd:
             print 'no password in $PASSWD'
-        else:
-            print 'start ftp connection'
             
         self.ftp = ftpUploader('localhost', getuser(), passwd)
         if not self.ftp.ok:
             return
         self.ok = True
-            
+
         #self.ftp = ftpUploader('snoball.corp.adobe.com', getuser(), passwd)
         self.ftp.infos()
         self.pwd = self.ftp.pwd()
@@ -115,4 +115,80 @@ class FTPTest(unittest.TestCase):
         self.ftp.mkd(cloneDir)
         self.ftp.mirror_r(topDir, cloneDir)
         self.assert_(diff(topDir, cloneDir))
+
+
+class FTPTestRemote(unittest.TestCase):
+    '''
+    This test case needs a remote ftp server, and you to set
+    the PASSWD env variable to your local account password
+    run it like PASSWD=blabla python test.py -t ftp_test.FTPTestRemote
+    '''
+
+    def setUp(self):
+        self.tempdir = mkdtemp()
+        self.ok = False
+
+        passwd = os.environ.get('PASSWD', '')
+        if not passwd:
+            print 'no password in $PASSWD'
+            
+        self.ftp = ftpUploader('lisa1', getuser(), passwd)
+        if not self.ftp.ok:
+            return
+        self.ok = True
+
+        #self.ftp = ftpUploader('snoball.corp.adobe.com', getuser(), passwd)
+        self.ftp.infos()
+        self.pwd = self.ftp.pwd()
+
+        # create remote dummy dir
+        self.remoteDir = basename(self.tempdir)
+        self.ftp.mkd(self.remoteDir)
+
+    def tearDown(self):
+        '''
+        Delete the local tree
+        FIXME: We should also delete the remote tree
+        '''
+        if not self.ok: return
+        rmtree(self.tempdir)
+        self.ftp.rmtree(self.remoteDir)
+
+    def create_dummy_dir(self, newDir):
+        if not self.ok: return
+        topDir = join(self.tempdir, newDir)
+        maybemakedirs(topDir)
+        
+        tmpftpfile = 'a_file'
+        create(join(self.tempdir, tmpftpfile), 'youcoulele')
+        tmpftpfile = 'another_file'
+        create(join(self.tempdir, tmpftpfile), 'warzazat')
+
+        nestedDir = join(topDir, 'a_dir')
+        mkdir(nestedDir)
+        
+        tmpftpfile = 'a_file'
+        create(join(nestedDir, tmpftpfile), 'youcoulele')
+        tmpftpfile = 'another_file'
+        create(join(nestedDir, tmpftpfile), 'warzazat')
+
+        return topDir
+
+    def info():
+        if not self.ok: return
+        self.ftp.infos()
+
+    def test_upload_one_file(self):
+        if not self.ok: return
+        tmp = join(self.tempdir, 'b')
+        create(tmp, 'youcoulele')
+
+        remoteTmp = basename(mktemp())
+        self.ftp.upload(tmp, join(self.remoteDir, remoteTmp))
+
+    def test_cp_rf(self):
+        if not self.ok: return
+        newDir = 'mirror_dir'
+        topDir = self.create_dummy_dir(newDir)
+        self.ftp.cp_rf(topDir, self.remoteDir)
 

@@ -17,6 +17,8 @@ import time
 import unittest
 from glob import glob
 import coverage, colorize
+from os import getcwd
+from os.path import join
 
 if 'check' in sys.argv[1:]:
     __pychecker__ = 'no-deprecated no-miximport'
@@ -72,11 +74,11 @@ def runTests(testModules=None, profileOut=None, coverageOutDir=None):
                 
         for module in modules:
             f, s, m, mf = coverage.analysis(module)
-            out = file(os.path.join(coverageOutDir, os.path.basename(f)+'.html'), 'wb')
+            out = file(join(coverageOutDir, os.path.basename(f)+'.html'), 'wb')
             colorize.colorize_file(f, outstream=out, not_covered=mf)
             out.close()
         print
-        coverageReportTxt = file(os.path.join(coverageOutDir, "coverage.txt"), 'w')
+        coverageReportTxt = file(join(coverageOutDir, "coverage.txt"), 'w')
         coverage.report(modules, show_missing=False, omit_prefixes=['__'], file=coverageReportTxt) 
         coverageReportTxt.close()
         coverage.report(modules, show_missing=False, omit_prefixes=['__'])
@@ -86,7 +88,10 @@ def runTests(testModules=None, profileOut=None, coverageOutDir=None):
         print
         print "Coverage information updated in " + coverageOutDir
         print
+
         
+        import webbrowser
+        webbrowser.open('file://' + join(getcwd(), coverageOutDir))
 
 if __name__ == '__main__':
     import getopt
