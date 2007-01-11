@@ -15,6 +15,7 @@ import unittest
 
 import os, sys
 from ftp import ftpUploader
+from ftplib import all_errors
 from os.path import join, basename, isdir
 from os import listdir, lstat, remove, chdir, mkdir
 from stat import S_ISDIR
@@ -42,6 +43,7 @@ class FTPTest(unittest.TestCase):
 
     def setUp(self):
         self.tempdir = mkdtemp()
+        self.ok = False
 
         passwd = os.environ.get('PASSWD', '')
         if not passwd:
@@ -51,14 +53,20 @@ class FTPTest(unittest.TestCase):
             print 'start ftp connection'
             
         self.ftp = ftpUploader('localhost', getuser(), passwd)
+        if not self.ftp.ok:
+            return
+        self.ok = True
+            
         #self.ftp = ftpUploader('snoball.corp.adobe.com', getuser(), passwd)
         self.ftp.infos()
         self.pwd = self.ftp.pwd()
 
     def tearDown(self):
+        if not self.ok: return
         rmtree(self.tempdir)
 
     def test_upload_one_file(self):
+        if not self.ok: return
         tmp = join(self.tempdir, 'b')
         create(tmp, 'youcoulele')
 
@@ -67,6 +75,7 @@ class FTPTest(unittest.TestCase):
         self.assert_ (diff (tmp, remoteTmp))
 
     def create_dummy_dir(self, newDir):
+        if not self.ok: return
         topDir = join(self.tempdir, newDir)
         maybemakedirs(topDir)
         
@@ -86,18 +95,21 @@ class FTPTest(unittest.TestCase):
         return topDir
 
     def test_cp_rf(self):
+        if not self.ok: return
         newDir = 'mirror_dir'
         topDir = self.create_dummy_dir(newDir)
         self.ftp.cp_rf(topDir, self.tempdir)
         self.assert_(diff(topDir, join(self.tempdir, newDir)))
 
     def test_rm_tree(self):
+        if not self.ok: return
         newDir = 'mirror_dir'
         topDir = self.create_dummy_dir(newDir)
         self.ftp.rmtree(topDir)
         self.assert_(not isdir(topDir) )
 
     def test_mirror_r(self):
+        if not self.ok: return
         newDir = 'mirror_dir'
         topDir = self.create_dummy_dir(newDir)
         cloneDir = join(self.tempdir, newDir + '2')
