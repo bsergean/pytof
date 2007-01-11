@@ -33,7 +33,7 @@ class ftpUploader(FTP):
         self.ok = False
         try:
             FTP.__init__(self, host, user, password)
-            self.ok
+            self.ok = True
         except all_errors, msg:
             logger.error(msg)
 
@@ -46,8 +46,12 @@ class ftpUploader(FTP):
         if not self.ok: return
         logger.debug('Does %s exists' % fn)
         try:
-            def callback(line): pass
+            lines = []
+            def callback(line): lines.append(line)
             self.dir('-a %s' % fn, callback)
+            logger.debug(lines)
+            if len(lines) and 'No such file or directory' in lines[0]:
+                return False
             return True
         except error_temp:
             return False
@@ -58,8 +62,8 @@ class ftpUploader(FTP):
         fd = open(src)
         # be carefull to leave a space between STOR and the filename
         if not tget:
-            target = basename(src)
-        self.storbinary('STOR ' + target, fd)
+            tget = basename(src)
+        self.storbinary('STOR ' + tget, fd)
         fd.close()
 
     def lsdir(self, path):
@@ -82,15 +86,21 @@ class ftpUploader(FTP):
             # need to do a better job here since there
             # may be a problem with file containing whitespace
             logger.debug('Current line: %s' % l)
+            if l.startswith('total'):
+                continue
+            
             fn = l.split()[8]
+            logger.debug('Current token: %s' % fn)
+            
             if l.startswith('d'):
-                files.append( (fn, 'Directory') )
+                if fn != '.' and fn != '..':
+                    files.append( (fn, 'Directory') )
             elif l.startswith('l'):
                 files.append( (fn, 'Symbolic link') )                
             else:
                 files.append( (fn, 'Regular File') )
 
-        return files[2:]
+        return files
 
     def rmtree(self, path):
         if not self.ok: return
@@ -115,8 +125,10 @@ class ftpUploader(FTP):
             elif fileType == 'Regular File':
                 logger.info('remove file %s' % fullpath)
                 self.delete(fullpath)
+            else:
+                logger.error('Unknown file type !!')
 
-        if path:
+        if self.exists(path):
             logger.info('remove dir %s' % path)
             self.rmd(path)
 
@@ -141,7 +153,7 @@ class ftpUploader(FTP):
                 mode = lstat(fullname).st_mode
             except: pass
             if S_ISDIR(mode):
-                mkdir(r_fullname)
+                self.mkd(r_fullname)
                 self.mirror_r(fullname, r_fullname)
             elif S_ISLNK(mode):
                 # FIXME
