@@ -187,6 +187,11 @@ def main(albumName, libraryPath, xmlFileName, outputDir,
                 except (error_perm):
                     logger.error('Incorrect ftp credentials')
                     sys.exit(1)
+
+                if not ftpU.ok:
+                    logger.error('Connection failed')
+                    sys.exit(1)               
+                
                 if remoteDir:
                     if not ftpU.exists(remoteDir):
                         logger.info('remote dir %s does not exist' % remoteDir)

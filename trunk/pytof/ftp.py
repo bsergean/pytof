@@ -29,7 +29,7 @@ class ftpUploader(FTP):
     '''
 
     def __init__(self, host, user, password):
-        ''' TODO: trap error: (111, \'Connection refused\') '''
+        ''' Start the connection '''
         self.ok = False
         try:
             FTP.__init__(self, host, user, password)
