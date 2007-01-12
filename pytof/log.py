@@ -13,34 +13,46 @@ __author__ = 'Benjamin Sergeant'
 
 import logging
 
-pytofModules = ['pytof.py',
-                'albumdataparser.py',
-                'config.py',
-                'ftp.py',
-                'makepage.py',
-                'utils.py',
-                'exif.py',
-                'makefs.py',
-                'photo.py']
+from os import listdir, chdir, pardir, getcwd, walk
+from os.path import join
+from glob import glob
 
 loggers = {}
-for m in pytofModules:
-    module = m.split('.')[0]
+class Logger(object):
 
-    logger = logging.getLogger(module)
-    logger.setLevel(logging.DEBUG)
+    def __init__(self):
 
-    #create console handler and set level to debug
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.DEBUG)
+        # FIXME: this may be a disaster when we will
+        # use a package produced by a setup.py install
+        self.pytofModules = []
+        
+        for i,j,files in walk(pardir):
+            self.pytofModules.extend([py for py in files if py.endswith('.py')])
+    
+        for m in self.pytofModules:
+            module = m.split('.')[0]
 
-    #create formatter
-    formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+            logger = logging.getLogger(module)
+            logger.setLevel(logging.DEBUG)
+            
+            #create console handler and set level to debug
+            ch = logging.StreamHandler()
+            ch.setLevel(logging.DEBUG)
 
-    #add formatter to ch
-    ch.setFormatter(formatter)
+            #create formatter
+            formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+            
+            #add formatter to ch
+            ch.setFormatter(formatter)
+            
+            #add ch to logger
+            logger.addHandler(ch)
 
-    #add ch to logger
-    logger.addHandler(ch)
+            loggers[module] = logger
 
-    loggers[module] = logger
+    def quiet(self):
+        ''' No fallback '''
+        logging.disable(logging.ERROR)
+        
+# init ?
+MainLogger = Logger()

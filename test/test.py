@@ -89,7 +89,6 @@ def runTests(testModules=None, profileOut=None, coverageOutDir=None):
         print "Coverage information updated in " + coverageOutDir
         print
 
-        
         import webbrowser
         webbrowser.open('file://' + join(getcwd(), coverageOutDir))
 
@@ -120,5 +119,7 @@ if __name__ == '__main__':
                 arg = "output/coverage/"
             coverageOutDir = arg
 
-    runTests(testModules, profileOut, coverageOutDir)
+    try:
+        runTests(testModules, profileOut, coverageOutDir)
+    except(KeyboardInterrupt):pass
     

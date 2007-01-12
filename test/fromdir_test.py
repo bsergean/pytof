@@ -15,8 +15,12 @@ from unittest import TestCase
 from makepage import main
 from tempfile import mkdtemp, mktemp
 from os.path import join
-from os import mkdir, listdir
-from shutil import copy
+from os import mkdir, listdir, getcwd
+from shutil import copy, rmtree
+from log import MainLogger
+
+# comment me if you want to enable logging
+MainLogger.quiet()
 
 class TestMakeGalleryFromDir(TestCase):
 
@@ -30,6 +34,9 @@ class TestMakeGalleryFromDir(TestCase):
 
         self.jpgsDir = join(self.baseDir, 'xxdiff-3.2-screenshots')
         self.pngDir = join(self.baseDir, 'recoll-icons')
+
+    def tearDown(self):
+        rmtree(self.tempdir)
     
     def testOnlyPNG(self):
 
@@ -42,30 +49,31 @@ class TestMakeGalleryFromDir(TestCase):
              fromDir = self.jpgsDir)
 
     def testOnlyMixedSimple(self):
-        ''' I am happy I wrote this one because I found a bug :) '''
+        '''
+        I am happy I wrote this one because I found a bug :)
+        Only take two picture of the jpeg and png sets
+        '''
 
         src = join(self.tempdir, 'mixedSimple')
-
-        print src
         mkdir(src)
 
         for d in [self.jpgsDir, self.pngDir]:
-            for f in listdir(d)[0:2]:
+            # the first file is the .svn dir ... start at 1, big hack
+            for f in listdir(d)[1:3]:
                 copy(join(d, f), src)
 
         main(self.albumName, self.topDir, self.xmlData, self.strip_originals,
              fromDir = src)
 
     def testOnlyMixedFull(self):
-        ''' I am happy I wrote this one because I found a bug :) '''
+        ''' Mix all png and jpeg in a single dir '''
 
         src = join(self.tempdir, 'mixedFull')
-
-        print src
         mkdir(src)
 
         for d in [self.jpgsDir, self.pngDir]:
-            for f in listdir(d):
+            # the first file is the .svn dir ... start at 1, big hack            
+            for f in listdir(d)[1:]:
                 copy(join(d, f), src)
 
         main(self.albumName, self.topDir, self.xmlData, self.strip_originals,

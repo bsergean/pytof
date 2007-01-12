@@ -238,7 +238,7 @@ def makePhotoPage(photo, linkBack, topDir, prev, next, strip_originals):
         dico['prev'] = prev.id + '.html'
         dico['prev_thumb'] = join('thumbs',   'th_' + prev.id + prev.getFileType())
         dico['next'] = next.id + '.html'
-        dico['next_thumb'] = join('thumbs',   'th_' + next.id + prev.getFileType())
+        dico['next_thumb'] = join('thumbs',   'th_' + next.id + next.getFileType())
 
         page.addSkeleton(dico, strip_originals)
         page.writePage()
@@ -275,7 +275,7 @@ def main(albumName, topDir, xmlData, strip_originals, fromDir):
     
     curPage = WebPage(join(topDir, 'index'), albumName)
     
-    sys.stderr.write("Writing pictures\n")
+    logger.info("Writing pictures\n")
     c = 1
     photos = data.getPicturesIdFromAlbumName(albumName)
     nb_photos = len(photos)
