@@ -99,8 +99,11 @@ xmlTimestamp=0
     def setLibraryPath(self, libraryPath):
         # we have to create a ftp section ...
         logger.debug('setLibraryPath')
-        self.Open()        
-        self.config.set('library', 'libraryPath', libraryPath)
+        self.Open()
+        section = 'library'
+        if not self.config.has_section(section):
+            self.config.add_section(section)
+        self.config.set(section, 'libraryPath', libraryPath)
         self.Close()
 
     # xml filename
@@ -113,8 +116,11 @@ xmlTimestamp=0
     def setXmlFileName(self, xmlFileName):
         # we have to create a ftp section ...
         logger.debug('setXmlFileName')
-        self.Open()        
-        self.config.set('library', 'xmlFileName', xmlFileName)
+        self.Open()
+        section = 'library'
+        if not self.config.has_section(section):
+            self.config.add_section(section)
+        self.config.set(section, 'xmlFileName', xmlFileName)
         self.Close()
 
     # output directory
@@ -155,6 +161,11 @@ xmlTimestamp=0
         self.Close()
 
     def canUseCache(self, xmlFileName):
+        if not self.ok: return False
+
+        # is there a cache file ?
+        if not exists(self.pickleFilename):
+            return False
 
         cache = False
         if self.config.has_option('Internals', 'xmlTimestamp'):

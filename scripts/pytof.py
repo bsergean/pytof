@@ -27,7 +27,6 @@ import os, sys
 from utils import _err_, _err_exit, echo, GetTmpDir
 from config import configHandler
 import makepage, makefs
-from cPickle import dump, load
 from optparse import OptionParser
 import tarfile
 from shutil import rmtree
@@ -75,28 +74,9 @@ def main(albumName, libraryPath, xmlFileName, outputDir,
 
     if not fromDir:
         try:
-            logger.info("Parsing AlbumData.xml")
-            parser = AlbumDataParser(libraryPath, xmlFileName)
-            xmlFileName = parser.xmlFileName
+            adp = AlbumDataParser(libraryPath, xmlFileName)
+            xmlData = adp.maybeLoadFromXML(conf)
             
-            # can we use the cached xml content ?
-            # try to load our stuff from the cache if the xml wasn't modified
-            cached = conf.canUseCache(xmlFileName)
-            
-            if cached:
-                pickleFd = open(conf.pickleFilename)
-                xmlData = load(pickleFd)
-            else:
-                xmlData = parser.parse()
-                xmlData.libraryPath = libraryPath
-
-                # writing the cached data to a file
-                pickleFd = open(conf.pickleFilename, 'w')
-                dump(xmlData, pickleFd)
-            
-            pickleFd.close()
-            echo("\t[DONE]\n")
-
         except(AlbumDataParserError):
             _err_exit("Problem parsing AlbumData.xml")
     else:
