@@ -11,9 +11,11 @@
 __revision__ = '$Id$  (C) 2004 GPL'
 __author__ = 'Benjamin Sergeant'
 
-from os.path import expanduser, join, exists, basename
 import sys
 import os
+from os import walk
+from os.path import splitext, expanduser, join, exists, basename
+
 
 sys.path.insert(1, '../deps/ftputil-2.2')
 
@@ -119,6 +121,17 @@ def ListCurrentDirFileFromExt(ext, path):
         extfiles.extend(glob.glob(join(path,'*' + e.swapcase())))
 
     return extfiles
+
+def UnixFind(dir, ext):
+    '''
+    return a flatened list of files with a specific extension
+    '''
+    files = []
+    for dummy1 , dummy2, files in walk(dir):
+        files.extend([f for f in files if splitext(f)[1] == ext])
+
+    return files
+
 
 pytof_modules = {
     'Image' : """
