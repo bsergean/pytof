@@ -72,7 +72,7 @@ def main(albumName, libraryPath, xmlFileName, outputDir,
 
     if not fromDir:
         try:
-            echo("Parsing AlbumData.xml")
+            logger.info("Parsing AlbumData.xml")
             parser = AlbumDataParser(libraryPath, xmlFileName)
             xmlFileName = parser.xmlFileName
             

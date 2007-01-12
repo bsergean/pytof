@@ -8,7 +8,7 @@
 #
 #*****************************************************************************
 
-__revision__ = '$Id: ftp_test.py 149 2007-01-08 22:31:28Z mathieu.robin $  (C) 2007 GPL'
+__revision__ = '$Id$  (C) 2007 GPL'
 
 
 from unittest import TestCase
