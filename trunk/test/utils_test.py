@@ -15,12 +15,16 @@ from unittest import TestCase
 from utils import RemoveSpecificChars, UnixFind, urlExtractor
 from os.path import join
 from tempfile import mkdtemp, mktemp
+from shutil import rmtree
 
 class TestUtils(TestCase):
 
     def setUp(self):
         self.tempdir = mkdtemp()
         self.baseDir = join('data', 'galleries')
+
+    def tearDown(self):
+        rmtree(self.tempdir)
     
     def testRemoveSpecificChars(self):
         testCases = [
