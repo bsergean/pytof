@@ -220,6 +220,8 @@ class ProgressMsg(object):
         self.target = target
 
     def Increment(self):
+        if self.counter == 0:
+            self.output.write("\n")
         self.counter += 1
         msg = "\r%.0f%% - (%d processed out of %d) " \
             % (100 * self.counter / float(self.target), self.counter, self.target)
