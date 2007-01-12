@@ -21,6 +21,7 @@ from photo import Photo
 from utils import _err_, _err_exit, ListCurrentDirFileFromExt
 from time import strptime
 from glob import glob
+from cPickle import dump, load
 
 class AlbumDataFromDir(object):
     def __init__(self, path):
@@ -166,8 +167,9 @@ class AlbumDataParser(object):
             xmlFileDir = expanduser('~/Pictures/iPhoto Library')
         if not xmlFileBaseName:
             xmlFileBaseName = 'AlbumData.xml'
-    
-        xmlFileName = join(xmlFileDir, xmlFileBaseName)
+
+        self.xmlFileDir = xmlFileDir
+        xmlFileName = join(self.xmlFileDir, xmlFileBaseName)
         if not exists(xmlFileName):
             _err_('\nNo xml file found at %s' %(xmlFileName))
             raise AlbumDataParserError
@@ -178,6 +180,7 @@ class AlbumDataParser(object):
         self.lastItemData = ''
         self.keys = []
         self.albumData = None        
+        self.parsed = False
 
     def addItem(self, item):
             liste = self.elemList[-1]
@@ -223,12 +226,47 @@ class AlbumDataParser(object):
             if not data.startswith('\n') and not data.startswith('\t'):
                 self.lastItemData += data
 
-        p = ParserCreate()
+        # This piece of code is from the parse method
+        self.parser = p = ParserCreate()
         p.StartElementHandler = start_element
         p.EndElementHandler = end_element
         p.CharacterDataHandler = char_data
         p.ParseFile(self.xmlFile)
         return self.albumData
+
+    def maybeLoadFromXML(self, conf):
+        '''
+        Maybe we should add a param to force reparsing from disk
+        '''
+        if self.parsed:
+            return self.xmlData
+        
+        logger.info('Parsing %s' % self.xmlFileName)
+
+        # can we use the cached xml content ?
+        # try to load our stuff from the cache if the xml wasn't modified
+        cached = conf.canUseCache(self.xmlFileName)
+        
+        if cached:
+            pickleFd = open(conf.pickleFilename)
+            self.xmlData = load(pickleFd)
+        else:
+            self.xmlData = self.parse()
+            # I cant remember what this line does ...
+            self.xmlData.libraryPath = self.xmlFileDir
+            
+            # writing the cached data to a file
+            # (shouldn't we do that only the first time ?)
+            logger.info('writing the cached data in %s' % conf.pickleFilename)
+            pickleFd = open(conf.pickleFilename, 'w')
+            dump(self.xmlData, pickleFd)
+        
+        pickleFd.close()
+        logger.info("\t[DONE]\n")
+
+        self.parsed = True
+        return self.xmlData
+
     
 # Code snipets kept for memory
 
