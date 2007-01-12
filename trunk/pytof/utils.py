@@ -36,6 +36,17 @@ def maybemakedirs(path):
     if not exists(path):
         os.makedirs(path)
 
+def urlExtractor(htmlpage):
+
+    html = open(htmlpage).read()
+
+    urls = []
+    import re
+    url = unicode(r"((http|ftp)://)?(((([\d]+\.)+){3}[\d]+(/[\w./]+)?)|([a-z]\w*((\.\w+)+){2,})([/][\w.~]*)*)")
+    for m in re.finditer(url, html) :
+        urls.append(m.group())
+
+    return urls
 
 def posixpath(d):
     """
