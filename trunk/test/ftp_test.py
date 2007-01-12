@@ -23,11 +23,10 @@ from utils import GetTmpDir, maybemakedirs
 from shutil import copy, rmtree
 from tempfile import mkdtemp, mktemp
 from getpass import getuser
-from log import MainLogger, loggers
-logger = loggers['ftp_test']
+from log import logger, quiet
 
 # comment me if you want to debug here
-MainLogger.quiet()
+quiet()
 
 def create(file, content):
     fd = open(file, 'w')
@@ -36,7 +35,7 @@ def create(file, content):
 
 def diff(a, b):
     ''' Call the real diff function on two Unix files or directories '''
-    exitCode = os.system('diff %s %s' % (a, b))
+    exitCode = os.system('diff %s %s > /dev/null' % (a, b))
     return exitCode == 0
 
 # FIXME: both class should inherit from the same class for factorization

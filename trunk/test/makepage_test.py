@@ -19,11 +19,7 @@ from tempfile import mkdtemp, mktemp
 from os.path import join
 from os import mkdir, listdir, getcwd
 from shutil import copy, rmtree
-from log import MainLogger
-
-# comment me if you want to enable logging
-MainLogger.quiet()
-
+from log import logger
 
 class PhotoWebPageTest(TestCase):
     def testWritePage(self):

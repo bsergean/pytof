@@ -13,11 +13,7 @@ __revision__ = '$Id$  (C) 2006 GPL'
 __author__ = 'Mathieu Robin'
 __dependencies__ = ['Image']
 
-from log import loggers
-import logging
-# FIXME: find a way to get the file name in python
-logger = loggers['photo']
-
+from log import logger
 from os.path import join, getsize, basename, splitext
 from shutil import copy
 import sys, os, time
@@ -51,8 +47,6 @@ def EXIF_tags(fn):
 
 class Photo(object):
     def __init__(self, fileName, id=None, title='', comment='', date=''):
-
-        logger.setLevel(logging.INFO)
         
         self.image = Image.open(fileName)
         self.fileName = fileName

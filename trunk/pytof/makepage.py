@@ -15,11 +15,7 @@
 __revision__ = '$Id$  (C) 2006 GPL'
 __author__ = 'Mathieu Robin'
 
-from log import loggers
-import logging
-# FIXME: find a way to get the file name in python
-logger = loggers['makepage']
-
+from log import logger
 from os.path import expanduser, join, exists, basename
 from albumdataparser import AlbumDataParser, AlbumDataParserError, AlbumDataFromDir
 import os, sys
@@ -245,7 +241,6 @@ def makePhotoPage(photo, linkBack, topDir, prev, next, strip_originals):
         return page.fileName
 
 def main(albumName, topDir, xmlData, strip_originals, fromDir):
-    logger.setLevel(logging.INFO)
     logger.info('strip_originals = %s' % strip_originals)
 
     data = xmlData

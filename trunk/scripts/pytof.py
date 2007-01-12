@@ -17,10 +17,7 @@ __dependencies__ = []
 import sys
 sys.path.insert(1, '../pytof')
 
-from log import loggers
-# FIXME: find a way to get the file name in python
-logger = loggers['pytof']
-
+from log import logger, quiet
 from os.path import expanduser, join, exists, basename, isabs, walk, isdir
 from albumdataparser import AlbumDataParser, AlbumDataParserError
 import os, sys
@@ -243,6 +240,9 @@ if __name__ == "__main__":
     parser.add_option("-V", "--version",
                       action="store_true", dest="version", default=False,
                       help="display version")
+    parser.add_option("-v", "--verbose",
+                      action="store_true", dest="verbose", default=False,
+                      help="Report a number of information")
     parser.add_option("-l", "--library", dest="libraryPath", default='',
                       help="The iPhoto library directory path"),
     parser.add_option("-x", "--xml-file", dest="xmlFileName", default='',
@@ -269,6 +269,9 @@ if __name__ == "__main__":
     elif not options.albumName:
         _err_exit('missing albumName argument')
             
+    if not options.verbose:
+        quiet()
+
     main(options.albumName, options.libraryPath,
          options.xmlFileName, options.outputDir,
          options.info, options.fs, options.tar,
