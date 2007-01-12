@@ -137,11 +137,11 @@ def UnixFind(dir, ext):
     '''
     return a flatened list of files with a specific extension
     '''
-    files = []
-    for dummy1 , dummy2, files in walk(dir):
-        files.extend([f for f in files if splitext(f)[1] == ext])
+    found = []
+    for dummy1, dummy2, files in walk(dir):
+        found.extend([i for i in files if splitext(i)[1] == ext])
 
-    return files
+    return found
 
 
 pytof_modules = {
