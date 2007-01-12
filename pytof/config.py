@@ -11,10 +11,7 @@
 __revision__ = '$Id$  (C) 2004 GPL'
 __author__ = 'Benjamin Sergeant'
 
-from log import loggers
-# FIXME: find a way to get the file name in python
-logger = loggers['config']
-
+from log import logger
 from os.path import expanduser, join, exists
 import os, sys
 from utils import _err_, _err_exit, echo

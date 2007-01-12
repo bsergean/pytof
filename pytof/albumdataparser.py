@@ -9,10 +9,7 @@
 #
 #*****************************************************************************
 
-from log import loggers
-import logging
-# FIXME: find a way to get the file name in python
-logger = loggers['albumdataparser']
+from log import logger
 
 import os
 from os.path import expanduser, exists, join, split, splitext, basename
@@ -26,8 +23,6 @@ from cPickle import dump, load
 class AlbumDataFromDir(object):
     def __init__(self, path):
 
-        logger.setLevel(logging.INFO)
-        
         self.path = path
         self.albumList = ListCurrentDirFileFromExt('jpg', self.path)
         logger.debug('pictures: %s' % self.albumList)

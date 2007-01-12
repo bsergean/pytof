@@ -19,12 +19,10 @@ from tempfile import mkdtemp, mktemp
 from os.path import join, basename
 from albumdataparser import AlbumDataParser
 from timeit import Timer
-
-from log import MainLogger, loggers
-logger = loggers['ftp_test']
+from log import logger, quiet
 
 # comment me if you want to debug here
-MainLogger.quiet()
+quiet()
 
 class TestConfigHandler(TestCase):
 

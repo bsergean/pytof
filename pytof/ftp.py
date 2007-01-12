@@ -11,10 +11,7 @@
 __revision__ = '$Id$  (C) 2004 GPL'
 __author__ = 'Benjamin Sergeant'
 
-from log import loggers
-# FIXME: find a way to get the file name in python
-logger = loggers['ftp']
-
+from log import logger
 from os.path import join, basename
 from os import walk, sep, chdir, rmdir, getcwd, listdir, lstat, mkdir, makedirs
 from sys import exc_info
