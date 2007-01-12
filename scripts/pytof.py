@@ -46,6 +46,9 @@ def getStringFromConsole(text, default = ''):
         return default
     return value
 
+class Pytof(object): pass
+
+
 def main(albumName, libraryPath, xmlFileName, outputDir,
          info, fs, tar, zip, ftp, strip_originals, fromDir):
     # init the config file
@@ -99,6 +102,7 @@ def main(albumName, libraryPath, xmlFileName, outputDir,
     else:
         logger.info('generate gallery from photos in %s dir' % fromDir)
         xmlData = None
+        # FIXME: this '/' may not be portable ...
         albumName = basename(rstrip(fromDir, '/'))
         logger.info('albumName is %s' % albumName)
 

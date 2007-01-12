@@ -232,13 +232,13 @@ def makePhotoPage(photo, linkBack, topDir, prev, next, strip_originals):
         dico['height'] = photo.height
         dico['size'] = photo.sizeKB
         dico['exif_infos'] = ('</br>').join(photo.exif_infos)
-        dico['preview'] = join('preview', 'pv_' + photo.id + '.jpg')
+        dico['preview'] = join('preview', 'pv_' + photo.id + photo.getFileType())
         dico['preview_filename'] = basename(dico['preview'])
-        dico['original'] = join('photos', photo.id + '.jpg')
+        dico['original'] = join('photos', photo.id + photo.getFileType())
         dico['prev'] = prev.id + '.html'
-        dico['prev_thumb'] = join('thumbs',   'th_' + prev.id + '.jpg')
+        dico['prev_thumb'] = join('thumbs',   'th_' + prev.id + prev.getFileType())
         dico['next'] = next.id + '.html'
-        dico['next_thumb'] = join('thumbs',   'th_' + next.id + '.jpg')
+        dico['next_thumb'] = join('thumbs',   'th_' + next.id + prev.getFileType())
 
         page.addSkeleton(dico, strip_originals)
         page.writePage()
@@ -305,7 +305,7 @@ def main(albumName, topDir, xmlData, strip_originals, fromDir):
                       prev, next, strip_originals)
         curPage.addCode("<a href=\"%s\"><img src=\"%s\" alt=\"toto.jpg\" border=\"0\"/></a>" %
                         (photo.id + '.html',
-                         join('thumbs',   'th_' + photo.id + '.jpg')))
+                         join('thumbs', 'th_' + photo.id + photo.getFileType())))
 
         # progress
         s = "\r%f %% - (%d processed out of %d) " \

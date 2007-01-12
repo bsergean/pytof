@@ -18,7 +18,7 @@ import logging
 # FIXME: find a way to get the file name in python
 logger = loggers['photo']
 
-from os.path import join, getsize, basename
+from os.path import join, getsize, basename, splitext
 from shutil import copy
 import sys, os, time
 from utils import TryToImport
@@ -86,11 +86,11 @@ class Photo(object):
         return str(self.id)
 
     def getFileType(self):
-        return basename(self.fileName).split('.')[-1].lower()
+        return splitext(self.fileName)[1].lower()
 
     def saveCopy(self, path):
         logger.info(path)
-        self.imagePath = join(path, self.getBaseName() + '.'
+        self.imagePath = join(path, self.getBaseName()
                               + self.getFileType())
         copy(self.fileName, self.imagePath)
 
@@ -118,7 +118,7 @@ class Photo(object):
         else:
             logger.debug('makeThumbnail: Do not rotate')
         
-        self.thumbPath = os.path.join(path, 'th_' + self.getBaseName() + '.jpg')
+        self.thumbPath = os.path.join(path, 'th_' + self.getBaseName() + self.getFileType())
         logger.debug('thumb will be %s', self.thumbPath)
         thumb.save(self.thumbPath, quality=80)
 
@@ -145,7 +145,7 @@ class Photo(object):
         else:
             logger.debug('makePreview: Do not rotate')
             
-        self.prevPath = os.path.join(path, 'pv_' + self.getBaseName() + '.jpg')
+        self.prevPath = os.path.join(path, 'pv_' + self.getBaseName() + self.getFileType())
         out.save(self.prevPath, quality=95)
 
 
