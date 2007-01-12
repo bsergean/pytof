@@ -15,6 +15,8 @@ import sys
 import logging
 from unittest import TestCase
 
+from log import MainLogger, loggers
+logger = loggers['log_test']
 
 class MockStream(object):
     def __init__(self):
@@ -54,4 +56,14 @@ class TestLog(TestCase):
                
         for i, line in enumerate(stream.data.split("\n")):
             self.assert_(line.endswith(expectedMsgEnds[i]))
-        
+
+    def test_list_logger(self):
+        self.assert_ (len(MainLogger.pytofModules) > 0)
+
+    def test_quiet(self):
+        MainLogger.quiet()
+        logger.debug('dont print this')
+        logger.info('dont print this')
+        logger.warn('dont print this')
+        logger.error('dont print this')
+        logger.critical('print only critical messages')

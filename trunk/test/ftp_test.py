@@ -23,6 +23,11 @@ from utils import GetTmpDir, maybemakedirs
 from shutil import copy, rmtree
 from tempfile import mkdtemp, mktemp
 from getpass import getuser
+from log import MainLogger, loggers
+logger = loggers['ftp_test']
+
+# comment me if you want to debug here
+MainLogger.quiet()
 
 def create(file, content):
     fd = open(file, 'w')
@@ -49,7 +54,7 @@ class FTPTestLocal(unittest.TestCase):
 
         passwd = os.environ.get('PASSWD', '')
         if not passwd:
-            print 'no password in $PASSWD'
+            logger.warn('no password in $PASSWD')
             
         self.ftp = ftpUploader('localhost', getuser(), passwd)
         if not self.ftp.ok:
@@ -130,7 +135,7 @@ class FTPTestRemote(unittest.TestCase):
 
         passwd = os.environ.get('PASSWD', '')
         if not passwd:
-            print 'no password in $PASSWD'
+            logger.warn('no password in $PASSWD')
             
         self.ftp = ftpUploader('lisa1', getuser(), passwd)
         if not self.ftp.ok:
