@@ -23,7 +23,7 @@ logger = loggers['makepage']
 from os.path import expanduser, join, exists, basename
 from albumdataparser import AlbumDataParser, AlbumDataParserError, AlbumDataFromDir
 import os, sys
-from utils import _err_, _err_exit, echo
+from utils import _err_, _err_exit, echo, ProgressMsg
 from shutil import copy
 
 css = 'scry.css'
@@ -276,10 +276,10 @@ def main(albumName, topDir, xmlData, strip_originals, fromDir):
     curPage = WebPage(join(topDir, 'index'), albumName)
     
     logger.info("Writing pictures\n")
-    c = 1
+    
     photos = data.getPicturesIdFromAlbumName(albumName)
-    nb_photos = len(photos)
-    for i in xrange(nb_photos):
+    progress = ProgressMsg(len(photos), sys.stderr)                           
+    for i in xrange(len(photos)):
 
         pic_id = photos[i]
         logger.debug('processing photo %s' % pic_id)
@@ -306,12 +306,6 @@ def main(albumName, topDir, xmlData, strip_originals, fromDir):
         curPage.addCode("<a href=\"%s\"><img src=\"%s\" alt=\"toto.jpg\" border=\"0\"/></a>" %
                         (photo.id + '.html',
                          join('thumbs', 'th_' + photo.id + photo.getFileType())))
-
-        # progress
-        s = "\r%f %% - (%d processed out of %d) " \
-            % (100 * float(c) / float(nb_photos), c, nb_photos)
-        sys.stderr.write(s)
-        c += 1
-
-    sys.stderr.write('\n')
+        progress.Increment()
+        
     curPage.writePage()

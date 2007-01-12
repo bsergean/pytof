@@ -211,6 +211,21 @@ def notYetImplemented():
 
 def complicatedFunctionFromTheFuture():
         notYetImplemented()
+
+class ProgressMsg(object):
+    """ General purpose progress bar """
+    def __init__(self, target, output=sys.stdout):
+        self.output = output
+        self.counter = 0
+        self.target = target
+
+    def Increment(self):
+        self.counter += 1
+        msg = "\r%.0f%% - (%d processed out of %d) " \
+            % (100 * self.counter / float(self.target), self.counter, self.target)
+        self.output.write(msg)
+        if self.counter == self.target:
+            self.output.write("\n")
         
 
 if __name__ == "__main__":

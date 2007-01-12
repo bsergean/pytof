@@ -15,6 +15,7 @@ __revision__ = '$Id$  (C) 2004 GPL'
 __author__ = 'Benjamin Sergeant'
 
 from albumdataparser import AlbumData
+from utils import ProgressMsg
 import os, sys
 
 __version__ = '0.0.1'
@@ -30,17 +31,10 @@ def main(albumName, topDir, xmlData):
     """
 
     photos = xmlData.getPicturesIdFromAlbumName(albumName)
-    nb_photos = len(photos)
-    cur = 1
 
     sys.stderr.write("Writing pictures\n")
+    progress = ProgressMsg(len(photos), output=sys.stderr)
     for pic_id in photos:
         photo = xmlData.getPhotoFromId(pic_id)
         photo.saveCopy(topDir)
-
-        s = "\r%f %% - (%d processed out of %d) " \
-            % (100 * float(cur) / float(nb_photos), cur, nb_photos)
-        sys.stderr.write(s)
-        cur += 1
-
-    sys.stderr.write('\n')
+        progress.Increment()
