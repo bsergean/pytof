@@ -14,7 +14,6 @@ __author__ = 'Benjamin Sergeant'
 import sys
 import logging
 from unittest import TestCase
-from log import logger
 
 class MockStream(object):
     def __init__(self):
