@@ -11,7 +11,6 @@
 __revision__ = '$Id$  (C) 2004 GPL'
 __author__ = 'Benjamin Sergeant'
 
-import unittest
 
 import os, sys
 from ftp import ftpUploader
@@ -19,11 +18,12 @@ from ftplib import all_errors
 from os.path import join, basename, isdir
 from os import listdir, lstat, remove, chdir, mkdir
 from stat import S_ISDIR
-from utils import GetTmpDir, maybemakedirs
+from utils import GetTmpDir, maybemakedirs, create
 from shutil import copy, rmtree
 from tempfile import mkdtemp, mktemp
 from getpass import getuser
 from log import logger, quiet
+from test import PytofTestCase
 
 # comment me if you want to debug here
 quiet()
@@ -35,7 +35,7 @@ def diff(a, b):
 
 # FIXME: both class should inherit from the same class for factorization
 
-class FTPTestLocal(unittest.TestCase):
+class FTPTestLocal(PytofTestCase):
     '''
     This test case needs a local ftp server, and you to set
     the PASSWD env variable to your local account password
@@ -80,12 +80,6 @@ class FTPTestLocal(unittest.TestCase):
         '''
 
         if not self.ok: return
-
-        def create(file, content):
-            fd = open(file, 'w')
-            fd.write(content)
-            fd.close()
-
         topDir = join(self.tempdir, newDir)
         maybemakedirs(topDir)
         
@@ -128,7 +122,7 @@ class FTPTestLocal(unittest.TestCase):
         self.assert_(diff(topDir, cloneDir))
 
 
-class FTPTestRemote(unittest.TestCase):
+class FTPTestRemote(PytofTestCase):
     '''
     This test case needs a remote ftp server, and you to set
     the PASSWD env variable to your local account password

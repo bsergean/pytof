@@ -12,21 +12,17 @@ __revision__ = '$Id$  (C) 2007 GPL'
 
 
 from unittest import TestCase
-from utils import RemoveSpecificChars, UnixFind, urlExtractor, mktar, maybemakedirs
+from utils import RemoveSpecificChars, UnixFind, urlExtractor
+from utils import mkarchive, maybemakedirs, lpathstrip, create
 from os.path import join, getsize
-from tempfile import mkdtemp, mktemp
-from shutil import rmtree, copytree
-from os import mkdir
 import tarfile
+from zipfile import ZipFile, ZIP_DEFLATED
+from log import quiet
+from test import PytofTestCase
 
-class TestUtils(TestCase):
+#quiet()
 
-    def setUp(self):
-        self.tempdir = mkdtemp()
-        self.baseDir = join('data', 'galleries')
-
-#    def tearDown(self):
-#        rmtree(self.tempdir)
+class TestUtils(PytofTestCase):
     
     def testRemoveSpecificChars(self):
         testCases = [
@@ -42,55 +38,18 @@ class TestUtils(TestCase):
         [bsergean@marge1 test]$ find data/galleries/xxdiff-3.2-screenshots/ -name '*.jpg' | wc -l
         22
         '''
-        galleries = join('data', 'galleries')
-        self.assertEquals(len(UnixFind(join(galleries, 'recoll-icons'), '.png')), 12)
-        self.assertEquals(len(UnixFind(join(galleries, 'xxdiff-3.2-screenshots'), '.jpg')), 22)
+        self.assertEquals(len(UnixFind(join(self.galleries, 'recoll-icons'), '.png')), 12)
+        self.assertEquals(len(UnixFind(join(self.galleries, 'xxdiff-3.2-screenshots'), '.jpg')), 22)
 
     def testUrlExtractor(self):
         '''
         In the long run this would be a test to check that urls within
         the HTML we generate is not broken.
         '''
-        leschats = join(self.baseDir, 'Les_chats_html_only')
+        leschats = join(self.galleries, 'Les_chats_html_only')
 
         for url in urlExtractor(join(leschats, 'index.html')):
             self.assertEquals(url, 'http://code.google.com/p/pytof/')
-
-    def create_dummy_dir(self, newDir):
-        '''
-        This one is duplicated from ftp_utils: We should create a class
-        that inherit unittest.TestCase, with this method in it in test.py.
-        We should take care of the self.tmpdir also.
-        '''
-
-        def create(file, content):
-            fd = open(file, 'w')
-            fd.write(content)
-            fd.close()
-        
-        topDir = join(self.tempdir, newDir)
-        maybemakedirs(topDir)
-
-        # first level
-        tmpftpfile = 'a_file'
-        create(join(self.tempdir, tmpftpfile), 'youcoulele')
-        tmpftpfile = 'another_file'
-        create(join(self.tempdir, tmpftpfile), 'warzazat')
-
-        # second level
-        tmpftpfile = 'one_file'
-        create(join(topDir, tmpftpfile), 'youcoulele')
-
-        # third level
-        nestedDir = join(topDir, 'a_dir')
-        mkdir(nestedDir)
-
-        tmpftpfile = 'a_file'
-        create(join(nestedDir, tmpftpfile), 'youcoulele')
-        tmpftpfile = 'another_file'
-        create(join(nestedDir, tmpftpfile), 'warzazat')
-
-        return topDir
     
     def testTar(self):
         '''
@@ -98,15 +57,17 @@ class TestUtils(TestCase):
         put one file at the prefix level, tar the archive
         extract the archive, and check that the file is there and
         that its size is the same as the original one.
+
+        FIXME: we should check for other files at other levels in the tar hierarchy.
         '''
         
         dummyDir = self.create_dummy_dir('tar_test_dir')
-        tmpftpfile = 'one_file'
+        tmpftpfile = 'level_2_fileA'
         topLevelFile = join(dummyDir, tmpftpfile)
         topLevelFileSize = getsize(topLevelFile)
         
-        tarFile = join(self.tempdir, 'foo.bar')
-        mktar(tarFile, dummyDir, 'a_dir', [topLevelFile])
+        tarFile = join(self.tempdir, 'foo.tar')
+        mkarchive(tarFile, dummyDir, 'a_dir', [topLevelFile], Zip = False, tar = True)
 
         # now list the file within the archive and look for topLevelFile
         tar = tarfile.open(tarFile)
@@ -119,3 +80,31 @@ class TestUtils(TestCase):
 
         self.assert_(found)
         self.assertEquals(size, topLevelFileSize)
+
+        
+    def testZip(self):
+        dummyDir = self.create_dummy_dir('tar_test_dir')
+        tmpftpfile = 'level_2_fileA'
+        topLevelFile = join(dummyDir, tmpftpfile)
+        topLevelFileSize = getsize(topLevelFile)
+        
+        zipFile = join(self.tempdir, 'foo.zip')
+        mkarchive(zipFile, dummyDir, 'a_dir', [topLevelFile])
+        # you also have printdirs to have a ls like output
+        # of the content of the zip file
+        self.assert_(tmpftpfile in ZipFile(zipFile).namelist())
+
+        # TODO: use sets.Set to do differences between the two sets of files (in the
+        # archive and in the dir)
+
+
+    def testlpathstrip(self):
+        '''
+        TODO: do the same tests with Windows os.sep  chars if os.name == nt
+        '''
+        prefix = '/tmp/'
+        path = '/tmp/kiki/coucou'
+        self.assertEquals(lpathstrip(prefix, path), 'kiki/coucou')
+
+        prefix = '/tmp'
+        self.assertEquals(lpathstrip(prefix, path), 'kiki/coucou')
