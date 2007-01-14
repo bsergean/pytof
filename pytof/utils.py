@@ -13,9 +13,10 @@ __author__ = 'Benjamin Sergeant'
 
 import sys
 import os
-from os import walk
-from os.path import splitext, expanduser, join, exists, basename
+from os.path import splitext, expanduser, join, exists, basename, walk, isfile
 import tarfile
+from zipfile import ZipFile, ZIP_DEFLATED
+from log import logger
 
 sys.path.insert(1, '../deps/ftputil-2.2')
 
@@ -138,7 +139,7 @@ def UnixFind(dir, ext):
     return a flatened list of files with a specific extension
     '''
     found = []
-    for dummy1, dummy2, files in walk(dir):
+    for dummy1, dummy2, files in os.walk(dir):
         found.extend([i for i in files if splitext(i)[1] == ext])
 
     return found
@@ -253,23 +254,72 @@ class ProgressMsg(object):
         if self.counter == self.target:
             self.output.write("\n")
 
-def mktar(fn, prefix, dirname, files):
+def lpathstrip(prefix, path):
+    '''
+    '''
+    result = path.replace(prefix, '', 1)
+    if result.startswith(os.sep):
+        result = result.lstrip(os.sep)
+
+    return result
+
+def create(file, content):
+    '''
+    $ echo content > file
+    '''
+    fd = open(file, 'w')
+    fd.write(content)
+    fd.close()
+
+def mkarchive(fn, prefix, mainDir, files, Zip = True, tar = False):
+    '''
+    FIXME: maybe we could do as in mkzip to avoid the chdir(s)
+    - fn is the archive filename
+    - prefix is the dir where we cd before creating the archive
+    - mainDir is the directory to archive within prefix
+    - files is a list of file with an absolute path which
+    will be put in the archive at the prefix level
+    '''
+    args = (fn, prefix, mainDir, files)
+    if Zip:
+        return mkzip(*args)
+    if tar:
+        return mktar(*args)
+
+def mkzip(fn, prefix, mainDir, files):
+    def visit (z, dirname, names):
+        for name in names:
+            path = os.path.normpath(os.path.join(dirname, name))
+            if isfile(path):
+                filenameInArchive = lpathstrip(prefix, path)
+                z.write(path, filenameInArchive)
+                logger.info("adding '%s'" % filenameInArchive)
+
+    ext = '.zip'
+    if not fn.endswith(ext): fn = fn + ext
+
+    z = ZipFile(fn, "w", compression=ZIP_DEFLATED)
+    walk(join(prefix, mainDir), visit, z)
+
+    for f in files:
+        z.write(f, basename(f))
+                
+    z.close()
+    return fn
+
+def mktar(fn, prefix, mainDir, files):
     '''
     The TarFile is created with modew, the simple tar file.
     We could add compression (w|gz or w|bz2) but it is useless
     since we are working on compressed image in pytof
-    
-    - fn is the tar filename
-    - prefix is the dir where we cd before creating the archive
-    - dirname is the directory to archive within prefix
-    - files is a list of file with an absolute path which
-    will be put in the tar at the prefix level
     '''
+    ext = '.tar'
+    if not fn.endswith(ext): fn = fn + ext
     
     pwd = os.getcwd()
     os.chdir(prefix)
     tarball = tarfile.open(fn, 'w') 
-    tarball.add(dirname)
+    tarball.add(mainDir)
     os.chdir(pwd)
     for f in files:
         # FIXME: maybe pb here: see zip section
@@ -277,7 +327,7 @@ def mktar(fn, prefix, dirname, files):
     tarball.close()
 
     # need to shut this up during test suite execution
-    echo('output tarball is %s' % (fn))
+    return fn
 
 
 if __name__ == "__main__":

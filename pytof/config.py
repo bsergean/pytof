@@ -14,7 +14,7 @@ __author__ = 'Benjamin Sergeant'
 from log import logger
 from os.path import expanduser, join, exists
 import os, sys
-from utils import _err_, _err_exit, echo
+from utils import _err_, _err_exit, echo, GetTmpDir
 from ConfigParser import RawConfigParser
 from shutil import copy
 
@@ -178,3 +178,23 @@ xmlTimestamp=0
                 self.Close()
 
         return cache
+
+    def getValuesAndUpdateFromUser(self, libraryPath, xmlFileName, outputDir):
+        # config file parameters
+        if self.hasLibraryPath() and not libraryPath:
+            libraryPath = self.getLibraryPath()
+        else:
+            self.setLibraryPath(libraryPath)
+            
+        if self.hasXmlFileName() and not xmlFileName:
+            xmlFileName = self.getXmlFileName()
+        else:
+            self.setXmlFileName(xmlFileName)
+
+        if outputDir == GetTmpDir():
+            if self.hasOutputDir():
+                outputDir = self.getOutputDir()
+        else:
+            self.setOutputDir(outputDir)
+
+        return libraryPath, xmlFileName, outputDir

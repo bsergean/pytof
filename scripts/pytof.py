@@ -21,53 +21,33 @@ from log import logger, quiet
 from os.path import expanduser, join, exists, basename, isabs, walk, isdir
 from albumdataparser import AlbumDataParser, AlbumDataParserError
 import os, sys
-from utils import _err_, _err_exit, echo, GetTmpDir, mktar
+from utils import _err_, _err_exit, echo, GetTmpDir, mkarchive
 from config import configHandler
 import makepage, makefs
 from optparse import OptionParser
 from shutil import rmtree
-from ftp import ftpUploader
+from ftp import ftpUploader, ftpPush
 from ftplib import error_perm
 from getpass import getuser, unix_getpass
-from zipfile import ZipFile, ZIP_DEFLATED
 from string import rstrip
 
 # FIXME: (see issue 11)
 __version__ = open('../VERSION').read().strip()
 
-def getStringFromConsole(text, default = ''):
-    value = raw_input('%s[%s]:' %(text, default))
-    if not value:
-        return default
-    return value
-
 class Pytof(object): pass
 
-
 def main(albumName, libraryPath, xmlFileName, outputDir,
-         info, fs, tar, zip, ftp, strip_originals, fromDir):
+         info, fs, tar, Zip, ftp, strip_originals, fromDir):
     # init the config file
     conf = configHandler()
     if not conf.ok:
         _err_exit('Problem with the config file')
-        
-    # config file parameters
-    if conf.hasLibraryPath() and not libraryPath:
-        libraryPath = conf.getLibraryPath()
-    else:
-        conf.setLibraryPath(libraryPath)
-        
-    if conf.hasXmlFileName() and not xmlFileName:
-        xmlFileName = conf.getXmlFileName()
-    else:
-        conf.setXmlFileName(xmlFileName)
 
-    if outputDir == GetTmpDir():
-        if conf.hasOutputDir():
-            outputDir = conf.getOutputDir()
-    else:
-        conf.setOutputDir(outputDir)            
+    libraryPath, xmlFileName, outputDir = \
+                 conf.getValuesAndUpdateFromUser(libraryPath, xmlFileName, outputDir)
 
+    ##
+    # get iPhoto datas or flat dir pictures list
     if not fromDir:
         try:
             adp = AlbumDataParser(libraryPath, xmlFileName)
@@ -101,90 +81,21 @@ def main(albumName, libraryPath, xmlFileName, outputDir,
             else:
                 makepage.main(albumName, topDir, xmlData, strip_originals, fromDir)
 
-            if tar:
-                mktar(fn = join(outputDir, up, albumName + '.tar'),
-                      prefix = join(outputDir, up),
-                      dirname = albumName,
-                      files = [makepage.cssfile])
-                #tarball.add(makepage.cssfile,
-                #            basename(makepage.cssfile))
-                
-            if zip:
-                def visit (z, dirname, names):
-                    for name in names:
-                        path = os.path.normpath(os.path.join(dirname, name))
-                        if os.path.isfile(path):
-                            # strip topDir from the fn in archive
-                            # and replace by the album name
-                            filename_in_archive = path.replace(topDir, albumName)
-                            z.write(path, filename_in_archive)
-                            logger.info("adding '%s'" % path)
-                
-                zip_filename = topDir + '.zip'
-                z = ZipFile(zip_filename, "w",
-                            compression=ZIP_DEFLATED)
-                walk(topDir, visit, z)
-
-                if not fs:
-                    z.write(makepage.cssfile,
-                            basename(makepage.cssfile))
-                
-                z.close()
-                logger.info('output zipfile is %s' % (zip_filename))
+            archive = None
+            if Zip or tar:
+                archive = mkarchive(fn = join(outputDir, up, albumName),
+                                    prefix = join(outputDir, up),
+                                    mainDir = albumName,
+                                    files = [makepage.cssfile],
+                                    Zip = Zip, tar = tar)
+                echo('output archive is %s' % (archive))
 
             if not info and not fs:
                 import webbrowser
                 webbrowser.open('file://' + join(topDir, 'index.html'))
-                
+
             if ftp:
-
-                logger.debug('Entering ftp code')
-                fromConfig = False
-                if conf.hasFtpParams():
-                    answer = getStringFromConsole('Use last ftp parameters', 'y')
-                    if answer == 'y':
-                        host, user, passwd, remoteDir = conf.getFtpParams()
-                        fromConfig = True        
-
-                if not fromConfig:
-                    # localhost is a preference for test
-                    host = getStringFromConsole('Host', 'localhost')
-                    user = getStringFromConsole('User', getuser())
-                    passwd = unix_getpass()
-                    remoteDir = getStringFromConsole('Remote directory', '')
-                    if not isabs(remoteDir):
-                        logger.error('Sorry: the remote drectory has to be an absolute path')
-                        remoteDir = ''
-
-                try:
-                    ftpU = ftpUploader(host, user, passwd)
-                except (error_perm):
-                    logger.error('Incorrect ftp credentials')
-                    sys.exit(1)
-
-                if not ftpU.ok:
-                    logger.error('Connection failed')
-                    sys.exit(1)               
-                
-                if remoteDir:
-                    if not ftpU.exists(remoteDir):
-                        logger.info('remote dir %s does not exist' % remoteDir)
-                        remoteDir = ftpU.pwd()
-                else:
-                    remoteDir = ftpU.pwd()
-                conf.setFtpParams(host, user, passwd, remoteDir)
-                
-                if tar:
-                    ftpU.upload(tarballFilename,
-                                join(remoteDir, basename(tarballFilename)))
-                else:
-                    # we'll have to mirror the whole dir
-                    if not fs:
-                        logger.debug('upload css')
-                        ftpU.upload(makepage.cssfile,
-                                    join(remoteDir, basename(makepage.cssfile)))
-                    ftpU.cp_rf(topDir,
-                               remoteDir)
+                ftpPush(conf, archive, topDir, fs)
 
     except (KeyboardInterrupt):
 
@@ -194,6 +105,7 @@ def main(albumName, libraryPath, xmlFileName, outputDir,
                 # we should remove the css file if there aren't
                 # any other exported albums left... hard to know,
                 # may be stored in the rc file, under the Internal section.
+                # => if that's the only file in the pytof dir we should be good to go.
                 pass
 
             if exists(topDir):
@@ -228,7 +140,7 @@ if __name__ == "__main__":
                       action="store_true", dest="tar", default=False,
                       help="Create a tar archive from the exported datas")
     parser.add_option("-z", "--zip-archive",
-                      action="store_true", dest="zip", default=False,
+                      action="store_true", dest="Zip", default=False,
                       help="Create a tar archive from the exported datas")
     parser.add_option("-V", "--version",
                       action="store_true", dest="version", default=False,
@@ -268,6 +180,6 @@ if __name__ == "__main__":
     main(options.albumName, options.libraryPath,
          options.xmlFileName, options.outputDir,
          options.info, options.fs, options.tar,
-         options.zip, options.ftp, options.strip_originals,
+         options.Zip, options.ftp, options.strip_originals,
          options.fromDir)
 

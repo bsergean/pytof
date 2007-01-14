@@ -18,6 +18,7 @@ from sys import exc_info
 from stat import S_ISDIR, S_ISLNK
 from utils import notYetImplemented
 from ftplib import FTP, error_temp, all_errors
+from makepage import cssfile
 
 class ftpUploader(FTP):
     '''
@@ -158,3 +159,59 @@ class ftpUploader(FTP):
                 pass
             else:
                 self.upload(fullname, r_fullname)
+
+def getStringFromConsole(text, default = ''):
+    value = raw_input('%s[%s]:' %(text, default))
+    if not value:
+        return default
+    return value
+
+def ftpPush(conf, archive, topDir, fs):
+    logger.debug('Entering ftp code')
+    fromConfig = False
+    if conf.hasFtpParams():
+        answer = getStringFromConsole('Use last ftp parameters', 'y')
+        if answer == 'y':
+            host, user, passwd, remoteDir = conf.getFtpParams()
+            fromConfig = True        
+
+    if not fromConfig:
+        # localhost is a preference for test
+        host = getStringFromConsole('Host', 'localhost')
+        user = getStringFromConsole('User', getuser())
+        passwd = unix_getpass()
+        remoteDir = getStringFromConsole('Remote directory', '')
+        if not isabs(remoteDir):
+            logger.warning('Sorry: the remote drectory has to be an absolute path')
+            remoteDir = ''
+
+    try:
+        ftpU = ftpUploader(host, user, passwd)
+    except (error_perm):
+        logger.error('Incorrect ftp credentials')
+        sys.exit(1)
+
+    if not ftpU.ok:
+        logger.error('Connection failed')
+        sys.exit(1)               
+                
+    if remoteDir:
+        if not ftpU.exists(remoteDir):
+            logger.info('remote dir %s does not exist' % remoteDir)
+            remoteDir = ftpU.pwd()
+    else:
+        remoteDir = ftpU.pwd()
+    conf.setFtpParams(host, user, passwd, remoteDir)
+                
+    if archive:
+        logger.info('upload archive')
+        ftpU.upload(archive,
+                    join(remoteDir, basename(archive)))
+    else:
+        # we'll have to mirror the whole dir
+        if not fs:
+            logger.debug('upload css')
+            ftpU.upload(cssfile,
+                        join(remoteDir, basename(cssfile)))
+        ftpU.cp_rf(topDir,
+                   remoteDir)

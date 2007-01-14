@@ -32,4 +32,4 @@ handler.setFormatter(logging.Formatter(format))
 logger.addHandler(handler)
 
 def quiet():
-    logging.disable(logging.ERROR)
+    logger.setLevel(logging.WARNING)

@@ -19,12 +19,19 @@ from glob import glob
 import coverage, colorize
 from os import getcwd
 from os.path import join
+from unittest import TestCase
 
 if 'check' in sys.argv[1:]:
     __pychecker__ = 'no-deprecated no-miximport'
     import pychecker.checker
 
 sys.path.insert(1, '../pytof')
+
+from utils import mkarchive, maybemakedirs, lpathstrip, create
+from os.path import join, getsize
+from tempfile import mkdtemp, mktemp
+from shutil import rmtree, copytree
+from os import mkdir
 
 class Profiler(object):
     def profile(self, alltests):
@@ -45,6 +52,55 @@ class Profiler(object):
                 results.append((testTime, test.id()))
                 totalTime += testTime
         return totalTime
+    
+class PytofTestCase(TestCase):
+
+    def setUp(self):
+        self.tempdir = mkdtemp()
+        self.galleries = join('data', 'galleries')
+
+    def tearDown(self):
+        rmtree(self.tempdir)
+
+    def create_dummy_dir(self, newDir):
+        '''
+        This one is duplicated from ftp_utils: We should create a class
+        that inherit unittest.TestCase, with this method in it in test.py.
+        We should take care of the self.tmpdir also.
+        '''
+        topDir = join(self.tempdir, newDir)
+        maybemakedirs(topDir)
+
+        # first level
+        tmpftpfile = 'level_1_fileA'
+        create(join(self.tempdir, tmpftpfile), 'youcoulele')
+        tmpftpfile = 'level_1_fileB'
+        create(join(self.tempdir, tmpftpfile), 'warzazat')
+
+        # second level
+        tmpftpfile = 'level_2_fileA'
+        create(join(topDir, tmpftpfile), 'youcoulele')
+
+        # third level A
+        nestedDir = join(topDir, 'a_dir')
+        mkdir(nestedDir)
+
+        tmpftpfile = 'level_3A_fileA'
+        create(join(nestedDir, tmpftpfile), 'youcoulele')
+        tmpftpfile = 'level_3A_fileB'
+        create(join(nestedDir, tmpftpfile), 'warzazat')
+
+        # third level B
+        nestedDir = join(topDir, 'b_dir')
+        mkdir(nestedDir)
+
+        tmpftpfile = 'level_3A_fileA'
+        create(join(nestedDir, tmpftpfile), 'makelele')
+        tmpftpfile = 'level_3B_fileB'
+        create(join(nestedDir, tmpftpfile), 'bogoss')
+
+        return topDir
+
     
 
 def runTests(testModules=None, profileOut=None, coverageOutDir=None):

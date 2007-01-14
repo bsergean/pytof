@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
+<!-- Generated with glade3
+	Version: 3.0.1
+	Date: Sat Jan 13 14:53:30 2007
+	User: bsergean
+	Host: marge1
+-->
+<glade-interface>
+  <widget class="GtkWindow" id="gtof">
+    <property name="title">pytof - share your pictures</property>
+    <child>
+      <widget class="GtkVBox" id="vbox1">
+        <property name="visible">True</property>
+        <child>
+          <widget class="GtkLabel" id="label1">
+            <property name="visible">True</property>
+            <property name="label" translatable="yes">I am a label
+</property>
+            <property name="wrap_mode">PANGO_WRAP_WORD_CHAR</property>
+          </widget>
+        </child>
+        <child>
+          <widget class="GtkButton" id="button1">
+            <property name="visible">True</property>
+            <property name="label" translatable="yes">Click me !!
+</property>
+          </widget>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+</glade-interface>
