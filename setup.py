@@ -12,13 +12,15 @@
 #
 
 from distutils.core import setup
+sys.path.insert(1, 'pytof')
+from version import __version__
+
 
 def main():
 
     # data files
     # http://docs.python.org/dist/node13.html
 
-    __version__ = open('VERSION').read().strip()
     setup(
         name = "pytof",
         version = __version__,
@@ -64,6 +66,7 @@ def main():
         scripts = ['scripts/pytof.py'],
         data_files = [ ('share', ['share/scry.css']), ('VERSION') ]
         )
+	# FIXME: VERSION file has to be removed	
 
 if __name__ == '__main__':
     main()
