@@ -2,7 +2,7 @@
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
 <!-- Generated with glade3
 	Version: 3.0.1
-	Date: Sat Jan 13 14:53:30 2007
+	Date: Sun Jan 14 17:39:44 2007
 	User: bsergean
 	Host: marge1
 -->
@@ -23,8 +23,9 @@
         <child>
           <widget class="GtkButton" id="button1">
             <property name="visible">True</property>
-            <property name="label" translatable="yes">Click me !!
+            <property name="label" translatable="yes">Start pytof using this button !
 </property>
+            <signal name="clicked" handler="startpytof"/>
           </widget>
           <packing>
             <property name="position">1</property>
