@@ -18,7 +18,7 @@ import sys
 sys.path.insert(1, '../pytof')
 
 from options import pytofOptions
-from pytofmain import main
+from pytofmain import Pytof
 
 if __name__ == "__main__":
     # Import Psyco if available
@@ -28,10 +28,8 @@ if __name__ == "__main__":
     except ImportError:
         pass
 
-    options = pytofOptions()
-    main(options.albumName, options.libraryPath,
-         options.xmlFileName, options.outputDir,
-         options.info, options.fs, options.tar,
-         options.Zip, options.ftp, options.strip_originals,
-         options.fromDir)
+    po = pytofOptions()
+    po.check()
+    pytof = Pytof(po)
+    pytof.main()
 
