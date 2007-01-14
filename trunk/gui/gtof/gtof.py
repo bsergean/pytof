@@ -17,7 +17,7 @@ except:
     sys.exit(1)
 
 from options import pytofOptions
-from pytofmain import main
+from pytofmain import Pytof
 
 
 class HelloWorld:
@@ -45,12 +45,10 @@ class HelloWorld:
         gtk.main()
 
     def startpytof(self, widget):
-        options = pytofOptions()
-        main(options.albumName, options.libraryPath,
-             options.xmlFileName, options.outputDir,
-             options.info, options.fs, options.tar,
-             options.Zip, options.ftp, options.strip_originals,
-             options.fromDir)
+        po = pytofOptions()
+        po.check()
+        pytof = Pytof(po)
+        pytof.main()
 
 
 if __name__ == "__main__":

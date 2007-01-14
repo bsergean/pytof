@@ -24,81 +24,98 @@ from ftplib import error_perm
 from getpass import getuser, unix_getpass
 from string import rstrip
 
-class Pytof(object): pass
 
-def main(albumName, libraryPath, xmlFileName, outputDir,
-         info, fs, tar, Zip, ftp, strip_originals, fromDir):
-    # init the config file
-    conf = configHandler()
-    if not conf.ok:
-        _err_exit('Problem with the config file')
+class Pytof(object):
 
-    libraryPath, xmlFileName, outputDir = \
-                 conf.getValuesAndUpdateFromUser(libraryPath, xmlFileName, outputDir)
+    def __init__(self, po):
+        self.albumName = po.options.albumName
+        self.libraryPath = po.options.libraryPath
+        self.xmlFileName = po.options.xmlFileName
+        self.outputDir = po.options.outputDir
+        self.info = po.options.info
+        self.fs = po.options.fs
+        self.tar = po.options.tar
+        self.Zip = po.options.Zip
+        self.ftp = po.options.ftp
+        self.stripOriginals = po.options.stripOriginals
+        self.fromDir = po.options.fromDir
 
-    ##
-    # get iPhoto datas or flat dir pictures list
-    if not fromDir:
-        try:
-            adp = AlbumDataParser(libraryPath, xmlFileName)
-            xmlData = adp.maybeLoadFromXML(conf)
-            
-        except(AlbumDataParserError):
-            _err_exit("Problem parsing AlbumData.xml")
-    else:
-        logger.info('generate gallery from photos in %s dir' % fromDir)
-        xmlData = None
-        # FIXME: this '/' may not be portable ...
-        albumName = basename(rstrip(fromDir, '/'))
-        logger.info('albumName is %s' % albumName)
+        
+    def main(self):
+        # init the config file
+        conf = configHandler()
+        if not conf.ok:
+            _err_exit('Problem with the config file')
 
-    up = 'pytof'
-    topDir = join(outputDir, up, albumName)
-    try:
-        if not exists(topDir):
-            os.makedirs(topDir)
-    except (os.error):
-        _err_exit('Cannot create %s' %(topDir))
+        libraryPath, xmlFileName, outputDir = \
+                     conf.getValuesAndUpdateFromUser(self.libraryPath,
+                                                     self.xmlFileName,
+                                                     self.outputDir)
 
-    print 'output dir is %s' % (topDir)
-
-    try:
-        if info:
-            print ('\n').join(xmlData.getAlbumList())
+        ##
+        # get iPhoto datas or flat dir pictures list
+        if not self.fromDir:
+            try:
+                adp = AlbumDataParser(libraryPath, xmlFileName)
+                xmlData = adp.maybeLoadFromXML(conf)
+            except(AlbumDataParserError):
+                _err_exit("Problem parsing AlbumData.xml")
         else:
-            if fs:
-                makefs.main(albumName, topDir, xmlData)
+            logger.info('generate gallery from photos in %s dir' % self.fromDir)
+            xmlData = None
+            # FIXME: this '/' may not be portable ...
+            self.albumName = basename(rstrip(self.fromDir, '/'))
+            logger.info('albumName is %s' % self.albumName)
+
+        up = 'pytof'
+        topDir = join(self.outputDir, up, self.albumName)
+        try:
+            if not exists(topDir):
+                os.makedirs(topDir)
+        except (os.error):
+            _err_exit('Cannot create %s' %(topDir))
+
+        echo('output dir is %s' % (topDir))
+
+        try:
+            if self.info:
+                print ('\n').join(xmlData.getAlbumList())
             else:
-                makepage.main(albumName, topDir, xmlData, strip_originals, fromDir)
+                if self.fs:
+                    makefs.main(self.albumName, topDir, xmlData)
+                else:
+                    makepage.main(self.albumName, topDir, xmlData, self.stripOriginals, self.fromDir)
 
             archive = None
-            if Zip or tar:
-                archive = mkarchive(fn = join(outputDir, up, albumName),
+            if self.Zip or self.tar:
+                archive = mkarchive(fn = join(outputDir, up, self.albumName),
                                     prefix = join(outputDir, up),
-                                    mainDir = albumName,
+                                    mainDir = self.albumName,
                                     files = [makepage.cssfile],
-                                    Zip = Zip, tar = tar)
+                                    Zip = self.Zip,
+                                    tar = self.tar)
                 echo('output archive is %s' % (archive))
 
-            if not info and not fs:
+            if not self.info and not self.fs:
                 import webbrowser
                 webbrowser.open('file://' + join(topDir, 'index.html'))
 
-            if ftp:
-                ftpPush(conf, archive, topDir, fs)
+            if self.ftp:
+                ftpPush(conf, archive, topDir, self.fs)
 
-    except (KeyboardInterrupt):
+        except (KeyboardInterrupt):
 
-        if not info:
-            if not fs:
-                # os.remove(makepage.cssfile)
-                # we should remove the css file if there aren't
-                # any other exported albums left... hard to know,
-                # may be stored in the rc file, under the Internal section.
-                # => if that's the only file in the pytof dir we should be good to go.
-                pass
+            if not self.info:
+                if not self.fs:
+                    # os.remove(makepage.cssfile)
+                    # we should remove the css file if there aren't
+                    # any other exported albums left... hard to know,
+                    # may be stored in the rc file, under the Internal section.
+                    # => if that's the only file in the pytof dir we should be good to go.
+                    pass
 
-            if exists(topDir):
-                rmtree(topDir)
+                if exists(topDir):
+                    rmtree(topDir)
 
-        _err_exit("\nAborted by user")
+                _err_exit("\nAborted by user")
+
