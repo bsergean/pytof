@@ -28,11 +28,6 @@ from log import logger, quiet
 # comment me if you want to debug here
 quiet()
 
-def create(file, content):
-    fd = open(file, 'w')
-    fd.write(content)
-    fd.close()
-
 def diff(a, b):
     ''' Call the real diff function on two Unix files or directories '''
     exitCode = os.system('diff %s %s > /dev/null' % (a, b))
@@ -78,7 +73,19 @@ class FTPTestLocal(unittest.TestCase):
         self.assert_ (diff (tmp, remoteTmp))
 
     def create_dummy_dir(self, newDir):
+        '''
+        This one is duplicated in utils_test: We should create a class
+        that inherit unittest.TestCase, with this method in it in test.py.
+        We should take care of the self.tmpdir also.
+        '''
+
         if not self.ok: return
+
+        def create(file, content):
+            fd = open(file, 'w')
+            fd.write(content)
+            fd.close()
+
         topDir = join(self.tempdir, newDir)
         maybemakedirs(topDir)
         
@@ -91,9 +98,9 @@ class FTPTestLocal(unittest.TestCase):
         mkdir(nestedDir)
         
         tmpftpfile = 'a_file'
-        create(join(nestedDir, tmpftpfile), 'youcoulele')
+        create(join(nestedDir, tmpftpfile), 'gouzigouzi')
         tmpftpfile = 'another_file'
-        create(join(nestedDir, tmpftpfile), 'warzazat')
+        create(join(nestedDir, tmpftpfile), 'guacamol')
 
         return topDir
 

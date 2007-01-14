@@ -15,12 +15,12 @@ import sys
 import os
 from os import walk
 from os.path import splitext, expanduser, join, exists, basename
-
+import tarfile
 
 sys.path.insert(1, '../deps/ftputil-2.2')
 
 def echo(s):
-    sys.stdout.write(s)
+    sys.stdout.write(str(s) + '\n')
     sys.stdout.flush()
 
 def _err_exit(msg):
@@ -252,7 +252,33 @@ class ProgressMsg(object):
         self.output.write(msg)
         if self.counter == self.target:
             self.output.write("\n")
-        
+
+def mktar(fn, prefix, dirname, files):
+    '''
+    The TarFile is created with modew, the simple tar file.
+    We could add compression (w|gz or w|bz2) but it is useless
+    since we are working on compressed image in pytof
+    
+    - fn is the tar filename
+    - prefix is the dir where we cd before creating the archive
+    - dirname is the directory to archive within prefix
+    - files is a list of file with an absolute path which
+    will be put in the tar at the prefix level
+    '''
+    
+    pwd = os.getcwd()
+    os.chdir(prefix)
+    tarball = tarfile.open(fn, 'w') 
+    tarball.add(dirname)
+    os.chdir(pwd)
+    for f in files:
+        # FIXME: maybe pb here: see zip section
+        tarball.add(f, basename(f))
+    tarball.close()
+
+    # need to shut this up during test suite execution
+    echo('output tarball is %s' % (fn))
+
 
 if __name__ == "__main__":
     # FIXME : Add tests here

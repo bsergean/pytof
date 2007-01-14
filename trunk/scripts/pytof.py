@@ -21,11 +21,10 @@ from log import logger, quiet
 from os.path import expanduser, join, exists, basename, isabs, walk, isdir
 from albumdataparser import AlbumDataParser, AlbumDataParserError
 import os, sys
-from utils import _err_, _err_exit, echo, GetTmpDir
+from utils import _err_, _err_exit, echo, GetTmpDir, mktar
 from config import configHandler
 import makepage, makefs
 from optparse import OptionParser
-import tarfile
 from shutil import rmtree
 from ftp import ftpUploader
 from ftplib import error_perm
@@ -103,19 +102,13 @@ def main(albumName, libraryPath, xmlFileName, outputDir,
                 makepage.main(albumName, topDir, xmlData, strip_originals, fromDir)
 
             if tar:
-                pwd = os.getcwd()
-                os.chdir(join(outputDir, up))
-                tarball = tarfile.open(albumName + '.tar', 'w')
-                tarball.add(albumName)
-                os.chdir(pwd)
-                if not fs:
-                    # FIXME: maybe pb here: see zip section
-                    tarball.add(makepage.cssfile,
-                                basename(makepage.cssfile))
-                tarball.close()
-                tarballFilename = join(outputDir, up, albumName + '.tar')
-                logger.info('output tarball is %s' % (tarballFilename))
-
+                mktar(fn = join(outputDir, up, albumName + '.tar'),
+                      prefix = join(outputDir, up),
+                      dirname = albumName,
+                      files = [makepage.cssfile])
+                #tarball.add(makepage.cssfile,
+                #            basename(makepage.cssfile))
+                
             if zip:
                 def visit (z, dirname, names):
                     for name in names:
