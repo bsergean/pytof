@@ -12,7 +12,7 @@ __revision__ = '$Id$  (C) 2004 GPL'
 __author__ = 'Benjamin Sergeant'
 
 from log import logger
-from os.path import expanduser, join, exists
+from os.path import expanduser, join, exists, getsize
 import os, sys
 from utils import _err_, _err_exit, echo, GetTmpDir
 from ConfigParser import RawConfigParser
@@ -49,7 +49,7 @@ xmlTimestamp=0
 
         exist = exists(confFilename)
         if exist:
-            size = os.stat(confFilename).st_blocks
+            size = getsize(confFilename)
 
         if not exist or size == 0:
             # create it

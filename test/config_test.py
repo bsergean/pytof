@@ -29,16 +29,16 @@ class TestConfigHandler(TestCase):
     def setUp(self):
         self.tempdir = mkdtemp()
 
-#    def tearDown(self):
-#        rmtree(self.tempdir)
+    def tearDown(self):
+        rmtree(self.tempdir)
 
     def testInit(self):
         '''
         The config file should be called pytof.ini,
         and be located inside the config dir
         '''
-        conf = configHandler('data/conf')
-        self.assertEquals("data/conf/pytof.ini", conf.confFilename)
+        conf = configHandler(join('data','conf'))
+        self.assertEquals(join('data','conf','pytof.ini'), conf.confFilename)
 
     def _InitAndSetLibrarySection(self):
         '''
