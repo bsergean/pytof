@@ -2,7 +2,7 @@
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
 <!-- Generated with glade3
 	Version: 3.0.1
-	Date: Sun Jan 14 17:39:44 2007
+	Date: Sun Jan 14 22:35:49 2007
 	User: bsergean
 	Host: marge1
 -->
@@ -29,6 +29,14 @@
           </widget>
           <packing>
             <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="GtkProgressBar" id="pbar">
+            <property name="visible">True</property>
+          </widget>
+          <packing>
+            <property name="position">2</property>
           </packing>
         </child>
       </widget>

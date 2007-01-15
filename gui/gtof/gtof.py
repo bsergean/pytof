@@ -18,7 +18,24 @@ except:
 
 from options import pytofOptions
 from pytofmain import Pytof
+from utils import ProgressMsg
 
+class ProgressMsg(object):
+    """ General purpose progress bar """
+    def __init__(self, target, pbar):
+        self.pbar = pbar
+        self.counter = 0.0
+        self.target = float(target)
+
+    def Increment(self):
+        self.counter += 1
+        self.pbar.set_fraction(self.counter / self.target)       
+        if self.counter == self.target:
+            self.pbar.set_fraction(1)
+
+        # FIXME: I guess there is a better way to do, like connecting the
+        # progress bar to the main application, or something like that.
+        gtk.main_iteration()
 
 class HelloWorld:
 
@@ -35,6 +52,8 @@ class HelloWorld:
         if (self.button):
             self.button.connect("clicked", self.startpytof)
 
+        self.pbar = self.wTree.get_widget("pbar")
+
         # if you forget to show the main window it's gonna be a sad gui
         self.window.show()
 
@@ -47,7 +66,9 @@ class HelloWorld:
     def startpytof(self, widget):
         po = pytofOptions()
         po.check()
-        pytof = Pytof(po)
+
+        progress = ProgressMsg(-1, self.pbar)
+        pytof = Pytof(po, progress)
         pytof.main()
 
 

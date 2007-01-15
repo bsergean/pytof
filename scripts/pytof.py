@@ -19,6 +19,7 @@ sys.path.insert(1, '../pytof')
 
 from options import pytofOptions
 from pytofmain import Pytof
+from utils import ProgressMsg
 
 if __name__ == "__main__":
     # Import Psyco if available
@@ -30,6 +31,7 @@ if __name__ == "__main__":
 
     po = pytofOptions()
     po.check()
-    pytof = Pytof(po)
+    progress = ProgressMsg(-1, sys.stderr)
+    pytof = Pytof(po, progress)
     pytof.main()
 

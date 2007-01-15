@@ -27,7 +27,7 @@ from string import rstrip
 
 class Pytof(object):
 
-    def __init__(self, po):
+    def __init__(self, po, progress):
         self.albumName = po.options.albumName
         self.libraryPath = po.options.libraryPath
         self.xmlFileName = po.options.xmlFileName
@@ -40,6 +40,7 @@ class Pytof(object):
         self.stripOriginals = po.options.stripOriginals
         self.fromDir = po.options.fromDir
 
+        self.progress = progress
         
     def main(self):
         # init the config file
@@ -84,7 +85,8 @@ class Pytof(object):
                 if self.fs:
                     makefs.main(self.albumName, topDir, xmlData)
                 else:
-                    makepage.main(self.albumName, topDir, xmlData, self.stripOriginals, self.fromDir)
+                    makepage.main(self.albumName, topDir, xmlData,
+                                  self.stripOriginals, self.fromDir, self.progress)
 
             archive = None
             if self.Zip or self.tar:

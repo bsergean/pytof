@@ -240,7 +240,8 @@ def makePhotoPage(photo, linkBack, topDir, prev, next, strip_originals):
         page.writePage()
         return page.fileName
 
-def main(albumName, topDir, xmlData, strip_originals, fromDir):
+def main(albumName, topDir, xmlData, strip_originals,
+         fromDir, progress = ProgressMsg(0, sys.stderr)):
     logger.info('strip_originals = %s' % strip_originals)
 
     data = xmlData
@@ -273,7 +274,7 @@ def main(albumName, topDir, xmlData, strip_originals, fromDir):
     logger.info("Writing pictures\n")
     
     photos = data.getPicturesIdFromAlbumName(albumName)
-    progress = ProgressMsg(len(photos), sys.stderr)                           
+    progress.target = len(photos)
     for i in xrange(len(photos)):
 
         pic_id = photos[i]
