@@ -10,7 +10,10 @@
 
 __revision__ = '$Id$  (C) 2007 GPL'
 
-
+# FIXME: see the run function at the bottom.
+import sys
+sys.path.insert(1, '../pytof')
+    
 from unittest import TestCase
 from utils import RemoveSpecificChars, UnixFind, urlExtractor
 from utils import mkarchive, maybemakedirs, lpathstrip, create
@@ -19,6 +22,7 @@ import tarfile
 from zipfile import ZipFile, ZIP_DEFLATED
 from log import quiet
 from test import PytofTestCase
+import os
 
 #quiet()
 
@@ -100,11 +104,26 @@ class TestUtils(PytofTestCase):
 
     def testlpathstrip(self):
         '''
-        TODO: do the same tests with Windows os.sep  chars if os.name == nt
+        Make sure the coverage is ok
         '''
-        prefix = '/tmp/'
-        path = '/tmp/kiki/coucou'
-        self.assertEquals(lpathstrip(prefix, path), 'kiki/coucou')
+        prefix = self.tempdir + os.sep
+        path = join(self.tempdir, 'kiki', 'coucou')
+        self.assertEquals(lpathstrip(prefix, path), join('kiki', 'coucou'))
 
-        prefix = '/tmp'
-        self.assertEquals(lpathstrip(prefix, path), 'kiki/coucou')
+        prefix = self.tempdir
+        self.assertEquals(lpathstrip(prefix, path), join('kiki', 'coucou'))
+
+def run():
+    '''
+    Should be in test and detect the current test name automatically.
+    Need this for IDLE on Windows where you can execute a with F5 and
+    where the shell/terminal support is bad and it's 
+    a hassle to start test from command line.
+    '''
+    import unittest
+    testModules = ['utils_test']
+    alltests = unittest.TestLoader().loadTestsFromNames(testModules)
+    unittest.TextTestRunner().run(alltests)
+    
+if __name__ == '__main__':
+    run()
