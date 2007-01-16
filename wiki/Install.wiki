@@ -67,6 +67,26 @@ sudo python setup.py install
 
 You should be good to go, and ready to play with pytof !!
 
+== gtof ==
+
+gtof is the name of the pytof graphical user interface. It is using the pygtk toolkit + libglade, so you'll have to install both of them.
+
+=== Linux ===
+
+Just use your installer manager to get glade-3 and pygtk (urpmi, yum, apt-get).
+
+=== Windows ===
+
+An all in one installer is being prepared by the pygtk fols, but for now:
+
+ * Install gtk+ and glade from [http://gladewin32.sourceforge.net/modules/news/ here]. I used the 2.10.7 version.
+ * Look for the Win32 Installer section in the pygtk [http://www.pygtk.org/downloads.html download] page, and install those tree guys: PyCairo (1.2), PyGObject (2.12), PyGTK (2.10)
+
+=== Mac ===
+
+Fink / x11 is needed for now, but there may be a lighter process as there is now a non X11 gtk implementation on the Mac, which is good news.
+
 == One click Installer ==
 
 Of course in the near future we'd like to make a nice OS X package, so that no-one would have to experience tar and configure nice moments ...
+
