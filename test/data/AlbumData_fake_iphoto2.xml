@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Application Version</key>
+	<string>2.0.1 (3E8)</string>
+	<key>Archive Path</key>
+	<string>/Users/100drine/Pictures/iPhotoLibrary</string>
+	<key>List of Albums</key>
+	<array>
+		<dict>
+			<key>AlbumName</key>
+			<string>Slyine Boulevard</string>
+			<key>BookDesignName</key>
+			<string>Livre dâimages</string>
+			<key>KeyList</key>
+			<array>
+				<string>198</string>
+				<string>199</string>
+				<string>200</string>
+				<string>201</string>
+			</array>
+			<key>PhotoCount</key>
+			<integer>4</integer>
+			<key>RepeatSlideShow</key>
+			<string>NO</string>
+			<key>SecondsPerSlide</key>
+			<integer>3</integer>
+			<key>SongPath</key>
+			<string>/Applications/iPhoto.app/Contents/Resources/Music/Jesu, Joy Of Man's Desiring.mp3</string>
+		</dict>
+	</array>
+	<key>Major Version</key>
+	<integer>2</integer>
+	<key>Master Image List</key>
+	<dict>
+                <key>198</key>
+		<dict>
+			<key>Caption</key>
+			<string>IMGP0240</string>
+			<key>Comment</key>
+			<string></string>
+			<key>Date</key>
+			<date>2005-08-08T06:03:54Z</date>
+			<key>ImagePath</key>
+			<string>/Users/100drine/Pictures/iPhotoLibrary/2005/05/01/IMGP0240.JPG</string>
+			<key>ModificationDate</key>
+			<date>2005-05-02T03:18:20Z</date>
+			<key>ThumbPath</key>
+			<string>/Users/100drine/Pictures/iPhotoLibrary/2005/05/01/Thumbs/198.jpg</string>
+		</dict>
+		<key>199</key>
+		<dict>
+			<key>Caption</key>
+			<string>IMGP0241</string>
+			<key>Comment</key>
+			<string></string>
+			<key>Date</key>
+			<date>2005-08-08T06:03:54Z</date>
+			<key>ImagePath</key>
+			<string>/Users/100drine/Pictures/iPhotoLibrary/2005/05/01/IMGP0241.JPG</string>
+			<key>ModificationDate</key>
+			<date>2005-05-02T03:19:48Z</date>
+			<key>ThumbPath</key>
+			<string>/Users/100drine/Pictures/iPhotoLibrary/2005/05/01/Thumbs/199.jpg</string>
+		</dict>
+		<key>200</key>
+		<dict>
+			<key>Caption</key>
+			<string>IMGP0242</string>
+			<key>Comment</key>
+			<string></string>
+			<key>Date</key>
+			<date>2005-08-08T06:03:54Z</date>
+			<key>ImagePath</key>
+			<string>/Users/100drine/Pictures/iPhotoLibrary/2005/05/01/IMGP0242.JPG</string>
+			<key>ModificationDate</key>
+			<date>2005-05-02T03:19:56Z</date>
+			<key>ThumbPath</key>
+			<string>/Users/100drine/Pictures/iPhotoLibrary/2005/05/01/Thumbs/200.jpg</string>
+		</dict>
+		<key>201</key>
+		<dict>
+			<key>Caption</key>
+			<string>IMGP0243</string>
+			<key>Comment</key>
+			<string></string>
+			<key>Date</key>
+			<date>2005-08-08T06:03:54Z</date>
+			<key>ImagePath</key>
+			<string>/Users/100drine/Pictures/iPhotoLibrary/2005/05/01/IMGP0243.JPG</string>
+			<key>ModificationDate</key>
+			<date>2005-05-02T03:25:47Z</date>
+			<key>ThumbPath</key>
+			<string>/Users/100drine/Pictures/iPhotoLibrary/2005/05/01/Thumbs/201.jpg</string>
+		</dict>
+	</dict>
+	<key>Minor Version</key>
+	<integer>0</integer>
+</dict>
+</plist>
