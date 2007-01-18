@@ -49,6 +49,7 @@ class TestConfigHandler(TestCase):
         copytree('data', tget)
 
         self.xmlFilename = 'AlbumData_gnocchi.xml'
+        self.xmlFilename = 'AlbumData_fake_iphoto2.xml'
         self.libraryPath = tget
         
         self.conf = configHandler(join(tget,'conf'))
