@@ -36,7 +36,9 @@ Installing [http://www.blastwave.org/packages/pil PIL] using [http://www.blastwa
 get a nice experience you should install [http://www.cygwin.com/mirrors.html
 cygwin] which comes with [http://www.gnu.org/software/bash/ bash].
  
-== Install from sources ==
+== Install dependancies from sources ==
+
+The drawback is that you need to install the developper tools, (a good 1Gigabyte dmg to download, hum ...) to get gcc that is required to build PIL and libjpeg.
 
 === Automatic ===
 
@@ -98,4 +100,3 @@ Fink / x11 is needed for now, but there may be a lighter process as there is now
 == One click Installer ==
 
 Of course in the near future we'd like to make a nice OS X package, so that no-one would have to experience tar and configure nice moments ...
-
