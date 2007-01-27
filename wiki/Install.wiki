@@ -3,13 +3,22 @@
 
 == Introduction ==
 
-For thumbnails creation pytof rely on the python imaging library, which itself rely on the libjpeg for low level jpeg handling. Both of them should be installed, and the process is quite simple.
+For thumbnails creation pytof rely on the python imaging library (PIL), which itself rely on the libjpeg for low level jpeg handling. Both of them should be installed, and the process is quite simple.
 
-== Install using prepackaged binaries ==
+== Install dependancies using prepackaged binaries ==
 
 === Mac ===
 
-I'm sure fink has a prepackaged PIL.
+==== Panther ====
+
+I made a PIL archive where PIL is compiled against a static libjpeg, so it should be self contained.
+{{{
+[100drine@gnocchi tmp]$ cd /Library/Python/2.3/    
+[100drine@gnocchi 2.3]$ sudo curl -O http://pytof.googlecode.com/files/PIL-PPC-Panther-python-2.3.tar.bz2
+[100drine@gnocchi 2.3]$ sudo bunzip2 -c PIL-PPC-Panther-python-2.3.tar.bz2 | tar xf -
+}}}
+When sudo ask you a password, type your user password.
+Otherwise I'm sure fink has a prepackaged PIL.
 
 === Linux ===
 
