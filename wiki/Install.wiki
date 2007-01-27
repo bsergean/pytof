@@ -38,7 +38,7 @@ cygwin] which comes with [http://www.gnu.org/software/bash/ bash].
  
 == Install dependancies from sources ==
 
-The drawback is that you need to install the developper tools, (a good 1Gigabyte dmg to download, hum ...) to get gcc that is required to build PIL and libjpeg.
+The drawback is that you need to install the developper tools on the Mac, (a good 1Gigabyte dmg to download, hum ...) to get gcc that is required to build PIL and libjpeg. As there is a windows installer on the PIL site, you'd better use that one. And on Linux most likely you will have pre-packaged PIL and libjpeg, otherwise install gcc.
 
 === Automatic ===
 
