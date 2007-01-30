@@ -45,9 +45,7 @@ class TestEXIF(unittest.TestCase):
     '''
     def setUp(self):
         self.tempdir = mkdtemp()
-        self.exim1 = join('data', 'exim1.jpg')
-        self.exim2 = join('data', 'Rotated_90_CW_thumb.jpg')
-        self.exim3 = join('data', 'Rotated_90_CW.jpg')
+        self.exim1 = join('data', 'rotated_minus_90.jpg')
 
     def tearDown(self):
         rmtree(self.tempdir)
@@ -59,28 +57,22 @@ class TestEXIF(unittest.TestCase):
               
     def test_exim1_assert_values(self):
         tags = EXIF_tags(self.exim1)
-        self.assert_( prune(tags, 'Image Model') == 'PENTAX Optio S5i' )
-        self.assert_( prune(tags, 'Image Make') == 'PENTAX Corporation' )
-
-        self.assert_( str(tags['EXIF DateTimeOriginal']) == '2005:04:10 17:52:16' )
-        self.assert_( str(tags['EXIF Flash']) == 'Off' )
+        print tags['Image Model']
+        self.assertEquals( str(tags['Image Model']), 'CYBERSHOT' )
+        self.assertEquals( str(tags['Image Make']),'SONY' )
+        self.assertEquals( str(tags['EXIF DateTimeOriginal']), '2005:03:23 10:16:48' )
+        self.assertEquals( str(tags['EXIF Flash']), 'Fired' )
 
         photo = Photo(self.exim1)
         infos = photo.EXIF_infos()
-        self.assertEquals("Model: PENTAX Optio S5i ", infos[0])
-        self.assertEquals("Date: 2005:04:10 17:52:16", infos[1])
-        self.assertEquals("Flash: Off", infos[2])
+        self.assertEquals('Model: CYBERSHOT', infos[0])
+        self.assertEquals('Date: 2005:03:23 10:16:48', infos[1])
+        self.assertEquals('Flash: Fired', infos[2])
         
-    def test_exif_stripped_picture(self):
-        # Nothing will be printed since PIL remove the exif infos
-        # on this data picture
-        # FIXME: we should create it
-        print_tags(self.exim2)
-
     def test_exif_assert_picture_is_rotated(self):
         key = 'Image Orientation'
         value = 'Rotated 90 CW'
-        valueFromFile = str(get_key(self.exim3, key))
+        valueFromFile = str(get_key(self.exim1, key))
         self.assertEquals(value, valueFromFile)
 
     def _auto_rotate_thanks_to_exif(self, thumb = True):
@@ -90,7 +82,7 @@ class TestEXIF(unittest.TestCase):
             tgetDir = 'preview'
         
         tmpFile = join(self.tempdir, 'toto.jpg')
-        copy(self.exim3, tmpFile)
+        copy(self.exim1, tmpFile)
 
         oldpwd = getcwd()
         chdir(self.tempdir)
