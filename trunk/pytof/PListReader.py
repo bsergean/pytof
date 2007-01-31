@@ -60,8 +60,21 @@ except ImportError:
     except ImportError:
         raise ImportError, "PListReader requires either the XMLFilter module (available separately from www.shearersoftware.com) or a version of Python with xml.sax support."
 
-import W3CDate
 import base64
+
+#import W3CDate
+# The new W3CDate may not be W3C compliant but works with my samples ...
+from time import strptime, strftime
+class W3CDate:
+    def __init__(self, text = None):
+        self.text = text
+
+    def getISO8601(self):
+        self.value = strptime(self.text, '%Y-%m-%dT%H:%M:%SZ')
+        return strftime('%Y-%m-%dT%H:%M:%S', self.value)
+
+    __str__ = __repr__ = getISO8601
+
 
 class PListReader(XMLSAXHandler):
     def __init__(self):
@@ -97,7 +110,7 @@ class PListReader(XMLSAXHandler):
 
     # map plist element names to functions that convert text into a Python object
     simpleTypeConverterFunctions = {
-        'data': base64.decodestring, 'date': W3CDate.W3CDate,
+        'data': base64.decodestring, 'date': W3CDate,
         'integer': int, 'real': float, 'string': lambda x: x, 
         'true': lambda x: 1==1, 'false': lambda x: 0==1}
     
@@ -134,3 +147,16 @@ class PListReader(XMLSAXHandler):
     def getResult(self):
         return self._result
 
+
+if __name__ == "__main__":
+    reader = PListReader()
+    import xml.sax
+    parser = xml.sax.make_parser()
+    parser.setContentHandler(reader)
+    parser.setFeature(xml.sax.handler.feature_external_ges, 0)
+    parser.setFeature(xml.sax.handler.feature_namespaces, 0)
+    parser.setFeature(xml.sax.handler.feature_external_pes, 0)
+    parser.parse('../test/data/AlbumData_fake_iphoto2.xml')
+    #parser.parse('../test/data/AlbumData_gnocchi.xml')
+    datas = reader.getResult()
+    print datas['List of Albums']

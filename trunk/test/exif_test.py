@@ -45,7 +45,12 @@ class TestEXIF(unittest.TestCase):
     '''
     def setUp(self):
         self.tempdir = mkdtemp()
-        self.exim1 = join('data', 'rotated_minus_90.jpg')
+        self.exim1 = join('data',
+                          'fake_iphoto2_library',
+                          '2005',
+                          '03',
+                          '23',
+                          'rotated_minus_90.jpg')
 
     def tearDown(self):
         rmtree(self.tempdir)
@@ -57,7 +62,6 @@ class TestEXIF(unittest.TestCase):
               
     def test_exim1_assert_values(self):
         tags = EXIF_tags(self.exim1)
-        print tags['Image Model']
         self.assertEquals( str(tags['Image Model']), 'CYBERSHOT' )
         self.assertEquals( str(tags['Image Make']),'SONY' )
         self.assertEquals( str(tags['EXIF DateTimeOriginal']), '2005:03:23 10:16:48' )

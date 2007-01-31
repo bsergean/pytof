@@ -52,9 +52,9 @@ class AlbumDataFromDir(object):
 
 class AlbumDataError(Exception): pass
 class AlbumData(object):
-    def __init__(self, data):
+    def __init__(self, data, libraryPath):
         self.data = data
-        self.libraryPath = ''
+        self.libraryPath = libraryPath
 
     def getAlbumByName(self, name):
         for album in self.data['List of Albums']:
@@ -99,11 +99,13 @@ class AlbumData(object):
                     photoFileName = join(self.libraryPath, suffix)
                     
             except (ValueError):
-                # probably panther iPhoto, there is no Original in the filenam
+                # probably panther iPhoto, there is no Original in the filename
                 print self.libraryPath
                 _err_exit('Internal Error: cannot handle %s' %(photoFileName))
 
             logger.info(photoFileName)
+        else:
+            raise AlbumDataError, "Internal error: libraryPath not defined"
 
         if not p.has_key('DateAsTimerInterval'):
             p['DateAsTimerInterval'] = ''
@@ -187,6 +189,19 @@ class AlbumDataParser(object):
                 raise ExpatError, list.__class__
 
     def parse(self):
+        from PListReader import PListReader
+        reader = PListReader()
+        import xml.sax
+        parser = xml.sax.make_parser()
+        parser.setContentHandler(reader)
+        parser.setFeature(xml.sax.handler.feature_external_ges, 0)
+        parser.setFeature(xml.sax.handler.feature_namespaces, 0)
+        parser.setFeature(xml.sax.handler.feature_external_pes, 0)
+
+        parser.parse(self.xmlFile)
+        return AlbumData(reader.getResult(), self.xmlFileDir)
+
+    def parseasdfasdf(self):
         def start_element(name, attrs):
             if name == 'dict':
                 elem = {}
@@ -201,7 +216,7 @@ class AlbumDataParser(object):
         def end_element(name):
             item = self.elemList.pop()
             if name == 'plist':
-                self.albumData = AlbumData(item[0])
+                self.albumData = AlbumData(item[0], self.xmlFileDir)
                 assert(len(self.elemList) == 0)
             elif name == 'dict':
                 self.addItem(item)
@@ -262,7 +277,7 @@ class AlbumDataParser(object):
         self.parsed = True
         return self.xmlData
 
-    
+
 # Code snipets kept for memory
 
 # 2005-08-08T06:03:54Z
