@@ -29,8 +29,8 @@ class TestMakeFS(TestCase):
         self.tempdir = mkdtemp()
         self.albumName = 'Youpi gallery'
         self.topDir = self.tempdir
-        self.libraryPath = join('data', 'fake_iphoto2_library')
-        self.xmlFilename = 'AlbumData_fake_iphoto2.xml'
+        self.libraryPath = join('data', 'fake_iphoto_library')
+        self.xmlFilename = 'AlbumData_fake_iphoto-2.xml'
 
     def tearDown(self):
         rmtree(self.tempdir)

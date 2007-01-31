@@ -45,13 +45,13 @@ class TestConfigHandler(TestCase):
         As we do some real stuff with the config file we
         should work on a copy.
         '''
-        libraries = join('data', 'fake_iphoto2_library')
+        libraries = join('data', 'fake_iphoto_library')
         mkdir(join(self.tempdir, 'data'))
         tget = join(self.tempdir, libraries)
         copytree(libraries, tget)
 
         self.xmlFilename = 'AlbumData_gnocchi.xml'
-        self.xmlFilename = 'AlbumData_fake_iphoto2.xml'
+        self.xmlFilename = 'AlbumData_fake_iphoto-2.xml'
         self.libraryPath = tget
         
         self.conf = configHandler(join(tget,'conf'))
