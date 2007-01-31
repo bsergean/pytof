@@ -46,7 +46,7 @@ class TestEXIF(unittest.TestCase):
     def setUp(self):
         self.tempdir = mkdtemp()
         self.exim1 = join('data',
-                          'fake_iphoto2_library',
+                          'fake_iphoto_library',
                           '2005',
                           '03',
                           '23',

@@ -32,7 +32,7 @@ class TestMakeFS(TestCase):
         self.tempdir = mkdtemp()
         self.pytof = join('data', 'templates', 'pytof.ezt')
         self.pytofOutput = mktemp()
-        print self.pytofOutput
+        #print self.pytofOutput
 
     def tearDown(self):
         rmtree(self.tempdir)
