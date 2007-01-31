@@ -54,6 +54,10 @@ See this [http://svnbook.red-bean.com/en/1.1/ch04s02.html note] from the subvers
 A         branches/makepages-scry
 }}}
 
+=== Moving ===
+
+If you move files or dirs around, it may fails sometimes and when you want to re-add your directories that you backuped somewhere, don't forget to erase all the .svn directories within the freshly to be added directories, otherwise commit will fails ... keep this in mind.
+
 == Wiki ==
 
 Quote from the FAQ:
