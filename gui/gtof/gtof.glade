@@ -2,41 +2,70 @@
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
 <!-- Generated with glade3
 	Version: 3.0.1
-	Date: Sun Jan 14 22:35:49 2007
+	Date: Mon Jan 15 01:16:21 2007
 	User: bsergean
 	Host: marge1
 -->
 <glade-interface>
   <widget class="GtkWindow" id="gtof">
-    <property name="title">pytof - share your pictures</property>
+    <property name="title">Select</property>
     <child>
-      <widget class="GtkVBox" id="vbox1">
+      <widget class="GtkNotebook" id="notebook1">
         <property name="visible">True</property>
         <child>
-          <widget class="GtkLabel" id="label1">
+          <widget class="GtkVBox" id="vbox1">
             <property name="visible">True</property>
-            <property name="label" translatable="yes">I am a label
-</property>
-            <property name="wrap_mode">PANGO_WRAP_WORD_CHAR</property>
-          </widget>
-        </child>
-        <child>
-          <widget class="GtkButton" id="button1">
-            <property name="visible">True</property>
-            <property name="label" translatable="yes">Start pytof using this button !
-</property>
-            <signal name="clicked" handler="startpytof"/>
+            <child>
+              <widget class="GtkButton" id="dirButton">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Select Directory</property>
+                <signal name="clicked" handler="fileSelection"/>
+              </widget>
+            </child>
+            <child>
+              <widget class="GtkButton" id="startButton">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Start</property>
+              </widget>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkProgressBar" id="pbar">
+                <property name="visible">True</property>
+              </widget>
+              <packing>
+                <property name="position">2</property>
+              </packing>
+            </child>
           </widget>
           <packing>
-            <property name="position">1</property>
+            <property name="tab_expand">False</property>
           </packing>
         </child>
         <child>
-          <widget class="GtkProgressBar" id="pbar">
-            <property name="visible">True</property>
-          </widget>
+          <placeholder/>
           <packing>
-            <property name="position">2</property>
+            <property name="type">tab</property>
+          </packing>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+          <packing>
+            <property name="type">tab</property>
+          </packing>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+          <packing>
+            <property name="type">tab</property>
           </packing>
         </child>
       </widget>

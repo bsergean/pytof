@@ -12,7 +12,7 @@ __revision__ = '$Id$  (C) 2004 GPL'
 __author__ = 'Benjamin Sergeant'
 
 from config import configHandler
-from os import remove
+from os import remove, mkdir
 from unittest import TestCase
 from shutil import copy, copytree, rmtree
 from tempfile import mkdtemp, mktemp
@@ -45,8 +45,10 @@ class TestConfigHandler(TestCase):
         As we do some real stuff with the config file we
         should work on a copy.
         '''
-        tget = join(self.tempdir, 'data')
-        copytree('data', tget)
+        libraries = join('data', 'fake_iphoto2_library')
+        mkdir(join(self.tempdir, 'data'))
+        tget = join(self.tempdir, libraries)
+        copytree(libraries, tget)
 
         self.xmlFilename = 'AlbumData_gnocchi.xml'
         self.xmlFilename = 'AlbumData_fake_iphoto2.xml'

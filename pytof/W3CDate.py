@@ -134,6 +134,7 @@ class W3CDate:
     def getISO8601(self):
         if self.dateMiniTuple is None:
             self._cacheTuples()
+        print self.dateMiniTuple
         result = time.strftime('%Y-%m-%dT%H:%M:%S', self.dateMiniTuple)
         if self.timezone is None:
             pass

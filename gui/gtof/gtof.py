@@ -37,6 +37,32 @@ class ProgressMsg(object):
         # progress bar to the main application, or something like that.
         gtk.main_iteration()
 
+class FileSelection:
+    # Get the selected filename and print it to the console
+    def file_ok_sel(self, w):
+        print "%s" % self.filew.get_filename()
+
+    def destroy(self, widget):
+        self.filew.destroy()
+
+    def __init__(self):
+        # Create a new file selection widget
+        self.filew = gtk.FileSelection("File selection")
+
+        self.filew.connect("destroy", self.destroy)
+        # Connect the ok_button to file_ok_sel method
+        self.filew.ok_button.connect("clicked", self.file_ok_sel)
+    
+        # Connect the cancel_button to destroy the widget
+        self.filew.cancel_button.connect("clicked",
+                                         lambda w: self.filew.destroy())
+    
+        # Lets set the filename, as if this were a save dialog,
+        # and we are giving a default filename
+        self.filew.set_filename("penguin.png")
+    
+        self.filew.show()
+
 class HelloWorld:
 
     def __init__(self):
@@ -48,14 +74,24 @@ class HelloWorld:
         if (self.window):
             self.window.connect("destroy", gtk.main_quit)
 
-        self.button = self.wTree.get_widget("button1")
-        if (self.button):
-            self.button.connect("clicked", self.startpytof)
+        self.dirButton = self.wTree.get_widget("dirButton")
+        if (self.dirButton):
+            self.dirButton.connect("clicked", self.fileSelection)
+
+        self.startButton = self.wTree.get_widget("startButton")
+        if (self.startButton):
+            self.startButton.connect("clicked", self.startpytof)
 
         self.pbar = self.wTree.get_widget("pbar")
+        self.label = self.wTree.get_widget("pbar")
 
         # if you forget to show the main window it's gonna be a sad gui
         self.window.show()
+
+    def fileSelection(self, widget):
+        print 'youpi'
+        fs = FileSelection()
+        self.dir = fs.filew.get_filename()
 
     def main(self):
         # All PyGTK applications must have a gtk.main(). Control ends here
@@ -66,6 +102,8 @@ class HelloWorld:
     def startpytof(self, widget):
         po = pytofOptions()
         po.check()
+
+        po.options.fromDir = self.dir
 
         progress = ProgressMsg(-1, self.pbar)
         pytof = Pytof(po, progress)
