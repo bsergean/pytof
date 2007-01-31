@@ -1,0 +1,16 @@
+<html><head><title>pytof: [title]</title>
+</head><body link="#444488" alink="#884444" vlink="#444488">
+
+[if-any gallery_name]
+  [gallery_name]
+[else]
+  <strong>No name</strong>
+[end]
+
+[if-any pictures]
+  [for pictures]
+    <img src="[pictures.href]">
+  [end]
+[end]
+
+</body></html>
