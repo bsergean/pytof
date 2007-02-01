@@ -224,6 +224,7 @@ def makePhotoPage(photo, linkBack, topDir, prev, next, strip_originals):
         #    % (linkBack, photo.prevPath))
 
         dico = {}
+        dico['title'] = 'My title'
         dico['width'] = photo.width
         dico['height'] = photo.height
         dico['size'] = photo.sizeKB
