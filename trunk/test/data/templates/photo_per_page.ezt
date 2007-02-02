@@ -29,7 +29,9 @@
             <br />
             [preview_filename]
             <br />
-            <a href="[original]">Original picture: [width] x [height], [size] KB</a>
+[if-any original]
+  <a href="[original]">Original picture: [width] x [height], [size] KB</a>
+[end]
             </div>
           </td>
         </tr>
@@ -48,7 +50,7 @@
           </td>
           <td width="30%" align="right" valign="bottom">
             <div class="images">
-<a style="text-decoration: none;" href="78.html"><img src="thumbs/th_78.jpg" alt="next" /><br />next &gt; </a>            </div>
+<a style="text-decoration: none;" href="[next]"><img src="[next_thumb]" alt="next" /><br />next &gt; </a>            </div>
           </td>
         </tr>
         </table>

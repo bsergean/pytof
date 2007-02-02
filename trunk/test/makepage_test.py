@@ -13,35 +13,13 @@ __author__ = 'Benjamin Sergeant'
 
 import os
 from utils import GetTmpDir
-from makepage import WebPage, PhotoWebPage, main
+from makepage import main
 from unittest import TestCase
 from tempfile import mkdtemp, mktemp
 from os.path import join
 from os import mkdir, listdir, getcwd
 from shutil import copy, rmtree
 from log import logger
-
-class PhotoWebPageTest(TestCase):
-    def testWritePage(self):
-        foo = os.path.join(GetTmpDir(), 'foo')
-        bar = os.path.join(GetTmpDir(), 'bar')
-
-        wp = WebPage(foo, 'testpage')
-        wp.writePage()
-
-        wp = PhotoWebPage(bar, 'bar', 'home.html')
-
-        # addSkeleton use a dictionnary now
-        #wp.addSkeleton(12, 12, 1000, ['EXIF infos'], 'back.jpg', 'original',
-        #               'prev', 'pv_prev', 'next', 'pv_next')
-        wp.writePage()
-
-        # here we could try to fetch the photo link from the page
-        # and compare the size to check that
-        # original_size > medium_size > thumbnail_size
-
-        self.assert_(True)
-
 
 class TestMakeGalleryFromDir(TestCase):
 
