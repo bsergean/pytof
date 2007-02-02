@@ -27,8 +27,9 @@ class TestMakeFS(TestCase):
         self.tempdir = mkdtemp()
         self.pytof = join('data', 'templates', 'pytof.ezt')
         self.perpage = join('data', 'templates', 'photo_per_page.ezt')
+        self.index = join('data', 'templates', 'gallery_index.ezt')
         self.pytofOutput = mktemp()
-        print self.pytofOutput
+        #print self.pytofOutput
 
     def tearDown(self):
         rmtree(self.tempdir)
@@ -55,7 +56,7 @@ class TestMakeFS(TestCase):
 
         self._testTemplate(self.pytof, data)
 
-    def testPerPhotoPage(self):
+    def _testPerPhotoPage(self, strip_originals):
         '''
         One test would be to have a page already generated, regenerate it with the
         template and compare them.
@@ -73,10 +74,37 @@ class TestMakeFS(TestCase):
         dico['exif_infos'] = ('</br>').join(photo.exif_infos)
         dico['preview'] = join('preview', 'pv_' + photo.id + photo.getFileType())
         dico['preview_filename'] = basename(dico['preview'])
-        dico['original'] = join('photos', photo.id + photo.getFileType())
         dico['prev'] = prev.id + '.html'
         dico['prev_thumb'] = join('thumbs',   'th_' + prev.id + prev.getFileType())
         dico['next'] = next.id + '.html'
         dico['next_thumb'] = join('thumbs',   'th_' + next.id + next.getFileType())
 
+        original = join('photos', photo.id + photo.getFileType())
+        if strip_originals:
+            original = ''
+        dico['original'] = original
+
         self._testTemplate(self.perpage, dico)
+
+    def testPerPhotoPageOriginals(self):
+        self._testPerPhotoPage(strip_originals = True)
+
+    def testPerPhotoPageNoOriginals(self):
+        self._testPerPhotoPage(strip_originals = False)
+
+    def testGalleryIndex(self):
+        class Thumb:
+            def __init__(self, page, image):
+                self.page = page
+                self.image = image
+
+        thumbs = []
+        thumbs.append(Thumb('foo.html', 'foo.jpg'))
+        thumbs.append(Thumb('bar.html', 'bar.jpg'))
+        thumbs.append(Thumb('buz.html', 'buz.jpg'))
+
+        dico = {}
+        dico['title'] = 'Youpi'
+        dico['thumbs'] = thumbs
+
+        self._testTemplate(self.index, dico)
