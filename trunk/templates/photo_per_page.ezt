@@ -8,24 +8,20 @@
 <body>
 
 <table cellpadding="5" cellspacing="0" width="85%" border="0" align="center">
-  <tr>
-    <td align="left">
- <a href="index.html">home</a> </td>
+  <tr> <td align="left"> <a href="index.html">home</a> </td>
   </tr>
 </table>
 
 
 <table cellpadding="5" cellspacing="0" width="85%" border="0" align="center">
-  <tr>
-    <td id="t_main" width="100%" colspan="2">
+  <tr> <td id="t_main" width="100%" colspan="2">
       <div class="images">
 
         <table align="center" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td width="100%" colspan="3" align="center">
+        <tr> <td width="100%" colspan="3" align="center">
             <div class="images">
 
-            <img src="[preview]" alt="img_0912.jpg" />
+            <img src="[preview]" />
             <br />
             [preview_filename]
             <br />
@@ -39,8 +35,12 @@
         <tr>
 
           <td width="30%" align="left" valign="bottom">
-            <div class="images">
-<a style="text-decoration: none;" href="[prev]"><img src="[prev_thumb]" alt="previous" /><br />&lt; previous</a>            </div>
+<div class="images">
+  <a style="text-decoration: none;" href="[prev]">
+    <img src="[prev_thumb]" alt="previous" />
+    <br />&lt; previous
+  </a>
+</div>
           </td>
           <td width="40%" align="middle" valign="bottom">
 
@@ -49,8 +49,12 @@
 
           </td>
           <td width="30%" align="right" valign="bottom">
-            <div class="images">
-<a style="text-decoration: none;" href="[next]"><img src="[next_thumb]" alt="next" /><br />next &gt; </a>            </div>
+<div class="images">
+  <a style="text-decoration: none;" href="[next]">
+    <img src="[next_thumb]" alt="next" />
+    <br />next &gt;
+  </a>
+</div>
           </td>
         </tr>
         </table>
@@ -74,7 +78,6 @@
   </tr>
 </table 
 
-  
 </table>
        
 </body>

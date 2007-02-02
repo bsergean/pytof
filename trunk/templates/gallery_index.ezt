@@ -10,9 +10,11 @@
   <tr>
     <td id="t_main" width="100%" colspan="2">
       <div class="images">
-      [for thumbs]
-<a href="[thumbs.page]"><img src="[thumbs.image]" alt="toto.jpg" border="0"/></a>
-      [end]
+[for thumbs]
+  <a href="[thumbs.page]">
+    <img src="[thumbs.image]" border="0"/>
+  </a>
+[end]
       </div>
     </td>
   </tr>
