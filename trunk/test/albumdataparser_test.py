@@ -55,19 +55,24 @@ A&M
 
     def setUp(self):
         self.xmlFilename = 'AlbumData_gnocchi.xml'
-        self.libraryPath = 'data'
+        self.libraryPath = join('data', 'fake_iphoto_library')
         
-        parser = AlbumDataParser(self.libraryPath, self.xmlFilename)
-        self.xmlData = parser.parse()
-    
-    def testAlbumNames(self):
+    def _testAlbumNames(self, xml):
         ''' TODO: try with album with non-ascii chars '''
-        albumList = self.xmlData.getAlbumList()
+        parser = AlbumDataParser(self.libraryPath, xml)
+        xmlData = parser.parse()
+        albumList = xmlData.getAlbumList()
 
         for album in self.albums.splitlines():
             album = album.strip()
             if album:
                 self.assert_(album in albumList)
+
+    def testAlbumNamesiPhoto2(self):
+        self._testAlbumNames('AlbumData_iphoto-2.xml')
+
+    def testAlbumNamesiPhoto6o5(self):
+        self._testAlbumNames('AlbumData_iphoto-6.0.5.xml')
 
     def testAlbumDates(self):
         pass
