@@ -3,6 +3,663 @@
 
 {{{
 ------------------------------------------------------------------------
+r218 | bsergean | 2007-02-02 17:08:42 -0500 (Fri, 02 Feb 2007) | 1 line
+Changed paths:
+   M /trunk/templates/gallery_index.ezt
+   M /trunk/templates/photo_per_page.ezt
+
+minor indentation stuff
+------------------------------------------------------------------------
+r217 | bsergean | 2007-02-02 13:10:19 -0500 (Fri, 02 Feb 2007) | 1 line
+Changed paths:
+   A /trunk/share/jamesh.id.au.css
+
+new interesting css, see issue 37
+------------------------------------------------------------------------
+r216 | bsergean | 2007-02-02 02:01:34 -0500 (Fri, 02 Feb 2007) | 2 lines
+Changed paths:
+   M /trunk/test/albumdataparser_test.py
+   D /trunk/test/data/AlbumData_gnocchi.xml
+   A /trunk/test/data/fake_iphoto_library/AlbumData_iphoto-2.xml (from /trunk/test/data/AlbumData_gnocchi.xml:208)
+
+Check new plist parser with a new testcase for one Tiger iPhoto XML gallery
+
+------------------------------------------------------------------------
+r215 | bsergean | 2007-02-02 01:36:15 -0500 (Fri, 02 Feb 2007) | 1 line
+Changed paths:
+   A /trunk/templates
+   A /trunk/templates/gallery_index.ezt
+   A /trunk/templates/photo_per_page.ezt
+
+add templates for non-testing purpose
+------------------------------------------------------------------------
+r214 | bsergean | 2007-02-02 01:34:35 -0500 (Fri, 02 Feb 2007) | 1 line
+Changed paths:
+   A /trunk/test/data/templates/gallery_index.ezt
+
+add a test template file
+------------------------------------------------------------------------
+r213 | bsergean | 2007-02-02 01:26:25 -0500 (Fri, 02 Feb 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/makepage.py
+   M /trunk/test/albumdataparser_test.py
+   M /trunk/test/data/templates/photo_per_page.ezt
+   M /trunk/test/ezt_test.py
+   M /trunk/test/makepage_test.py
+
+New templating system working
+------------------------------------------------------------------------
+r212 | bsergean | 2007-02-01 12:50:40 -0500 (Thu, 01 Feb 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/makepage.py
+   A /trunk/test/data/templates/photo_per_page.ezt
+   M /trunk/test/ezt_test.py
+
+work in progress for templating, see ezt_test
+------------------------------------------------------------------------
+r211 | bsergean | 2007-01-31 18:55:36 -0500 (Wed, 31 Jan 2007) | 1 line
+Changed paths:
+   A /trunk/gui/gtof/color.py
+
+add dummy gtk sample that might be usefull one day
+------------------------------------------------------------------------
+r209 | bsergean | 2007-01-31 13:27:11 -0500 (Wed, 31 Jan 2007) | 1 line
+Changed paths:
+   A /trunk/test/data/fake_iphoto_library/2005
+   A /trunk/test/data/fake_iphoto_library/2005/03
+   A /trunk/test/data/fake_iphoto_library/2005/03/23
+   A /trunk/test/data/fake_iphoto_library/2005/03/23/rotated_minus_90.jpg
+
+renaming
+------------------------------------------------------------------------
+r208 | bsergean | 2007-01-31 13:15:17 -0500 (Wed, 31 Jan 2007) | 1 line
+Changed paths:
+   D /trunk/test/data/fake_iphoto_library/2005
+   A /trunk/test/data/fake_iphoto_library/AlbumData_fake_iphoto-2.xml
+   D /trunk/test/data/fake_iphoto_library/AlbumData_fake_iphoto2.xml
+
+renaming and moving files
+------------------------------------------------------------------------
+r207 | bsergean | 2007-01-31 13:05:38 -0500 (Wed, 31 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/test/config_test.py
+   D /trunk/test/data/fake_iphoto2_library
+   A /trunk/test/data/fake_iphoto_library (from /trunk/test/data/fake_iphoto2_library:205)
+   A /trunk/test/data/fake_iphoto_library/AlbumData_iphoto-6.0.5.xml
+   M /trunk/test/exif_test.py
+   M /trunk/test/ezt_test.py
+   M /trunk/test/makefs_test.py
+
+new test file by renaming
+------------------------------------------------------------------------
+r206 | bsergean | 2007-01-31 12:59:42 -0500 (Wed, 31 Jan 2007) | 1 line
+Changed paths:
+   A /trunk/pytof/ezt.py
+   A /trunk/test/data/templates
+   A /trunk/test/data/templates/default.ezt
+   A /trunk/test/data/templates/default_complex.ezt
+   A /trunk/test/data/templates/pytof.ezt
+   A /trunk/test/data/templates/stats.ezt
+   A /trunk/test/data/templates/style-xml.ezt
+   A /trunk/test/ezt_test.py
+
+working on ezt templating test
+------------------------------------------------------------------------
+r205 | bsergean | 2007-01-31 00:20:18 -0500 (Wed, 31 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/gui/gtof/gtof.glade
+   M /trunk/gui/gtof/gtof.py
+   M /trunk/pytof/PListReader.py
+   M /trunk/pytof/W3CDate.py
+   M /trunk/pytof/albumdataparser.py
+   M /trunk/test/config_test.py
+   D /trunk/test/data/AlbumData_fake_iphoto2.xml
+   A /trunk/test/data/fake_iphoto2_library
+   A /trunk/test/data/fake_iphoto2_library/2005
+   A /trunk/test/data/fake_iphoto2_library/2005/03
+   A /trunk/test/data/fake_iphoto2_library/2005/03/23
+   A /trunk/test/data/fake_iphoto2_library/2005/03/23/rotated_minus_90.jpg (from /trunk/test/data/rotated_minus_90.jpg:201)
+   A /trunk/test/data/fake_iphoto2_library/AlbumData_fake_iphoto2.xml (from /trunk/test/data/AlbumData_fake_iphoto2.xml:196)
+   D /trunk/test/data/rotated_minus_90.jpg
+   M /trunk/test/exif_test.py
+   A /trunk/test/makefs_test.py
+
+new faster plus more robust xml parser, add a testcase for makefs and create a fake iPhoto Library in test/data
+------------------------------------------------------------------------
+r204 | bsergean | 2007-01-30 13:59:42 -0500 (Tue, 30 Jan 2007) | 1 line
+Changed paths:
+   A /trunk/pytof/PListReader.py
+   A /trunk/pytof/W3CDate.py
+
+add robust plist parser to the project
+------------------------------------------------------------------------
+r203 | bsergean | 2007-01-29 21:18:57 -0500 (Mon, 29 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/exif.py
+
+add shebang
+------------------------------------------------------------------------
+r202 | bsergean | 2007-01-29 21:11:01 -0500 (Mon, 29 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/test/exif_test.py
+
+exif test is ok and using a correct data image
+------------------------------------------------------------------------
+r201 | bsergean | 2007-01-29 21:02:26 -0500 (Mon, 29 Jan 2007) | 1 line
+Changed paths:
+   A /trunk/test/data/AlbumData_gnocchi_light.xml
+   A /trunk/test/data/rotated_minus_90.jpg
+
+Add test datas
+------------------------------------------------------------------------
+r197 | bsergean | 2007-01-18 23:45:52 -0500 (Thu, 18 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/exif.py
+
+set exec flag
+------------------------------------------------------------------------
+r196 | bsergean | 2007-01-18 01:54:28 -0500 (Thu, 18 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/test/config_test.py
+
+from 9s to 1.5s with a smaller xml file for caching tests
+------------------------------------------------------------------------
+r195 | bsergean | 2007-01-18 01:45:56 -0500 (Thu, 18 Jan 2007) | 1 line
+Changed paths:
+   A /trunk/test/data/AlbumData_fake_iphoto2.xml
+
+fake small album to fasten test cases
+------------------------------------------------------------------------
+r193 | bsergean | 2007-01-16 17:55:04 -0500 (Tue, 16 Jan 2007) | 1 line
+Changed paths:
+   A /trunk/pytof/version.py
+
+version file was not in subversion
+------------------------------------------------------------------------
+r192 | bsergean | 2007-01-16 16:47:09 -0500 (Tue, 16 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/test/utils_test.py
+
+Convert a test case to be windows compatible
+------------------------------------------------------------------------
+r191 | bsergean | 2007-01-15 14:59:31 -0500 (Mon, 15 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/config.py
+   M /trunk/test/config_test.py
+
+Some unit test were not working on windows. Fixed some of them.
+------------------------------------------------------------------------
+r190 | bsergean | 2007-01-14 23:18:47 -0500 (Sun, 14 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/gui/gtof/gtof.glade
+   M /trunk/gui/gtof/gtof.py
+   M /trunk/pytof/makepage.py
+   M /trunk/pytof/pytofmain.py
+   M /trunk/scripts/pytof.py
+
+add a lame progress bar to the UI
+------------------------------------------------------------------------
+r189 | bsergean | 2007-01-14 18:27:46 -0500 (Sun, 14 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/gui/gtof/gtof.py
+   M /trunk/pytof/options.py
+   M /trunk/pytof/pytofmain.py
+   M /trunk/scripts/pytof.py
+
+more factorization for GUI
+------------------------------------------------------------------------
+r188 | bsergean | 2007-01-14 17:42:00 -0500 (Sun, 14 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/gui/gtof/gtof.glade
+   M /trunk/gui/gtof/gtof.py
+   A /trunk/pytof/options.py
+   A /trunk/pytof/pytofmain.py
+   M /trunk/scripts/pytof.py
+   M /trunk/setup.py
+   M /trunk/test/test.py
+
+gui work in progress. you can start pytof with gtof.py, and click on the button to really start it
+------------------------------------------------------------------------
+r187 | bsergean | 2007-01-14 06:50:27 -0500 (Sun, 14 Jan 2007) | 1 line
+Changed paths:
+   A /trunk/gui/gtof
+   A /trunk/gui/gtof/gtof.glade
+   A /trunk/gui/gtof/gtof.py
+   M /trunk/pytof/config.py
+   M /trunk/pytof/ftp.py
+   M /trunk/pytof/log.py
+   M /trunk/pytof/utils.py
+   M /trunk/scripts/pytof.py
+   M /trunk/test/ftp_test.py
+   M /trunk/test/test.py
+   M /trunk/test/utils_test.py
+
+refactoring to simplify ui, test case for zip and tar generators, and added a minimal pygtk-glade sample
+------------------------------------------------------------------------
+r186 | bsergean | 2007-01-14 02:45:59 -0500 (Sun, 14 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/utils.py
+   M /trunk/scripts/pytof.py
+   M /trunk/test/ftp_test.py
+   M /trunk/test/utils_test.py
+
+move tar code in a single function in utils and added a test case
+------------------------------------------------------------------------
+r185 | bsergean | 2007-01-12 19:22:54 -0500 (Fri, 12 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/test/log_test.py
+
+pb with logger test case
+------------------------------------------------------------------------
+r184 | bsergean | 2007-01-12 18:55:48 -0500 (Fri, 12 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/utils.py
+
+same variable name used for two different things
+------------------------------------------------------------------------
+r183 | bsergean | 2007-01-12 16:09:48 -0500 (Fri, 12 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/test/utils_test.py
+
+a test created a temp dir without destroying it
+------------------------------------------------------------------------
+r182 | bsergean | 2007-01-12 16:07:56 -0500 (Fri, 12 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/utils.py
+   A /trunk/test/data/galleries/Les_chats_html_only
+   A /trunk/test/data/galleries/Les_chats_html_only/146.html
+   A /trunk/test/data/galleries/Les_chats_html_only/220.html
+   A /trunk/test/data/galleries/Les_chats_html_only/221.html
+   A /trunk/test/data/galleries/Les_chats_html_only/222.html
+   A /trunk/test/data/galleries/Les_chats_html_only/223.html
+   A /trunk/test/data/galleries/Les_chats_html_only/224.html
+   A /trunk/test/data/galleries/Les_chats_html_only/225.html
+   A /trunk/test/data/galleries/Les_chats_html_only/247.html
+   A /trunk/test/data/galleries/Les_chats_html_only/248.html
+   A /trunk/test/data/galleries/Les_chats_html_only/539.html
+   A /trunk/test/data/galleries/Les_chats_html_only/543.html
+   A /trunk/test/data/galleries/Les_chats_html_only/545.html
+   A /trunk/test/data/galleries/Les_chats_html_only/78.html
+   A /trunk/test/data/galleries/Les_chats_html_only/82.html
+   A /trunk/test/data/galleries/Les_chats_html_only/index.html
+   M /trunk/test/utils_test.py
+
+new util for a future urls checker to check that our html pages are corrects
+------------------------------------------------------------------------
+r181 | bsergean | 2007-01-12 15:03:18 -0500 (Fri, 12 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/albumdataparser.py
+   M /trunk/pytof/config.py
+   M /trunk/pytof/ftp.py
+   M /trunk/pytof/log.py
+   M /trunk/pytof/makepage.py
+   M /trunk/pytof/photo.py
+   M /trunk/scripts/pytof.py
+   M /trunk/test/config_test.py
+   M /trunk/test/ftp_test.py
+   M /trunk/test/log_test.py
+   M /trunk/test/makepage_test.py
+
+worked on issue 32
+------------------------------------------------------------------------
+r180 | bsergean | 2007-01-12 14:24:32 -0500 (Fri, 12 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/utils.py
+   M /trunk/test/utils_test.py
+
+add a kind of unix find command
+------------------------------------------------------------------------
+r179 | bsergean | 2007-01-12 14:07:47 -0500 (Fri, 12 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/albumdataparser.py
+   M /trunk/pytof/config.py
+   M /trunk/scripts/pytof.py
+
+Fix issue 31
+------------------------------------------------------------------------
+r178 | bsergean | 2007-01-12 14:07:32 -0500 (Fri, 12 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/test/config_test.py
+
+Fix issue 31
+------------------------------------------------------------------------
+r177 | bsergean | 2007-01-12 11:54:40 -0500 (Fri, 12 Jan 2007) | 1 line
+Changed paths:
+   D /trunk/test/fromdir_test.py
+
+refactor test, only one test case module per pytof module. removed unused file
+------------------------------------------------------------------------
+r176 | bsergean | 2007-01-12 11:54:06 -0500 (Fri, 12 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/test/fromdir_test.py
+   M /trunk/test/makepage_test.py
+
+refactor test, only one test case module per pytof module
+------------------------------------------------------------------------
+r175 | mathieu.robin | 2007-01-12 05:51:08 -0500 (Fri, 12 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/utils.py
+
+Fixed output in ProgressMsg.Increment
+------------------------------------------------------------------------
+r174 | mathieu.robin | 2007-01-12 05:29:42 -0500 (Fri, 12 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/makefs.py
+   M /trunk/pytof/makepage.py
+   M /trunk/pytof/utils.py
+
+Factored out some common code to makefs and makepage and moved it to utils
+------------------------------------------------------------------------
+r173 | bsergean | 2007-01-12 03:35:22 -0500 (Fri, 12 Jan 2007) | 1 line
+Changed paths:
+   A /tags/0.5.0 (from /trunk:169)
+   M /tags/0.5.0/VERSION
+   R /tags/0.5.0/pytof/__init__.py (from /trunk/pytof/__init__.py:170)
+   R /tags/0.5.0/pytof/exif.py (from /trunk/pytof/exif.py:170)
+   R /tags/0.5.0/pytof/log.py (from /trunk/pytof/log.py:172)
+   R /tags/0.5.0/pytof/makefs.py (from /trunk/pytof/makefs.py:170)
+   R /tags/0.5.0/pytof/makepage.py (from /trunk/pytof/makepage.py:172)
+   R /tags/0.5.0/pytof/photo.py (from /trunk/pytof/photo.py:171)
+   R /tags/0.5.0/scripts/pytof.py (from /trunk/scripts/pytof.py:171)
+   A /tags/0.5.0/test/albumdataparser_test.py (from /trunk/test/albumdataparser_test.py:172)
+   R /tags/0.5.0/test/colorize.py (from /trunk/test/colorize.py:170)
+   R /tags/0.5.0/test/coverage.py (from /trunk/test/coverage.py:170)
+   A /tags/0.5.0/test/data/galleries (from /trunk/test/data/galleries:172)
+   R /tags/0.5.0/test/exif_test.py (from /trunk/test/exif_test.py:170)
+   A /tags/0.5.0/test/fromdir_test.py (from /trunk/test/fromdir_test.py:172)
+   R /tags/0.5.0/test/ftp_test.py (from /trunk/test/ftp_test.py:172)
+   R /tags/0.5.0/test/log_test.py (from /trunk/test/log_test.py:172)
+   R /tags/0.5.0/test/test.py (from /trunk/test/test.py:172)
+   R /tags/0.5.0/test/utils_test.py (from /trunk/test/utils_test.py:170)
+   M /trunk/VERSION
+
+tag this fabulous version with Windows support
+------------------------------------------------------------------------
+r172 | bsergean | 2007-01-12 03:20:40 -0500 (Fri, 12 Jan 2007) | 4 lines
+Changed paths:
+   M /trunk/pytof/log.py
+   M /trunk/pytof/makepage.py
+   M /trunk/test/albumdataparser_test.py
+   A /trunk/test/data/galleries
+   A /trunk/test/data/galleries/recoll-icons
+   A /trunk/test/data/galleries/recoll-icons/document.png
+   A /trunk/test/data/galleries/recoll-icons/drawing.png
+   A /trunk/test/data/galleries/recoll-icons/html.png
+   A /trunk/test/data/galleries/recoll-icons/message.png
+   A /trunk/test/data/galleries/recoll-icons/mozilla_doc.png
+   A /trunk/test/data/galleries/recoll-icons/pdf.png
+   A /trunk/test/data/galleries/recoll-icons/postscript.png
+   A /trunk/test/data/galleries/recoll-icons/presentation.png
+   A /trunk/test/data/galleries/recoll-icons/soffice.png
+   A /trunk/test/data/galleries/recoll-icons/spreadsheet.png
+   A /trunk/test/data/galleries/recoll-icons/txt.png
+   A /trunk/test/data/galleries/recoll-icons/wordprocessing.png
+   A /trunk/test/data/galleries/xxdiff-3.2-screenshots
+   A /trunk/test/data/galleries/xxdiff-3.2-screenshots/xxdiff-snap-about--thumb.jpg
+   A /trunk/test/data/galleries/xxdiff-3.2-screenshots/xxdiff-snap-about.jpg
+   A /trunk/test/data/galleries/xxdiff-3.2-screenshots/xxdiff-snap-dirs2--thumb.jpg
+   A /trunk/test/data/galleries/xxdiff-3.2-screenshots/xxdiff-snap-dirs2.jpg
+   A /trunk/test/data/galleries/xxdiff-3.2-screenshots/xxdiff-snap-doc--thumb.jpg
+   A /trunk/test/data/galleries/xxdiff-3.2-screenshots/xxdiff-snap-doc.jpg
+   A /trunk/test/data/galleries/xxdiff-3.2-screenshots/xxdiff-snap-files2--thumb.jpg
+   A /trunk/test/data/galleries/xxdiff-3.2-screenshots/xxdiff-snap-files2.jpg
+   A /trunk/test/data/galleries/xxdiff-3.2-screenshots/xxdiff-snap-files3--thumb.jpg
+   A /trunk/test/data/galleries/xxdiff-3.2-screenshots/xxdiff-snap-files3.jpg
+   A /trunk/test/data/galleries/xxdiff-3.2-screenshots/xxdiff-snap-merged--thumb.jpg
+   A /trunk/test/data/galleries/xxdiff-3.2-screenshots/xxdiff-snap-merged.jpg
+   A /trunk/test/data/galleries/xxdiff-3.2-screenshots/xxdiff-snap-opt1--thumb.jpg
+   A /trunk/test/data/galleries/xxdiff-3.2-screenshots/xxdiff-snap-opt1.jpg
+   A /trunk/test/data/galleries/xxdiff-3.2-screenshots/xxdiff-snap-opt2--thumb.jpg
+   A /trunk/test/data/galleries/xxdiff-3.2-screenshots/xxdiff-snap-opt2.jpg
+   A /trunk/test/data/galleries/xxdiff-3.2-screenshots/xxdiff-snap-opt3--thumb.jpg
+   A /trunk/test/data/galleries/xxdiff-3.2-screenshots/xxdiff-snap-opt3.jpg
+   A /trunk/test/data/galleries/xxdiff-3.2-screenshots/xxdiff-snap-opt4--thumb.jpg
+   A /trunk/test/data/galleries/xxdiff-3.2-screenshots/xxdiff-snap-opt4.jpg
+   A /trunk/test/data/galleries/xxdiff-3.2-screenshots/xxdiff-snap-opt5--thumb.jpg
+   A /trunk/test/data/galleries/xxdiff-3.2-screenshots/xxdiff-snap-opt5.jpg
+   M /trunk/test/fromdir_test.py
+   M /trunk/test/ftp_test.py
+   M /trunk/test/log_test.py
+   M /trunk/test/test.py
+
+ - Add an option to disable logging (usefull for the test suite)
+ - Add a test case for the fromDir mode, and pictures samples (snapshots or icons) from opensource projects
+
+
+------------------------------------------------------------------------
+r171 | bsergean | 2007-01-12 01:19:41 -0500 (Fri, 12 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/makepage.py
+   M /trunk/pytof/photo.py
+   M /trunk/scripts/pytof.py
+   A /trunk/test/fromdir_test.py
+
+new test for web generation from flat directory
+------------------------------------------------------------------------
+r170 | bsergean | 2007-01-11 19:53:08 -0500 (Thu, 11 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/__init__.py
+   M /trunk/pytof/exif.py
+   M /trunk/pytof/makefs.py
+   M /trunk/scripts/pytof.py
+   A /trunk/test/albumdataparser_test.py
+   M /trunk/test/colorize.py
+   M /trunk/test/coverage.py
+   M /trunk/test/exif_test.py
+   M /trunk/test/utils_test.py
+
+add a minimum test case for albumdataparser
+------------------------------------------------------------------------
+r169 | bsergean | 2007-01-11 16:50:37 -0500 (Thu, 11 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/README.txt
+   M /trunk/pytof/ftp.py
+   M /trunk/test/ftp_test.py
+   M /trunk/test/test.py
+
+Fix issue 24
+------------------------------------------------------------------------
+r168 | bsergean | 2007-01-11 15:33:29 -0500 (Thu, 11 Jan 2007) | 1 line
+Changed paths:
+   A /trunk/tools/ftpd
+   A /trunk/tools/ftpd/README-py2exe.txt
+   A /trunk/tools/ftpd/ftpd.py
+   A /trunk/tools/ftpd/options.py
+   A /trunk/tools/ftpd/setup-ftpd.py
+
+a python ftp server that we might use for testing
+------------------------------------------------------------------------
+r167 | bsergean | 2007-01-11 13:20:37 -0500 (Thu, 11 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/test/ftp_test.py
+
+
+------------------------------------------------------------------------
+r166 | bsergean | 2007-01-11 13:17:02 -0500 (Thu, 11 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/ftp.py
+   M /trunk/pytof/photo.py
+   M /trunk/scripts/pytof.py
+
+handle ftp initial connection error in main pytof script
+------------------------------------------------------------------------
+r165 | bsergean | 2007-01-11 13:13:05 -0500 (Thu, 11 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/ftp.py
+   M /trunk/test/ftp_test.py
+
+handle ftp initial connection error
+------------------------------------------------------------------------
+r163 | bsergean | 2007-01-10 18:38:28 -0500 (Wed, 10 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/test/test.py
+
+problem when listing all the modules
+------------------------------------------------------------------------
+r162 | bsergean | 2007-01-10 18:22:59 -0500 (Wed, 10 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/MANIFEST.in
+   M /trunk/VERSION
+   M /trunk/pytof/albumdataparser.py
+   M /trunk/pytof/config.py
+   M /trunk/pytof/makepage.py
+   M /trunk/pytof/photo.py
+   M /trunk/scripts/pytof.py
+   M /trunk/setup.py
+
+replaced log occurence with logger.info and add a psycho black magic at startup
+------------------------------------------------------------------------
+r161 | mathieu.robin | 2007-01-10 18:18:06 -0500 (Wed, 10 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/test/README
+   M /trunk/test/test.py
+
+Adds automatic creation of the output directory for the coverage webapges
+------------------------------------------------------------------------
+r160 | mathieu.robin | 2007-01-10 18:09:07 -0500 (Wed, 10 Jan 2007) | 1 line
+Changed paths:
+   A /trunk/test/output
+
+
+------------------------------------------------------------------------
+r159 | mathieu.robin | 2007-01-10 18:08:43 -0500 (Wed, 10 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/test/README
+   A /trunk/test/colorize.py
+   A /trunk/test/coverage.py
+   M /trunk/test/exif_test.py
+   M /trunk/test/test.py
+
+Test coverage report, 1st version
+------------------------------------------------------------------------
+r158 | mathieu.robin | 2007-01-10 18:07:43 -0500 (Wed, 10 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/albumdataparser.py
+   M /trunk/pytof/config.py
+   M /trunk/pytof/makepage.py
+   M /trunk/pytof/photo.py
+
+Finish removing the old "log(...)" from utils
+------------------------------------------------------------------------
+r157 | bsergean | 2007-01-09 18:49:57 -0500 (Tue, 09 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/utils.py
+
+log is not needed anymore and there are problems with it on Windows
+------------------------------------------------------------------------
+r156 | bsergean | 2007-01-09 16:47:13 -0500 (Tue, 09 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/albumdataparser.py
+   M /trunk/pytof/config.py
+   M /trunk/pytof/ftp.py
+   M /trunk/pytof/makefs.py
+   M /trunk/pytof/makepage.py
+   M /trunk/pytof/photo.py
+   M /trunk/pytof/utils.py
+   M /trunk/scripts/pytof.py
+
+fixed most pychecker errors
+------------------------------------------------------------------------
+r155 | bsergean | 2007-01-09 01:00:22 -0500 (Tue, 09 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/test/test.py
+
+test module dont need to be hard coded anymore
+------------------------------------------------------------------------
+r154 | bsergean | 2007-01-09 00:46:21 -0500 (Tue, 09 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/scripts/pytof.py
+
+config file name changed but import did not, and pickle dump has to be done only once when the xml is really dumped
+------------------------------------------------------------------------
+r153 | bsergean | 2007-01-08 19:24:28 -0500 (Mon, 08 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/test/test.py
+   M /trunk/test/utils_test.py
+
+add header
+------------------------------------------------------------------------
+r152 | mathieu.robin | 2007-01-08 17:39:31 -0500 (Mon, 08 Jan 2007) | 1 line
+Changed paths:
+   A /trunk/test/data/conf
+   A /trunk/test/data/conf/pytof.ini
+
+
+------------------------------------------------------------------------
+r151 | mathieu.robin | 2007-01-08 17:39:05 -0500 (Mon, 08 Jan 2007) | 1 line
+Changed paths:
+   A /trunk/test/test.py
+   A /trunk/test/utils_test.py
+
+
+------------------------------------------------------------------------
+r150 | mathieu.robin | 2007-01-08 17:37:32 -0500 (Mon, 08 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/config.py
+   M /trunk/pytof/log.py
+
+
+------------------------------------------------------------------------
+r149 | mathieu.robin | 2007-01-08 17:31:28 -0500 (Mon, 08 Jan 2007) | 1 line
+Changed paths:
+   D /trunk/test/ConfigParserTest.py
+   D /trunk/test/EXIFTest.py
+   M /trunk/test/README
+   D /trunk/test/WebPageTest.py
+   A /trunk/test/config_test.py (from /trunk/test/ConfigParserTest.py:147)
+   A /trunk/test/exif_test.py
+   D /trunk/test/ftpTest.py
+   A /trunk/test/ftp_test.py (from /trunk/test/ftpTest.py:147)
+   A /trunk/test/log_test.py (from /trunk/test/loggingTest.py:147)
+   D /trunk/test/loggingTest.py
+   A /trunk/test/makepage_test.py (from /trunk/test/WebPageTest.py:147)
+
+
+------------------------------------------------------------------------
+r148 | mathieu.robin | 2007-01-08 16:02:03 -0500 (Mon, 08 Jan 2007) | 1 line
+Changed paths:
+   D /trunk/pytof/EXIF.py
+   A /trunk/pytof/config.py (from /trunk/pytof/configFile.py:147)
+   D /trunk/pytof/configFile.py
+   A /trunk/pytof/exif.py
+   M /trunk/pytof/photo.py
+
+Modified module names to follow python style guide (ie short, lower case names)
+------------------------------------------------------------------------
+r147 | bsergean | 2007-01-08 00:14:19 -0500 (Mon, 08 Jan 2007) | 1 line
+Changed paths:
+   D /branches/0.0.2/deps
+   A /deps (from /trunk/deps:146)
+   D /tags/0.3.1/deps
+   D /trunk/deps
+
+moved deps out of trunk
+------------------------------------------------------------------------
+r146 | bsergean | 2007-01-07 23:56:15 -0500 (Sun, 07 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/configFile.py
+
+suppress non-portable code
+------------------------------------------------------------------------
+r145 | bsergean | 2007-01-07 23:49:42 -0500 (Sun, 07 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/scripts/pytof.py
+
+span a browser at the gallery url when program exit
+------------------------------------------------------------------------
+r143 | bsergean | 2007-01-07 12:47:29 -0500 (Sun, 07 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/ftp.py
+
+syntax error
+------------------------------------------------------------------------
+r141 | bsergean | 2007-01-04 16:48:06 -0500 (Thu, 04 Jan 2007) | 1 line
+Changed paths:
+   M /trunk/tools/changelog.sh
+   M /wiki/Changelog.wiki
+
+change changelog tool to feature the changelog wiki page
+------------------------------------------------------------------------
 r135 | bsergean | 2007-01-03 16:14:34 -0500 (Wed, 03 Jan 2007) | 1 line
 Changed paths:
    M /trunk/pytof/ftp.py
