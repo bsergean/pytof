@@ -201,48 +201,6 @@ class AlbumDataParser(object):
         parser.parse(self.xmlFile)
         return AlbumData(reader.getResult(), self.xmlFileDir)
 
-    def parseasdfasdf(self):
-        def start_element(name, attrs):
-            if name == 'dict':
-                elem = {}
-            elif name in ['plist', 'array']:
-                elem = []
-            elif name in ['key', 'string', 'integer', 'real', 'true', 'false', 'date']:
-                elem = XmlItem(name)
-            else:
-                raise ExpatError, "Element \"%s\" not supported" % name
-            self.elemList.append(elem)
-
-        def end_element(name):
-            item = self.elemList.pop()
-            if name == 'plist':
-                self.albumData = AlbumData(item[0], self.xmlFileDir)
-                assert(len(self.elemList) == 0)
-            elif name == 'dict':
-                self.addItem(item)
-            elif name == 'array':
-                self.addItem(item)
-            elif name in ['key', 'string', 'integer', 'real', 'true', 'false', 'date']:
-                item.setValue(self.lastItemData)
-                if name == 'key':
-                    self.keys.append(item.value)
-                else:
-                    self.addItem(item.value)
-            else:
-                raise ExpatError, "Element \"%s\" not supported" % name
-            self.lastItemData = ''
-
-        def char_data(data):
-            if not data.startswith('\n') and not data.startswith('\t'):
-                self.lastItemData += data
-
-        # This piece of code is from the parse method
-        self.parser = p = ParserCreate()
-        p.StartElementHandler = start_element
-        p.EndElementHandler = end_element
-        p.CharacterDataHandler = char_data
-        p.ParseFile(self.xmlFile)
-        return self.albumData
 
     def maybeLoadFromXML(self, conf):
         '''

@@ -12,6 +12,7 @@
 #
 
 from distutils.core import setup
+import sys
 sys.path.insert(1, 'pytof')
 from version import __version__
 
