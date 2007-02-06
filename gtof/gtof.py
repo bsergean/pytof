@@ -3,7 +3,7 @@
 # example helloworld.py
 
 import sys
-sys.path.insert(1, '../../pytof')
+sys.path.insert(1, '../pytof')
 
 try:
     import pygtk
@@ -85,9 +85,6 @@ class HelloWorld:
         # if you forget to show the main window it's gonna be a sad gui
         self.window.show()
 
-        # data init
-        self.dir = ''
-
     def fileSelection(self, widget):
         fs = FileSelection()
         self.dir = fs.filew.get_filename()
@@ -100,14 +97,18 @@ class HelloWorld:
 
     def startpytof(self, widget):
         po = pytofOptions()
-        po.options.fromDir = self.dir
+        if not po.options.fromDir: # not from command line
+            if not self.dir:
+                sys.exit(1)
         po.check()
 
         progress = ProgressMsg(-1, self.pbar)
         pytof = Pytof(po, progress)
         pytof.main()
 
-
-if __name__ == "__main__":
+def main():
     hello = HelloWorld()
     hello.main()
+
+if __name__ == "__main__":
+    main()
