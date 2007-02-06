@@ -41,9 +41,13 @@ class FileSelection:
     # Get the selected filename and print it to the console
     def file_ok_sel(self, w):
         print "%s" % self.filew.get_filename()
+        self.parent.dir = self.filew.get_filename()
         self.filew.destroy()
 
-    def __init__(self):
+    def __init__(self, parent):
+
+        self.parent = parent
+        
         # Create a new file selection widget
         self.filew = gtk.FileSelection("File selection")
 
@@ -86,8 +90,7 @@ class HelloWorld:
         self.window.show()
 
     def fileSelection(self, widget):
-        fs = FileSelection()
-        self.dir = fs.filew.get_filename()
+        fs = FileSelection(self)
 
     def main(self):
         # All PyGTK applications must have a gtk.main(). Control ends here
@@ -100,6 +103,9 @@ class HelloWorld:
         if not po.options.fromDir: # not from command line
             if not self.dir:
                 sys.exit(1)
+            else:
+                po.options.fromDir = self.dir
+            
         po.check()
 
         progress = ProgressMsg(-1, self.pbar)
