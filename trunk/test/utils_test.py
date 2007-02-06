@@ -16,7 +16,7 @@ sys.path.insert(1, '../pytof')
     
 from unittest import TestCase
 from utils import RemoveSpecificChars, UnixFind, urlExtractor
-from utils import mkarchive, maybemakedirs, lpathstrip, create, chmod777dir
+from utils import mkarchive, maybemakedirs, lpathstrip, chmodwwdir, create
 from os.path import join, getsize
 import tarfile
 from zipfile import ZipFile, ZIP_DEFLATED
@@ -116,7 +116,7 @@ class TestUtils(PytofTestCase):
 
     def testchmod(self):
         foodir = '/home/bsergean/sandbox/galleries'
-        chmod777dir(foodir)
+        chmodwwdir(foodir)
         rmtree(foodir)
 
 def run():
