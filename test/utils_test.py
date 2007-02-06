@@ -16,12 +16,13 @@ sys.path.insert(1, '../pytof')
     
 from unittest import TestCase
 from utils import RemoveSpecificChars, UnixFind, urlExtractor
-from utils import mkarchive, maybemakedirs, lpathstrip, create
+from utils import mkarchive, maybemakedirs, lpathstrip, create, chmod777dir
 from os.path import join, getsize
 import tarfile
 from zipfile import ZipFile, ZIP_DEFLATED
 from log import quiet
 from test import PytofTestCase
+from shutil import rmtree
 import os
 
 #quiet()
@@ -112,6 +113,11 @@ class TestUtils(PytofTestCase):
 
         prefix = self.tempdir
         self.assertEquals(lpathstrip(prefix, path), join('kiki', 'coucou'))
+
+    def testchmod(self):
+        foodir = '/home/bsergean/sandbox/galleries'
+        chmod777dir(foodir)
+        rmtree(foodir)
 
 def run():
     '''
