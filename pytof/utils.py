@@ -329,7 +329,8 @@ def mktar(fn, prefix, mainDir, files):
     # need to shut this up during test suite execution
     return fn
 
-def chmod777dir(prefix):
+def chmodwwdir(prefix):
+    ''' ww is world writable '''
     def visit (z, dirname, names):
         for name in names:
             path = os.path.normpath(os.path.join(dirname, name))

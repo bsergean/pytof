@@ -60,7 +60,9 @@ class PytofTestCase(TestCase):
         self.galleries = join('data', 'galleries')
 
     def tearDown(self):
-        rmtree(self.tempdir)
+        try:
+            rmtree(self.tempdir)
+        except OSError: pass
 
     def create_dummy_dir(self, newDir):
         '''
@@ -177,5 +179,7 @@ if __name__ == '__main__':
 
     try:
         runTests(testModules, profileOut, coverageOutDir)
+        if os.name = 'nt': # otherwise the termnial quits
+            raw_input()
     except(KeyboardInterrupt):pass
     
