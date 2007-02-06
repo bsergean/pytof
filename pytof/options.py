@@ -12,7 +12,7 @@ __revision__ = '$Id$  (C) 2004 GPL'
 __author__ = 'Benjamin Sergeant'
 
 from log import logger
-from os.path import expanduser, join, exists
+from os.path import expanduser, join, exists, isdir
 import os, sys
 from utils import _err_, _err_exit, echo, GetTmpDir
 from ConfigParser import RawConfigParser
