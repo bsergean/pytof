@@ -329,6 +329,14 @@ def mktar(fn, prefix, mainDir, files):
     # need to shut this up during test suite execution
     return fn
 
+def chmod777dir(prefix):
+    def visit (z, dirname, names):
+        for name in names:
+            path = os.path.normpath(os.path.join(dirname, name))
+            if isfile(path):
+                os.chmod(path, 777)
+
+    walk(prefix, visit, None)
 
 if __name__ == "__main__":
     # FIXME : Add tests here
