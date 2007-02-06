@@ -132,4 +132,4 @@ def main(albumName, topDir, xmlData, strip_originals,
     dico['thumbs'] = thumbs
 
     Template(join(templateDir, 'gallery_index.ezt'),
-             dico, join(topDir, 'index'))
+             dico, join(topDir, 'index') + '.html')
