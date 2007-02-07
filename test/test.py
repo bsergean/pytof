@@ -179,7 +179,7 @@ if __name__ == '__main__':
 
     try:
         runTests(testModules, profileOut, coverageOutDir)
-        if os.name = 'nt': # otherwise the termnial quits
+        if os.name == 'nt': # otherwise the termnial quits
             raw_input()
     except(KeyboardInterrupt):pass
     
