@@ -22,6 +22,7 @@ import tarfile
 from zipfile import ZipFile, ZIP_DEFLATED
 from log import quiet
 from test import PytofTestCase
+from tempfile import mkdtemp
 from shutil import rmtree
 import os
 
@@ -115,7 +116,7 @@ class TestUtils(PytofTestCase):
         self.assertEquals(lpathstrip(prefix, path), join('kiki', 'coucou'))
 
     def testchmod(self):
-        foodir = '/home/bsergean/sandbox/galleries'
+        foodir = mkdtemp()
         chmodwwdir(foodir)
         rmtree(foodir)
 
