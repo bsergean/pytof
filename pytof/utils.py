@@ -253,6 +253,8 @@ class ProgressMsg(object):
         self.output.write(msg)
         if self.counter == self.target:
             self.output.write("\n")
+        elif self.counter >= self.target:
+            raise Exception, "Counter above limit"
 
 def lpathstrip(prefix, path):
     '''
