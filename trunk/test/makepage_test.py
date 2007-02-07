@@ -19,7 +19,9 @@ from tempfile import mkdtemp, mktemp
 from os.path import join
 from os import mkdir, listdir, getcwd
 from shutil import copy, rmtree
-from log import logger
+from log import logger, quiet
+
+quiet()
 
 class TestMakeGalleryFromDir(TestCase):
 
