@@ -15,7 +15,7 @@ from log import logger, quiet
 from os.path import expanduser, join, exists, basename, isabs, walk, isdir
 from albumdataparser import AlbumDataParser, AlbumDataParserError
 import os, sys
-from utils import _err_, _err_exit, echo, GetTmpDir, mkarchive
+from utils import _err_, _err_exit, echo, mkarchive
 from config import configHandler
 import makepage, makefs
 from shutil import rmtree

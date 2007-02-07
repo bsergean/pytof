@@ -61,9 +61,10 @@ def makePhotoPage(photo, topDir, prev, next, strip_originals):
              dico, join(topDir, photo.id) + '.html')
 
 def main(albumName, topDir, xmlData, strip_originals,
-         fromDir, progress = ProgressMsg(0, sys.stderr)):
+         fromDir, progress=None):
     logger.info('strip_originals = %s' % strip_originals)
-
+    if progress == None:
+        progress = ProgressMsg(0, sys.stderr)
     data = xmlData
     if fromDir:
         data = AlbumDataFromDir(fromDir)
