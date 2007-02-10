@@ -40,7 +40,7 @@
 			<real>1.000000</real>
 		</dict>
 	</array>
-	<key>List of Keywords</key>
+      	<key>List of Keywords</key>
 	<dict>
 		<key>1</key>
 		<string>_Favorite_</string>
@@ -84,6 +84,7 @@
 			<key>ThumbPath</key>
 			<string>/Users/benjadrine/Pictures/iPhoto Library/Data/2005/Rouleau 2/IMG_1479.jpg</string>
 		</dict>
+        </dict>
 	<key>Minor Version</key>
 	<integer>0</integer>
 </dict>
