@@ -120,12 +120,14 @@ def runTests(testModules=None, profileOut=None, coverageOutDir=None):
         results = Profiler().profile(alltests)
         results.sort()
         results.reverse()
+        out = open(profileOut, 'w')
         for result in results:
-            profileOut.write("%s  \t%3.6f\n" % (result[1], result[0]))
-            print "Profiling information written in " + profileOut.name
-        profileOut.close()
-    
-    unittest.TextTestRunner().run(alltests)
+            out.write("%s  \t%3.6f\n" % (result[1], result[0]))
+        print "Profiling information written in " + profileOut
+        out.close()
+    else:
+        # if we don't add this else the tests are run twice
+        unittest.TextTestRunner().run(alltests)
 
     if coverageOutDir is not None:
         coverage.stop()

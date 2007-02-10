@@ -24,3 +24,7 @@ WRITING TESTS:
 * When a new test module is created, it should be added to the list at the end of test.py
 * Ideally, tests should be silent, i.e. not output anything to the terminal
 * [TODO: Finish the list of coding style guide for tests.]
+
+PROFILING (2)
+Just played with the trace python module. If you want to have a thourought understanding of what your program is doing, run it like:
+python -m trace -C ~/sandbox -cts test.py -p -l makefs_test
