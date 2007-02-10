@@ -32,6 +32,8 @@ from os.path import join, getsize
 from tempfile import mkdtemp, mktemp
 from shutil import rmtree, copytree
 from os import mkdir
+from optparse import OptionParser
+
 
 class Profiler(object):
     def profile(self, alltests):
@@ -150,36 +152,57 @@ def runTests(testModules=None, profileOut=None, coverageOutDir=None):
         import webbrowser
         webbrowser.open('file://' + join(getcwd(), coverageOutDir))
 
+
+class ArgsOptions(object):
+
+    def __init__(self):
+        # parse args
+        usage = "usage: python %prog <options>"
+        parser = OptionParser(usage=usage)
+
+        parser.add_option("-c", "--coverage", action="store_true", dest="coverage",
+                          help="Enable coverage testing")
+        parser.add_option("-p", "--profile", action="store_true", dest="profile",
+                          help="Enable profiling")
+        
+        parser.add_option("-C", "--coverage-filename", dest="coverageOutDir",
+                          help="The coverage test output directory [%default]")
+        parser.add_option("-P", "--profile-filename", dest="profileOut",
+                          help="The output profile filename [%default]")
+        parser.add_option("-l", "--list", dest="testModules",
+                          help="The list of module to test [%default]")
+
+        defaultTestModules = tuple( [os.path.splitext(i)[0] for i in glob('*_test.py')] )
+
+        parser.set_defaults(
+            testModules = defaultTestModules,
+            profile = False,
+            profileOut = join('output','profile.txt'),
+            coverage = False,
+            coverageOutDir = join('output','coverage'))
+        
+        self.options, args = parser.parse_args()
+
+        if self.options.testModules != defaultTestModules:
+            self.options.testModules = tuple(self.options.testModules.split(','))
+
+        if not self.options.coverage:
+            self.options.coverageOutDir = None
+        if not self.options.profile:
+            self.options.profileOut = None
+
 if __name__ == '__main__':
-    import getopt
-    try:
-        options, args = getopt.getopt(sys.argv[1:], 't:pc', [])
-    except getopt.GetoptError, (msg, opt):
-        print "ERROR: " + msg
-        sys.exit(2)
-    
-    testModules = tuple( [os.path.splitext(i)[0] for i in glob('*_test.py')] )
-
-    profileOut = None
-    coverageOutDir = None
-    for option, arg in options:
-        if option == "-t":
-            names = arg.split(',')
-            testModules = ()
-            for name in names:
-                testModules += (name,)
-        elif option == "-p":
-            if arg == "":
-                arg = "output/profile.txt"
-            profileOut = file(arg, 'w')
-        elif option == "-c":
-            if arg == "":
-                arg = "output/coverage/"
-            coverageOutDir = arg
 
     try:
-        runTests(testModules, profileOut, coverageOutDir)
-        if os.name == 'nt': # otherwise the termnial quits
+        ao = ArgsOptions()
+        runTests(ao.options.testModules,
+                 ao.options.profileOut,
+                 ao.options.coverageOutDir)
+
+        # On windows, we make a dummy raw_input so that the 
+        # python terminal does not shut down after exiting
+        if os.name == 'nt': 
             raw_input()
+            
     except(KeyboardInterrupt):pass
     
