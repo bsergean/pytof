@@ -36,6 +36,10 @@ from optparse import OptionParser
 
 
 class Profiler(object):
+    '''
+    This class is usefull to sort unittest
+    by runtime
+    '''
     def profile(self, alltests):
         results = []
         self.profileTests(alltests._tests, results)
@@ -105,8 +109,6 @@ class PytofTestCase(TestCase):
 
         return topDir
 
-    
-
 def runTests(testModules=None, profileOut=None, coverageOutDir=None):
     if coverageOutDir is not None:
         if not os.path.exists(coverageOutDir):
@@ -123,7 +125,7 @@ def runTests(testModules=None, profileOut=None, coverageOutDir=None):
         out = open(profileOut, 'w')
         for result in results:
             out.write("%s  \t%3.6f\n" % (result[1], result[0]))
-        print "Profiling information written in " + profileOut
+        print "unittest profiling information written in " + profileOut
         out.close()
     else:
         # if we don't add this else the tests are run twice
@@ -164,13 +166,17 @@ class ArgsOptions(object):
 
         parser.add_option("-c", "--coverage", action="store_true", dest="coverage",
                           help="Enable coverage testing [default=%default]")
-        parser.add_option("-p", "--profile", action="store_true", dest="profile",
-                          help="Enable profiling [default=%default]")
+        parser.add_option("-p", "--profile", action="store_true", dest="pyprofile",
+                          help="Enable python profile module profiling  [default=%default]")
+
+        parser.add_option("-u", "--unittest-profile", action="store_true", dest="uProfile",
+                          help="Tell which unittest  [default=%default]")
+
         
         parser.add_option("-C", "--coverage-filename", dest="coverageOutDir",
                           help="The coverage test output directory [%default]")
         parser.add_option("-P", "--profile-filename", dest="profileOut",
-                          help="The output profile filename [%default]")
+                          help="The unittest profiling output filename [%default]")
         parser.add_option("-l", "--list", dest="testModules",
                           help="The list of module to test [default=%default]")
 
@@ -190,16 +196,39 @@ class ArgsOptions(object):
 
         if not self.options.coverage:
             self.options.coverageOutDir = None
-        if not self.options.profile:
+        if not self.options.uProfile:
             self.options.profileOut = None
 
 if __name__ == '__main__':
 
     try:
         ao = ArgsOptions()
-        runTests(ao.options.testModules,
-                 ao.options.profileOut,
-                 ao.options.coverageOutDir)
+
+        options = [ao.options.testModules,
+                   ao.options.profileOut,
+                   ao.options.coverageOutDir]
+
+        if ao.options.pyprofile:
+            
+            from profile import Profile
+            myprofiler = Profile()
+            myprofiler.create_stats()
+            
+            myprofiler.runcall(runTests, *options)
+
+            statfile = mktemp()
+            myprofiler.dump_stats(statfile)
+
+            import pstats
+            p = pstats.Stats(statfile)
+            os.remove(statfile) # remove temp file
+            p.strip_dirs()
+            p.sort_stats('cumulative').print_stats(30)
+
+
+            
+        else:
+            runTests(*options)
 
         # On windows, we make a dummy raw_input so that the 
         # python terminal does not shut down after exiting
