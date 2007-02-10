@@ -27,15 +27,16 @@ class TestMakeFS(TestCase):
 
     def setUp(self):
         self.tempdir = mkdtemp()
-        self.albumName = 'Youpi gallery'
         self.topDir = self.tempdir
-        self.libraryPath = join('data', 'fake_iphoto_library')
-        self.xmlFilename = 'AlbumData_fake_iphoto-2.xml'
 
     def tearDown(self):
         rmtree(self.tempdir)
     
-    def testOnlyPNG(self):
+    def testiPhoto2(self):
+
+        self.albumName = 'Youpi gallery'
+        self.libraryPath = join('data', 'fake_iphoto_library')
+        self.xmlFilename = 'AlbumData_fake_iphoto-2.xml'
 
         parser = AlbumDataParser(self.libraryPath, self.xmlFilename)
         self.xmlData = parser.parse()
@@ -45,4 +46,12 @@ class TestMakeFS(TestCase):
         
         main(self.albumName, self.topDir, self.xmlData)
 
-        # FIXME: test that the output directory contains our picture
+#    def testiPhoto6(self):
+#        self.albumName = 'Livre Yosemite'
+#        self.libraryPath = join('data', 'fake_iphoto_library')
+#        self.xmlFilename = 'AlbumData_fake_iphoto-6.0.5.xml'
+#
+#        parser = AlbumDataParser(self.libraryPath, self.xmlFilename)
+#        self.xmlData = parser.parse()
+#
+#        main(self.albumName, self.topDir, self.xmlData)

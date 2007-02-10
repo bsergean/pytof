@@ -26,11 +26,19 @@ class ftpUploader(FTP):
     For ftp commands explanations see http://www.nsftools.com/tips/RawFTP.htm
     '''
 
-    def __init__(self, host, user, password):
+    def __init__(self, host, user, password, port=21):
         ''' Start the connection '''
         self.ok = False
         try:
-            FTP.__init__(self, host, user, password)
+            FTP.__init__(self)
+            self.set_debuglevel(2)
+            
+            print 'host', host, 'port', port
+            self.connect(host, port)
+            print 'caca'
+            self.login(user, password)
+            print 'pipi'
+            
             self.ok = True
         except all_errors, msg:
             logger.error(msg)

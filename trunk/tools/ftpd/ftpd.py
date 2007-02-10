@@ -69,7 +69,8 @@ class FTPsession(SocketServer.BaseRequestHandler):
           "nlst":self.nlst,
           "cdup":self.cdup,
           "cwd":self.cwd,
-          "dele":self.dele
+          "dele":self.dele,
+          "pwd":self.pwd,
         }
 
     def response(self,s):
@@ -242,6 +243,9 @@ class FTPsession(SocketServer.BaseRequestHandler):
         """Delete a file"""
         self.response("502 DELE not implemented")   # Override this
             
+
+    def pwd(self,args):
+        self.response("257 /tmp")
 
     def absolute_path(self,fname):
         joindir=self.current_dir
