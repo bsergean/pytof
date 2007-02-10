@@ -29,11 +29,48 @@ from test import PytofTestCase
 quiet()
 
 def diff(a, b):
-    ''' Call the real diff function on two Unix files or directories '''
+    '''
+    Call the real diff function on two Unix files or directories
+    FIXME: Not portable
+    '''
     exitCode = os.system('diff %s %s > /dev/null' % (a, b))
     return exitCode == 0
 
 # FIXME: both class should inherit from the same class for factorization
+
+from threading import Thread
+
+class FtpdThread(Thread):
+    def __init__ (self, server):
+        Thread.__init__(self)
+        self.server = server
+    def run(self):
+        self.server.serve_forever()
+    def stop(self):
+        self.server.server_close()
+
+def startStandaloneFTPServerInThread():
+    '''
+    Return a thread that can be stoped with
+    the FtpdThread class stop method
+    
+    FIXME: ftpd is not feature rich
+    The current ftpd is too limited and do not implement some ftp
+    required by our ftp module: pwd and delete at least.
+    '''
+    sys.path.insert(1, '../tools/ftpd')
+    from ftpd import FileFTPsession, DangerousFTPsession, FTPserver
+    
+    handler=(FileFTPsession,DangerousFTPsession)[0]
+    server = FTPserver(bind_to=('', 1024),
+                       handler=handler,
+                       hosts='',
+                       dir=self.tempdir,
+                       allow='.txt')
+    ftpdThread = FtpdThread(server)
+    ftpdThread.start()
+
+    return ftpdThread
 
 class FTPTestLocal(PytofTestCase):
     '''
@@ -46,27 +83,23 @@ class FTPTestLocal(PytofTestCase):
         self.tempdir = mkdtemp()
         self.ok = False
 
-        passwd = os.environ.get('PASSWD', '')
-        if not passwd:
-            logger.warn('no password in $PASSWD')
-            
-        self.ftp = ftpUploader('localhost', getuser(), passwd)
+        self.ftp = ftpUploader('localhost', 'anonymous', '', 1024)
         if not self.ftp.ok:
             return
         self.ok = True
 
         #self.ftp = ftpUploader('snoball.corp.adobe.com', getuser(), passwd)
         self.ftp.infos()
-        self.pwd = self.ftp.pwd()
+        #self.pwd = self.ftp.pwd()
 
-    def tearDown(self):
+    def tearDown(self):        
         if not self.ok: return
         rmtree(self.tempdir)
 
     def test_upload_one_file(self):
         if not self.ok: return
         tmp = join(self.tempdir, 'b')
-        create(tmp, 'youcoulele')
+        create(tmp, 'youcoulele.txt')
 
         remoteTmp = mktemp()
         self.ftp.upload(tmp, remoteTmp)
