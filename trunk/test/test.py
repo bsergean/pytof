@@ -161,16 +161,16 @@ class ArgsOptions(object):
         parser = OptionParser(usage=usage)
 
         parser.add_option("-c", "--coverage", action="store_true", dest="coverage",
-                          help="Enable coverage testing")
+                          help="Enable coverage testing [default=%default]")
         parser.add_option("-p", "--profile", action="store_true", dest="profile",
-                          help="Enable profiling")
+                          help="Enable profiling [default=%default]")
         
         parser.add_option("-C", "--coverage-filename", dest="coverageOutDir",
                           help="The coverage test output directory [%default]")
         parser.add_option("-P", "--profile-filename", dest="profileOut",
                           help="The output profile filename [%default]")
         parser.add_option("-l", "--list", dest="testModules",
-                          help="The list of module to test [%default]")
+                          help="The list of module to test [default=%default]")
 
         defaultTestModules = tuple( [os.path.splitext(i)[0] for i in glob('*_test.py')] )
 
