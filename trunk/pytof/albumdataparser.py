@@ -95,7 +95,8 @@ class AlbumData(object):
                     photoFileName = join(self.libraryPath, photoFileName[index:])
                 else:
                     # iPhoto 2 (Panther)
-                    suffix = photoFileName.split('iPhotoLibrary' + os.sep)[1]
+                    # platform specific problem here. 
+                    suffix = photoFileName.split('iPhotoLibrary' + '/')[1]
                     photoFileName = join(self.libraryPath, suffix)
                     
             except (ValueError):
