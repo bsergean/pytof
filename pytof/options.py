@@ -25,8 +25,8 @@ class pytofOptions(object):
 
     def __init__(self):
         # parse args
-        usage = "usage: python %prog <options>"
-        parser = OptionParser(usage=usage)
+        parser = OptionParser(usage = "usage: python %prog <options>",
+                              version = "%prog " + __version__)
         
         parser.add_option("-a", "--album", dest="albumName", default='',
                           help="The iPhoto library album to process")
@@ -34,7 +34,7 @@ class pytofOptions(object):
                       action="store_true", dest="info", default=False,
                           help="Print info about the collection [default = %default]")
         parser.add_option("-o", "--output", dest="outputDir", default=GetTmpDir(),
-                          help="The output directory [%default + out/ALBUMNAME]"),
+                          help="The output directory [%default + out/ALBUMNAME]")
         parser.add_option("-f", "--file-system",
                           action="store_true", dest="fs", default=False,
                           help="Extract album photo to OUTPUTDIR and stop")
@@ -44,16 +44,13 @@ class pytofOptions(object):
         parser.add_option("-z", "--zip-archive",
                           action="store_true", dest="Zip", default=False,
                           help="Create a tar archive from the exported datas")
-        parser.add_option("-V", "--version",
-                          action="store_true", dest="version", default=False,
-                          help="display version")
         parser.add_option("-v", "--verbose",
                           action="store_true", dest="verbose", default=False,
                           help="Report a number of information")
         parser.add_option("-l", "--library", dest="libraryPath", default='',
                           help="The iPhoto library directory path"),
         parser.add_option("-x", "--xml-file", dest="xmlFileName", default='',
-                          help="The iPhoto library XML file name"),
+                          help="The iPhoto library XML file name")
         parser.add_option("-u", "--ftp-upload",
                           action="store_true", dest="ftp", default=False,
                           help="Upload pytof output to a ftp site")
@@ -61,16 +58,15 @@ class pytofOptions(object):
                           action="store_true", dest="stripOriginals", default=False,
                           help="Remove the originals from the generated gallery Gallery will be way smaller")
         parser.add_option("-d", "--from-directory", dest="fromDir", default='',
-                          help="The directory path for the gallery. Do not interact with iPhoto"),
+                          help="The directory path for the gallery. Do not interact with iPhoto")
+        parser.add_option("-c", "--gallery-style", dest="style", default='scry',
+                          type="choice", choices=['scry','foobar'],
+                          help="The style of the HTML gallery.")
 
         self.options, args = parser.parse_args()
 
     def check(self):
     
-        if self.options.version:
-            print 'pytof version %s' % (__version__)
-            sys.exit(0)
-
         if self.options.info: pass
         elif self.options.fromDir:
             if not isdir(self.options.fromDir):

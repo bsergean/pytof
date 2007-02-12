@@ -27,8 +27,19 @@ css = 'scry.css'
 cssfile = join(os.pardir, 'share', css)
 templateDir = join(os.path.pardir, 'templates')
 
-def Template(template, data, output):
+def Template(pagetype, data, output, style = 'foobar'):
     from ezt import Template
+
+    # FIXME: Great error handling
+    styles = {'scry': ['scry.css', 'gallery_index.ezt', 'photo_per_page.ezt'],
+              'foobar': 'jamesh.id.au.css'}
+    css_content = open(join(os.pardir, 'share', styles[style][0])).read()
+    data['css_content'] = css_content
+
+    pagetypeID = 1
+    if pagetype == 'photo':
+        pagetypeID = 2
+    template = join(templateDir, styles[style][pagetypeID])
     
     pytofTemplate = Template(template)
     wfile = open(output, 'w')
@@ -57,8 +68,7 @@ def makePhotoPage(photo, topDir, prev, next, strip_originals):
         original = ''
     dico['original'] = original
 
-    Template(join(templateDir, 'photo_per_page.ezt'),
-             dico, join(topDir, photo.id) + '.html')
+    Template('photo', dico, join(topDir, photo.id) + '.html')
 
 def main(albumName, topDir, xmlData, strip_originals,
          fromDir, progress=None):
@@ -132,5 +142,4 @@ def main(albumName, topDir, xmlData, strip_originals,
     dico['title'] = albumName
     dico['thumbs'] = thumbs
 
-    Template(join(templateDir, 'gallery_index.ezt'),
-             dico, join(topDir, 'index') + '.html')
+    Template('index', dico, join(topDir, 'index') + '.html')
