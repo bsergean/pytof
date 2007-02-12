@@ -3,7 +3,9 @@
 <html>
 <head>
 <title> [title] </title>
-<link href="../scry.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+[css_content]
+</style>
 </head>
 <body>
 
