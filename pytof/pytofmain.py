@@ -39,6 +39,7 @@ class Pytof(object):
         self.ftp = po.options.ftp
         self.stripOriginals = po.options.stripOriginals
         self.fromDir = po.options.fromDir
+        self.style = po.options.style
 
         self.progress = progress
         
@@ -86,7 +87,8 @@ class Pytof(object):
                     makefs.main(self.albumName, topDir, xmlData)
                 else:
                     makepage.main(self.albumName, topDir, xmlData,
-                                  self.stripOriginals, self.fromDir, self.progress)
+                                  self.stripOriginals, self.style,
+                                  self.fromDir, self.progress)
 
             archive = None
             if self.Zip or self.tar:

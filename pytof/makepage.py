@@ -27,12 +27,18 @@ css = 'scry.css'
 cssfile = join(os.pardir, 'share', css)
 templateDir = join(os.path.pardir, 'templates')
 
-def Template(pagetype, data, output, style = 'foobar'):
+class TemplateError(Exception): pass
+def Template(pagetype, data, output, style = 'scry'):
     from ezt import Template
 
     # FIXME: Great error handling
     styles = {'scry': ['scry.css', 'scry_gallery_index.ezt', 'scry_photo_per_page.ezt'],
               'foobar': ['jamesh.id.au.css', 'james_gallery_index.ezt', 'james_photo_per_page.ezt']}
+
+    # FIXME:
+    if not style in styles.keys():
+        raise TemplateError, '%s is not a supported style' % style
+
     css_content = open(join(os.pardir, 'share', styles[style][0])).read()
     data['css_content'] = css_content
 
@@ -45,13 +51,13 @@ def Template(pagetype, data, output, style = 'foobar'):
     wfile = open(output, 'w')
     pytofTemplate.generate(wfile, data)
 
-def makePhotoPage(photo, topDir, prev, next, strip_originals):
+def makePhotoPage(photo, topDir, prev, next, strip_originals, style):
     '''
     Should have a next and back with thumbnails
     FIXME: strip_originals is not implemented
     '''
     dico = {}
-    dico['title'] = 'My title'
+    dico['title'] = photo.id + photo.getFileType()
     dico['width'] = str(photo.width)
     dico['height'] = str(photo.height)
     dico['size'] = str(photo.sizeKB)
@@ -68,10 +74,10 @@ def makePhotoPage(photo, topDir, prev, next, strip_originals):
         original = ''
     dico['original'] = original
 
-    Template('photo', dico, join(topDir, photo.id) + '.html')
+    Template('photo', dico, join(topDir, photo.id) + '.html', style)
 
 def main(albumName, topDir, xmlData, strip_originals,
-         fromDir, progress=None):
+         style, fromDir, progress=None):
     logger.info('strip_originals = %s' % strip_originals)
     if progress == None:
         progress = ProgressMsg(0, sys.stderr)
@@ -133,7 +139,8 @@ def main(albumName, topDir, xmlData, strip_originals,
         # a dir HTML, change the links in the index to HTML/123.html
         # and create the per page file in HTML/123.html
         makePhotoPage(photo, topDir,
-                      prev, next, strip_originals)
+                      prev, next,
+                      strip_originals, style)
         thumbs.append(Thumb(photo.id + '.html',
                             join('thumbs', 'th_' + photo.id + photo.getFileType())))
         progress.Increment()
@@ -142,4 +149,4 @@ def main(albumName, topDir, xmlData, strip_originals,
     dico['title'] = albumName
     dico['thumbs'] = thumbs
 
-    Template('index', dico, join(topDir, 'index') + '.html')
+    Template('index', dico, join(topDir, 'index') + '.html', style)

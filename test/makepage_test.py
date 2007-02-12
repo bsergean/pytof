@@ -41,12 +41,12 @@ class TestMakeGalleryFromDir(TestCase):
     
     def testOnlyPNG(self):
 
-        main(self.albumName, self.topDir, self.xmlData, self.strip_originals,
+        main(self.albumName, self.topDir, self.xmlData, self.strip_originals, 'scry',
              fromDir = self.pngDir)
 
     def testOnlyJPG(self):
 
-        main(self.albumName, self.topDir, self.xmlData, self.strip_originals,
+        main(self.albumName, self.topDir, self.xmlData, self.strip_originals, 'foobar',
              fromDir = self.jpgsDir)
 
     def testOnlyMixedSimple(self):
@@ -63,7 +63,7 @@ class TestMakeGalleryFromDir(TestCase):
             for f in listdir(d)[1:3]:
                 copy(join(d, f), src)
 
-        main(self.albumName, self.topDir, self.xmlData, self.strip_originals,
+        main(self.albumName, self.topDir, self.xmlData, self.strip_originals, 'foobar',
              fromDir = src)
 
     def testOnlyMixedFull(self):
@@ -77,7 +77,7 @@ class TestMakeGalleryFromDir(TestCase):
             for f in listdir(d)[1:]:
                 copy(join(d, f), src)
 
-        main(self.albumName, self.topDir, self.xmlData, self.strip_originals,
+        main(self.albumName, self.topDir, self.xmlData, self.strip_originals, 'scry',
              fromDir = src)
 
 
