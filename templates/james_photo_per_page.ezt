@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>Sideshow Bob</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <div class="photo">
+      <img src="[preview]" alt="Sideshow Bob" />
+
+    </div>
+    <div class="caption">
+      <div class="note">Sideshow Bob</div>
+      <div class="location">Oxford, 20 August 2004</div>
+      <div><a href="[original]">(original)</a></div>
+    </div>
+
+  </body>
+</html>
