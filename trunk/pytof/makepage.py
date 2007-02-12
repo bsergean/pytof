@@ -27,12 +27,12 @@ css = 'scry.css'
 cssfile = join(os.pardir, 'share', css)
 templateDir = join(os.path.pardir, 'templates')
 
-def Template(pagetype, data, output, style = 'foobar'):
+def Template(pagetype, data, output, style = 'scry'):
     from ezt import Template
 
     # FIXME: Great error handling
-    styles = {'scry': ['scry.css', 'gallery_index.ezt', 'photo_per_page.ezt'],
-              'foobar': 'jamesh.id.au.css'}
+    styles = {'scry': ['scry.css', 'scry_gallery_index.ezt', 'scry_photo_per_page.ezt'],
+              'foobar': ['jamesh.id.au.css', 'james_gallery_index.ezt', 'james_photo_per_page.ezt']}
     css_content = open(join(os.pardir, 'share', styles[style][0])).read()
     data['css_content'] = css_content
 

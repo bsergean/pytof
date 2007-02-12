@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>Oxford, August 2004</title>
+    <style type="text/css">
+[css_content]
+    </style>
+  </head>
+  <body>
+    <h1>Oxford, August 2004</h1>
+
+    <ul>
+
+    [for thumbs]
+
+      <li class="slide">
+        <a href="[thumbs.page]"><img src="[thumbs.image]" alt="Canal boats" /></a>
+      </li>
+
+    [end]
+      
+    </ul>
+
+<!--> FIXME: add the scry commercial here <-->
+        
+  </body>
+</html>
