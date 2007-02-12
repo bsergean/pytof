@@ -27,7 +27,7 @@ css = 'scry.css'
 cssfile = join(os.pardir, 'share', css)
 templateDir = join(os.path.pardir, 'templates')
 
-def Template(pagetype, data, output, style = 'scry'):
+def Template(pagetype, data, output, style = 'foobar'):
     from ezt import Template
 
     # FIXME: Great error handling

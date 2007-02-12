@@ -3,17 +3,21 @@
 <html>
   <head>
     <title>Sideshow Bob</title>
-    <link rel="stylesheet" type="text/css" href="style.css" />
+<style type="text/css">
+[css_content]
+</style>
   </head>
   <body>
     <div class="photo">
-      <img src="[preview]" alt="Sideshow Bob" />
+      <img src="[preview]" />
 
     </div>
     <div class="caption">
-      <div class="note">Sideshow Bob</div>
-      <div class="location">Oxford, 20 August 2004</div>
-      <div><a href="[original]">(original)</a></div>
+            <p> [exif_infos]
+            </p>
+[if-any original]
+  <a href="[original]">Original picture: [width] x [height], [size] KB</a>
+[end]
     </div>
 
   </body>
