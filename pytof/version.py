@@ -1,1 +1,1 @@
-__version__ = 'Dugarry (0.5.0)'
+__version__ = 'Chibunda (0.6.0)'
