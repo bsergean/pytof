@@ -1,0 +1,30 @@
+pytof testing HOWTO
+-------------------
+
+
+RUNNING TESTS:
+To the full test suite, "python test.py" from the test/ directory
+Selected parts of the test suite (with -t):
+* just one test module: python test.py -t ftp_test
+* just one test case:   python test.py -t ftp_test.FTPTest
+* just one test:        python test.py -t ftp_test.FTPTest.test_upload_one_file
+* several arguments of the -t option can be given as a coma-separated list:
+                        python test.py -t ftp_test.FTPTest,exif_test
+
+PROFILING (with -p):
+* Saves profiling information in a file. If not specified, defaults to "output/profile.txt".
+
+COVERAGE (with -c):
+* Create a test coverage report. If not specified, the files are created in the "output/coverage/" directory. If the directory doesn't exist, it is created automatically.
+* Coverage has to be run on the full test suite and without profiling (i.e. it is incompatible with the -t and -p options)
+* Code that is not executed with test suite appears highlighted in red in the HTML.
+
+WRITING TESTS:
+* There should be one test module per module in the pytof directory. The test module name is based on the original module, with "_test" added.
+* When a new test module is created, it should be added to the list at the end of test.py
+* Ideally, tests should be silent, i.e. not output anything to the terminal
+* [TODO: Finish the list of coding style guide for tests.]
+
+PROFILING (2)
+Just played with the trace python module. If you want to have a thourought understanding of what your program is doing, run it like:
+python -m trace -C ~/sandbox -cts test.py -p -l makefs_test
