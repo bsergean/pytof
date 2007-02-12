@@ -1,0 +1,55 @@
+/*
+ * Scry - Simple PHP Photo Album
+ * Copyright 2004 James Byers <jbyers@users.sf.net>
+ * http://scry.org
+ *
+ * Scry is distributed under a BSD License.  See LICENSE for details.
+ *
+ * $Id: scry.css,v 1.4 2004/09/30 20:12:44 jbyers Exp $
+ *
+ */
+
+body {
+        background-color: #fff;
+        color: #666;
+        font-family: verdana, arial, sans-serif;
+        font-size: 15px;
+        margin-left: 10px;
+        margin-top: 10px;
+        text-align: left;
+}
+div {
+        font-size: 10px;
+}
+#t_main {
+        background-color: #ccc;
+        border: 2px solid #999;
+        padding: 20px;
+        text-align: center;
+}
+#t_slim {
+        background-color: #ccc;
+        border: 2px solid #999;
+        padding: 2px;
+        text-align: center;
+}
+#footer {
+        font-size: 9px;
+        text-align: right;
+}
+.folder {
+        float: left;
+        height: 100px;
+        padding: 2px;
+        text-align: center;
+        width: 120px;
+}
+.folder a {
+        text-decoration: none;
+}
+.folder img {
+        border: 0px;
+}
+.images img {
+        border: 2px solid #000000;
+}

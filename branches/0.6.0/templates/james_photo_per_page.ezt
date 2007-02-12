@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>[title]</title>
+<style type="text/css">
+[css_content]
+</style>
+  </head>
+  <body>
+    <div class="photo">
+      <img src="[preview]" />
+
+    </div>
+    <div class="caption">
+            <p> [exif_infos]
+            </p>
+[if-any original]
+  <a href="[original]">Original picture: [width] x [height], [size] KB</a>
+[end]
+    </div>
+
+  </body>
+</html>
