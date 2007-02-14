@@ -26,7 +26,7 @@ def echo(s):
 
 def _err_exit(msg):
     """ to exit from program on an error with a formated message """
-    sys.stderr.write("%s: %s\n" % (os.path.basename(sys.argv[0]), msg))
+    _err_(msg)
     sys.exit(1)
 
 def _err_(msg):
