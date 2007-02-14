@@ -89,14 +89,15 @@ class AlbumData(object):
 
         if self.libraryPath:
             try:
-                # FIXME:
                 if 'Originals' in photoFileName:
                     index = photoFileName.index('Originals')
                     photoFileName = join(self.libraryPath, photoFileName[index:])
+                elif 'Modified' in photoFileName:
+                    index = photoFileName.index('Modified')
+                    photoFileName = join(self.libraryPath, photoFileName[index:])
                 else:
                     # iPhoto 2 (Panther)
-                    # platform specific problem here. 
-                    suffix = photoFileName.split('iPhotoLibrary' + '/')[1]
+                    suffix = photoFileName.split('iPhoto Library' + '/')[1]
                     photoFileName = join(self.libraryPath, suffix)
                     
             except (ValueError):
