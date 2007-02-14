@@ -81,7 +81,8 @@ class Pytof(object):
 
         try:
             if self.info:
-                print ('\n').join(xmlData.getAlbumList())
+		for a in xmlData.getAlbumList():
+		    print a.encode('utf8')
             else:
                 if self.fs:
                     makefs.main(self.albumName, topDir, xmlData)
