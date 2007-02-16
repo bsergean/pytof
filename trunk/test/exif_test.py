@@ -33,6 +33,7 @@ def get_key(file, key, prune = False):
             else:
                 return tags[key]
 
+
 def print_tags(file):
     tags = EXIF_tags(file)
     for i in tags:
@@ -113,6 +114,11 @@ class TestEXIF(unittest.TestCase):
     
     def test_auto_rotate_preview_thanks_to_exif(self):
         self._auto_rotate_thanks_to_exif(thumb = False)
+
+    def test_undefined_tags(self):
+        exim1 = join('data', 'NoExifTags.jpg') 
+        tags = EXIF_tags(exim1)
+        self.assertEquals(tags,{})       
 
 if __name__ == "__main__":
     unittest.main()
