@@ -68,7 +68,11 @@ class Photo(object):
         self.date = date
 
     def EXIF_infos(self):
-        tags = EXIF_tags(self.fileName)
+        try:
+            tags = EXIF_tags(self.fileName)
+        except:
+            logger.error('%s: EXIF extraction failed' % self.fileName)
+            tags = {}
         self.rotation = str(tags.get('Image Orientation', 'Unknown'))
         infos = []
         infos.append('Model: %s' % str(tags.get('Image Model', 'Unknown')))
