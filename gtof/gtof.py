@@ -86,10 +86,11 @@ class HelloWorld:
         self.pbar = self.wTree.get_widget("pbar")
         self.label = self.wTree.get_widget("pbar") # strange
 
+
         # if you forget to show the main window it's gonna be a sad gui
         self.window.show()
 
-    def fileSelection(self, widget):
+    def fileSelection(self, widget):        
         fs = FileSelection(self)
 
     def main(self):
@@ -105,7 +106,12 @@ class HelloWorld:
                 sys.exit(1)
             else:
                 po.options.fromDir = self.dir
-            
+
+        localEncoding = sys.stdout.encoding
+        if localEncoding == 'cp850':
+            po.options.fromDir = po.options.fromDir.encode('latin1')
+            print po.options.fromDir
+
         po.check()
 
         progress = ProgressMsg(-1, self.pbar)
