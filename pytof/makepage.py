@@ -62,14 +62,14 @@ def makePhotoPage(photo, topDir, prev, next, strip_originals, style):
     dico['height'] = str(photo.height)
     dico['size'] = str(photo.sizeKB)
     dico['exif_infos'] = ('</br>').join(photo.exif_infos)
-    dico['preview'] = join('preview', 'pv_' + photo.id + photo.getFileType())
+    dico['preview'] = ('/').join(['preview', 'pv_' + photo.id + photo.getFileType()])
     dico['preview_filename'] = basename(dico['preview'])
     dico['prev'] = prev.id + '.html'
-    dico['prev_thumb'] = join('thumbs',   'th_' + prev.id + prev.getFileType())
+    dico['prev_thumb'] = ('/').join(['thumbs', 'th_' + prev.id + prev.getFileType()])
     dico['next'] = next.id + '.html'
-    dico['next_thumb'] = join('thumbs',   'th_' + next.id + next.getFileType())
+    dico['next_thumb'] = ('/').join(['thumbs', 'th_' + next.id + next.getFileType()])
 
-    original = join('photos', photo.id + photo.getFileType())
+    original = ('/').join(['photos', photo.id + photo.getFileType()])
     if strip_originals:
         original = ''
     dico['original'] = original
@@ -142,7 +142,8 @@ def main(albumName, topDir, xmlData, strip_originals,
                       prev, next,
                       strip_originals, style)
         thumbs.append(Thumb(photo.id + '.html',
-                            join('thumbs', 'th_' + photo.id + photo.getFileType())))
+                            # FIXME: replace the join here by a /
+                            ('/').join(['thumbs', 'th_' + photo.id + photo.getFileType()])))
         progress.Increment()
 
     dico = {}
