@@ -27,14 +27,14 @@ class pytofOptions(object):
         # parse args
         parser = OptionParser(usage = "usage: python %prog <options>",
                               version = "%prog " + __version__)
-        
+
         parser.add_option("-a", "--album", dest="albumName", default='',
                           help="The iPhoto library album to process")
         parser.add_option("-i", "--info",
                       action="store_true", dest="info", default=False,
                           help="Print info about the collection [default = %default]")
-        parser.add_option("-o", "--output", dest="outputDir", default=GetTmpDir(),
-                          help="The output directory [%default + out/ALBUMNAME]")
+        parser.add_option("-o", "--output", dest="outputDir", default=expanduser('~'),
+                          help="The output directory [%default + pytof/ALBUMNAME]")
         parser.add_option("-f", "--file-system",
                           action="store_true", dest="fs", default=False,
                           help="Extract album photo to OUTPUTDIR and stop")
