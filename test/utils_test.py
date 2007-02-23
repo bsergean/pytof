@@ -26,8 +26,6 @@ from tempfile import mkdtemp
 from shutil import rmtree
 import os
 
-#quiet()
-
 class TestUtils(PytofTestCase):
     
     def testRemoveSpecificChars(self):

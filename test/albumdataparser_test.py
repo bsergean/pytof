@@ -14,12 +14,8 @@ __author__ = 'Benjamin Sergeant'
 from config import configHandler
 from os import remove
 from unittest import TestCase
-from log import quiet
-
 from albumdataparser import AlbumDataParser
 from os.path import join
-
-quiet()
 
 class TestConfigHandler(TestCase):
 

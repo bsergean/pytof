@@ -19,10 +19,7 @@ from tempfile import mkdtemp, mktemp
 from os.path import join, basename
 from albumdataparser import AlbumDataParser
 from timeit import Timer
-from log import logger, quiet
-
-# comment me if you want to debug here
-quiet()
+from log import logger
 
 class TestConfigHandler(TestCase):
 

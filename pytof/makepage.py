@@ -16,15 +16,13 @@ __revision__ = '$Id$  (C) 2006 GPL'
 __author__ = 'Mathieu Robin'
 
 from log import logger
-from os.path import expanduser, join, exists, basename
+from os.path import expanduser, join, exists, basename, isdir
 from albumdataparser import AlbumDataParser, AlbumDataParserError, AlbumDataFromDir
 import os, sys
 from utils import _err_, _err_exit, echo, ProgressMsg
 from shutil import copy
 
 # globals ... bouhhhh
-css = 'scry.css'
-cssfile = join(os.pardir, 'share', css)
 templateDir = join(os.path.pardir, 'templates')
 
 class TemplateError(Exception): pass
@@ -33,41 +31,52 @@ def Template(pagetype, data, output, style = 'scry'):
 
     # FIXME: Great error handling
     styles = {'scry': ['scry.css', 'scry_gallery_index.ezt', 'scry_photo_per_page.ezt'],
-              'foobar': ['jamesh.id.au.css', 'james_gallery_index.ezt', 'james_photo_per_page.ezt']}
+              'james': ['james.css', 'james_gallery_index.ezt', 'james_photo_per_page.ezt']}
+
+    pageTypes = {'photo': '_photo_per_page.ezt',
+		 'index': '_gallery_index.ezt',
+		 'main': '_main_index.ezt'}
 
     # FIXME:
     if not style in styles.keys():
         raise TemplateError, '%s is not a supported style' % style
 
-    css_content = open(join(os.pardir, 'share', styles[style][0])).read()
+    css_content = open(join(os.pardir, 'share', style + '.css')).read()
     data['css_content'] = css_content
 
-    pagetypeID = 1
     if pagetype == 'photo':
-        pagetypeID = 2
-    template = join(templateDir, styles[style][pagetypeID])
-    
+	exif_infos = data['exif_infos']
+	if style == 'scry':
+	    data['exif_infos'] = ('</br>').join(exif_infos)
+	elif style == 'james':
+	    data['exif_infos'] = '<ul>'
+	    for info in exif_infos:
+		data['exif_infos'] += '<li>' + info + '</li>'
+	    data['exif_infos'] += '</ul>'
+
+    template = join(templateDir, style + pageTypes[pagetype])
     pytofTemplate = Template(template)
     wfile = open(output, 'w')
     pytofTemplate.generate(wfile, data)
 
-def makePhotoPage(photo, topDir, prev, next, strip_originals, style):
-    '''
-    Should have a next and back with thumbnails
-    FIXME: strip_originals is not implemented
+def makePhotoPage(photo, topDir, prev, next, strip_originals, albumName, style):
+    ''' 
+    Create the per photo page, with a next and prev link
+    Each link has a thumbnail in scry style mode
     '''
     dico = {}
+    dico['album_name'] = albumName
     dico['title'] = photo.id + photo.getFileType()
     dico['width'] = str(photo.width)
     dico['height'] = str(photo.height)
     dico['size'] = str(photo.sizeKB)
-    dico['exif_infos'] = ('</br>').join(photo.exif_infos)
-    dico['preview'] = ('/').join(['preview', 'pv_' + photo.id + photo.getFileType()])
+    dico['exif_infos'] = photo.exif_infos
+    dico['preview'] = '/'.join(['preview', 'pv_' + photo.id + photo.getFileType()])
     dico['preview_filename'] = basename(dico['preview'])
     dico['prev'] = prev.id + '.html'
-    dico['prev_thumb'] = ('/').join(['thumbs', 'th_' + prev.id + prev.getFileType()])
+    dico['prev_thumb'] = '/'.join(['thumbs', 'th_' + prev.id + prev.getFileType()])
     dico['next'] = next.id + '.html'
-    dico['next_thumb'] = ('/').join(['thumbs', 'th_' + next.id + next.getFileType()])
+    dico['next_thumb'] = '/'.join(['thumbs', 'th_' + next.id + next.getFileType()])
 
     original = ('/').join(['photos', photo.id + photo.getFileType()])
     if strip_originals:
@@ -75,6 +84,11 @@ def makePhotoPage(photo, topDir, prev, next, strip_originals, style):
     dico['original'] = original
 
     Template('photo', dico, join(topDir, photo.id) + '.html', style)
+
+class Thumb:
+    def __init__(self, page, image):
+	self.page = page
+	self.image = image
 
 def main(albumName, topDir, xmlData, strip_originals,
          style, fromDir, progress=None):
@@ -96,22 +110,10 @@ def main(albumName, topDir, xmlData, strip_originals,
             except (os.error):
                 _err_exit('Cannot create %s' %(Dir))
 
-    # FIXME: how do we get the package install path, to retrieve
-    # the resource dir next ...quick hack for now
-    logger.info(cssfile)
-    if not exists(cssfile):
-        _err_('No css file was found: HTML files look and feel will be bad')
-    else:
-        copy(cssfile, join(topDir, os.pardir, css))
-
     logger.info(topDir)
 
+    # photo per page
     thumbs = []
-    class Thumb:
-        def __init__(self, page, image):
-            self.page = page
-            self.image = image
-        
     logger.info("Writing pictures\n")
     
     photos = data.getPicturesIdFromAlbumName(albumName)
@@ -140,14 +142,38 @@ def main(albumName, topDir, xmlData, strip_originals,
         # and create the per page file in HTML/123.html
         makePhotoPage(photo, topDir,
                       prev, next,
-                      strip_originals, style)
+                      strip_originals, albumName, style)
         thumbs.append(Thumb(photo.id + '.html',
-                            # FIXME: replace the join here by a /
-                            ('/').join(['thumbs', 'th_' + photo.id + photo.getFileType()])))
+                            '/'.join(['thumbs', 'th_' + photo.id + photo.getFileType()])))
         progress.Increment()
 
+
+    # gallery index
     dico = {}
     dico['title'] = albumName
     dico['thumbs'] = thumbs
 
     Template('index', dico, join(topDir, 'index') + '.html', style)
+
+    # main index (list of all galleries)
+    dico = {}
+    dico['title'] = albumName
+    dicoThumbs = []
+    mainDir = join(topDir, os.pardir)
+    logger.debug('main dir: %s' % mainDir)
+    for album in os.listdir(mainDir):
+	if not isdir(join(mainDir, album)): 
+	    continue
+
+	logger.debug('Found gallery %s' % album)
+	thLink = '/'.join([album, 'index.html'])
+	thDir = join(mainDir, album, 'thumbs')
+	    
+	thumbs = os.listdir(thDir)
+	if len(thumbs) > 0:
+	    thImage = '/'.join([thDir, thumbs[0]])
+	    dicoThumbs.append(Thumb(thLink, thImage))
+
+    dico['gallery_thumb'] = dicoThumbs
+
+    Template('main', dico, join(mainDir, 'index') + '.html', style)

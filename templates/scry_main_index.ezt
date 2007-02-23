@@ -2,25 +2,19 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 TRANSITIONAL//EN">
 <html>
 <head>
-<title> [title] </title>
+<title> My pytof galleries </title>
 <style type="text/css">
 [css_content]
 </style>
 </head>
 <body>
-
-<table cellpadding="5" cellspacing="0" width="85%" border="0" align="center">
-  <tr> <td align="left"> <a href="../index.html">home</a> </td>
-  </tr>
-</table>
-
 <table cellpadding="5" cellspacing="0" width="85%" border="0" align="center">
   <tr>
     <td id="t_main" width="100%" colspan="2">
       <div class="images">
-[for thumbs]
-  <a href="[thumbs.page]">
-    <img src="[thumbs.image]" border="0"/>
+[for gallery_thumb]
+  <a href="[gallery_thumb.page]">
+    <img src="[gallery_thumb.image]" border="0"/>
   </a>
 [end]
       </div>

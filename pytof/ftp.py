@@ -18,7 +18,6 @@ from sys import exc_info
 from stat import S_ISDIR, S_ISLNK
 from utils import notYetImplemented
 from ftplib import FTP, error_temp, all_errors
-from makepage import cssfile
 
 class ftpUploader(FTP):
     '''
@@ -217,9 +216,10 @@ def ftpPush(conf, archive, topDir, fs):
                     join(remoteDir, basename(archive)))
     else:
         # we'll have to mirror the whole dir
-        if not fs:
-            logger.debug('upload css')
-            ftpU.upload(cssfile,
-                        join(remoteDir, basename(cssfile)))
+
+	# A single file upload sample 
+	# (to be used for pytof/index.html for example)
+	# ftpU.upload('myfile',
+	#	    join(remoteDir, basename(cssfile)))
         ftpU.cp_rf(topDir,
                    remoteDir)

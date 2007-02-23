@@ -65,8 +65,10 @@ def main():
         packages = ['pytof'],
         classifiers = [],
         scripts = ['scripts/pytof.py'],
-        data_files = [ ('share', ['share/scry.css']), ('VERSION') ]
+	data_files = [ ('templates', ['templates/scry_photo_per_page.ezt'])]
         )
+
+        # data_files = [ ('share', ['share/scry.css']), ('VERSION') ]
 	# FIXME: VERSION file has to be removed	
 
 if __name__ == '__main__':

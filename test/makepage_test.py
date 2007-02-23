@@ -17,18 +17,16 @@ from makepage import main
 from unittest import TestCase
 from tempfile import mkdtemp, mktemp
 from os.path import join
-from os import mkdir, listdir, getcwd
+from os import mkdir, listdir, getcwd, makedirs
 from shutil import copy, rmtree
-from log import logger, quiet
-
-quiet()
 
 class TestMakeGalleryFromDir(TestCase):
 
     def setUp(self):
         self.tempdir = mkdtemp()
         self.albumName = 'Youpi'
-        self.topDir = self.tempdir
+        self.topDir = join(self.tempdir, 'foo', 'pytof')
+	makedirs(self.topDir)
         self.xmlData = None
         self.strip_originals = False
         self.baseDir = join('data', 'galleries')
@@ -46,7 +44,7 @@ class TestMakeGalleryFromDir(TestCase):
 
     def testOnlyJPG(self):
 
-        main(self.albumName, self.topDir, self.xmlData, self.strip_originals, 'foobar',
+        main(self.albumName, self.topDir, self.xmlData, self.strip_originals, 'james',
              fromDir = self.jpgsDir)
 
     def testOnlyMixedSimple(self):
@@ -63,7 +61,7 @@ class TestMakeGalleryFromDir(TestCase):
             for f in listdir(d)[1:3]:
                 copy(join(d, f), src)
 
-        main(self.albumName, self.topDir, self.xmlData, self.strip_originals, 'foobar',
+        main(self.albumName, self.topDir, self.xmlData, self.strip_originals, 'james',
              fromDir = src)
 
     def testOnlyMixedFull(self):

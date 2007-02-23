@@ -96,14 +96,14 @@ class Pytof(object):
                 archive = mkarchive(fn = join(outputDir, up, self.albumName),
                                     prefix = join(outputDir, up),
                                     mainDir = self.albumName,
-                                    files = [makepage.cssfile],
+                                    files = [],
                                     Zip = self.Zip,
                                     tar = self.tar)
                 echo('output archive is %s' % (archive))
 
             if not self.info and not self.fs:
                 import webbrowser
-                webbrowser.open('file://' + join(topDir, 'index.html'))
+                webbrowser.open('file://' + join(topDir, os.pardir, 'index.html'))
 
             if self.ftp:
                 ftpPush(conf, archive, topDir, self.fs)
