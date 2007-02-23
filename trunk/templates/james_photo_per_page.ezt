@@ -13,8 +13,7 @@
 
     </div>
     <div class="caption">
-            <p> [exif_infos]
-            </p>
+            [exif_infos]
 [if-any original]
   <a href="[original]">Original picture: [width] x [height], [size] KB</a>
 [end]

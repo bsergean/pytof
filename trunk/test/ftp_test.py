@@ -22,11 +22,8 @@ from utils import GetTmpDir, maybemakedirs, create
 from shutil import copy, rmtree
 from tempfile import mkdtemp, mktemp
 from getpass import getuser
-from log import logger, quiet
+from log import logger
 from test import PytofTestCase
-
-# comment me if you want to debug here
-quiet()
 
 def diff(a, b):
     '''
@@ -83,7 +80,17 @@ class FTPTestLocal(PytofTestCase):
         self.tempdir = mkdtemp()
         self.ok = False
 
-        self.ftp = ftpUploader('localhost', 'anonymous', '', 1024)
+        passwd = os.environ.get('PASSWD', '')
+        if not passwd:
+            logger.warn('no password in $PASSWD')
+
+	distServerArgs = 'localhost', getuser(), passwd
+	pythonFtpServerArgs = 'localhost', 'anonymous', '', 1024
+
+	args = pythonFtpServerArgs
+	args = distServerArgs
+
+        self.ftp = ftpUploader(*args)
         if not self.ftp.ok:
             return
         self.ok = True
@@ -92,7 +99,7 @@ class FTPTestLocal(PytofTestCase):
         self.ftp.infos()
         #self.pwd = self.ftp.pwd()
 
-    def tearDown(self):        
+    def tearDown(self):
         if not self.ok: return
         rmtree(self.tempdir)
 
@@ -110,6 +117,13 @@ class FTPTestLocal(PytofTestCase):
         This one is duplicated in utils_test: We should create a class
         that inherit unittest.TestCase, with this method in it in test.py.
         We should take care of the self.tmpdir also.
+
+	Here is the dummy tree structure, from topDir
+	./a_file
+	./another_file
+	./a_dir
+	./a_dir/a_file
+	./a_dir/another_file
         '''
 
         if not self.ok: return
@@ -117,9 +131,9 @@ class FTPTestLocal(PytofTestCase):
         maybemakedirs(topDir)
         
         tmpftpfile = 'a_file'
-        create(join(self.tempdir, tmpftpfile), 'youcoulele')
+        create(join(topDir, tmpftpfile), 'youcoulele')
         tmpftpfile = 'another_file'
-        create(join(self.tempdir, tmpftpfile), 'warzazat')
+        create(join(topDir, tmpftpfile), 'warzazat')
 
         nestedDir = join(topDir, 'a_dir')
         mkdir(nestedDir)
@@ -129,9 +143,17 @@ class FTPTestLocal(PytofTestCase):
         tmpftpfile = 'another_file'
         create(join(nestedDir, tmpftpfile), 'guacamol')
 
+	#import commands
+	#outtext = commands.getoutput('(cd %s ; find .)' % topDir)
+	#print outtext
+
         return topDir
 
     def test_cp_rf(self):
+	'''
+	Fails with Apple ftp server
+	PASSWD=!#@$!#@%#$@% ./test.py -l ftp_test.FTPTestLocal.test_cp_rf
+	'''
         if not self.ok: return
         newDir = 'mirror_dir'
         topDir = self.create_dummy_dir(newDir)
@@ -139,6 +161,10 @@ class FTPTestLocal(PytofTestCase):
         self.assert_(diff(topDir, join(self.tempdir, newDir)))
 
     def test_rm_tree(self):
+	'''
+	Fails with Apple ftp server
+	PASSWD=!#@$!#@%#$@% ./test.py -l ftp_test.FTPTestLocal.test_rm_tree
+	'''
         if not self.ok: return
         newDir = 'mirror_dir'
         topDir = self.create_dummy_dir(newDir)

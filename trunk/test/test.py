@@ -33,7 +33,7 @@ from tempfile import mkdtemp, mktemp
 from shutil import rmtree, copytree
 from os import mkdir
 from optparse import OptionParser
-
+from log import quiet
 
 class Profiler(object):
     '''
@@ -179,6 +179,9 @@ class ArgsOptions(object):
                           help="The unittest profiling output filename [%default]")
         parser.add_option("-l", "--list", dest="testModules",
                           help="The list of module to test [default=%default]")
+        parser.add_option("-v", "--verbose",
+                          action="store_true", dest="verbose", default=False,
+                          help="Report a number of information")
 
         defaultTestModules = tuple( [os.path.splitext(i)[0] for i in glob('*_test.py')] )
 
@@ -198,6 +201,8 @@ class ArgsOptions(object):
             self.options.coverageOutDir = None
         if not self.options.uProfile:
             self.options.profileOut = None
+        if not self.options.verbose:
+            quiet()
 
 if __name__ == '__main__':
 

@@ -10,7 +10,8 @@
 <body>
 
 <table cellpadding="5" cellspacing="0" width="85%" border="0" align="center">
-  <tr> <td align="left"> <a href="index.html">home</a> </td>
+  <tr> 
+    <td align="left"> <a href="../index.html">home</a> /  <a href="index.html">[album_name]</a> </td>
   </tr>
 </table>
 

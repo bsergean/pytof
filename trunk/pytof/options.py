@@ -60,7 +60,7 @@ class pytofOptions(object):
         parser.add_option("-d", "--from-directory", dest="fromDir", default='',
                           help="The directory path for the gallery. Do not interact with iPhoto")
         parser.add_option("-c", "--gallery-style", dest="style", default='scry',
-                          type="choice", choices=['scry','foobar'],
+                          type="choice", choices=['scry','james'],
                           help="The style of the HTML gallery.")
 
         self.options, args = parser.parse_args()

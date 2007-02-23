@@ -87,6 +87,8 @@ class AlbumData(object):
         p = self.data['Master Image List'][pic_id]
         photoFileName = p['ImagePath']
 
+	# FIXME: This is a mess:
+	# Can we simplify it with dictionnaries and / or regexp ?
         if self.libraryPath:
             try:
                 if 'Originals' in photoFileName:
@@ -97,7 +99,10 @@ class AlbumData(object):
                     photoFileName = join(self.libraryPath, photoFileName[index:])
                 else:
                     # iPhoto 2 (Panther)
-                    suffix = photoFileName.split('iPhoto Library' + '/')[1]
+		    if 'iPhoto Library' in photoFileName:
+			suffix = photoFileName.split('iPhoto Library' + '/')[1]
+		    elif 'iPhotoLibrary' in photoFileName:
+			suffix = photoFileName.split('iPhotoLibrary' + '/')[1]
                     photoFileName = join(self.libraryPath, suffix)
                     
             except (ValueError):
