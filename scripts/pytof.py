@@ -14,7 +14,7 @@ __revision__ = '$Id$  (C) 2006 GPL'
 __author__ = 'Benjamin Sergeant'
 __dependencies__ = []
 
-import sys
+import os, sys
 sys.path.insert(1, '../pytof')
 
 from options import pytofOptions
@@ -33,5 +33,27 @@ if __name__ == "__main__":
     po.check()
     progress = ProgressMsg(-1, sys.stderr)
     pytof = Pytof(po, progress)
-    pytof.main()
+
+    if po.options.pyprofile:
+            
+	# FIXME: factorize me in utils
+	from profile import Profile
+	myprofiler = Profile()
+	myprofiler.create_stats()
+	
+	myprofiler.runcall(pytof.main)
+	
+	from tempfile import mktemp
+	statfile = mktemp()
+	myprofiler.dump_stats(statfile)
+
+	import pstats
+	p = pstats.Stats(statfile)
+	os.remove(statfile) # remove temp file
+	p.strip_dirs()
+	p.sort_stats('cumulative').print_stats(30)
+
+    else:
+
+	pytof.main()
 

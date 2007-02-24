@@ -62,6 +62,8 @@ class pytofOptions(object):
         parser.add_option("-c", "--gallery-style", dest="style", default='scry',
                           type="choice", choices=['scry','james'],
                           help="The style of the HTML gallery.")
+        parser.add_option("-p", "--profile", action="store_true", dest="pyprofile",
+                          default=False, help="Enable python profile module profiling  [default=%default]")
 
         self.options, args = parser.parse_args()
 
