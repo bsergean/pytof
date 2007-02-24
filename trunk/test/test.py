@@ -215,6 +215,7 @@ if __name__ == '__main__':
 
         if ao.options.pyprofile:
             
+	    # FIXME: factorize me in utils
             from profile import Profile
             myprofiler = Profile()
             myprofiler.create_stats()
@@ -230,8 +231,6 @@ if __name__ == '__main__':
             p.strip_dirs()
             p.sort_stats('cumulative').print_stats(30)
 
-
-            
         else:
             runTests(*options)
 
