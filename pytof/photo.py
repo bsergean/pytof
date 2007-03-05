@@ -74,10 +74,16 @@ class Photo(object):
             logger.error('%s: EXIF extraction failed' % self.fileName)
             tags = {}
         self.rotation = str(tags.get('Image Orientation', 'Unknown'))
-        infos = []
-        infos.append('Model: %s' % str(tags.get('Image Model', 'Unknown')))
-        infos.append('Date: %s' % tags.get('EXIF DateTimeOriginal', 'Unknown'))
-        infos.append('Flash: %s' % tags.get('EXIF Flash', 'Unknown'))        
+
+	class _datablob:
+	    def __init__(self, **args):
+		self.__dict__.update(args)
+
+        infos = _datablob()
+        infos.model = str(tags.get('Image Model', 'Unknown'))
+        infos.date = str(tags.get('EXIF DateTimeOriginal', 'Unknown'))
+        infos.flash = str(tags.get('EXIF Flash', 'Unknown'))
+
         return infos
 
     def getBaseName(self):

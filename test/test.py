@@ -240,4 +240,36 @@ if __name__ == '__main__':
             raw_input()
             
     except(KeyboardInterrupt):pass
+
+
+todo = """
+======================================================================
+ERROR: test_exim1_assert_values (exif_test.TestEXIF)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/benjadrine/src/pytof/trunk/test/exif_test.py", line 73, in test_exim1_assert_values
+    self.assertEquals('Model: CYBERSHOT', infos[0])
+AttributeError: _datablob instance has no attribute '__getitem__'
+
+======================================================================
+ERROR: testPerPhotoPageNoOriginals (ezt_test.TestMakeFS)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/benjadrine/src/pytof/trunk/test/ezt_test.py", line 93, in testPerPhotoPageNoOriginals
+    self._testPerPhotoPage(strip_originals = False)
+  File "/Users/benjadrine/src/pytof/trunk/test/ezt_test.py", line 74, in _testPerPhotoPage
+    dico['exif_infos'] = ('</br>').join(photo.exif_infos)
+TypeError: sequence expected, instance found
+
+======================================================================
+ERROR: testPerPhotoPageOriginals (ezt_test.TestMakeFS)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/benjadrine/src/pytof/trunk/test/ezt_test.py", line 90, in testPerPhotoPageOriginals
+    self._testPerPhotoPage(strip_originals = True)
+  File "/Users/benjadrine/src/pytof/trunk/test/ezt_test.py", line 74, in _testPerPhotoPage
+    dico['exif_infos'] = ('</br>').join(photo.exif_infos)
+TypeError: sequence expected, instance found
+----------------------------------------------------------------------
+"""
     

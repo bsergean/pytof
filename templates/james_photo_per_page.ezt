@@ -13,10 +13,16 @@
 
     </div>
     <div class="caption">
-            [exif_infos]
-[if-any original]
-  <a href="[original]">Original picture: [width] x [height], [size] KB</a>
+<ul>
+[if-any exif_infos]
+<li>Model: [exif_infos.model] </li>
+<li>Date: [exif_infos.date]  </li>
+<li>Flash: [exif_infos.flash] <li>
 [end]
+[if-any original]
+<li><a href="[original]">Original picture: [width] x [height], [size] KB</a></li>
+[end]
+</ul>
     </div>
 
   </body>

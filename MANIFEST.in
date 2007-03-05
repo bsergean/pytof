@@ -1,3 +1,4 @@
 recursive-include tools *.*
 recursive-include test *.*
 recursive-include templates *.*
+recursive-include share *.*

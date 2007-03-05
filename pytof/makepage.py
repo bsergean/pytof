@@ -21,43 +21,7 @@ from albumdataparser import AlbumDataParser, AlbumDataParserError, AlbumDataFrom
 import os, sys
 from utils import _err_, _err_exit, echo, ProgressMsg
 from shutil import copy
-
-# globals ... bouhhhh
-templateDir = join(os.path.pardir, 'templates')
-
-class TemplateError(Exception): pass
-def Template(pagetype, data, output, style = 'scry'):
-    from ezt import Template
-
-    # FIXME: Great error handling
-    styles = {'scry': ['scry.css', 'scry_gallery_index.ezt', 'scry_photo_per_page.ezt'],
-              'james': ['james.css', 'james_gallery_index.ezt', 'james_photo_per_page.ezt']}
-
-    pageTypes = {'photo': '_photo_per_page.ezt',
-		 'index': '_gallery_index.ezt',
-		 'main': '_main_index.ezt'}
-
-    # FIXME:
-    if not style in styles.keys():
-        raise TemplateError, '%s is not a supported style' % style
-
-    css_content = open(join(os.pardir, 'share', style + '.css')).read()
-    data['css_content'] = css_content
-
-    if pagetype == 'photo':
-	exif_infos = data['exif_infos']
-	if style == 'scry':
-	    data['exif_infos'] = ('</br>').join(exif_infos)
-	elif style == 'james':
-	    data['exif_infos'] = '<ul>'
-	    for info in exif_infos:
-		data['exif_infos'] += '<li>' + info + '</li>'
-	    data['exif_infos'] += '</ul>'
-
-    template = join(templateDir, style + pageTypes[pagetype])
-    pytofTemplate = Template(template)
-    wfile = open(output, 'w')
-    pytofTemplate.generate(wfile, data)
+from template import pytofTemplate
 
 def makePhotoPage(photo, topDir, prev, next, strip_originals, albumName, style):
     ''' 
@@ -71,19 +35,23 @@ def makePhotoPage(photo, topDir, prev, next, strip_originals, albumName, style):
     dico['height'] = str(photo.height)
     dico['size'] = str(photo.sizeKB)
     dico['exif_infos'] = photo.exif_infos
-    dico['preview'] = '/'.join(['preview', 'pv_' + photo.id + photo.getFileType()])
+    dico['preview'] = '/'.join(['preview', 
+				'pv_' + photo.id + photo.getFileType()])
     dico['preview_filename'] = basename(dico['preview'])
     dico['prev'] = prev.id + '.html'
-    dico['prev_thumb'] = '/'.join(['thumbs', 'th_' + prev.id + prev.getFileType()])
+    dico['prev_thumb'] = '/'.join(['thumbs', 
+				   'th_' + prev.id + prev.getFileType()])
     dico['next'] = next.id + '.html'
-    dico['next_thumb'] = '/'.join(['thumbs', 'th_' + next.id + next.getFileType()])
+    dico['next_thumb'] = '/'.join(['thumbs', 
+				   'th_' + next.id + next.getFileType()])
 
     original = ('/').join(['photos', photo.id + photo.getFileType()])
     if strip_originals:
         original = ''
     dico['original'] = original
 
-    Template('photo', dico, join(topDir, photo.id) + '.html', style)
+    pt = pytofTemplate()
+    pt.write('photo', dico, join(topDir, photo.id) + '.html', style)
 
 class Thumb:
     def __init__(self, page, image):
@@ -109,6 +77,10 @@ def main(albumName, topDir, xmlData, strip_originals,
                 os.makedirs(Dir)
             except (os.error):
                 _err_exit('Cannot create %s' %(Dir))
+
+    # Create magic file
+    fo = open(join(topDir, '.magic'), 'w')
+    fo.close()
 
     logger.info(topDir)
 
@@ -153,7 +125,8 @@ def main(albumName, topDir, xmlData, strip_originals,
     dico['title'] = albumName
     dico['thumbs'] = thumbs
 
-    Template('index', dico, join(topDir, 'index') + '.html', style)
+    pt = pytofTemplate()
+    pt.write('index', dico, join(topDir, 'index') + '.html', style)
 
     # main index (list of all galleries)
     dico = {}
@@ -162,8 +135,8 @@ def main(albumName, topDir, xmlData, strip_originals,
     mainDir = join(topDir, os.pardir)
     logger.debug('main dir: %s' % mainDir)
     for album in os.listdir(mainDir):
-	if not isdir(join(mainDir, album)): 
-	    continue
+	if not isdir(join(mainDir, album)): continue
+	if not exists(join(mainDir, album, '.magic')): continue
 
 	logger.debug('Found gallery %s' % album)
 	thLink = '/'.join([album, 'index.html'])
@@ -176,4 +149,4 @@ def main(albumName, topDir, xmlData, strip_originals,
 
     dico['gallery_thumb'] = dicoThumbs
 
-    Template('main', dico, join(mainDir, 'index') + '.html', style)
+    pt.write('main', dico, join(mainDir, 'index') + '.html', style)
