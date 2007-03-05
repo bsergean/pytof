@@ -8,22 +8,26 @@
 #
 #*****************************************************************************
 
-__revision__ = '$Id$  (C) 2004 GPL'
+__revision__ = '$Id$  (C) 2007 GPL'
 __author__ = 'Benjamin Sergeant'
 
 from log import logger
-from os.path import expanduser, join, exists, isdir
+from os.path import expanduser, join, exists, isdir, splitext, basename
 import os, sys
-from utils import _err_, _err_exit, echo, GetTmpDir
+from utils import _err_, _err_exit, echo, GetTmpDir, ListCurrentDirFileFromExt
 from ConfigParser import RawConfigParser
 from shutil import copy
 from optparse import OptionParser
 from log import quiet
 from version import __version__
+from template import pytofTemplate
 
 class pytofOptions(object):
 
     def __init__(self):
+
+	pt = pytofTemplate()
+
         # parse args
         parser = OptionParser(usage = "usage: python %prog <options>",
                               version = "%prog " + __version__)
@@ -60,7 +64,7 @@ class pytofOptions(object):
         parser.add_option("-d", "--from-directory", dest="fromDir", default='',
                           help="The directory path for the gallery. Do not interact with iPhoto")
         parser.add_option("-c", "--gallery-style", dest="style", default='scry',
-                          type="choice", choices=['scry','james'],
+                          type="choice", choices=pt.styles,
                           help="The style of the HTML gallery.")
         parser.add_option("-p", "--profile", action="store_true", dest="pyprofile",
                           default=False, help="Enable python profile module profiling  [default=%default]")
