@@ -40,6 +40,14 @@ cygwin] which comes with [http://www.gnu.org/software/bash/ bash].
 
 The drawback is that you need to install the developper tools on the Mac, (a good 1Gigabyte dmg to download, hum ...) to get gcc that is required to build PIL and libjpeg. As there is a windows installer on the PIL site, you'd better use that one. And on Linux most likely you will have pre-packaged PIL and libjpeg, otherwise install gcc.
 
+=== Python eggs ===
+
+Get the python eggs [http://peak.telecommunity.com/DevCenter/EasyInstall#installing-easy-install runtime], and issue this command to install PIL (but you'll still have to compile a static libjpeg).
+
+{{{
+sudo easy_install -f http://www.pythonware.com/products/pil/ Imaging
+}}}
+
 === Automatic ===
 
 The sources for the open source project were added to our sources in the deps
