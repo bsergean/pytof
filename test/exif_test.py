@@ -70,9 +70,9 @@ class TestEXIF(unittest.TestCase):
 
         photo = Photo(self.exim1)
         infos = photo.EXIF_infos()
-        self.assertEquals('Model: CYBERSHOT', infos[0])
-        self.assertEquals('Date: 2005:03:23 10:16:48', infos[1])
-        self.assertEquals('Flash: Fired', infos[2])
+        self.assertEquals('CYBERSHOT', infos.model)
+        self.assertEquals('2005:03:23 10:16:48', infos.date)
+        self.assertEquals('Fired', infos.flash)
         
     def test_exif_assert_picture_is_rotated(self):
         key = 'Image Orientation'
