@@ -20,9 +20,14 @@ import sys, os, time
 from utils import TryToImport
 from exif import process_file
 
-TryToImport(__dependencies__)
-for mod in __dependencies__:
-    exec 'import ' + mod
+# Once wxpil works, we should try to import PIL and then falback to wxpil
+pilfromwx = False
+if not pilfromwx:
+    TryToImport(__dependencies__)
+    for mod in __dependencies__:
+        exec 'import ' + mod
+else:
+    import wxpil as Image
 
 def EXIF_tags(fn):
     # FIXME: strip some keys for speed-up instead of
