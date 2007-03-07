@@ -44,7 +44,12 @@
           </td>
           <td width="40%" align="middle" valign="bottom">
 
-            <p> [exif_infos]
+            <p>
+[if-any exif_infos]
+Model: [exif_infos.model] </br>
+Date: [exif_infos.date]  </br>
+Flash: [exif_infos.flash] </br>
+[end]
             </p>
 
           </td>

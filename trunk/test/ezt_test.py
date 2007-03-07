@@ -71,7 +71,17 @@ class TestMakeFS(TestCase):
         dico['width'] = str(photo.width)
         dico['height'] = str(photo.height)
         dico['size'] = str(photo.sizeKB)
-        dico['exif_infos'] = ('</br>').join(photo.exif_infos)
+
+	class _datablob:
+	    def __init__(self, **args):
+		self.__dict__.update(args)
+
+        infos = _datablob()
+        infos.model = 'le super appareil de la mort'
+        infos.date = 'premier janvier 2012'
+        infos.flash = 'flash avec les yeux rouges'
+        
+        dico['exif_infos'] = infos
         dico['preview'] = join('preview', 'pv_' + photo.id + photo.getFileType())
         dico['preview_filename'] = basename(dico['preview'])
         dico['prev'] = prev.id + '.html'
