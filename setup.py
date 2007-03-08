@@ -16,17 +16,8 @@ import sys
 sys.path.insert(1, 'pytof')
 from version import __version__
 
-
-def main():
-
-    # data files
-    # http://docs.python.org/dist/node13.html
-
-    setup(
-        name = "pytof",
-        version = __version__,
-        description = "Exports album from iPhoto Libraries",
-        long_description = '''In this release
+pytof_long_description = '''
+In this release
         ===============
 
 	New in 0.2.0:
@@ -44,18 +35,27 @@ def main():
         - better navigation, makepage output looks almost like scry now
 	- works on Linux with Panther iPhoto 2 and Tiger
 	- cleaner help and option parsing thanks to optparse
-	- xml file content is cached with cPickle and cache is used when the file hasn't changed
+	- xml file content is cached with cPickle and cache is used when the file has not changed
 	- lots of bug fixes
 	- regular python package (some problem, see first issue though, transition is not finished)
-
 	Known issues:
-	- You may have to pytof from the source script directory, regulare package install 
-	  with python setup.py install wasn't tested. (if you can give it a try and report problems it's great
+	- You may have to pytof from the source script directory, regular package install 
+	  with python setup.py install was not tested. - if you can give it a try and report problems it is great
 	  there might be problem finding the resources (.css files) then
 	- Versionning is broken (issue 11)
 	- Canceled operations should cleanup target dir (issue 13)
-        
-        ''',
+'''
+
+def main():
+
+    # data files
+    # http://docs.python.org/dist/node13.html
+
+    setup(
+        name = "pytof",
+        version = __version__,
+        description = "Exports album from iPhoto Libraries",
+        long_description = pytof_long_description,
         author = "Mathieu Robin",
         author_email = "mathieu.robin@gmail.com",
         maintainer = 'Benjamin Sergeant',
@@ -65,11 +65,16 @@ def main():
         packages = ['pytof'],
         classifiers = [],
         scripts = ['scripts/pytof.py'],
-	data_files = [ ('templates', ['templates/scry_photo_per_page.ezt'])]
+	data_files = [ ('templates', ['templates/scry_photo_per_page.ezt',
+                                      'templates/james_main_index.ezt',
+                                      'templates/james_gallery_index.ezt',
+                                      'templates/james_photo_per_page.ezt',
+                                      'templates/scry_main_index.ezt',
+                                      'templates/scry_gallery_index.ezt',
+                                      'templates/scry_photo_per_page.ezt']),
+                        ('share',    ['share/scry.css',
+                                      'share/james.css'])]
         )
-
-        # data_files = [ ('share', ['share/scry.css']), ('VERSION') ]
-	# FIXME: VERSION file has to be removed	
 
 if __name__ == '__main__':
     main()
