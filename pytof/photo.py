@@ -11,7 +11,6 @@
 
 __revision__ = '$Id$  (C) 2006 GPL'
 __author__ = 'Mathieu Robin'
-__dependencies__ = ['Image']
 
 from log import logger
 from os.path import join, getsize, basename, splitext
@@ -21,13 +20,14 @@ from utils import TryToImport
 from exif import process_file
 
 # Once wxpil works, we should try to import PIL and then falback to wxpil
-pilfromwx = False
-if not pilfromwx:
-    TryToImport(__dependencies__)
-    for mod in __dependencies__:
-        exec 'import ' + mod
-else:
-    import wxpil as Image
+try:
+    import Image
+except ImportError:
+    try:
+        import wxpil as Image
+    except ImportError:
+        logger.error('No Image processing module available. Install wxPython or PIL.')
+        sys.exit(0)
 
 def EXIF_tags(fn):
     # FIXME: strip some keys for speed-up instead of

@@ -53,8 +53,7 @@ class Image:
 
     def crop(self, rect):
         x1, y1, x2, y2 = rect
-        self.image = self.image.Size(wx.Size(x2 - x1, y2 - y1),
-                                     wx.Point(x1, y1))        
+        self.image = self.image.GetSubImage(wx.Rect(x1, y1, x2 - x1, y2 - y1))
         return self.fromImage(self.image, self.setSize())
 
     def resize(self, size, dummy):

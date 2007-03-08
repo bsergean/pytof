@@ -11,6 +11,8 @@
 __revision__ = '$Id: options.py 258 2007-02-24 00:17:04Z bsergean $  (C) 2004 GPL'
 __author__ = 'Benjamin Sergeant'
 
+print __file__
+
 from log import logger
 from os.path import expanduser, join, exists, isdir, splitext, basename
 import os, sys
