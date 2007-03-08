@@ -4,7 +4,7 @@
 == General ==
 
 Here is the google code hosting [http://code.google.com/hosting/faq.html FAQ].
-If ou have ideas on how the service could be better, add notes [http://code.google.com/p/support/issues/list here].
+If ou have ideas on how the service could be better, add notes [http://code.google.com/p/support/issues/list here]. Here the Zope svn [http://www.zope.org/DevHome/Subversion/ZopeSVNFAQ tips], might be interesting.
 
 == Subversion ==
 
