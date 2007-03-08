@@ -13,8 +13,7 @@ __author__ = 'Benjamin Sergeant'
 
 from log import logger
 from os.path import join, basename
-from os import walk, sep, chdir, rmdir, getcwd, listdir, lstat, mkdir, makedirs
-from sys import exc_info
+from os import listdir, lstat
 from stat import S_ISDIR, S_ISLNK
 from utils import notYetImplemented
 from ftplib import FTP, error_temp, all_errors

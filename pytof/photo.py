@@ -19,7 +19,6 @@ import sys, os, time
 from utils import TryToImport
 from exif import process_file
 
-# Once wxpil works, we should try to import PIL and then falback to wxpil
 try:
     import Image
 except ImportError:

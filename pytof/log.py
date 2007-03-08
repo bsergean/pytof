@@ -13,10 +13,6 @@ __author__ = 'Benjamin Sergeant'
 
 import logging
 
-from os import listdir, chdir, pardir, getcwd, walk
-from os.path import join
-from glob import glob
-
 #TODO: Would be nice to have funcName here as well, but it's only available for python >- 2.5
 format = "%(levelname)s\t[%(pathname)s:%(lineno)d] %(message)s"
 

@@ -14,14 +14,9 @@ __author__ = 'Benjamin Sergeant'
 print __file__
 
 from log import logger
-from os.path import expanduser, join, exists, isdir, splitext, basename
+from os.path import join, exists, splitext, basename
 import os, sys
-from utils import _err_, _err_exit, echo, GetTmpDir, ListCurrentDirFileFromExt
-from ConfigParser import RawConfigParser
-from shutil import copy
-from optparse import OptionParser
-from log import quiet
-from version import __version__
+from utils import ListCurrentDirFileFromExt
 
 class TemplateError(Exception): pass
 class pytofTemplate(object):

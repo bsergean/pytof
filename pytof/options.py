@@ -11,12 +11,9 @@
 __revision__ = '$Id$  (C) 2007 GPL'
 __author__ = 'Benjamin Sergeant'
 
-from log import logger
-from os.path import expanduser, join, exists, isdir, splitext, basename
+from os.path import expanduser, isdir
 import os, sys
-from utils import _err_, _err_exit, echo, GetTmpDir, ListCurrentDirFileFromExt
-from ConfigParser import RawConfigParser
-from shutil import copy
+from utils import _err_exit
 from optparse import OptionParser
 from log import quiet
 from version import __version__
