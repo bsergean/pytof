@@ -13,8 +13,7 @@
 
 from distutils.core import setup
 import sys
-sys.path.insert(1, 'pytof')
-from version import __version__
+from pytof.version import __version__
 
 pytof_long_description = '''
 In this release
