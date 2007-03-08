@@ -61,18 +61,21 @@ def main():
         maintainer_email = 'bsergean@gmail.com',
         url = 'http://code.google.com/p/pytof/',
         cmdclass = {},
-        packages = ['pytof'],
         classifiers = [],
         scripts = ['scripts/pytof.py'],
-	data_files = [ ('templates', ['templates/scry_photo_per_page.ezt',
-                                      'templates/james_main_index.ezt',
-                                      'templates/james_gallery_index.ezt',
-                                      'templates/james_photo_per_page.ezt',
-                                      'templates/scry_main_index.ezt',
-                                      'templates/scry_gallery_index.ezt',
-                                      'templates/scry_photo_per_page.ezt']),
-                        ('share',    ['share/scry.css',
-                                      'share/james.css'])]
+
+        packages = ['pytof'],
+        package_dir = {'pytof': 'pytof'},
+        package_data = {'pytof': ['share/*.css', 'templates/*.ezt']},
+#	data_files = [ ('templates', ['templates/scry_photo_per_page.ezt',
+#                                      'templates/james_main_index.ezt',
+#                                      'templates/james_gallery_index.ezt',
+#                                      'templates/james_photo_per_page.ezt',
+#                                      'templates/scry_main_index.ezt',
+#                                      'templates/scry_gallery_index.ezt',
+#                                      'templates/scry_photo_per_page.ezt']),
+#                        ('share',    ['share/scry.css',
+#                                      'share/james.css'])]
         )
 
 if __name__ == '__main__':
