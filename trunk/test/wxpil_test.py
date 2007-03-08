@@ -44,7 +44,7 @@ class TestMakeFS(TestCase):
 
     def testCrop(self):
         image = Image.open(self.jpgFn)
-        image = image.crop(100, 100, 900, 900)
+        image = image.crop((100, 100, 900, 900))
         self.assertEquals(image.size, [800, 800])
 
         

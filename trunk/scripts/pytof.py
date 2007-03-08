@@ -21,6 +21,8 @@ from options import pytofOptions
 from pytofmain import Pytof
 from utils import ProgressMsg
 
+print __name__
+
 if __name__ == "__main__":
     # Import Psyco if available
     try:
