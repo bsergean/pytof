@@ -17,7 +17,6 @@ from xml.parsers.expat import ParserCreate, ExpatError
 from photo import Photo
 from utils import _err_, _err_exit, ListCurrentDirFileFromExt
 from time import strptime
-from glob import glob
 from cPickle import dump, load
 
 class AlbumDataFromDir(object):

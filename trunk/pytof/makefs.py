@@ -14,7 +14,6 @@
 __revision__ = '$Id$  (C) 2004 GPL'
 __author__ = 'Benjamin Sergeant'
 
-from albumdataparser import AlbumData
 from utils import ProgressMsg
 import os, sys
 

@@ -11,17 +11,15 @@
 __revision__ = '$Id$  (C) 2004 GPL'
 __author__ = 'Benjamin Sergeant'
 
-from log import logger, quiet
-from os.path import expanduser, join, exists, basename, isabs, walk, isdir
+from log import logger
+from os.path import join, exists, basename
 from albumdataparser import AlbumDataParser, AlbumDataParserError
 import os, sys
-from utils import _err_, _err_exit, echo, mkarchive
+from utils import _err_exit, echo, mkarchive
 from config import configHandler
 import makepage, makefs
 from shutil import rmtree
-from ftp import ftpUploader, ftpPush
-from ftplib import error_perm
-from getpass import getuser, unix_getpass
+from ftp import ftpPush
 from string import rstrip
 
 

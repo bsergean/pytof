@@ -13,7 +13,7 @@ __author__ = 'Benjamin Sergeant'
 
 import sys
 import os
-from os.path import splitext, expanduser, join, exists, basename, walk, isfile
+from os.path import splitext, join, exists, basename, walk, isfile
 import tarfile
 from zipfile import ZipFile, ZIP_DEFLATED
 from log import logger

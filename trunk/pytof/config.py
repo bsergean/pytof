@@ -14,7 +14,7 @@ __author__ = 'Benjamin Sergeant'
 from log import logger
 from os.path import expanduser, join, exists, getsize
 import os, sys
-from utils import _err_, _err_exit, echo, GetTmpDir
+from utils import _err_exit, GetTmpDir
 from ConfigParser import RawConfigParser
 from shutil import copy
 

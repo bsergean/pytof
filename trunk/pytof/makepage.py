@@ -16,11 +16,10 @@ __revision__ = '$Id$  (C) 2006 GPL'
 __author__ = 'Mathieu Robin'
 
 from log import logger
-from os.path import expanduser, join, exists, basename, isdir
-from albumdataparser import AlbumDataParser, AlbumDataParserError, AlbumDataFromDir
+from os.path import join, exists, basename, isdir
+from albumdataparser import AlbumDataFromDir
 import os, sys
-from utils import _err_, _err_exit, echo, ProgressMsg
-from shutil import copy
+from utils import _err_exit, ProgressMsg
 from template import pytofTemplate
 
 def makePhotoPage(photo, topDir, prev, next, strip_originals, albumName, style):

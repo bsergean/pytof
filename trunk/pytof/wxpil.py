@@ -13,12 +13,7 @@ __revision__ = '$Id$  (C) 2006 GPL'
 __author__ = 'Benjamin Sergeant'
 __dependencies__ = ['wx']
 
-from log import logger
-from os.path import join, getsize, basename, splitext
-from shutil import copy
-import sys, os, time
 from utils import TryToImport
-from exif import process_file
 
 TryToImport(__dependencies__)
 for mod in __dependencies__:
