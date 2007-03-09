@@ -1,0 +1,12 @@
+#summary Developper packaging tips.
+#labels Phase-Implementation
+
+= Introduction =
+
+== Source distribution ==
+
+For windows users it's better to get a zip file.
+
+{{{
+python setup.py sdist --formats=zip 
+}}}
