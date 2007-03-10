@@ -157,15 +157,6 @@ see http://...
 
     }
 
-def TryToImport(modules):
-    """ try to import modules from a list """
-    for module in modules:
-        try:
-            exec 'import '+ module
-        except (ImportError):
-            print pytof_modules[module]
-            sys.exit(1)
-
 def automaticHelp(str, revision, dependencies, author):
     """
     print a nice page (which is the actual man page too)
