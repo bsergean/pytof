@@ -21,10 +21,6 @@ from os import getcwd
 from os.path import join
 from unittest import TestCase
 
-print os.path.realpath(__file__)
-print __file__
-sys.exit(0)
-
 if 'check' in sys.argv[1:]:
     __pychecker__ = 'no-deprecated no-miximport'
     import pychecker.checker
