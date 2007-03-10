@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>[title]</title>
+<style type="text/css">
+[css_content]
+</style>
+  </head>
+  <body>
+    <div class="photo">
+      <img src="[preview]" />
+
+    </div>
+    <div class="caption">
+<ul>
+[if-any exif_infos]
+<li>Model: [exif_infos.model] </li>
+<li>Date: [exif_infos.date]  </li>
+<li>Flash: [exif_infos.flash] <li>
+[end]
+[if-any original]
+<li><a href="[original]">Original picture: [width] x [height], [size] KB</a></li>
+[end]
+</ul>
+    </div>
+
+  </body>
+</html>
