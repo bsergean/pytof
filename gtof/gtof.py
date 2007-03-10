@@ -3,6 +3,7 @@
 # example helloworld.py
 
 import sys
+from os.path import join
 sys.path.insert(1, '../pytof')
 
 try:
@@ -67,7 +68,8 @@ class FileSelection:
 class HelloWorld:
 
     def __init__(self):
-        self.gladefile = "gtof.glade"
+    	gladeDir = join(sys.prefix, 'share', 'pytof', 'glade')
+        self.gladefile = join(gladeDir, 'gtof.glade')
         self.wTree = gtk.glade.XML(self.gladefile) 
         
         #Get the Main Window, and connect the "destroy" event

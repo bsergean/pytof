@@ -38,7 +38,7 @@ In this release
 	- lots of bug fixes
 	- regular python package (some problem, see first issue though, transition is not finished)
 	Known issues:
-	- You may have to pytof from the source script directory, regular package install 
+	- You may have to call pytof from the source script directory, regular package install 
 	  with python setup.py install was not tested. - if you can give it a try and report problems it is great
 	  there might be problem finding the resources (.css files) then
 	- Versionning is broken (issue 11)
