@@ -19,7 +19,7 @@ from os import mkdir, listdir, getcwd
 from shutil import copy, rmtree
 from log import logger
 
-import wxpil as Image
+import gtkpil as Image
 
 class TestMakeFS(TestCase):
 

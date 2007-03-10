@@ -25,8 +25,11 @@ except ImportError:
     try:
         import wxpil as Image
     except ImportError:
-        logger.error('No Image processing module available. Install wxPython or PIL.')
-        sys.exit(0)
+        try:
+            import gtkpil as Image
+        except ImportError:
+            logger.error('No Image processing module available. Install PIL, wxPython, or pygtk.')
+            sys.exit(0)
 
 def EXIF_tags(fn):
     # FIXME: strip some keys for speed-up instead of
