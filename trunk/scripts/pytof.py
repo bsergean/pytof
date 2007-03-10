@@ -15,11 +15,9 @@ __author__ = 'Benjamin Sergeant'
 __dependencies__ = []
 
 import os, sys
-sys.path.insert(1, '../pytof')
-
-from options import pytofOptions
-from pytofmain import Pytof
-from utils import ProgressMsg
+from pytof.options import pytofOptions
+from pytof.pytofmain import Pytof
+from pytof.utils import ProgressMsg
 
 if __name__ == "__main__":
     # Import Psyco if available
