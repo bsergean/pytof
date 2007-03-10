@@ -17,9 +17,9 @@ try:
 except:
     sys.exit(1)
 
-from options import pytofOptions
-from pytofmain import Pytof
-from utils import ProgressMsg
+from pytof.options import pytofOptions
+from pytof.pytofmain import Pytof
+from pytof.utils import ProgressMsg
 
 class ProgressMsg(object):
     """ General purpose progress bar """
