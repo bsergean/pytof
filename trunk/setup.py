@@ -63,7 +63,7 @@ def main():
         url = 'http://code.google.com/p/pytof/',
         cmdclass = {},
         classifiers = [],
-        scripts = ['ctof.py'],
+        scripts = ['ctof.py', 'gtof/gtof.py'],
         packages = ['pytof'],
 #        package_dir = {'pytof': 'pytof'},
 #        package_data = {'pytof': ['templates/*.css', 'templates/*.ezt']},

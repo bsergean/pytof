@@ -2,7 +2,7 @@
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
 <!-- Generated with glade3
 	Version: 3.0.1
-	Date: Mon Jan 15 01:16:21 2007
+	Date: Fri Mar  9 17:33:16 2007
 	User: bsergean
 	Host: marge1
 -->
@@ -10,7 +10,7 @@
   <widget class="GtkWindow" id="gtof">
     <property name="title">Select</property>
     <child>
-      <widget class="GtkNotebook" id="notebook1">
+      <widget class="GtkNotebook" id="Exporting">
         <property name="visible">True</property>
         <child>
           <widget class="GtkVBox" id="vbox1">
