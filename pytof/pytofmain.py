@@ -12,7 +12,7 @@ __revision__ = '$Id$  (C) 2004 GPL'
 __author__ = 'Benjamin Sergeant'
 
 from log import logger
-from os.path import join, exists, basename
+from os.path import join, exists, basename, sep
 from albumdataparser import AlbumDataParser, AlbumDataParserError
 import os, sys
 from utils import _err_exit, echo, mkarchive
@@ -101,7 +101,10 @@ class Pytof(object):
 
             if not self.info and not self.fs:
                 import webbrowser
-                webbrowser.open('file://' + '/'.join([topDir, os.pardir, 'index.html']))
+                url = 'file:///'
+                url += '/'.join(topDir.split(sep))
+                url += '/'.join(['..', 'index.html'])
+                webbrowser.open(url)
 
             if self.ftp:
                 ftpPush(conf, archive, topDir, self.fs)
