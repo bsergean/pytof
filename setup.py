@@ -49,6 +49,7 @@ def main():
 
     # data files
     # http://docs.python.org/dist/node13.html
+    # http://www.thescripts.com/forum/thread164172.html
 
     setup(
         name = "pytof",
@@ -66,7 +67,7 @@ def main():
 
         packages = ['pytof'],
         package_dir = {'pytof': 'pytof'},
-        package_data = {'pytof': ['share/*.css', 'templates/*.ezt']},
+        package_data = {'pytof': ['templates/*.css', 'templates/*.ezt']},
 #	data_files = [ ('templates', ['templates/scry_photo_per_page.ezt',
 #                                      'templates/james_main_index.ezt',
 #                                      'templates/james_gallery_index.ezt',

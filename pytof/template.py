@@ -11,23 +11,28 @@
 __revision__ = '$Id: options.py 258 2007-02-24 00:17:04Z bsergean $  (C) 2004 GPL'
 __author__ = 'Benjamin Sergeant'
 
-print __file__
-
 from log import logger
 from os.path import join, exists, splitext, basename
 import os, sys
 from utils import ListCurrentDirFileFromExt
 
+#import distutils
+#print 'caca'
+#
+#os.path.normpath
+#
+#print os.path__file__
+#print __name__
+
 class TemplateError(Exception): pass
 class pytofTemplate(object):
 
-    styleDir = join(os.pardir, 'share')
-    templateDir = join(os.pardir, 'templates')
+    templateDir = 'templates'
 
     def __init__(self):
 	# styles:
 	self.styles = []
-	for fStyle in ListCurrentDirFileFromExt('.css', self.styleDir):
+	for fStyle in ListCurrentDirFileFromExt('.css', self.templateDir):
 	    style = splitext(basename(fStyle))[0] # get rid of the ext
 
 	    # FIXME: this is to workaround a bug with non case sensitive
@@ -52,7 +57,7 @@ class pytofTemplate(object):
 	if not style in styles:
 	    raise TemplateError, '%s is not a supported style' % style
 
-	css_content = open(join(self.styleDir, style + '.css')).read()
+	css_content = open(join(self.templateDir, style + '.css')).read()
 	data['css_content'] = css_content
 
 	template = join(self.templateDir, style + pageTypes[pagetype])
