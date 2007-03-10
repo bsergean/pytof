@@ -74,9 +74,9 @@ def main():
                                                   'share/pytof/templates/scry_main_index.ezt',
                                                   'share/pytof/templates/scry_gallery_index.ezt',
                                                   'share/pytof/templates/scry_photo_per_page.ezt']),
-                       ('share/pytof/style', ['share/pytof/style/scry.css',
-                                              'share/pytof/style/james.css']),
-                       ('share/pytof/glade', ['share/pytof/glade/pytof.glade'])]
+                       ('share/pytof/styles', ['share/pytof/styles/scry.css',
+                                               'share/pytof/styles/james.css']),
+                       ('share/pytof/glade', ['share/pytof/glade/gtof.glade'])]
         )
 
 if __name__ == '__main__':
