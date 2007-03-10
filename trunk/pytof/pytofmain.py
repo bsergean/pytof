@@ -101,7 +101,7 @@ class Pytof(object):
 
             if not self.info and not self.fs:
                 import webbrowser
-                webbrowser.open('file://' + join(topDir, os.pardir, 'index.html'))
+                webbrowser.open('file://' + '/'.join([topDir, os.pardir, 'index.html']))
 
             if self.ftp:
                 ftpPush(conf, archive, topDir, self.fs)
