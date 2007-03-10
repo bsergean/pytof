@@ -1,0 +1,163 @@
+#!/bin/bash
+
+###
+# jmake - junk make
+# usage: jmake <C or C++ src file>
+#
+# - Emulate make for a single source code program (C or C++), and launch the bin after it is compiled.
+# - For application which requires special build flags, add one line in the final case instruction
+# - Ideal for Junk Code Directory (hum, how do I loop on a std::map ...???)
+#
+# if C++ apps
+#   JCXX=true
+# elif C apps
+#   JCC=true
+# COMPILER_FLAGS=# Fill me
+# LINKER_FLAGS=# Fill me
+###
+
+JCC=
+JCXX=
+COMPILER_FLAGS=-g
+LINKER_FLAGS=
+
+log()
+{
+    echo "$me:" $@
+}
+
+all()
+{
+    compile
+    CS=$?
+    log "Compile status: " $CS
+    
+    if [ $CS -eq 0 ]; then
+	link
+	LS=$?
+	log "Link status: " $LS
+    else
+	return $CS
+    fi
+    
+    return $LS
+}
+
+compile()
+{
+    COMPILE_CMD="$COMPILER $COMPILER_FLAGS -o $tgetobj -c $tgetsrc"
+    echo $COMPILE_CMD
+    $COMPILE_CMD
+    # Last error code automaticaly returned by compile
+}
+
+link()
+{        
+    LINK_CMD="$LD -o $tgetapp $tgetobj $LINKER_FLAGS"
+    echo $LINK_CMD
+    $LINK_CMD
+    # Last error code automaticaly returned by link
+}
+
+prepare_make()
+{
+    if [ ! -z $JCC ]; then
+	log 'Handling C program'
+	COMPILER=gcc
+	[ $CC ] && COMPILER=$CC
+	LD=$COMPILER
+	EXT=c
+    elif [ ! -z $JCXX ]; then
+	log 'Handling C++ program'
+	COMPILER=c++
+	[ $CXX ] && COMPILER=$CXX
+	LD=$COMPILER
+	EXT=cpp
+    fi
+    
+    tgetapp=$(echo $tgetsrc | sed "s/.$EXT$//")
+    tgetobj=$tgetapp.o
+
+    # no object, "make all"
+    if [ ! -f $tgetobj ]; then
+	all
+    # object older than the source, "make all"
+    elif [ $tgetobj -ot $tgetsrc ]; then
+	all
+    # no bin, "make link"
+    elif [ ! -f $tgetapp ]; then
+	link
+    else
+	log "Everything is up to date"
+    fi
+
+    # Run apps if everything went well
+    if [ $? -eq 0 ]; then
+	log "Starting binary" $tgetapp "with args :" $tgetappargs
+	./$tgetapp $tgetappargs
+    fi
+}
+
+me=$(basename $0)
+log "Hello, I am" $me
+
+tgetsrc=$1
+shift
+tgetappargs=$@
+
+sys=`uname`
+
+case $tgetsrc in
+# add a new app here (see top of file for model)
+std-namespaces.cpp)
+	JCXX=true
+	test $sys = "HP-UX" && COMPILER_FLAGS="-AA " && LINKER_FLAGS=-lCsup_v2
+	;; #-DNO_NAMESPACES
+deltaTime.cpp|splitpath.cpp|bmpresize.cpp|bmpmirror.cpp|bmp2raw.cpp|wxdllopener.cpp)
+	JCXX=true
+	COMPILER_FLAGS="`wx-config --cppflags` -DLOW_BYTE_FIRST=1"
+	LINKER_FLAGS=`wx-config --libs=gl`
+	;;
+mandrakeDefined.c)
+	JCC=true
+	COMPILER_FLAGS=-v
+	;;
+glProut*.c)
+	JCC=true
+	case $sys in
+	    SunOS) LINKER_FLAGS=/usr/openwin/lib/libGL.so ;;
+	    Linux) LINKER_FLAGS=-lGL ;;
+	esac
+	;;
+dlopen.c)
+	JCC=true
+        case $sys in
+	    HP-UX) LINKER_FLAGS=-ldld ;;
+	    *) LINKER_FLAGS=-ldl ;;
+	esac    
+	;;
+macro.c)
+	cpp macro.c
+	exit
+	;;
+time.c|rounding.c)
+    	JCC=true
+	LINKER_FLAGS=-lm
+	;;
+# clean dir to be able to see what's in here
+clean)
+	log "Remove every exec and obj files"
+	RM='rm -f'
+	$RM *.o *~ \#*
+	for i in $(ls); do
+	    [ -x $i ] && [ ! -d $i ] && [ $i != $me ] && $RM $i;
+	done
+	exit
+	;;
+# Unknown apps, rely on file extension
+*.cpp) JCXX=true;;
+*.c) JCC=true;;
+esac
+
+# do the job
+prepare_make
