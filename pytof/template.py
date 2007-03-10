@@ -27,12 +27,13 @@ from utils import ListCurrentDirFileFromExt
 class TemplateError(Exception): pass
 class pytofTemplate(object):
 
-    templateDir = 'templates'
+    templateDir = join(sys.prefix, 'share', 'pytof', 'templates')
+    styleDir = join(sys.prefix, 'share', 'pytof', 'styles')
 
     def __init__(self):
 	# styles:
 	self.styles = []
-	for fStyle in ListCurrentDirFileFromExt('.css', self.templateDir):
+	for fStyle in ListCurrentDirFileFromExt('.css', self.styleDir):
 	    style = splitext(basename(fStyle))[0] # get rid of the ext
 
 	    # FIXME: this is to workaround a bug with non case sensitive
@@ -57,7 +58,7 @@ class pytofTemplate(object):
 	if not style in styles:
 	    raise TemplateError, '%s is not a supported style' % style
 
-	css_content = open(join(self.templateDir, style + '.css')).read()
+	css_content = open(join(self.styleDir, style + '.css')).read()
 	data['css_content'] = css_content
 
 	template = join(self.templateDir, style + pageTypes[pagetype])
