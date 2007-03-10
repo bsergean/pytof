@@ -11,13 +11,8 @@
 
 __revision__ = '$Id$  (C) 2006 GPL'
 __author__ = 'Benjamin Sergeant'
-__dependencies__ = ['wx']
 
-from utils import TryToImport
-
-TryToImport(__dependencies__)
-for mod in __dependencies__:
-    exec 'import ' + mod
+import wx
 
 # dummy global for compat
 ANTIALIAS = True
