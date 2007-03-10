@@ -102,8 +102,9 @@ class Pytof(object):
             if not self.info and not self.fs:
                 import webbrowser
                 url = 'file:///'
-                url += '/'.join(topDir.split(sep))
+                url += '/'.join(topDir.split(sep)) + '/'
                 url += '/'.join(['..', 'index.html'])
+		print url
                 webbrowser.open(url)
 
             if self.ftp:
