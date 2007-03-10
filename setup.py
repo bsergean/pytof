@@ -63,20 +63,20 @@ def main():
         url = 'http://code.google.com/p/pytof/',
         cmdclass = {},
         classifiers = [],
-        scripts = ['scripts/pytof.py'],
-
+        scripts = ['pytof.py'],
         packages = ['pytof'],
-        package_dir = {'pytof': 'pytof'},
-        package_data = {'pytof': ['templates/*.css', 'templates/*.ezt']},
-#	data_files = [ ('templates', ['templates/scry_photo_per_page.ezt',
-#                                      'templates/james_main_index.ezt',
-#                                      'templates/james_gallery_index.ezt',
-#                                      'templates/james_photo_per_page.ezt',
-#                                      'templates/scry_main_index.ezt',
-#                                      'templates/scry_gallery_index.ezt',
-#                                      'templates/scry_photo_per_page.ezt']),
-#                        ('share',    ['share/scry.css',
-#                                      'share/james.css'])]
+#        package_dir = {'pytof': 'pytof'},
+#        package_data = {'pytof': ['templates/*.css', 'templates/*.ezt']},
+        data_files = [ ('share/pytof/templates', ['share/pytof/templates/scry_photo_per_page.ezt',
+                                                  'share/pytof/templates/james_main_index.ezt',
+                                                  'share/pytof/templates/james_gallery_index.ezt',
+                                                  'share/pytof/templates/james_photo_per_page.ezt',
+                                                  'share/pytof/templates/scry_main_index.ezt',
+                                                  'share/pytof/templates/scry_gallery_index.ezt',
+                                                  'share/pytof/templates/scry_photo_per_page.ezt']),
+                       ('share/pytof/style', ['share/pytof/style/scry.css',
+                                              'share/pytof/style/james.css']),
+                       ('share/pytof/glade', ['share/pytof/glade/pytof.glade'])]
         )
 
 if __name__ == '__main__':
