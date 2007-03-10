@@ -16,7 +16,6 @@ from log import logger
 from os.path import join, getsize, basename, splitext
 from shutil import copy
 import sys, os, time
-from utils import TryToImport
 from exif import process_file
 
 try:
