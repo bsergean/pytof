@@ -30,7 +30,7 @@ class pytofOptions(object):
                               version = "%prog " + __version__)
 
         parser.add_option("-a", "--album", dest="albumName", default='',
-                          help="The iPhoto library album to process")
+                          help="The iPhoto library album to process (it can be a list, comma separated")
         parser.add_option("-i", "--info",
                       action="store_true", dest="info", default=False,
                           help="Print info about the collection [default = %default]")
