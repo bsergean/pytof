@@ -18,6 +18,14 @@ from pytof.version import __version__
 pytof_long_description = '''
 In this release
         ===============
+       New in 0.7.0:
+       - Windows installer
+       - Primitive user interface based on pygtk.
+       - Image processing fallback to wxPython or pygtk if PIL is not installed
+       - Play well with distutils, python setup.py install will put ctof.py (Command Line Interface) and gtof.py in your PATH
+       - Several themes are available, and adding your own style should be easy (a wiki page to come soon).
+       - Lots of PIL binaries (and python eggs) are available throught the download page
+       - Create an index for all galleries, and there's an easy like in scry
 
 	New in 0.2.0:
 
