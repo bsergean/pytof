@@ -1,0 +1,11 @@
+pytof is under GPL license, but there's some borrowed code that's GPL compatible.
+
+See:
+ - exif.py
+ - ezt.py
+ - PListReader.py
+ - W3CDate.py
+ - coverage.py (test)
+ - colorize.py (test)
+
+ - 

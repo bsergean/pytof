@@ -67,6 +67,7 @@ class Pytof(object):
             self.albumName = basename(rstrip(self.fromDir, '/'))
             logger.info('albumName is %s' % self.albumName)
 
+	# FIXME: remove the output dir if a problem occur
         up = 'pytof'
         topDir = join(self.outputDir, up, self.albumName)
         try:
