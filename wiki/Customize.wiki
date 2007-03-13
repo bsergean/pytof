@@ -21,6 +21,11 @@ And store them in the folder share/pytof/templates/
 
 Edit them and replace the html with the one you want for your pages. Words enclosed in brackets will be replaced by their content by pytof.
 
-[title] will become [My super gallery name] for example.
+{{{
+[title] will become:
+My super vacations in Acapulco
+}}}
 
 It's quite simple and after some tries you should be able to add your own template. Send it to me and it will be my pleasure to add it to pytof :)
+
+
