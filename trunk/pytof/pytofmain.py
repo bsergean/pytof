@@ -105,7 +105,6 @@ class Pytof(object):
                 url = 'file:///'
                 url += '/'.join(topDir.split(sep)) + '/'
                 url += '/'.join(['..', 'index.html'])
-		print url
                 webbrowser.open(url)
 
             if self.ftp:

@@ -1,1 +1,2 @@
 recursive-include share *.ezt *.css *.glade
+include Makefile LICENSE.txt
