@@ -140,8 +140,14 @@ Just use your installer manager to get glade-3 and pygtk (urpmi, yum, apt-get).
 
 An all in one installer is being prepared by the pygtk fols, but for now:
 
+==== Step by step ====
+
  * Install gtk+ and glade from [http://gladewin32.sourceforge.net/modules/news/ here]. I used the 2.10.7 version.
  * Look for the Win32 Installer section in the pygtk [http://www.pygtk.org/downloads.html download] page, and install those tree guys: PyCairo (1.2), PyGObject (2.12), PyGTK (2.10)
+
+==== All in one installer ====
+
+Some nice guy packaged python  + gtk + pygtk [http://aruiz.typepad.com/siliconisland/2006/12/allinone_win32_.html together]. Just download that big [http://osl.ulpgc.es/~arc/gnome/pygtk-setup.exe installer], and you will get all gtof deps in a single step. Cool, no ?
 
 === Mac ===
 
