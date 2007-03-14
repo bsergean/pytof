@@ -12,11 +12,12 @@ __revision__ = '$Id$  (C) 2004 GPL'
 __author__ = 'Benjamin Sergeant'
 
 from log import logger
-from os.path import join, basename
+from os.path import join, basename, isabs
 from os import listdir, lstat
 from stat import S_ISDIR, S_ISLNK
 from utils import notYetImplemented
 from ftplib import FTP, error_temp, all_errors
+from getpass import getuser, getpass
 
 class ftpUploader(FTP):
     '''
@@ -31,12 +32,9 @@ class ftpUploader(FTP):
             FTP.__init__(self)
             self.set_debuglevel(2)
             
-            print 'host', host, 'port', port
+            logger.debug('host (%s) port (%s)' % (host, port))
             self.connect(host, port)
-            print 'caca'
             self.login(user, password)
-            print 'pipi'
-            
             self.ok = True
         except all_errors, msg:
             logger.error(msg)
@@ -185,7 +183,7 @@ def ftpPush(conf, archive, topDir, fs):
         # localhost is a preference for test
         host = getStringFromConsole('Host', 'localhost')
         user = getStringFromConsole('User', getuser())
-        passwd = unix_getpass()
+        passwd = getpass()
         remoteDir = getStringFromConsole('Remote directory', '')
         if not isabs(remoteDir):
             logger.warning('Sorry: the remote drectory has to be an absolute path')
