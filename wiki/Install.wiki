@@ -3,7 +3,7 @@
 
 == Introduction ==
 
-For thumbnails creation pytof rely on the python imaging library (PIL), which itself rely on the libjpeg for low level jpeg handling. Both of them should be installed, and the process is quite simple.
+For thumbnails creation pytof rely on the python imaging library (PIL), which itself rely on the libjpeg for low level jpeg handling. Both of them should be installed, and the process is quite simple. *New*: We can now fallback on pygtk or wxPython is any of those are installed. wxPython is installed by default on Mac Tiger, but the quality of the created thumbnail is bad, I have to look into that.
 
 == Install dependancies using prepackaged binaries ==
 
@@ -18,7 +18,13 @@ I made a PIL archive where PIL is compiled against a static libjpeg, so it shoul
 [100drine@gnocchi 2.3]$ sudo bunzip2 -c PIL-PPC-Panther-python-2.3.tar.bz2 | tar xf -
 }}}
 When sudo ask you a password, type your user password.
-Otherwise I'm sure fink has a prepackaged PIL.
+
+==== Tiger ====
+
+I also made tar files with everything installed, that you can install just like on OSX.
+
+* [http://pytof.googlecode.com/files/PIL-Tiger-Intel.tgz Intel] Mac
+* [http://pytof.googlecode.com/files/PIL-Tiger-PPC.tgz Powe PC] Mac
 
 === Linux ===
 
@@ -32,9 +38,8 @@ Installing [http://www.blastwave.org/packages/pil PIL] using [http://www.blastwa
 
  * Install [http://www.python.org/ftp/python/2.4.4/python-2.4.4.msi python] 
  * Install [http://effbot.org/downloads/PIL-1.1.6.win32-py2.4.exe PIL]
- * For now there is no GUI so you'll have to type commands in a terminal. To
-get a nice experience you should install [http://www.cygwin.com/mirrors.html
-cygwin] which comes with [http://www.gnu.org/software/bash/ bash].
+ * For now the GUI is minimalistic so you'll have to type commands in a terminal. To
+get a nice experience you should install [http://www.cygwin.com/mirrors.html cygwin] which comes with [http://www.gnu.org/software/bash/ bash].
  
 == Install dependancies from sources ==
 
@@ -47,6 +52,8 @@ Get the python eggs [http://peak.telecommunity.com/DevCenter/EasyInstall#install
 {{{
 sudo easy_install -f http://www.pythonware.com/products/pil/ Imaging
 }}}
+
+I created an egg for Intel Tiger, that you can just copy to  if you do not have the developper tools, because that last command will require them to be installed. I think you just have to extract and copy the .egg terminated directory to your site-packages (mine is at `/System/Library/Frameworks/Python.framework/Versions/2.3/lib/python2.3/site-packages`). I'm not positive on that thought, as I am an egg user newbie.
 
 === Automatic ===
 
@@ -107,4 +114,4 @@ Fink / x11 is needed for now, but there may be a lighter process as there is now
 
 == One click Installer ==
 
-Of course in the near future we'd like to make a nice OS X package, so that no-one would have to experience tar and configure nice moments ...
+Of course in the near future we'd like to make a nice OS X package, so that no-one would have to experience tar and configure nice moments. *New*: there is already a cool windows setup.exe like installer that can be downloaded from the pytof download page.
