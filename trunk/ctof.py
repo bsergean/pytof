@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 CLI (command line interface) main driver for pytof.
 """

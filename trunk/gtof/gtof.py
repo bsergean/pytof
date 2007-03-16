@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 """
 Main User interface for pytof, based on pygtk.
 Currently it is very basic, just a file selection dialog
