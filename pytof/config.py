@@ -1,15 +1,17 @@
-#!/usr/bin/env python
-# -*- coding: iso-8859-1 -*-
-# -*- python -*-
-#
-#*****************************************************************************
-#
-# See LICENSE file for licensing and to see where does some code come from
-#
-#*****************************************************************************
+"""
+Configuration file handler.
+Help storing:
+ - output directory
+ - ftp params
+ - library path (iPhoto)
+ - xml filename (iPhoto)
+ - timestamp use by the xml iPhoto library file caching (with pickle)
+"""
 
-__revision__ = '$Id$  (C) 2004 GPL'
-__author__ = 'Benjamin Sergeant'
+# Copyright (C) 2006, 2007 GPL
+# Written by Benjamin Sergeant <bsergean@gmail.com>
+
+__revision__ = '$Id$  (C) 2007 GPL'
 
 from log import logger
 from os.path import expanduser, join, exists, getsize

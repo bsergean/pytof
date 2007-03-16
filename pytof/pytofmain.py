@@ -1,15 +1,11 @@
-#!/usr/bin/env python
-# -*- coding: iso-8859-1 -*-
-# -*- python -*-
-#
-#*****************************************************************************
-#
-# See LICENSE file for licensing and to see where does some code come from
-#
-#*****************************************************************************
+"""
+Main interface to a pytof session. Used by gtof and ctof.
+"""
 
-__revision__ = '$Id$  (C) 2004 GPL'
-__author__ = 'Benjamin Sergeant'
+# Copyright (C) 2006, 2007 GPL
+# Written by Benjamin Sergeant <bsergean@gmail.com>
+
+__revision__ = '$Id$  (C) 2007 GPL'
 
 from log import logger
 from os.path import join, exists, basename, sep
@@ -22,8 +18,13 @@ from shutil import rmtree
 from ftp import ftpPush
 from string import rstrip
 
-
 class Pytof(object):
+
+    '''
+    The options given to the constructor are the command line arguments
+    and a progress bar class (so that it can be used by a command line
+    interface (like ctof.py) or a graphical line interface.
+    '''
 
     def __init__(self, po, progress):
         self.albumName = po.options.albumName

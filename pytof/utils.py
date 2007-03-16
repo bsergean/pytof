@@ -1,15 +1,11 @@
-#!/usr/bin/env python
-# -*- coding: iso-8859-1 -*-
-# -*- python -*-
-#
-#*****************************************************************************
-#
-# See LICENSE file for licensing and to see where does some code come from
-#
-#*****************************************************************************
+"""
+Misc utilities. (working with path, creating zip and tar archive, etc ...)
+"""
 
-__revision__ = '$Id$  (C) 2004 GPL'
-__author__ = 'Benjamin Sergeant'
+# Copyright (C) 2006, 2007 GPL
+# Written by Benjamin Sergeant <bsergean@gmail.com>
+
+__revision__ = '$Id$  (C) 2007 GPL'
 
 import sys
 import os
@@ -18,7 +14,7 @@ import tarfile
 from zipfile import ZipFile, ZIP_DEFLATED
 from log import logger
 
-sys.path.insert(1, '../deps/ftputil-2.2')
+# sys.path.insert(1, join(os.par, os.par, 'deps', 'ftputil-2.2'))
 
 def echo(s):
     sys.stdout.write(str(s) + '\n')

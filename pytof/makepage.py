@@ -1,19 +1,43 @@
-#!/usr/bin/env python
-# -*- coding: iso-8859-1 -*-
-# -*- python -*-
-# $Id$
-#
-#*****************************************************************************
-#
-# See LICENSE file for licensing and to see where does some code come from
-#
-#*****************************************************************************
-#
-# Main file.
-#
+"""
+Create the webpages.
 
-__revision__ = '$Id$  (C) 2006 GPL'
-__author__ = 'Mathieu Robin'
+The webpages contains the originals (non-resized pictures)(default)
+thumbs and preview are generated.
+
+An index file for each gallery is created.
+
+The user can customize those pages, using the templating engine.
+http://code.google.com/p/pytof/wiki/Customize
+
+Here is how it looks like on disk. There is also an index.html file,
+with links to all galleries, that is generated at the pytof dir level.
+
+/home/bsergean/pytof/mes-vacances-postales
+|-- 2124.html
+|-- 2154.html
+|-- 2155.html
+|-- index.html
+|-- photos
+|   |-- 2124.jpg
+|   |-- 2154.jpg
+|   `-- 2155.jpg
+|-- preview
+|   |-- pv_2124.jpg
+|   |-- pv_2154.jpg
+|   `-- pv_2155.jpg
+`-- thumbs
+    |-- th_2124.jpg
+    |-- th_2154.jpg
+    `-- th_2155.jpg
+
+3 directories, 13 files
+"""
+
+# Copyright (C) 2006, 2007 GPL
+# Originaly written by Mathieu Robin <mathieu.robin@gmail.com>
+# Rewritten by Benjamin Sergeant <bsergean@gmail.com>
+
+__revision__ = '$Id$  (C) 2007 GPL'
 
 from log import logger
 from os.path import join, exists, basename, isdir

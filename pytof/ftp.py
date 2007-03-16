@@ -1,15 +1,25 @@
-#!/usr/bin/env python
-# -*- coding: iso-8859-1 -*-
-# -*- python -*-
-#
-#*****************************************************************************
-#
-# See LICENSE file for licensing and to see where does some code come from
-#
-#*****************************************************************************
+"""
+Class used to initiate a ftp connection to a remote ftp server,
+and push the output of a pytof session there (or any directory).
 
-__revision__ = '$Id$  (C) 2004 GPL'
-__author__ = 'Benjamin Sergeant'
+Still in alpha.
+
+Working (a bit ...) with:
+    - Mandriva 2007 proftpd
+    - Solaris 8 default ftp server
+
+Not working with:
+    - Apple OSX
+    - free.fr ftpperso ftp server
+
+We tried to use a ftpd python server (see tools/ftpd),
+but it did not implement the whole ftp protocol.
+"""
+
+# Copyright (C) 2006, 2007 GPL
+# Written by Benjamin Sergeant <bsergean@gmail.com>
+
+__revision__ = '$Id$  (C) 2007 GPL'
 
 from log import logger
 from os.path import join, basename, isabs

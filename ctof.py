@@ -1,20 +1,14 @@
-#!/usr/bin/env python
-# -*- coding: iso-8859-1 -*-
-# -*- python -*-
-#*****************************************************************************
-#
-# See LICENSE file for licensing and to see where does some code come from
-#
-#*****************************************************************************
-#
-# Main file.
-#
+"""
+CLI (command line interface) main driver for pytof.
+"""
 
-__revision__ = '$Id$  (C) 2006 GPL'
-__author__ = 'Benjamin Sergeant'
+# Copyright (C) 2006, 2007 GPL
+# Written by Benjamin Sergeant <bsergean@gmail.com>
+
+__revision__ = '$Id$  (C) 2007 GPL'
 
 import os, sys
-from pytof.options import pytofOptions
+from pytof.options import PytofOptions
 from pytof.pytofmain import Pytof
 from pytof.utils import ProgressMsg
 
@@ -26,9 +20,8 @@ if __name__ == "__main__":
     except ImportError:
         pass
 
-    po = pytofOptions()
+    po = PytofOptions()
     po.check()
-    progress = ProgressMsg(-1, sys.stderr)
 
     # FIXME: there's gonna be a problem if we have a a comma
     # in the album name.
@@ -36,6 +29,7 @@ if __name__ == "__main__":
 
 	po.options.albumName = album
 
+        progress = ProgressMsg(-1, sys.stderr)
 	pytof = Pytof(po, progress)
 	if po.options.pyprofile:
 

@@ -1,10 +1,20 @@
 #!/usr/bin/env python
 
-# example helloworld.py
+"""
+Main User interface for pytof, based on pygtk.
+Currently it is very basic, just a file selection dialog
+and a go button.
+"""
+
+# Copyright (C) 2006, 2007 GPL
+# Written by Benjamin Sergeant <bsergean@gmail.com>
+
+__revision__ = '$Id$  (C) 2007 GPL'
 
 import sys
-from os.path import join
-sys.path.insert(1, '../pytof')
+from os.path import join, expanduser
+from os import sep, pardir
+sys.path.insert(1, join(pardir, 'pytof'))
 
 try:
     import pygtk
@@ -15,37 +25,45 @@ try:
     import gtk
     import gtk.glade
 except:
-    sys.exit(1)
+    from pytof.options import _err_exit
+    _err_exit('You need to install pygtk to use gtof. Sorry...')
 
-from pytof.options import pytofOptions
+from pytof.options import PytofOptions
 from pytof.pytofmain import Pytof
 from pytof.utils import ProgressMsg
 
 class ProgressMsg(object):
-    """ General purpose progress bar """
+
+    ''' General purpose progress bar '''
+    
     def __init__(self, target, pbar):
         self.pbar = pbar
         self.counter = 0.0
         self.target = float(target)
 
     def Increment(self):
+        '''
+        FIXME: I guess there is a better way to do, like connecting the
+        progress bar to the main application, or something like that, than
+        calling gtk.main_iteration() to update the progress bar
+        '''
         self.counter += 1
         self.pbar.set_fraction(self.counter / self.target)       
         if self.counter == self.target:
             self.pbar.set_fraction(1)
 
-        # FIXME: I guess there is a better way to do, like connecting the
-        # progress bar to the main application, or something like that.
         gtk.main_iteration()
 
 class FileSelection:
-    # Get the selected filename and print it to the console
     def file_ok_sel(self, w):
+        '''
+        Get the selected filename and print it to the console
+        '''
         print "%s" % self.filew.get_filename()
         self.parent.dir = self.filew.get_filename()
         self.filew.destroy()
 
-    def __init__(self, parent):
+    def __init__(self, parent, dirName):
 
         self.parent = parent
         
@@ -61,7 +79,7 @@ class FileSelection:
     
         # Lets set the filename, as if this were a save dialog,
         # and we are giving a default filename
-        self.filew.set_filename('')
+        self.filew.set_filename(dirName)
     
         self.filew.show()
 
@@ -88,12 +106,14 @@ class HelloWorld:
         self.pbar = self.wTree.get_widget("pbar")
         self.label = self.wTree.get_widget("pbar") # strange
 
-
+	homeDir = expanduser('~')
+	self.dirName = homeDir
+	print self.dirName
         # if you forget to show the main window it's gonna be a sad gui
         self.window.show()
 
     def fileSelection(self, widget):        
-        fs = FileSelection(self)
+        fs = FileSelection(self, self.dirName)
 
     def main(self):
         # All PyGTK applications must have a gtk.main(). Control ends here

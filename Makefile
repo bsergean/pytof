@@ -1,5 +1,7 @@
 # python setup.py --help bdist_rpm
 #
+# Mandriva policy is here:
+# http://wiki.mandriva.com/en/Policies/Python
 
 all:
 	@echo 'supported target are:'
