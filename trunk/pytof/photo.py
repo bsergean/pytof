@@ -1,16 +1,13 @@
-#!/usr/bin/env python
-# -*- coding: iso-8859-1 -*-
-# -*- python -*-
-# $Id$
-#
-#*****************************************************************************
-#
-# See LICENSE file for licensing and to see where does some code come from
-#
-#*****************************************************************************
+"""
+Main image module.
+The underlying image processing engine is either PIL, wxPython or pyGTK
+"""
 
-__revision__ = '$Id$  (C) 2006 GPL'
-__author__ = 'Mathieu Robin'
+# Copyright (C) 2006, 2007 GPL
+# Originaly written by Mathieu Robin <mathieu.robin@gmail.com>
+# Rewritten by Benjamin Sergeant <bsergean@gmail.com>
+
+__revision__ = '$Id$  (C) 2007 GPL'
 
 from log import logger
 from os.path import join, getsize, basename, splitext
@@ -49,9 +46,13 @@ def EXIF_tags(fn):
     f.close()
     return tags
 
-
-
 class Photo(object):
+
+    '''
+    Create thumb and preview.
+    Save it to a file
+    '''
+    
     def __init__(self, fileName, id=None, title='', comment='', date=''):
         
         self.image = Image.open(fileName)

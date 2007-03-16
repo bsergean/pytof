@@ -1,28 +1,16 @@
-#!/usr/bin/env python
-# -*- coding: iso-8859-1 -*-
-# -*- python -*-
-#
-#*****************************************************************************
-#
-# See LICENSE file for licensing and to see where does some code come from
-#
-#*****************************************************************************
+"""
+Simple templating engine, front-end to ezt.py
+"""
 
-__revision__ = '$Id: options.py 258 2007-02-24 00:17:04Z bsergean $  (C) 2004 GPL'
-__author__ = 'Benjamin Sergeant'
+# Copyright (C) 2006, 2007 GPL
+# Written by Benjamin Sergeant <bsergean@gmail.com>
+
+__revision__ = '$Id: options.py 294 2007-03-12 04:28:19Z bsergean $  (C) 2007 GPL'
 
 from log import logger
 from os.path import join, exists, splitext, basename
 import os, sys
 from utils import ListCurrentDirFileFromExt
-
-#import distutils
-#print 'caca'
-#
-#os.path.normpath
-#
-#print os.path__file__
-#print __name__
 
 class TemplateError(Exception): pass
 class pytofTemplate(object):

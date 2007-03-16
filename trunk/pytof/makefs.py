@@ -1,21 +1,17 @@
-#!/usr/bin/env python
-# -*- coding: iso-8859-1 -*-
-# -*- python -*-
-#
-#*****************************************************************************
-#
-# See LICENSE file for licensing and to see where does some code come from
-#
-#*****************************************************************************
-#
-# fs
-#
+"""
+Create a directory with all the originals from a gallery.
+Mainly used in conjunction with iPhoto, where pictures are kindof stucked.
+Usefull to backup your pictures, or to give to a webbased (php ?) system
+like scry.
+"""
 
-__revision__ = '$Id$  (C) 2004 GPL'
-__author__ = 'Benjamin Sergeant'
+# Copyright (C) 2006, 2007 GPL
+# Rewritten by Benjamin Sergeant <bsergean@gmail.com>
+
+__revision__ = '$Id$  (C) 2007 GPL'
 
 from utils import ProgressMsg
-import os, sys
+import sys
 
 __version__ = '0.0.1'
 

@@ -1,15 +1,12 @@
-#!/usr/bin/env python
-# -*- coding: iso-8859-1 -*-
-# -*- python -*-
-#
-#*****************************************************************************
-#
-# See LICENSE file for licensing and to see where does some code come from
-#
-#*****************************************************************************
+"""
+Command line argument parser.
+Shared by gtof and ctof
+"""
+
+# Copyright (C) 2006, 2007 GPL
+# Written by Benjamin Sergeant <bsergean@gmail.com>
 
 __revision__ = '$Id$  (C) 2007 GPL'
-__author__ = 'Benjamin Sergeant'
 
 from os.path import expanduser, isdir
 import os, sys
@@ -19,7 +16,7 @@ from log import quiet
 from version import __version__
 from template import pytofTemplate
 
-class pytofOptions(object):
+class PytofOptions(object):
 
     def __init__(self):
 
