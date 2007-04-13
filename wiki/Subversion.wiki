@@ -175,8 +175,11 @@ Adding         tags/0.0.2
 Committed revision 88.
 }}}
 
+== Properties ==
+
+Usefull when you want to revert a property, like an executable property that you set on a source file. From the subversion [http://svnbook.red-bean.com/en/1.0/ch07s02.html book].
+
 = Links =
 
 [http://svnbook.red-bean.com/en/1.1/ch04s04.html subversion]
 [http://www.dehora.net/journal/2006/02/subversion_tips_dealing_with_branches.html Working with branches]
-
