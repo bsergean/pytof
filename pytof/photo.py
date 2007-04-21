@@ -55,8 +55,15 @@ class Photo(object):
     
     def __init__(self, fileName, id=None, title='', comment='', date=''):
         
-        self.image = Image.open(fileName)
+        self.ok = False
         self.fileName = fileName
+        # This is to prevent Image crash on loading, but actually 
+        # it happens when trying to load .MPG files :)
+        # Maybe we should check for fileName extension instead ...
+        try:
+            self.image = Image.open(fileName)
+        except(IOError): return
+			
         if id == None:
             self.id = time.strftime("%y%j%H%M%S")
         else:
@@ -73,6 +80,7 @@ class Photo(object):
         self.sizeKB = getsize(self.fileName) / 1024
         self.exif_infos = self.EXIF_infos()
         self.date = date
+        self.ok = True
 
     def EXIF_infos(self):
         try:
