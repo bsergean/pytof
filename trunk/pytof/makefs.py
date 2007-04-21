@@ -31,5 +31,6 @@ def main(albumName, topDir, xmlData):
     progress = ProgressMsg(len(photos), output=sys.stderr)
     for pic_id in photos:
         photo = xmlData.getPhotoFromId(pic_id)
-        photo.saveCopy(topDir)
+        if photo.ok:
+		    photo.saveCopy(topDir)
         progress.Increment()
