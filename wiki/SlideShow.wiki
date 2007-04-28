@@ -1,0 +1,16 @@
+#summary Add a js slide show engine.
+#labels Phase-Design
+
+= Introduction =
+
+Having a one click nice slideshow would be a good enhancement to the user experience. This has probably to be done on the client side and javascript would be a good fit.
+
+== Changes ==
+
+=== Python ===
+
+We would have to embed some js (callbacks) inside the HTML pages
+
+=== Java Script ===
+
+The whole thing would be done in a separate bunch of JS scripts, located somewhere inside the generated directory.
