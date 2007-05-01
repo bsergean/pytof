@@ -13,4 +13,4 @@ We would have to embed some js (callbacks) inside the HTML pages
 
 === Java Script ===
 
-The whole thing would be done in a separate bunch of JS scripts, located somewhere inside the generated directory. The flickr slideshow is really cool, such a slidewhow code can be fetched from [http://www.robertnyman.com/2006/04/12/jas-like-your-own-mini-flickr/ here].
+The whole thing would be done in a separate bunch of JS scripts, located somewhere inside the generated directory. The flickr slideshow is really cool, such a slidewhow code can be fetched from [http://www.robertnyman.com/jas/ here].
