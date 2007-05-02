@@ -149,9 +149,18 @@ end. 400 times is more than enough. -->
 	    except foo:
 	            i /= 2 
 
-def level5):
+def level5():
     '''
     http://www.pythonchallenge.com/pc/def/peak.html
+    The hint is: pronounce it
+    In the web page there is a something to download: banner.p.
+    And there's also: <!-- peak hell sounds familiar ? -->
     '''
- 
+    from urllib import urlencode, urlopen
+    fo = urlopen('http://www.pythonchallenge.com/pc/def/banner.p')
+    text = fo.read()
+    print text
+    text = ('').join(text.splitlines())
+    #print text
+
 level5()
