@@ -10,7 +10,7 @@ def level0():
     a = 2 ** 38
     challengeUrlOpen(str(a))
 
-def level1():
+def createTranslationTable():
     '''
     http://www.pythonchallenge.com/pc/def/map.html
     The hint is:
@@ -31,12 +31,15 @@ def level1():
         letter = chr(code)
         newCode = (code - first + 2) % size        
         newLetter = chr(newCode + first)
-        print newLetter
         newAll += newLetter
     table = string.maketrans(all, newAll)
+    return table
+
+def level1():
     encodedStr = \
 ''' g fmnc wms bgblr rpylqjyrc gr zw fylb. rfyrq ufyr amknsrcpq ypc dmp. bmgle gr gl zw fylb gq glcddgagclr ylb rfyr'q ufw rfgq rcvr gq qm jmle. sqgle qrpgle.kyicrpylq() gq pcamkkclbcb. lmu ynnjw ml rfc spj.
 '''
+    table = createTranslationTable()
     newStr = encodedStr.translate(table)
     print newStr
     challengeUrlOpen('map'.translate(table))
@@ -47,6 +50,36 @@ def level2():
 
     recognize the characters. maybe they are in the book, 
     but MAYBE they are in the page source.
-    '''
 
-level1()
+    You have to fetch the html page. Within it you have two comments, 
+    the first is:
+    find rare characters in the mess below:
+    the second is a mess of character. Both are the last comment of the document
+    '''
+    urlBase = 'http://www.pythonchallenge.com/pc/def/ocr.html'
+    import urllib
+    fo = urllib.urlopen(urlBase)
+    text = fo.read()
+
+    first = text.rfind('<!--')
+    last = text.rfind('-->')
+
+    mess = text[first+len('<!--\n'):last-1]
+    assert mess[0] == '%'
+    assert mess[-1] == '*'
+
+    import string
+    url = ''
+    for c in mess:
+        if c in string.lowercase: url += c
+
+    # rare characters (using the lowercase filter, or using a dict and counting occurences) 
+    # form the word 'equality'
+    challengeUrlOpen(url)
+
+def level3():
+    ''' 
+    http://www.pythonchallenge.com/pc/def/equality.html'
+    '''
+    
+level2()
