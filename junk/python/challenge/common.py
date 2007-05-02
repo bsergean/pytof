@@ -1,6 +1,8 @@
-def challengeUrlOpen(url):
+def challengeUrlOpen(url, php = False):
     import webbrowser
-    webbrowser.open('http://www.pythonchallenge.com/pc/def/' + url + '.html')
+    suffix = '.html'
+    if php: suffix = '.php'
+    webbrowser.open('http://www.pythonchallenge.com/pc/def/' + url + suffix)
 
 def level0():
     '''
@@ -44,6 +46,27 @@ def level1():
     print newStr
     challengeUrlOpen('map'.translate(table))
 
+def getLastComment(url, serialize = False):
+    import urllib
+    fo = urllib.urlopen(url)
+    text = fo.read()
+
+    first = text.rfind('<!--')
+    last = text.rfind('-->')
+
+    mess = text[first+len('<!--\n'):last-1]
+
+    if serialize:
+	    from tempfile import mkstemp
+	    import os
+	    (fd, name) = mkstemp()
+	    print name
+	    fo = os.fdopen(fd, 'w')
+	    fo.write(mess)
+	    fo.close()
+
+    return mess
+ 
 def level2():
     '''
     http://www.pythonchallenge.com/pc/def/ocr.html
@@ -57,14 +80,7 @@ def level2():
     the second is a mess of character. Both are the last comment of the document
     '''
     urlBase = 'http://www.pythonchallenge.com/pc/def/ocr.html'
-    import urllib
-    fo = urllib.urlopen(urlBase)
-    text = fo.read()
-
-    first = text.rfind('<!--')
-    last = text.rfind('-->')
-
-    mess = text[first+len('<!--\n'):last-1]
+    mess = getLastComment(urlBase)
     assert mess[0] == '%'
     assert mess[-1] == '*'
 
@@ -80,6 +96,62 @@ def level2():
 def level3():
     ''' 
     http://www.pythonchallenge.com/pc/def/equality.html'
+    One small letter, surrounded by EXACTLY three big bodyguards on each of its sides.
+    We still have to parse the last piece of data at the end 
     '''
-    
-level2()
+    urlBase = 'http://www.pythonchallenge.com/pc/def/equality.html'
+    mess = getLastComment(urlBase, True)
+    import string
+    Up = string.uppercase
+    Low = string.lowercase
+    candidates = []
+    url = ''
+
+    for c in range(len(mess)):
+	    if c+7 >= len(mess): continue
+	    i,j,k,L,m,n,o = mess[c:c+7]
+	    
+	    if i in Up and j in Up and k in Up and L in Low and m in Up and n in Up and o in Up:
+		     candidates.append(c) 
+
+    for c in candidates:
+	    if mess[c-1] in Low and mess[c+7] in Low:
+		    url += mess[c+3]
+    challengeUrlOpen(url, True)
+
+class foo(Exception): pass
+def nextNothing(id):
+    import webbrowser
+    from urllib import urlencode, urlopen
+    url = urlencode([('nothing', str(id))])
+    fo = urlopen('http://www.pythonchallenge.com/pc/def/linkedlist.php?' + url)
+    line = fo.read()
+    last = line.split()[-1]
+    if not last.isdigit():
+	    print line
+	    raise foo
+    else:
+	    return int(last)
+
+def level4():
+    '''
+    http://www.pythonchallenge.com/pc/def/linkedlist.php
+    if we click on the pictures, which is at linkedlist.php?nothing=12345", we get a 92512
+    <!-- urllib may help. DON'T TRY ALL NOTHINGS, since it will never 
+end. 400 times is more than enough. -->
+
+    After a while, the php print peak.html ...
+    '''
+    i = 12345
+    while True:
+	    try:
+		    i = nextNothing(i)
+	    except foo:
+	            i /= 2 
+
+def level5):
+    '''
+    http://www.pythonchallenge.com/pc/def/peak.html
+    '''
+ 
+level5()
