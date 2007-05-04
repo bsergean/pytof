@@ -177,36 +177,38 @@ def level6():
     from urllib import urlencode, urlopen, urlretrieve
     from zipfile import ZipFile
     urlBase = 'http://www.pythonchallenge.com/pc/def/channel.zip'
-    tempFile = '/tmp/foo.zip'
+    import tempfile
+    tempFile = tempfile.mktemp()
     fo = urlretrieve(urlBase, tempFile)
     zi = ZipFile(tempFile)
-    print zi.printdir()
     print zi.read('readme.txt') # here they tell us to start with 90052
     
     comments = {}
+    import string
+    Up = string.uppercase
     class fooException(Exception): pass
-    def nextNothing(id, zi):
+    def nextNothing(id, zi, url):
         line = zi.read(str(id) + '.txt')
         infos = zi.getinfo(str(id) + '.txt')
-        if comments.has_key(infos.comment):pass
-        else: 
-            comments[infos.comment] = id
-            print infos.comment
+        if infos.comment in Up:
+            if not infos.comment in url or not url:
+                url += infos.comment
         last = line.split()[-1]
         if last.isdigit():
-            return last
+            return last, url
         else:
             raise fooException
 
     i = 90052 # first start with me
+    url = ''
     while True:
         try:
-            i = nextNothing(i, zi)
+            i, url = nextNothing(i, zi, url)
         except(fooException):
-            print comments.keys()
+            challengeUrlOpen(url.lower())
             return
 
-def level6():
+def level7():
     '''
     http://www.pythonchallenge.com/pc/def/oxygen.html
     '''
