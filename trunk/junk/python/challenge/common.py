@@ -212,5 +212,20 @@ def level7():
     '''
     http://www.pythonchallenge.com/pc/def/oxygen.html
     '''
- 
+    from urllib import urlencode, urlopen, urlretrieve
+    from zipfile import ZipFile
+    urlBase = 'http://www.pythonchallenge.com/pc/def/oxygen.png'
+    import tempfile
+    tempFile = tempfile.mktemp()
+    fo = urlretrieve(urlBase, tempFile)
+    import Image
+    photo = Image.open(tempFile) 
+    photo.load()
+    pixels = list(photo.getdata())
+    colors = {}
+    for i in pixels:
+        colors[i] = colors.get(i, 0) + 1
+
+    print len(colors.keys())
+
 level6()
