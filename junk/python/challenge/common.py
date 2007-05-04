@@ -159,8 +159,19 @@ def level5():
     from urllib import urlencode, urlopen
     fo = urlopen('http://www.pythonchallenge.com/pc/def/banner.p')
     text = fo.read()
-    print text
-    text = ('').join(text.splitlines())
-    #print text
+    import pickle
+    object = pickle.loads(text)
+    for t in object:
+        line = ''
+        for elem in t:
+            i, j = elem
+            for k in xrange(j):
+                line += i
+        print line
 
-level5()
+def level6():
+    '''
+    http://www.pythonchallenge.com/pc/def/channel.html
+    '''
+ 
+level6()
