@@ -120,7 +120,7 @@ def level3():
     challengeUrlOpen(url, True)
 
 class foo(Exception): pass
-def nextNothing(id):
+def nextNothingLevel4(id):
     import webbrowser
     from urllib import urlencode, urlopen
     url = urlencode([('nothing', str(id))])
@@ -155,6 +155,7 @@ def level5():
     The hint is: pronounce it
     In the web page there is a something to download: banner.p.
     And there's also: <!-- peak hell sounds familiar ? -->
+    If you say it loud you get pickle...
     '''
     from urllib import urlencode, urlopen
     fo = urlopen('http://www.pythonchallenge.com/pc/def/banner.p')
@@ -172,6 +173,42 @@ def level5():
 def level6():
     '''
     http://www.pythonchallenge.com/pc/def/channel.html
+    '''
+    from urllib import urlencode, urlopen, urlretrieve
+    from zipfile import ZipFile
+    urlBase = 'http://www.pythonchallenge.com/pc/def/channel.zip'
+    tempFile = '/tmp/foo.zip'
+    fo = urlretrieve(urlBase, tempFile)
+    zi = ZipFile(tempFile)
+    print zi.printdir()
+    print zi.read('readme.txt') # here they tell us to start with 90052
+    
+    comments = {}
+    class fooException(Exception): pass
+    def nextNothing(id, zi):
+        line = zi.read(str(id) + '.txt')
+        infos = zi.getinfo(str(id) + '.txt')
+        if comments.has_key(infos.comment):pass
+        else: 
+            comments[infos.comment] = id
+            print infos.comment
+        last = line.split()[-1]
+        if last.isdigit():
+            return last
+        else:
+            raise fooException
+
+    i = 90052 # first start with me
+    while True:
+        try:
+            i = nextNothing(i, zi)
+        except(fooException):
+            print comments.keys()
+            return
+
+def level6():
+    '''
+    http://www.pythonchallenge.com/pc/def/oxygen.html
     '''
  
 level6()
