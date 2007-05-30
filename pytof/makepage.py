@@ -167,7 +167,7 @@ def main(albumName, topDir, xmlData, strip_originals,
 	    
 	thumbs = os.listdir(thDir)
 	if len(thumbs) > 0:
-	    thImage = '/'.join([albumName, 'thumbs', thumbs[0]])
+	    thImage = '/'.join([album, 'thumbs', thumbs[0]])
 	    dicoThumbs.append(Thumb(thLink, thImage))
 
     dico['gallery_thumb'] = dicoThumbs
