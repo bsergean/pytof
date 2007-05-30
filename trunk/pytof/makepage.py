@@ -50,7 +50,7 @@ def makePhotoPage(photo, topDir, prev, next, strip_originals, albumName, style):
     ''' 
     Create the per photo page, with a next and prev link
     Each link has a thumbnail in scry style mode
-    '''
+    ''' 
     dico = {}
     dico['album_name'] = albumName
     dico['title'] = photo.id + photo.getFileType()
