@@ -67,7 +67,7 @@ class AlbumData(object):
             a = album['AlbumName']
             # FIXME: maybe there's a better way of filtering
             # (another meta data saying it's a book ...)
-            if not a.endswith('Book'):
+            if not a.endswith('Book') and not a.startswith('Livre') and not a.startswith('Diaporama'):
                 albums.append( [int(album['PhotoCount']), a] )
 
         # to sort by date, we would have to compute the date mean of
