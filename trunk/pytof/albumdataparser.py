@@ -79,8 +79,15 @@ class AlbumData(object):
         return self.data['Master Image List'][pic_id]['ImagePath']
 
     def getPicturesIdFromAlbumName(self, name):
+        ''' 
+        Skip movies, only return a list of pictures 
+        The ok member tells if a photo is really a photo, and not 
+        just a file given by iPhoto
+        '''
         album = self.getAlbumByName(name)
-        return album['KeyList']
+        album = album['KeyList']
+        pictureAlbum = [picture for picture in album if self.getPhotoFromId(picture).ok]
+        return pictureAlbum
 
     def getPhotoFromId(self, pic_id):
         p = self.data['Master Image List'][pic_id]
