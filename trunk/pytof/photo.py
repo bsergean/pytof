@@ -14,6 +14,7 @@ from os.path import join, getsize, basename, splitext
 from shutil import copy
 import sys, os, time
 from exif import process_file
+from mimetypes import guess_type
 
 try:
     import Image
@@ -57,9 +58,13 @@ class Photo(object):
         
         self.ok = False
         self.fileName = fileName
-        # This is to prevent Image crash on loading, but actually 
-        # it happens when trying to load .MPG files :)
-        # Maybe we should check for fileName extension instead ...
+
+        # Return if fileName is not an image
+        # >>> mimetypes.guess_type(f)
+        # ('video/x-msvideo', None)
+        type = guess_type(fileName)[0].split('/')[0]
+        if type != 'image':
+            return
         try:
             self.image = Image.open(fileName)
         except(IOError): return
