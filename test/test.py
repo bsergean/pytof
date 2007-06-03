@@ -156,6 +156,21 @@ def runTests(testModules=None, profileOut=None, coverageOutDir=None):
         import webbrowser
         webbrowser.open('file://' + join(getcwd(), coverageOutDir))
 
+def getDefaultTestModules():
+    defaultTestModules = [os.path.splitext(i)[0] for i in glob('*_test.py')] 
+    # Remove tests that require non-installed dependency.
+    try:
+        import wxpil
+    except ImportError:
+        defaultTestModules.remove('wxpil_test')
+    try:
+        import gtkpil
+    except ImportError:
+        defaultTestModules.remove('gtkpil_test')
+
+    defaultTestModules.remove('flickrapi_test')
+    defaultTestModules = tuple( defaultTestModules )
+    return defaultTestModules
 
 class ArgsOptions(object):
 
@@ -183,7 +198,7 @@ class ArgsOptions(object):
                           action="store_true", dest="verbose", default=False,
                           help="Report a number of information")
 
-        defaultTestModules = tuple( [os.path.splitext(i)[0] for i in glob('*_test.py')] )
+        defaultTestModules = getDefaultTestModules()
 
         parser.set_defaults(
             testModules = defaultTestModules,
