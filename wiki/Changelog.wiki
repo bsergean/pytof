@@ -3,6 +3,831 @@
 
 {{{
 ------------------------------------------------------------------------
+r334 | bsergean | 2007-06-03 21:09:08 -0400 (Sun, 03 Jun 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/photo.py
+
+do not generate previews and thumbs twice
+------------------------------------------------------------------------
+r333 | bsergean | 2007-06-03 16:33:48 -0400 (Sun, 03 Jun 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/version.py
+   M /trunk/setup.py
+
+prepare to push package on pypi
+------------------------------------------------------------------------
+r332 | bsergean | 2007-06-03 15:23:30 -0400 (Sun, 03 Jun 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/photo.py
+
+better job as guessing if a file is an image
+------------------------------------------------------------------------
+r331 | bsergean | 2007-06-03 15:04:45 -0400 (Sun, 03 Jun 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/albumdataparser.py
+
+Remove diaporama and books from albums
+------------------------------------------------------------------------
+r330 | bsergean | 2007-06-03 15:00:42 -0400 (Sun, 03 Jun 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/albumdataparser.py
+
+Do not crash when there are movies in an iPhoto album, but skip them
+------------------------------------------------------------------------
+r329 | bsergean | 2007-06-03 14:33:47 -0400 (Sun, 03 Jun 2007) | 1 line
+Changed paths:
+   M /trunk/test/test.py
+
+Remove tests that require non-installed dependency
+------------------------------------------------------------------------
+r328 | bsergean | 2007-05-30 00:34:27 -0400 (Wed, 30 May 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/makepage.py
+   M /trunk/share/pytof/templates/scry_main_index.ezt
+   M /trunk/share/pytof/templates/scry_photo_per_page.ezt
+
+indent plus change default photo_per_page page layout
+------------------------------------------------------------------------
+r327 | bsergean | 2007-05-29 23:28:31 -0400 (Tue, 29 May 2007) | 1 line
+Changed paths:
+   A /trunk/junk/js
+   M /trunk/pytof/makepage.py
+
+main page thumbs are broken
+------------------------------------------------------------------------
+r326 | bsergean | 2007-05-04 11:13:35 -0400 (Fri, 04 May 2007) | 1 line
+Changed paths:
+   M /trunk/junk/python/challenge/common.py
+
+some tries on level 7
+------------------------------------------------------------------------
+r325 | bsergean | 2007-05-04 01:32:30 -0400 (Fri, 04 May 2007) | 1 line
+Changed paths:
+   M /trunk/junk/python/challenge/common.py
+
+do level 6 without dictionnaries
+------------------------------------------------------------------------
+r324 | bsergean | 2007-05-04 01:15:49 -0400 (Fri, 04 May 2007) | 1 line
+Changed paths:
+   M /trunk/junk/python/challenge/common.py
+
+at level 7
+------------------------------------------------------------------------
+r323 | bsergean | 2007-05-03 22:37:21 -0400 (Thu, 03 May 2007) | 1 line
+Changed paths:
+   M /trunk/junk/python/challenge/common.py
+
+at level 6
+------------------------------------------------------------------------
+r322 | bsergean | 2007-05-02 19:58:02 -0400 (Wed, 02 May 2007) | 1 line
+Changed paths:
+   M /trunk/junk/python/challenge/common.py
+
+level 5 tips
+------------------------------------------------------------------------
+r321 | bsergean | 2007-05-02 18:20:10 -0400 (Wed, 02 May 2007) | 1 line
+Changed paths:
+   M /trunk/junk/python/challenge/common.py
+
+working on level 5 now
+------------------------------------------------------------------------
+r320 | bsergean | 2007-05-02 12:45:41 -0400 (Wed, 02 May 2007) | 1 line
+Changed paths:
+   M /trunk/junk/python/challenge/common.py
+
+at level 3 in the challenge
+------------------------------------------------------------------------
+r319 | bsergean | 2007-05-02 11:14:27 -0400 (Wed, 02 May 2007) | 1 line
+Changed paths:
+   M /trunk/junk/python/challenge/common.py
+
+at level 2 ...
+------------------------------------------------------------------------
+r318 | bsergean | 2007-05-02 01:02:37 -0400 (Wed, 02 May 2007) | 1 line
+Changed paths:
+   A /trunk/junk/python
+   A /trunk/junk/python/challenge
+   A /trunk/junk/python/challenge/common.py
+
+python challenge !!
+------------------------------------------------------------------------
+r313 | bsergean | 2007-04-21 13:40:56 -0400 (Sat, 21 Apr 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/makefs.py
+   M /trunk/pytof/photo.py
+
+quick fix for defect 39
+------------------------------------------------------------------------
+r311 | bsergean | 2007-03-16 16:02:15 -0400 (Fri, 16 Mar 2007) | 1 line
+Changed paths:
+   M /trunk/Makefile
+
+add a make doc target
+------------------------------------------------------------------------
+r309 | bsergean | 2007-03-16 14:26:21 -0400 (Fri, 16 Mar 2007) | 1 line
+Changed paths:
+   M /trunk/README.txt
+
+readme contains links to the wiki
+------------------------------------------------------------------------
+r308 | bsergean | 2007-03-16 00:29:16 -0400 (Fri, 16 Mar 2007) | 1 line
+Changed paths:
+   M /trunk/ctof.py
+   M /trunk/gtof/gtof.py
+
+add env shebang
+------------------------------------------------------------------------
+r307 | bsergean | 2007-03-16 00:28:13 -0400 (Fri, 16 Mar 2007) | 1 line
+Changed paths:
+   M /trunk/Makefile
+   M /trunk/ctof.py
+   M /trunk/gtof/gtof.py
+   M /trunk/pytof/albumdataparser.py
+   M /trunk/pytof/config.py
+   M /trunk/pytof/ftp.py
+   M /trunk/pytof/gtkpil.py
+   M /trunk/pytof/log.py
+   M /trunk/pytof/makefs.py
+   M /trunk/pytof/makepage.py
+   M /trunk/pytof/options.py
+   M /trunk/pytof/photo.py
+   M /trunk/pytof/pytofmain.py
+   M /trunk/pytof/template.py
+   M /trunk/pytof/utils.py
+   M /trunk/pytof/wxpil.py
+
+add code documentation
+------------------------------------------------------------------------
+r305 | bsergean | 2007-03-14 11:48:49 -0400 (Wed, 14 Mar 2007) | 1 line
+Changed paths:
+   M /trunk/MANIFEST.in
+   M /trunk/Makefile
+   M /trunk/pytof/ftp.py
+   M /trunk/pytof/pytofmain.py
+   M /trunk/pytof/version.py
+
+removed some message and some ftp simple problems
+------------------------------------------------------------------------
+r298 | bsergean | 2007-03-12 23:16:41 -0400 (Mon, 12 Mar 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/makepage.py
+
+main index thumbnail path was an absolute path
+------------------------------------------------------------------------
+r297 | bsergean | 2007-03-12 20:04:00 -0400 (Mon, 12 Mar 2007) | 1 line
+Changed paths:
+   M /trunk/Makefile
+
+add packager info
+------------------------------------------------------------------------
+r296 | bsergean | 2007-03-12 19:59:29 -0400 (Mon, 12 Mar 2007) | 1 line
+Changed paths:
+   M /trunk/MANIFEST.in
+   A /trunk/Makefile
+   M /trunk/pytof/version.py
+
+know how to build a rpm for Mandriva
+------------------------------------------------------------------------
+r295 | bsergean | 2007-03-12 02:41:44 -0400 (Mon, 12 Mar 2007) | 1 line
+Changed paths:
+   M /trunk/setup.py
+
+new infos on the latest release
+------------------------------------------------------------------------
+r294 | bsergean | 2007-03-12 00:28:19 -0400 (Mon, 12 Mar 2007) | 1 line
+Changed paths:
+   A /trunk/LICENSE.txt
+   M /trunk/ctof.py
+   M /trunk/pytof/options.py
+   M /trunk/pytof/pytofmain.py
+
+can process multiple albums
+------------------------------------------------------------------------
+r293 | bsergean | 2007-03-10 15:48:10 -0500 (Sat, 10 Mar 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/pytofmain.py
+
+problem with urls given to webbrowser in posix systems
+------------------------------------------------------------------------
+r290 | bsergean | 2007-03-09 22:54:28 -0500 (Fri, 09 Mar 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/version.py
+
+Increased version number
+------------------------------------------------------------------------
+r289 | bsergean | 2007-03-09 22:41:29 -0500 (Fri, 09 Mar 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/photo.py
+   M /trunk/pytof/utils.py
+
+removed some crap in utils
+------------------------------------------------------------------------
+r288 | bsergean | 2007-03-09 22:36:59 -0500 (Fri, 09 Mar 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/gtkpil.py
+   M /trunk/pytof/utils.py
+   M /trunk/pytof/wxpil.py
+
+back to a basic importing style
+------------------------------------------------------------------------
+r287 | bsergean | 2007-03-09 22:30:34 -0500 (Fri, 09 Mar 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/pytofmain.py
+
+Problem with webbrowser.
+------------------------------------------------------------------------
+r286 | bsergean | 2007-03-09 22:28:58 -0500 (Fri, 09 Mar 2007) | 1 line
+Changed paths:
+   A /trunk/pytof/gtkpil.py
+   M /trunk/pytof/photo.py
+   A /trunk/test/gtkpil_test.py
+   M /trunk/test/wxpil_test.py
+
+can replace PIL with pygtk imaging modules
+------------------------------------------------------------------------
+r285 | bsergean | 2007-03-09 20:54:37 -0500 (Fri, 09 Mar 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/pytofmain.py
+
+bad url given to webbrowser under windows
+------------------------------------------------------------------------
+r284 | bsergean | 2007-03-09 20:37:24 -0500 (Fri, 09 Mar 2007) | 1 line
+Changed paths:
+   M /trunk/gtof/gtof.py
+   M /trunk/setup.py
+   M /trunk/share/pytof/glade/gtof.glade
+
+
+------------------------------------------------------------------------
+r283 | bsergean | 2007-03-09 20:29:23 -0500 (Fri, 09 Mar 2007) | 1 line
+Changed paths:
+   M /trunk/gtof/gtof.py
+   M /trunk/setup.py
+   M /trunk/test/test.py
+
+gtof works in local again
+------------------------------------------------------------------------
+r282 | bsergean | 2007-03-09 20:21:56 -0500 (Fri, 09 Mar 2007) | 1 line
+Changed paths:
+   A /trunk/ctof.py (from /trunk/pyto:281)
+   D /trunk/pyto
+
+moving moving again
+------------------------------------------------------------------------
+r281 | bsergean | 2007-03-09 20:02:17 -0500 (Fri, 09 Mar 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/template.py
+   D /trunk/scripts
+   M /trunk/setup.py
+
+
+------------------------------------------------------------------------
+r280 | bsergean | 2007-03-09 19:55:46 -0500 (Fri, 09 Mar 2007) | 1 line
+Changed paths:
+   D /trunk/pytof/pytof.py
+
+
+------------------------------------------------------------------------
+r279 | bsergean | 2007-03-09 19:55:30 -0500 (Fri, 09 Mar 2007) | 1 line
+Changed paths:
+   D /trunk/VERSION
+   A /trunk/pyto (from /trunk/pytof.py:277)
+   A /trunk/pytof/pytof.py (from /trunk/pytof.py:277)
+   D /trunk/pytof.py
+
+
+------------------------------------------------------------------------
+r278 | bsergean | 2007-03-09 19:47:22 -0500 (Fri, 09 Mar 2007) | 1 line
+Changed paths:
+   D /trunk/glade
+   D /trunk/pytof/templates
+
+cleanup
+------------------------------------------------------------------------
+r277 | bsergean | 2007-03-09 19:46:21 -0500 (Fri, 09 Mar 2007) | 1 line
+Changed paths:
+   D /trunk/glade/gtof.glade
+   D /trunk/pytof/templates/james.css
+   D /trunk/pytof/templates/james_gallery_index.ezt
+   D /trunk/pytof/templates/james_main_index.ezt
+   D /trunk/pytof/templates/james_photo_per_page.ezt
+   D /trunk/pytof/templates/scry.css
+   D /trunk/pytof/templates/scry_gallery_index.ezt
+   D /trunk/pytof/templates/scry_main_index.ezt
+   D /trunk/pytof/templates/scry_photo_per_page.ezt
+   M /trunk/setup.py
+   A /trunk/share
+   A /trunk/share/pytof
+   A /trunk/share/pytof/glade
+   A /trunk/share/pytof/glade/gtof.glade (from /trunk/glade/gtof.glade:276)
+   A /trunk/share/pytof/styles
+   A /trunk/share/pytof/styles/james.css (from /trunk/pytof/templates/james.css:272)
+   A /trunk/share/pytof/styles/scry.css (from /trunk/pytof/templates/scry.css:272)
+   A /trunk/share/pytof/templates
+   A /trunk/share/pytof/templates/james_gallery_index.ezt (from /trunk/pytof/templates/james_gallery_index.ezt:271)
+   A /trunk/share/pytof/templates/james_main_index.ezt (from /trunk/pytof/templates/james_main_index.ezt:271)
+   A /trunk/share/pytof/templates/james_photo_per_page.ezt (from /trunk/pytof/templates/james_photo_per_page.ezt:271)
+   A /trunk/share/pytof/templates/scry_gallery_index.ezt (from /trunk/pytof/templates/scry_gallery_index.ezt:271)
+   A /trunk/share/pytof/templates/scry_main_index.ezt (from /trunk/pytof/templates/scry_main_index.ezt:271)
+   A /trunk/share/pytof/templates/scry_photo_per_page.ezt (from /trunk/pytof/templates/scry_photo_per_page.ezt:271)
+
+preparing packaging
+------------------------------------------------------------------------
+r276 | bsergean | 2007-03-09 19:40:13 -0500 (Fri, 09 Mar 2007) | 1 line
+Changed paths:
+   A /trunk/glade
+   A /trunk/glade/gtof.glade (from /trunk/gtof/gtof.glade:270)
+   D /trunk/gtof/gtof.glade
+   M /trunk/setup.py
+
+moving
+------------------------------------------------------------------------
+r275 | bsergean | 2007-03-09 19:34:02 -0500 (Fri, 09 Mar 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/template.py
+   A /trunk/pytof.py (from /trunk/scripts/pytof.py:274)
+   D /trunk/scripts/pytof.py
+   M /trunk/setup.py
+   M /trunk/test/test.py
+
+moving files around
+------------------------------------------------------------------------
+r274 | bsergean | 2007-03-09 19:33:36 -0500 (Fri, 09 Mar 2007) | 1 line
+Changed paths:
+   M /trunk/scripts/pytof.py
+
+no more sys.path hack
+------------------------------------------------------------------------
+r272 | bsergean | 2007-03-08 15:52:09 -0500 (Thu, 08 Mar 2007) | 1 line
+Changed paths:
+   D /trunk/pytof/share
+   A /trunk/pytof/templates/james.css (from /trunk/pytof/share/james.css:271)
+   A /trunk/pytof/templates/scry.css (from /trunk/pytof/share/scry.css:271)
+
+moving files around
+------------------------------------------------------------------------
+r271 | bsergean | 2007-03-08 15:51:17 -0500 (Thu, 08 Mar 2007) | 1 line
+Changed paths:
+   M /trunk/MANIFEST.in
+   A /trunk/pytof/share
+   A /trunk/pytof/share/james.css (from /trunk/share/james.css:266)
+   A /trunk/pytof/share/scry.css (from /trunk/share/scry.css:266)
+   A /trunk/pytof/templates
+   A /trunk/pytof/templates/james_gallery_index.ezt (from /trunk/templates/james_gallery_index.ezt:266)
+   A /trunk/pytof/templates/james_main_index.ezt (from /trunk/templates/james_main_index.ezt:266)
+   A /trunk/pytof/templates/james_photo_per_page.ezt (from /trunk/templates/james_photo_per_page.ezt:266)
+   A /trunk/pytof/templates/scry_gallery_index.ezt (from /trunk/templates/scry_gallery_index.ezt:266)
+   A /trunk/pytof/templates/scry_main_index.ezt (from /trunk/templates/scry_main_index.ezt:266)
+   A /trunk/pytof/templates/scry_photo_per_page.ezt (from /trunk/templates/scry_photo_per_page.ezt:266)
+   M /trunk/setup.py
+   D /trunk/share
+   D /trunk/templates
+
+moving resources around
+------------------------------------------------------------------------
+r270 | bsergean | 2007-03-08 14:50:49 -0500 (Thu, 08 Mar 2007) | 1 line
+Changed paths:
+   M /trunk/setup.py
+
+cleanup
+------------------------------------------------------------------------
+r269 | bsergean | 2007-03-08 14:40:28 -0500 (Thu, 08 Mar 2007) | 1 line
+Changed paths:
+   M /trunk/setup.py
+   A /trunk/share/index.html
+
+housekeeping
+------------------------------------------------------------------------
+r267 | bsergean | 2007-03-08 13:22:33 -0500 (Thu, 08 Mar 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/albumdataparser.py
+   M /trunk/pytof/config.py
+   M /trunk/pytof/ftp.py
+   M /trunk/pytof/log.py
+   M /trunk/pytof/makefs.py
+   M /trunk/pytof/makepage.py
+   M /trunk/pytof/options.py
+   M /trunk/pytof/photo.py
+   M /trunk/pytof/pytofmain.py
+   M /trunk/pytof/template.py
+   M /trunk/pytof/utils.py
+   M /trunk/pytof/wxpil.py
+
+removed unused module functions
+------------------------------------------------------------------------
+r266 | bsergean | 2007-03-08 02:56:27 -0500 (Thu, 08 Mar 2007) | 1 line
+Changed paths:
+   A /trunk/gui/samples/wxglsample.py
+
+add GL sample
+------------------------------------------------------------------------
+r265 | bsergean | 2007-03-08 02:51:26 -0500 (Thu, 08 Mar 2007) | 1 line
+Changed paths:
+   M /trunk/scripts/pytof.py
+
+remove debug logging
+------------------------------------------------------------------------
+r264 | bsergean | 2007-03-08 02:47:58 -0500 (Thu, 08 Mar 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/photo.py
+   M /trunk/pytof/template.py
+   M /trunk/pytof/wxpil.py
+   M /trunk/scripts/pytof.py
+   M /trunk/test/wxpil_test.py
+
+can interchange wxPython and PIL
+------------------------------------------------------------------------
+r263 | bsergean | 2007-03-07 13:47:22 -0500 (Wed, 07 Mar 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/photo.py
+   A /trunk/pytof/wxpil.py
+   A /trunk/test/wxpil_test.py
+
+wxPython can do image processing instead of PIL
+------------------------------------------------------------------------
+r262 | bsergean | 2007-03-07 12:12:27 -0500 (Wed, 07 Mar 2007) | 1 line
+Changed paths:
+   M /trunk/test/data/templates/photo_per_page.ezt
+   M /trunk/test/exif_test.py
+   M /trunk/test/ezt_test.py
+   A /trunk/test/template_test.py
+
+passing all tests
+------------------------------------------------------------------------
+r261 | bsergean | 2007-03-07 01:18:31 -0500 (Wed, 07 Mar 2007) | 1 line
+Changed paths:
+   A /trunk/tools/ez_setup.py
+
+add egg tool
+------------------------------------------------------------------------
+r259 | bsergean | 2007-03-04 23:11:09 -0500 (Sun, 04 Mar 2007) | 1 line
+Changed paths:
+   M /trunk/MANIFEST.in
+   M /trunk/pytof/makepage.py
+   M /trunk/pytof/options.py
+   M /trunk/pytof/photo.py
+   A /trunk/pytof/template.py
+   M /trunk/templates/james_photo_per_page.ezt
+   M /trunk/templates/scry_photo_per_page.ezt
+   M /trunk/test/test.py
+
+styles are dynamic
+------------------------------------------------------------------------
+r258 | bsergean | 2007-02-23 19:17:04 -0500 (Fri, 23 Feb 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/options.py
+   M /trunk/scripts/pytof.py
+   M /trunk/test/test.py
+
+able to profile pytof main script
+------------------------------------------------------------------------
+r257 | bsergean | 2007-02-23 18:48:01 -0500 (Fri, 23 Feb 2007) | 5 lines
+Changed paths:
+   M /trunk/MANIFEST.in
+   M /trunk/pytof/albumdataparser.py
+   M /trunk/pytof/ftp.py
+   M /trunk/pytof/makepage.py
+   M /trunk/pytof/options.py
+   M /trunk/pytof/pytofmain.py
+   M /trunk/pytof/version.py
+   M /trunk/setup.py
+   A /trunk/share/james.css (from /trunk/share/jamesh.id.au.css:255)
+   D /trunk/share/jamesh.id.au.css
+   A /trunk/templates/james_main_index.ezt
+   M /trunk/templates/james_photo_per_page.ezt
+   M /trunk/templates/scry_gallery_index.ezt
+   A /trunk/templates/scry_main_index.ezt
+   M /trunk/templates/scry_photo_per_page.ezt
+   M /trunk/test/albumdataparser_test.py
+   M /trunk/test/config_test.py
+   M /trunk/test/ftp_test.py
+   M /trunk/test/makepage_test.py
+   M /trunk/test/test.py
+   M /trunk/test/utils_test.py
+
+makepage generate an index for every gallery
+working on ftp with the mac ftp server
+verbosity in test as a parameter
+
+
+------------------------------------------------------------------------
+r255 | francois.barjon | 2007-02-17 14:16:57 -0500 (Sat, 17 Feb 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/makepage.py
+
+paths in href should be slash separated
+------------------------------------------------------------------------
+r254 | francois.barjon | 2007-02-17 08:31:31 -0500 (Sat, 17 Feb 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/options.py
+
+Default ouput dir is expanduser('~')
+------------------------------------------------------------------------
+r253 | francois.barjon | 2007-02-17 08:21:06 -0500 (Sat, 17 Feb 2007) | 1 line
+Changed paths:
+   M /trunk/gtof/gtof.py
+
+Problem with input directory encoding on windows
+------------------------------------------------------------------------
+r252 | francois.barjon | 2007-02-16 18:33:20 -0500 (Fri, 16 Feb 2007) | 1 line
+Changed paths:
+   A /trunk/test/data/cannot_be_rotated.jpg
+
+Add data file
+------------------------------------------------------------------------
+r251 | francois.barjon | 2007-02-16 17:41:39 -0500 (Fri, 16 Feb 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/photo.py
+   M /trunk/pytof/pytofmain.py
+   A /trunk/test/data/NoExifTags.jpg
+   M /trunk/test/exif_test.py
+
+Handle photo without EXIF tags
+------------------------------------------------------------------------
+r250 | bsergean | 2007-02-14 01:34:58 -0500 (Wed, 14 Feb 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/pytofmain.py
+
+problem with tab space
+------------------------------------------------------------------------
+r249 | bsergean | 2007-02-14 01:26:00 -0500 (Wed, 14 Feb 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/albumdataparser.py
+   M /trunk/pytof/pytofmain.py
+
+fix for bugs on Tiger
+------------------------------------------------------------------------
+r248 | mathieu.robin | 2007-02-14 00:57:11 -0500 (Wed, 14 Feb 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/log.py
+
+Updated loggin messages format
+------------------------------------------------------------------------
+r247 | mathieu.robin | 2007-02-14 00:55:35 -0500 (Wed, 14 Feb 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/utils.py
+
+
+------------------------------------------------------------------------
+r244 | bsergean | 2007-02-12 03:09:29 -0500 (Mon, 12 Feb 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/makepage.py
+   M /trunk/pytof/pytofmain.py
+   M /trunk/templates/james_gallery_index.ezt
+   M /trunk/templates/james_photo_per_page.ezt
+   M /trunk/test/makepage_test.py
+
+style can be choosen at command line
+------------------------------------------------------------------------
+r243 | bsergean | 2007-02-12 02:50:03 -0500 (Mon, 12 Feb 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/makepage.py
+   M /trunk/templates/james_gallery_index.ezt
+   M /trunk/templates/james_photo_per_page.ezt
+
+james style output is OK
+------------------------------------------------------------------------
+r242 | bsergean | 2007-02-12 00:10:35 -0500 (Mon, 12 Feb 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/makepage.py
+   A /trunk/templates/james_gallery_index.ezt
+   A /trunk/templates/james_photo_per_page.ezt
+   M /trunk/templates/scry_gallery_index.ezt
+
+another template almost there
+------------------------------------------------------------------------
+r241 | bsergean | 2007-02-11 23:14:06 -0500 (Sun, 11 Feb 2007) | 1 line
+Changed paths:
+   D /trunk/templates/gallery_index.ezt
+   D /trunk/templates/photo_per_page.ezt
+   A /trunk/templates/scry_gallery_index.ezt (from /trunk/templates/gallery_index.ezt:240)
+   A /trunk/templates/scry_photo_per_page.ezt (from /trunk/templates/photo_per_page.ezt:240)
+
+template names are relative to their style
+------------------------------------------------------------------------
+r240 | bsergean | 2007-02-11 23:13:01 -0500 (Sun, 11 Feb 2007) | 1 line
+Changed paths:
+   M /trunk/AUTHORS
+   M /trunk/pytof/makepage.py
+   M /trunk/pytof/options.py
+   M /trunk/share/scry.css
+   M /trunk/templates/gallery_index.ezt
+   M /trunk/templates/photo_per_page.ezt
+
+working on having several styles
+------------------------------------------------------------------------
+r239 | bsergean | 2007-02-10 18:47:59 -0500 (Sat, 10 Feb 2007) | 1 line
+Changed paths:
+   M /trunk/test/test.py
+
+Add real python profiling to the test framework
+------------------------------------------------------------------------
+r238 | bsergean | 2007-02-10 17:53:48 -0500 (Sat, 10 Feb 2007) | 1 line
+Changed paths:
+   M /trunk/test/README
+   M /trunk/test/test.py
+
+test were run twice in profiling mode
+------------------------------------------------------------------------
+r237 | bsergean | 2007-02-10 17:33:57 -0500 (Sat, 10 Feb 2007) | 1 line
+Changed paths:
+   M /trunk/test/test.py
+
+better -h option look for test.py
+------------------------------------------------------------------------
+r236 | bsergean | 2007-02-10 17:30:05 -0500 (Sat, 10 Feb 2007) | 1 line
+Changed paths:
+   M /trunk/test/data/fake_iphoto_library/AlbumData_fake_iphoto-6.0.5.xml
+   M /trunk/test/makefs_test.py
+
+add an iPhoto 6 xml parsing test through makefs_test
+------------------------------------------------------------------------
+r235 | bsergean | 2007-02-10 17:24:36 -0500 (Sat, 10 Feb 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/ftp.py
+   M /trunk/pytof/options.py
+   A /trunk/test/data/fake_iphoto_library/AlbumData_fake_iphoto-6.0.5.xml
+   M /trunk/test/makefs_test.py
+   M /trunk/test/test.py
+   M /trunk/tools/ftpd/ftpd.py
+
+test uses optparse
+------------------------------------------------------------------------
+r234 | bsergean | 2007-02-10 16:55:55 -0500 (Sat, 10 Feb 2007) | 1 line
+Changed paths:
+   M /trunk/test/ftp_test.py
+
+try to use the python ftpd implementation but it is not rich enought
+------------------------------------------------------------------------
+r233 | bsergean | 2007-02-09 21:23:53 -0500 (Fri, 09 Feb 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/albumdataparser.py
+
+Failing windows unittest
+------------------------------------------------------------------------
+r232 | mathieu.robin | 2007-02-07 02:07:42 -0500 (Wed, 07 Feb 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/makepage.py
+   M /trunk/pytof/pytofmain.py
+   M /trunk/pytof/utils.py
+
+Fix progress bar bug
+------------------------------------------------------------------------
+r231 | mathieu.robin | 2007-02-07 02:06:54 -0500 (Wed, 07 Feb 2007) | 1 line
+Changed paths:
+   M /trunk/test/utils_test.py
+
+Replaces hardcoded test directory by a temporary one
+------------------------------------------------------------------------
+r230 | bsergean | 2007-02-07 01:30:32 -0500 (Wed, 07 Feb 2007) | 1 line
+Changed paths:
+   M /trunk/test/makepage_test.py
+   M /trunk/test/test.py
+
+misc
+------------------------------------------------------------------------
+r229 | bsergean | 2007-02-06 01:07:13 -0500 (Tue, 06 Feb 2007) | 1 line
+Changed paths:
+   M /trunk/gtof/gtof.py
+   A /trunk/gtof/xxdiff-3.2-screenshots
+   A /trunk/gtof/xxdiff-3.2-screenshots/xxdiff-snap-about--thumb.jpg
+   A /trunk/gtof/xxdiff-3.2-screenshots/xxdiff-snap-about.jpg
+   A /trunk/gtof/xxdiff-3.2-screenshots/xxdiff-snap-dirs2--thumb.jpg
+   A /trunk/gtof/xxdiff-3.2-screenshots/xxdiff-snap-dirs2.jpg
+   A /trunk/gtof/xxdiff-3.2-screenshots/xxdiff-snap-doc--thumb.jpg
+   A /trunk/gtof/xxdiff-3.2-screenshots/xxdiff-snap-doc.jpg
+   A /trunk/gtof/xxdiff-3.2-screenshots/xxdiff-snap-files2--thumb.jpg
+   A /trunk/gtof/xxdiff-3.2-screenshots/xxdiff-snap-files2.jpg
+   A /trunk/gtof/xxdiff-3.2-screenshots/xxdiff-snap-files3--thumb.jpg
+   A /trunk/gtof/xxdiff-3.2-screenshots/xxdiff-snap-files3.jpg
+   A /trunk/gtof/xxdiff-3.2-screenshots/xxdiff-snap-merged--thumb.jpg
+   A /trunk/gtof/xxdiff-3.2-screenshots/xxdiff-snap-merged.jpg
+   A /trunk/gtof/xxdiff-3.2-screenshots/xxdiff-snap-opt1--thumb.jpg
+   A /trunk/gtof/xxdiff-3.2-screenshots/xxdiff-snap-opt1.jpg
+   A /trunk/gtof/xxdiff-3.2-screenshots/xxdiff-snap-opt2--thumb.jpg
+   A /trunk/gtof/xxdiff-3.2-screenshots/xxdiff-snap-opt2.jpg
+   A /trunk/gtof/xxdiff-3.2-screenshots/xxdiff-snap-opt3--thumb.jpg
+   A /trunk/gtof/xxdiff-3.2-screenshots/xxdiff-snap-opt3.jpg
+   A /trunk/gtof/xxdiff-3.2-screenshots/xxdiff-snap-opt4--thumb.jpg
+   A /trunk/gtof/xxdiff-3.2-screenshots/xxdiff-snap-opt4.jpg
+   A /trunk/gtof/xxdiff-3.2-screenshots/xxdiff-snap-opt5--thumb.jpg
+   A /trunk/gtof/xxdiff-3.2-screenshots/xxdiff-snap-opt5.jpg
+
+can export gallery selected from file dialog !!
+------------------------------------------------------------------------
+r228 | bsergean | 2007-02-06 00:36:10 -0500 (Tue, 06 Feb 2007) | 1 line
+Changed paths:
+   M /trunk/gtof/gtof.py
+   M /trunk/pytof/makepage.py
+
+gtof works once ... and -d was broken
+------------------------------------------------------------------------
+r227 | bsergean | 2007-02-05 23:56:32 -0500 (Mon, 05 Feb 2007) | 1 line
+Changed paths:
+   A /trunk/gtof
+   A /trunk/gtof/color.py
+   A /trunk/gtof/gtof.glade
+   A /trunk/gtof/gtof.py
+
+moved some files around
+------------------------------------------------------------------------
+r226 | bsergean | 2007-02-05 23:55:58 -0500 (Mon, 05 Feb 2007) | 1 line
+Changed paths:
+   D /trunk/gui/gtof
+
+moved some files around
+------------------------------------------------------------------------
+r225 | bsergean | 2007-02-05 23:51:18 -0500 (Mon, 05 Feb 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/utils.py
+   M /trunk/test/test.py
+   M /trunk/test/utils_test.py
+
+don't exit after test has been run
+------------------------------------------------------------------------
+r224 | bsergean | 2007-02-05 23:42:19 -0500 (Mon, 05 Feb 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/options.py
+   M /trunk/pytof/utils.py
+
+help fixing a failed test on windows
+------------------------------------------------------------------------
+r223 | bsergean | 2007-02-05 23:41:18 -0500 (Mon, 05 Feb 2007) | 1 line
+Changed paths:
+   M /trunk/test/utils_test.py
+
+help fixing a failed test on windows
+------------------------------------------------------------------------
+r222 | bsergean | 2007-02-05 23:17:58 -0500 (Mon, 05 Feb 2007) | 1 line
+Changed paths:
+   M /trunk/gui/gtof/gtof.py
+
+do something with the dir got from UI
+------------------------------------------------------------------------
+r221 | bsergean | 2007-02-03 20:05:49 -0500 (Sat, 03 Feb 2007) | 1 line
+Changed paths:
+   M /trunk/pytof/albumdataparser.py
+   M /trunk/setup.py
+
+removed dead code
+------------------------------------------------------------------------
+r219 | bsergean | 2007-02-02 17:13:16 -0500 (Fri, 02 Feb 2007) | 1 line
+Changed paths:
+   A /trunk/junk
+   A /trunk/junk/cpp
+   A /trunk/junk/cpp/C_arrays.c
+   A /trunk/junk/cpp/OpenGL
+   A /trunk/junk/cpp/OpenGL/simple
+   A /trunk/junk/cpp/OpenGL/simple/simple.c
+   A /trunk/junk/cpp/OpenGL/transposebmp
+   A /trunk/junk/cpp/OpenGL/transposebmp/.qglviewer.xml
+   A /trunk/junk/cpp/OpenGL/transposebmp/main.cpp
+   A /trunk/junk/cpp/OpenGL/transposebmp/simpleViewer.cpp
+   A /trunk/junk/cpp/OpenGL/transposebmp/simpleViewer.h
+   A /trunk/junk/cpp/OpenGL/transposebmp/simpleViewer.pro
+   A /trunk/junk/cpp/OpenGL/transposebmp/snapshot.bmp
+   A /trunk/junk/cpp/antoine.c
+   A /trunk/junk/cpp/bmp2raw.cpp
+   A /trunk/junk/cpp/bmpmirror.cpp
+   A /trunk/junk/cpp/bmpresize.cpp
+   A /trunk/junk/cpp/checkfloatprint.c
+   A /trunk/junk/cpp/copy_struct.c
+   A /trunk/junk/cpp/deltaTime.cpp
+   A /trunk/junk/cpp/dlopen.c
+   A /trunk/junk/cpp/endianmirror.cpp
+   A /trunk/junk/cpp/glBool.c
+   A /trunk/junk/cpp/glProut.c
+   A /trunk/junk/cpp/glProutSUN.c
+   A /trunk/junk/cpp/hexa.cpp
+   A /trunk/junk/cpp/jmake
+   A /trunk/junk/cpp/macro.c
+   A /trunk/junk/cpp/mandrakeDefined.c
+   A /trunk/junk/cpp/mapiter.cpp
+   A /trunk/junk/cpp/memberfunctionpointerarray.cpp
+   A /trunk/junk/cpp/numtochar.h
+   A /trunk/junk/cpp/oper.c
+   A /trunk/junk/cpp/pipe.c
+   A /trunk/junk/cpp/pipe2.c
+   A /trunk/junk/cpp/pipe3.c
+   A /trunk/junk/cpp/pipe4.c
+   A /trunk/junk/cpp/precision_double_print.cpp
+   A /trunk/junk/cpp/printargs.c
+   A /trunk/junk/cpp/rounding.c
+   A /trunk/junk/cpp/secondssince1970.c
+   A /trunk/junk/cpp/sizeofcommontypes.c
+   A /trunk/junk/cpp/splitpath.cpp
+   A /trunk/junk/cpp/std-namespaces.cpp
+   A /trunk/junk/cpp/std-namespaces.h
+   A /trunk/junk/cpp/stdlist.cpp
+   A /trunk/junk/cpp/swapint.cpp
+   A /trunk/junk/cpp/test.xpm
+   A /trunk/junk/cpp/time.c
+   A /trunk/junk/cpp/transposebmp.c
+   A /trunk/junk/cpp/wxdllopener.cpp
+   A /trunk/junk/cpp/zfill.cpp
+
+add junk directory with code samples
+------------------------------------------------------------------------
 r218 | bsergean | 2007-02-02 17:08:42 -0500 (Fri, 02 Feb 2007) | 1 line
 Changed paths:
    M /trunk/templates/gallery_index.ezt
