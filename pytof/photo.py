@@ -10,7 +10,7 @@ The underlying image processing engine is either PIL, wxPython or pyGTK
 __revision__ = '$Id$  (C) 2007 GPL'
 
 from log import logger
-from os.path import join, getsize, basename, splitext
+from os.path import join, getsize, basename, splitext, exists
 from shutil import copy
 import sys, os, time
 from exif import process_file
@@ -120,6 +120,10 @@ class Photo(object):
 
     def makeThumbnail(self, path, size=100):
         ''' Thumb can be created to a relative path '''
+        self.thumbPath = join(path, 'th_' + self.getBaseName() + self.getFileType())
+        if exists(self.thumbPath): return
+
+        logger.debug('thumb will be %s', self.thumbPath)
         width = self.image.size[0]
         height = self.image.size[1]
         if width > height:
@@ -142,11 +146,14 @@ class Photo(object):
         else:
             logger.debug('makeThumbnail: Do not rotate')
         
-        self.thumbPath = os.path.join(path, 'th_' + self.getBaseName() + self.getFileType())
-        logger.debug('thumb will be %s', self.thumbPath)
         thumb.save(self.thumbPath, quality=80)
 
     def makePreview(self, path, maxDim=800):
+        self.prevPath = join(path, 'pv_' + self.getBaseName() + self.getFileType())
+        # If a file with the preview name exists, we assume if was created by pytof earlier
+        # and we exit
+        if exists(self.prevPath): return
+
         width = self.image.size[0]
         height = self.image.size[1]
         if width > height and width > maxDim:
@@ -169,7 +176,6 @@ class Photo(object):
         else:
             logger.debug('makePreview: Do not rotate')
             
-        self.prevPath = os.path.join(path, 'pv_' + self.getBaseName() + self.getFileType())
         out.save(self.prevPath, quality=95)
 
 
