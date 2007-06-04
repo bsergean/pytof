@@ -220,6 +220,7 @@ def level7():
     fo = urlretrieve(urlBase, tempFile)
     import Image
     photo = Image.open(tempFile) 
+    photo = Image.open('/home/bsergean/Pictures/oxygen_greyscale.png') 
     photo.load()
     pixels = list(photo.getdata())
     colors = {}
@@ -228,4 +229,4 @@ def level7():
 
     print len(colors.keys())
 
-level6()
+level7()

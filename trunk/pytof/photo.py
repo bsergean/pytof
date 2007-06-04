@@ -15,6 +15,8 @@ from shutil import copy
 import sys, os, time
 from exif import process_file
 from mimetypes import guess_type
+from config import configHandler
+from pickle import load, dump
 
 try:
     import Image
@@ -39,10 +41,11 @@ def EXIF_tags(fn):
     #
     # We should do a better timing with the timeit module (in EXIFTest.py
     #
+    logger.info('calling exif api function')
     f = open(fn, 'rb')
     tags = process_file(f)
     for t in ['JPEGThumbnail', 'TIFFThumbnail', 'Filename', 'EXIF MakerNote']:
-        if tags.has_key(t):
+        if t in tags:
             del tags[t]
     f.close()
     return tags
@@ -88,16 +91,53 @@ class Photo(object):
         self.ok = True
 
     def EXIF_infos(self):
+        logger.info('Getting EXIF_infos for a photo object')
         try:
-            tags = EXIF_tags(self.fileName)
-        except:
+            ok = False
+            logger.info('Getting a config handler instance')
+            conf = configHandler()
+            fn = conf.exifFilename 
+            exifTags = {}
+            logger.info('Checking if cache file %s exists' % fn)
+            if exists(fn):
+                exifFD = open(fn)
+                exifTags = load(exifFD)
+                if self.fileName in exifTags:
+                    tags = exifTags[self.fileName]
+                    ok = True
+                else:
+                    logger.info('This picture was not found in cache')
+            else:
+                logger.info('No exif cache file exists')
+
+            logger.info('Status: %s' % ok)
+            if not ok:
+                logger.info('EXIF datas, not found in cache')
+                a = 1
+                tags = EXIF_tags(self.fileName)
+                logger.info('EXIF datas retrieved by direct call')
+                exifFD = open(fn, 'w')
+
+                # Just write in the cache what we really need
+                smallTags = {}
+                smallTags['Image Model'] = str(tags.get('Image Model', 'Unknown'))
+                smallTags['EXIF DateTimeOriginal'] = str(tags.get('EXIF DateTimeOriginal', 'Unknown'))
+                smallTags['EXIF Flash'] = str(tags.get('EXIF Flash', 'Unknown'))
+                smallTags['Image Orientation'] = str(tags.get('Image Orientation', 'Unknown'))
+
+                exifTags[self.fileName] = smallTags
+                dump(exifTags, exifFD)
+
+            exifFD.close()
+
+        except ValueError:
             logger.error('%s: EXIF extraction failed' % self.fileName)
             tags = {}
         self.rotation = str(tags.get('Image Orientation', 'Unknown'))
 
-	class _datablob:
-	    def __init__(self, **args):
-		self.__dict__.update(args)
+        class _datablob:
+            def __init__(self, **args):
+                self.__dict__.update(args)
 
         infos = _datablob()
         infos.model = str(tags.get('Image Model', 'Unknown'))

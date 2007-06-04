@@ -65,6 +65,7 @@ xmlTimestamp=0
         self.confFilename = confFilename
 
         self.pickleFilename = join(self.confDir, 'xmlData.pickle')
+        self.exifFilename = join(self.confDir, 'exif.pickle')
         logger.info(self.pickleFilename)
         self.Load()
         self.ok = True
@@ -180,7 +181,7 @@ xmlTimestamp=0
                 self.Close()
 
         return cache
-
+    
     def getValuesAndUpdateFromUser(self, libraryPath, xmlFileName, outputDir):
         # config file parameters
         if self.hasLibraryPath() and not libraryPath:

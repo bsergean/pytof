@@ -35,7 +35,7 @@ class TestMakeFS(TestCase):
                           '03',
                           '23',
                           'rotated_minus_90.jpg')
-        self.jpgSize = [1856, 1392]
+        self.jpgSize = [1944, 2592]
 
     def tearDown(self):
         rmtree(self.tempdir)
