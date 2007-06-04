@@ -63,16 +63,17 @@ class TestEXIF(unittest.TestCase):
               
     def test_exim1_assert_values(self):
         tags = EXIF_tags(self.exim1)
-        self.assertEquals( str(tags['Image Model']), 'CYBERSHOT' )
+        self.assertEquals( str(tags['Image Model']), 'DSC-W1' )
         self.assertEquals( str(tags['Image Make']),'SONY' )
-        self.assertEquals( str(tags['EXIF DateTimeOriginal']), '2005:03:23 10:16:48' )
-        self.assertEquals( str(tags['EXIF Flash']), 'Fired' )
+        self.assertEquals( str(tags['EXIF DateTimeOriginal']), '2005:01:29 16:59:27' )
+        self.assertEquals( str(tags['EXIF Flash']), '77L' )
 
+    def test_exim2_assert_values(self):
         photo = Photo(self.exim1)
         infos = photo.EXIF_infos()
-        self.assertEquals('CYBERSHOT', infos.model)
-        self.assertEquals('2005:03:23 10:16:48', infos.date)
-        self.assertEquals('Fired', infos.flash)
+        self.assertEquals('DSC-W1', infos.model)
+        self.assertEquals('2005:01:29 16:59:27', infos.date)
+        self.assertEquals('77L', infos.flash)
         
     def test_exif_assert_picture_is_rotated(self):
         key = 'Image Orientation'

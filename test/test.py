@@ -168,7 +168,11 @@ def getDefaultTestModules():
     except ImportError:
         defaultTestModules.remove('gtkpil_test')
 
-    defaultTestModules.remove('flickrapi_test')
+    try:
+        defaultTestModules.remove('flickrapi_test')
+    except ValueError: # nothing to remove
+        pass
+
     defaultTestModules = tuple( defaultTestModules )
     return defaultTestModules
 
