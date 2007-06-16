@@ -82,7 +82,10 @@ class Pytof(object):
         try:
             if self.info:
                 for a in xmlData.getAlbumList():
-                    print a.encode('utf8')
+                    try: 
+                        print a.encode('utf8')
+                    except UnicodeDecodeError:
+                        print a
             else:
                 if self.fs:
                     makefs.main(self.albumName, topDir, xmlData)
