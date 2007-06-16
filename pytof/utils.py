@@ -155,7 +155,24 @@ def notYetImplemented():
 def complicatedFunctionFromTheFuture():
         notYetImplemented()
 
+from colorterm import TerminalController, ProgressBar
 class ProgressMsg(object):
+    """ curses progress bar """
+    def __init__(self, target, output=sys.stdout):
+        term = TerminalController()
+        self.pb = ProgressBar(term, 'pytof')
+        self.counter = 0
+        self.target = target
+
+    def Increment(self):
+        if self.counter == 0:
+            self.pb.clear()
+        self.counter += 1
+        percent = self.counter / float(self.target)
+        self.pb.update(percent, '(%d processed out of %d)' \
+                % (self.counter, self.target))
+ 
+class ProgressMsgMonochrom(object):
     """ General purpose progress bar """
     def __init__(self, target, output=sys.stdout):
         self.output = output
@@ -163,8 +180,6 @@ class ProgressMsg(object):
         self.target = target
 
     def Increment(self):
-        if self.counter == 0:
-            self.output.write("\n")
         self.counter += 1
         msg = "\r%.0f%% - (%d processed out of %d) " \
             % (100 * self.counter / float(self.target), self.counter, self.target)
