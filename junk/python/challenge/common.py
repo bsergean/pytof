@@ -218,15 +218,57 @@ def level7():
     import tempfile
     tempFile = tempfile.mktemp()
     fo = urlretrieve(urlBase, tempFile)
+    #print tempFile
     import Image
-    photo = Image.open(tempFile) 
-    photo = Image.open('/home/bsergean/Pictures/oxygen_greyscale.png') 
+    #photo = Image.open(tempFile) 
+    #photo = Image.open('/home/bsergean/Pictures/oxygen_greyscale.png') 
+    photo = Image.open('/tmp/image.png') 
     photo.load()
     pixels = list(photo.getdata())
     colors = {}
-    for i in pixels:
-        colors[i] = colors.get(i, 0) + 1
+    line = []
+    c = 1
+    p_prev = pixels[0]
+    startGrey = False
+    for i, p in enumerate(pixels):
+        #if i > 659 * 50 and i < 659 * 51:
+        #print p #line.append(p)
 
-    print len(colors.keys())
+        if p == p_prev:
+            c += 1
+        else:
+            if c == 5:
+                if startGrey:
+                   break 
+                else:
+                    startGrey = True
+                    
+            if startGrey:
+                if c >= 14:
+                    line.append(p)
+                    line.append(p)
+                elif c >= 5:
+                    line.append(p)
 
-level7()
+            c = 1
+        p_prev = p
+
+        
+    mySet = set()
+    sentence = []
+    for l in line:
+        if l[0:2] == l[1:3]:
+            sentence.append( chr(l[1]) )
+            mySet.add(l[0])
+
+    print mySet
+    print ''.join(sentence)
+    print ''.join([chr(i) for i in [105, 100, 166, 101, 103, 144, 105, 166, 121]])
+
+def level8():
+    '''
+    http://www.pythonchallenge.com/pc/def/integrity.html
+    '''
+    print 'youpi'
+
+level8()
