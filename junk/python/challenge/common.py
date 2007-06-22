@@ -222,7 +222,7 @@ def level7():
     import Image
     #photo = Image.open(tempFile) 
     #photo = Image.open('/home/bsergean/Pictures/oxygen_greyscale.png') 
-    photo = Image.open('/tmp/image.png') 
+    photo = Image.open('level7.png') 
     photo.load()
     pixels = list(photo.getdata())
     colors = {}
@@ -269,6 +269,23 @@ def level8():
     '''
     http://www.pythonchallenge.com/pc/def/integrity.html
     '''
-    print 'youpi'
+    from urllib import urlencode, urlopen
+    fo = urlopen('http://www.pythonchallenge.com/pc/def/integrity.html')
+    lines = fo.read().splitlines()
+    for l in lines:
+        if l.strip().startswith('coords'):
+            coords = l.split('=')[1].replace('"', '').split(',')
+    import Image, ImageDraw
+    coords = [int(i) for i in coords]
+    X = max(coords)
+    Y = X
+    white = (255, 255, 255)
+    blue = (0, 0, 255)
+    photo = Image.new('RGB', (X, Y), white)
+    draw = ImageDraw.Draw(photo)
+    draw.line(coords, blue)
+    import sys
+    #photo.save('/Users/100drine/Desktop/foo8.png', "PNG")
+    photo.save('level8.png', "PNG")
 
 level8()
