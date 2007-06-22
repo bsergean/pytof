@@ -269,12 +269,28 @@ def level8():
     '''
     http://www.pythonchallenge.com/pc/def/integrity.html
     '''
+    from bz2 import decompress, compress
+    import sys
+    bits = compress('bonjour')
+    print decompress(bits)
+    
     from urllib import urlencode, urlopen
     fo = urlopen('http://www.pythonchallenge.com/pc/def/integrity.html')
     lines = fo.read().splitlines()
     for l in lines:
         if l.strip().startswith('coords'):
             coords = l.split('=')[1].replace('"', '').split(',')
+        if l.strip().startswith('un'):
+            pw = l.split(':')[1].strip().replace('\'', '')
+            from bz2 import decompress
+            print len(pw)
+            print decompress(pw)
+        if l.strip().startswith('pw'):
+            pw = l.split(':')[1].strip().replace('\'', '')
+            from bz2 import decompress
+            print decompress(pw)
+
+    # Draw a horse
     import Image, ImageDraw
     coords = [int(i) for i in coords]
     X = max(coords)
