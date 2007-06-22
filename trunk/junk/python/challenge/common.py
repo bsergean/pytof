@@ -265,6 +265,21 @@ def level7():
     print ''.join(sentence)
     print ''.join([chr(i) for i in [105, 100, 166, 101, 103, 144, 105, 166, 121]])
 
+def level8_bunzip2_ascii(ascii_bin, un = True):
+    import tempfile
+    tempfile = 'mymodule.py'
+    fo = open(tempfile, 'w')
+    fo.write(ascii_bin)
+    fo.close()
+    if un:
+        from mymodule import un
+        bzip2Str = un
+    else:
+        from mymodule import pw
+        bzip2Str = pw 
+    from bz2 import decompress
+    print decompress(bzip2Str)
+
 def level8():
     '''
     http://www.pythonchallenge.com/pc/def/integrity.html
@@ -281,14 +296,11 @@ def level8():
         if l.strip().startswith('coords'):
             coords = l.split('=')[1].replace('"', '').split(',')
         if l.strip().startswith('un'):
-            pw = l.split(':')[1].strip().replace('\'', '')
-            from bz2 import decompress
-            print len(pw)
-            print decompress(pw)
+            un = l.replace(':', '=')
+            level8_bunzip2_ascii(un)
         if l.strip().startswith('pw'):
-            pw = l.split(':')[1].strip().replace('\'', '')
-            from bz2 import decompress
-            print decompress(pw)
+            pw = l.replace(':', '=')
+            level8_bunzip2_ascii(pw, False)
 
     # Draw a horse
     import Image, ImageDraw
