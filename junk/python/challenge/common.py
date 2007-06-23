@@ -334,7 +334,7 @@ def level9():
         line = lines[i]
         i += 1
         if line.strip().startswith('first:'):
-            line = lines[i]
+            line = lines[i] # Useless ?
             first = ''
             while len(line):
                 line = lines[i]
@@ -368,7 +368,11 @@ def level9():
 
 def level10():
     '''
-    http://www.pythonchallenge.com/pc/return/good.html
+    http://www.pythonchallenge.com/pc/return/bull.html
+    len(a[30])= ?
+    There is a bull picture, when you click it you get a text file
+    with this sequence in it ...
+    a = [1, 11, 21, 1211, 111221,
     '''
 
 level10()
