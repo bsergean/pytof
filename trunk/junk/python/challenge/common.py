@@ -265,30 +265,22 @@ def level7():
     print ''.join(sentence)
     print ''.join([chr(i) for i in [105, 100, 166, 101, 103, 144, 105, 166, 121]])
 
-def level8_bunzip2_ascii(ascii_bin, un = True):
-    import tempfile
+def level8_write_module(ascii_bin):
     tempfile = 'mymodule.py'
-    fo = open(tempfile, 'w')
-    fo.write(ascii_bin)
+    fo = open(tempfile, 'a')
+    fo.write(ascii_bin + '\n')
     fo.close()
-    if un:
-        from mymodule import un
-        bzip2Str = un
-    else:
-        from mymodule import pw
-        bzip2Str = pw 
+
+def level8_read_values():
+    from mymodule import un, pw
     from bz2 import decompress
-    print decompress(bzip2Str)
+    print decompress(un)
+    print decompress(pw)
 
 def level8():
     '''
     http://www.pythonchallenge.com/pc/def/integrity.html
     '''
-    from bz2 import decompress, compress
-    import sys
-    bits = compress('bonjour')
-    print decompress(bits)
-    
     from urllib import urlencode, urlopen
     fo = urlopen('http://www.pythonchallenge.com/pc/def/integrity.html')
     lines = fo.read().splitlines()
@@ -297,10 +289,12 @@ def level8():
             coords = l.split('=')[1].replace('"', '').split(',')
         if l.strip().startswith('un'):
             un = l.replace(':', '=')
-            level8_bunzip2_ascii(un)
+            level8_write_module(un)
         if l.strip().startswith('pw'):
             pw = l.replace(':', '=')
-            level8_bunzip2_ascii(pw, False)
+            level8_write_module(pw)
+
+    level8_read_values()
 
     # Draw a horse
     import Image, ImageDraw
@@ -316,4 +310,65 @@ def level8():
     #photo.save('/Users/100drine/Desktop/foo8.png', "PNG")
     photo.save('level8.png', "PNG")
 
-level8()
+def level9():
+    '''
+    http://www.pythonchallenge.com/pc/return/good.html
+    '''
+    import urllib2
+    # Create an OpenerDirector with support for Basic HTTP Authentication...
+    auth_handler = urllib2.HTTPBasicAuthHandler()
+    auth_handler.add_password('realm', 'host', 'huge', 'file')
+    opener = urllib2.build_opener(auth_handler)
+    # ...and install it globally so it can be used with urlopen.
+    urllib2.install_opener(opener)
+    
+    # Authentication does not work (real and host should be replaced by the
+    # right value)
+    #urllib2.urlopen('http://www.pythonchallenge.com/pc/return/good.html')
+    
+    from urllib import urlencode, urlopen
+    fo = urlopen('http://www.pythonchallenge.com/pc/return/good.html')
+    lines = fo.read().splitlines()
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        i += 1
+        if line.strip().startswith('first:'):
+            line = lines[i]
+            first = ''
+            while len(line):
+                line = lines[i]
+                i += 1
+                first += line
+
+        if line.strip().startswith('second:'):
+            second = ''
+            while len(line):
+                line = lines[i]
+                i += 1
+                second += line
+
+    first = [int(i) for i in first.split(',')]
+    second = [int(i) for i in second.split(',')]
+
+    # first is a cow / second looks like a penis ? -> bull 
+    import Image, ImageDraw
+    coords = second
+    X = max(coords)
+    Y = X
+    white = (255, 255, 255)
+    blue = (0, 0, 255)
+    photo = Image.new('RGB', (X, Y), white)
+    draw = ImageDraw.Draw(photo)
+    draw.line(first, blue)
+    draw.line(second, blue)
+    import sys
+    #photo.save('/Users/100drine/Desktop/foo9.png', "PNG")
+    photo.save('level9.png', "PNG")
+
+def level10():
+    '''
+    http://www.pythonchallenge.com/pc/return/good.html
+    '''
+
+level10()
