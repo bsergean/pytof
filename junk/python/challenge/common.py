@@ -1,8 +1,12 @@
-def challengeUrlOpen(url, php = False):
+#!/usr/bin/env python
+
+def challengeUrlOpen(url, php = False, deff = False):
     import webbrowser
     suffix = '.html'
     if php: suffix = '.php'
-    webbrowser.open('http://www.pythonchallenge.com/pc/def/' + url + suffix)
+    last = 'def'
+    if deff: last = 'return'
+    webbrowser.open('http://www.pythonchallenge.com/pc/' + last + '/' + url + suffix)
 
 def level0():
     '''
@@ -374,5 +378,43 @@ def level10():
     with this sequence in it ...
     a = [1, 11, 21, 1211, 111221,
     '''
+    def a(n):
+        dict = {}
+        res = ''
+        for e in n:
+            if e in dict:
+                dict[e] += 1
+            else:
+                if dict != {}:
+                    elem = dict.keys()[0]
+                    occurences = dict.values()[0]
+                    res += str(occurences)
+                    res += elem
+                    dict = {}
+                dict[e] = 1
+            
+        if dict != {}:
+            elem = dict.keys()[0]
+            occurences = dict.values()[0]
+            res += str(occurences)
+            res += elem
 
-level10()
+        return res
+            
+    N = a('1')
+    i = 1
+    while i <= 30:
+        print i, len(N)
+        N = a(N)
+        i += 1
+
+    challengeUrlOpen('5808', False, True)
+
+def level11():
+    '''
+    http://www.pythonchallenge.com/pc/return/5808.html
+    Odd or even.
+    The image is like a big chess board with color variations.
+    '''
+
+level11()
