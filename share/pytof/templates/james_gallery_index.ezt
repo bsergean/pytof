@@ -14,7 +14,7 @@
     [for thumbs]
 
       <li class="slide">
-        <a href="[thumbs.page]"><img src="[thumbs.image]" alt="Canal boats" /></a>
+        <a href="[thumbs.page]"><img src="[thumbs.image]" alt="Thumb" /></a>
       </li>
 
     [end]

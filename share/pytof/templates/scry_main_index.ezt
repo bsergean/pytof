@@ -14,7 +14,7 @@
 	  <div class="images">
 	    [for gallery_thumb]
 	    <a href="[gallery_thumb.page]">
-	      <img src="[gallery_thumb.image]" border="0"/>
+	      <img alt="Thumb" src="[gallery_thumb.image]" border="0"/>
 	    </a>
 	    [end]
 	  </div>
