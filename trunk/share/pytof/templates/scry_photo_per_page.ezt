@@ -1,5 +1,6 @@
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 TRANSITIONAL//EN">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "DTD/xhtml1-strict.dtd">
 <html>
   <head>
     <title> [title] </title>
@@ -27,7 +28,7 @@
 		<td width="30%" align="left" valign="bottom">
 		  <div class="images">
 		    <a style="text-decoration: none;" href="[prev]">
-		      <img src="[prev_thumb]" alt="previous" />
+		      <img alt="Thumb" src="[prev_thumb]" alt="previous" />
 		      <br />&lt; previous
 		    </a>
 		  </div>
@@ -50,7 +51,7 @@
 		<td width="30%" align="right" valign="bottom">
 		  <div class="images">
 		    <a style="text-decoration: none;" href="[next]">
-		      <img src="[next_thumb]" alt="next" />
+		      <img alt="Thumb" src="[next_thumb]" alt="next" />
 		      <br />next &gt;
 		    </a>
 		  </div>
@@ -60,7 +61,7 @@
 		<td width="100%" colspan="3" align="center">
 		  <div class="images">
 
-		    <img src="[preview]" />
+		    <img alt="Preview" src="[preview]" />
 
 		  </div>
 		</td>

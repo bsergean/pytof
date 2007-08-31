@@ -1,5 +1,5 @@
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 TRANSITIONAL//EN">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "DTD/xhtml1-strict.dtd">
 <html>
 <head>
 <title> My pytof galleries </title>
@@ -14,7 +14,7 @@
       <div class="images">
 [for gallery_thumb]
   <a href="[gallery_thumb.page]">
-    <img src="[gallery_thumb.image]" border="0"/>
+    <img alt="Thumb" src="[gallery_thumb.image]" border="0"/>
   </a>
 [end]
       </div>

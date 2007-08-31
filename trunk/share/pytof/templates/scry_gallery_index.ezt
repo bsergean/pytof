@@ -1,5 +1,6 @@
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 TRANSITIONAL//EN">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "DTD/xhtml1-strict.dtd">
 <html>
 <head>
 <title> [title] </title>
@@ -20,7 +21,7 @@
       <div class="images">
 [for thumbs]
   <a href="[thumbs.page]">
-    <img src="[thumbs.image]" border="0"/>
+    <img alt="Thumb" src="[thumbs.image]" border="0"/>
   </a>
 [end]
       </div>
