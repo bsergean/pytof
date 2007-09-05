@@ -1,10 +1,18 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 # Library to extract EXIF information in digital camera image files
 #
 # To use this library call with:
 #    f=open(path_name, 'rb')
 #    tags=EXIF.process_file(f)
-# tags will now be a dictionary mapping names of EXIF tags to their
+#
+# If you want to ignore makerNote, pass the -q or --quick
+# command line arguments, or as
+#    tags=EXIF.process_file(f, details=False)
+#
+# This is usefull when you are retrieving a large list of images
+#
+# Returned tags will be a dictionary mapping names of EXIF tags to their
 # values in the file named by path_name.  You can process the tags
 # as you wish.  In particular, you can iterate through all the tags with:
 #     for tag in tags.keys():
@@ -25,7 +33,7 @@
 #
 # This copyright license is intended to be similar to the FreeBSD license.
 #
-# Copyright 2002 Gene Cash All rights reserved.
+# Copyright (c) 2002 Gene Cash All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are
@@ -88,17 +96,33 @@
 #               IFD_Tag() object.
 # 15-FEB-04 CEC Finally fixed bit shift warning by converting Y to 0L.
 #
+# ---------------------------- End original notices ------------------------- #
+
+# 2007-18-01 - Ianaré Sévi <ianare@gmail.com>
+# Fixed a couple errors and assuming maintenance of the library.
+
+# 2007-24-03 - Ianaré Sévi
+# Can now ignore MakerNotes Tags for faster processing.
+
+# 2007-03-05 - Martin Stone <mj_stone@users.sourceforge.net>
+# Fix for inverted detailed flag and Photoshop header
+
+
+
+
+
+# ===== CODE START ==== #
 
 # field type descriptions as (length, abbreviation, full name) tuples
 FIELD_TYPES=(
-    (0, 'X',  'Proprietary'), # no such type
-    (1, 'B',  'Byte'),
-    (1, 'A',  'ASCII'),
-    (2, 'S',  'Short'),
-    (4, 'L',  'Long'),
-    (8, 'R',  'Ratio'),
+    (0, 'X', 'Proprietary'), # no such type
+    (1, 'B', 'Byte'),
+    (1, 'A', 'ASCII'),
+    (2, 'S', 'Short'),
+    (4, 'L', 'Long'),
+    (8, 'R', 'Ratio'),
     (1, 'SB', 'Signed Byte'),
-    (1, 'U',  'Undefined'),
+    (1, 'U', 'Undefined'),
     (2, 'SS', 'Signed Short'),
     (4, 'SL', 'Signed Long'),
     (8, 'SR', 'Signed Ratio')
@@ -295,6 +319,12 @@ GPS_TAGS={
     0x0019: ('GPSDestDistanceRef', ),
     0x001A: ('GPSDestDistance', )
     }
+
+# ignore these tags when quick processing
+# 0x927C is MakerNote Tags
+# 0x9286 is user comment
+IGNORE_TAGS=(0x9286, 0x927C)
+
 
 # Nikon E99x MakerNote Tags
 # http://members.tripod.com/~tawba/990exif.htm
@@ -823,79 +853,86 @@ class EXIF_header:
             # entry is index of start of this IFD in the file
             entry=ifd+2+12*i
             tag=self.s2n(entry, 2)
-            # get tag name.  We do it early to make debugging easier
-            tag_entry=dict.get(tag)
-            if tag_entry:
-                tag_name=tag_entry[0]
-            else:
-                tag_name='Tag 0x%04X' % tag
-            field_type=self.s2n(entry+2, 2)
-            if not 0 < field_type < len(FIELD_TYPES):
-                # unknown field type
-                raise ValueError, \
-                      'unknown type %d in tag 0x%04X' % (field_type, tag)
-            typelen=FIELD_TYPES[field_type][0]
-            count=self.s2n(entry+4, 4)
-            offset=entry+8
-            if count*typelen > 4:
-                # offset is not the value; it's a pointer to the value
-                # if relative we set things up so s2n will seek to the right
-                # place when it adds self.offset.  Note that this 'relative'
-                # is for the Nikon type 3 makernote.  Other cameras may use
-                # other relative offsets, which would have to be computed here
-                # slightly differently.
-                if relative:
-                    tmp_offset=self.s2n(offset, 4)
-                    offset=tmp_offset+ifd-self.offset+4
-                    if self.fake_exif:
-                        offset=offset+18
+            
+            #if not (tag in IGNORE_TAGS and detailed == False):
+            #    pass
+            # ignore certain tags for faster processing
+            if not (tag in IGNORE_TAGS and detailed == False):
+                # get tag name.  We do it early to make debugging easier
+                tag_entry=dict.get(tag)
+                if tag_entry:
+                    tag_name=tag_entry[0]
                 else:
-                    offset=self.s2n(offset, 4)
-            field_offset=offset
-            if field_type == 2:
-                # special case: null-terminated ASCII string
-                if count != 0:
-                    self.file.seek(self.offset+offset)
-                    values=self.file.read(count)
-                    values=values.strip().replace('\x00','')
+                    tag_name='Tag 0x%04X' % tag
+                
+                field_type=self.s2n(entry+2, 2)
+                if not 0 < field_type < len(FIELD_TYPES):
+                    # unknown field type
+                    raise ValueError, \
+                          'unknown type %d in tag 0x%04X' % (field_type, tag)
+                typelen=FIELD_TYPES[field_type][0]
+                count=self.s2n(entry+4, 4)
+                offset=entry+8
+                if count*typelen > 4:
+                    # offset is not the value; it's a pointer to the value
+                    # if relative we set things up so s2n will seek to the right
+                    # place when it adds self.offset.  Note that this 'relative'
+                    # is for the Nikon type 3 makernote.  Other cameras may use
+                    # other relative offsets, which would have to be computed here
+                    # slightly differently.
+                    if relative:
+                        tmp_offset=self.s2n(offset, 4)
+                        offset=tmp_offset+ifd-self.offset+4
+                        if self.fake_exif:
+                            offset=offset+18
+                    else:
+                        offset=self.s2n(offset, 4)
+                field_offset=offset
+                if field_type == 2:
+                    # special case: null-terminated ASCII string
+                    if count != 0:
+                        self.file.seek(self.offset+offset)
+                        values=self.file.read(count)
+                        values=values.strip().replace('\x00','')
+                    else:
+                        values=''
                 else:
-                    values=''
-            else:
-                values=[]
-                signed=(field_type in [6, 8, 9, 10])
-                for j in range(count):
-                    if field_type in (5, 10):
-                        # a ratio
-                        value_j=Ratio(self.s2n(offset,   4, signed),
-                                      self.s2n(offset+4, 4, signed))
-                    else:
-                        value_j=self.s2n(offset, typelen, signed)
-                    values.append(value_j)
-                    offset=offset+typelen
-            # now "values" is either a string or an array
-            if count == 1 and field_type != 2:
-                printable=str(values[0])
-            else:
-                printable=str(values)
-            # compute printable version of values
-            if tag_entry:
-                if len(tag_entry) != 1:
-                    # optional 2nd tag element is present
-                    if callable(tag_entry[1]):
-                        # call mapping function
-                        printable=tag_entry[1](values)
-                    else:
-                        printable=''
-                        for i in values:
-                            # use lookup table for this tag
-                            printable+=tag_entry[1].get(i, repr(i))
-            self.tags[ifd_name+' '+tag_name]=IFD_Tag(printable, tag,
-                                                     field_type,
-                                                     values, field_offset,
-                                                     count*typelen)
-            if self.debug:
-                print ' debug:   %s: %s' % (tag_name,
-                                            repr(self.tags[ifd_name+' '+tag_name]))
+                    values=[]
+                    signed=(field_type in [6, 8, 9, 10])
+                    for j in range(count):
+                        if field_type in (5, 10):
+                            # a ratio
+                            value_j=Ratio(self.s2n(offset,   4, signed),
+                                          self.s2n(offset+4, 4, signed))
+                        else:
+                            value_j=self.s2n(offset, typelen, signed)
+                        values.append(value_j)
+                        offset=offset+typelen
+                # now "values" is either a string or an array
+                if count == 1 and field_type != 2:
+                    printable=str(values[0])
+                else:
+                    printable=str(values)
+                # compute printable version of values
+                if tag_entry:
+                    if len(tag_entry) != 1:
+                        # optional 2nd tag element is present
+                        if callable(tag_entry[1]):
+                            # call mapping function
+                            printable=tag_entry[1](values)
+                        else:
+                            printable=''
+                            for i in values:
+                                # use lookup table for this tag
+                                printable+=tag_entry[1].get(i, repr(i))
+                           
+                self.tags[ifd_name+' '+tag_name]=IFD_Tag(printable, tag,
+                                                         field_type,
+                                                         values, field_offset,
+                                                         count*typelen)
+                if self.debug:
+                    print ' debug:   %s: %s' % (tag_name,
+                                                repr(self.tags[ifd_name+' '+tag_name]))
 
     # extract uncompressed TIFF thumbnail (like pulling teeth)
     # we take advantage of the pre-existing layout in the thumbnail IFD as
@@ -1062,7 +1099,14 @@ class EXIF_header:
 # process an image file (expects an open file object)
 # this is the function that has to deal with all the arbitrary nasty bits
 # of the EXIF standard
-def process_file(file, debug=0):
+def process_file(file, details=True, debug=0):
+    # yah it's cheesy...
+    global detailed
+    detailed = details
+    
+    # by default do not fake an EXIF beginning
+    fake_exif=0
+    
     # determine whether it's a JPEG or TIFF
     data=file.read(12)
     if data[0:4] in ['II*\x00', 'MM\x00*']:
@@ -1073,9 +1117,7 @@ def process_file(file, debug=0):
         offset=0
     elif data[0:2] == '\xFF\xD8':
         # it's a JPEG file
-        # skip JFIF style header(s)
-        fake_exif=0
-        while data[2] == '\xFF' and data[6:10] in ('JFIF', 'JFXX', 'OLYM'):
+        while data[2] == '\xFF' and data[6:10] in ('JFIF', 'JFXX', 'OLYM', 'Phot'):
             length=ord(data[4])*256+ord(data[5])
             file.read(length-8)
             # fake an EXIF beginning of file
@@ -1144,7 +1186,7 @@ def process_file(file, debug=0):
         hdr.tags['JPEGThumbnail']=file.read(size)
         
     # deal with MakerNote contained in EXIF IFD
-    if hdr.tags.has_key('EXIF MakerNote'):
+    if hdr.tags.has_key('EXIF MakerNote') and detailed:
         hdr.decode_maker_note()
 
     # Sometimes in a TIFF file, a JPEG thumbnail is hidden in the MakerNote
@@ -1157,15 +1199,23 @@ def process_file(file, debug=0):
             
     return hdr.tags
 
+
 # library test/debug function (dump given files)
 if __name__ == '__main__':
     import sys
     
     if len(sys.argv) < 2:
-        print 'Usage: %s files...\n' % sys.argv[0]
+        print "Usage: %s [options] file1 [file2 ...]\n\nOptions:\n-q --quick : do not process MakerNotes for faster processing\n" % sys.argv[0]
         sys.exit(0)
-        
-    for filename in sys.argv[1:]:
+    
+    if sys.argv[1] == "-q" or sys.argv[1] == "--quick":
+        fileNamesStart = 2
+        detailed = False
+    else:
+        fileNamesStart = 1
+        detailed = True
+    
+    for filename in sys.argv[fileNamesStart:]:
         try:
             file=open(filename, 'rb')
         except:
@@ -1173,8 +1223,8 @@ if __name__ == '__main__':
             print
             continue
         print filename+':'
-        # data=process_file(file, 1) # with debug info
-        data=process_file(file)
+        # data=process_file(file, debug=1) # with debug info and all tags
+        data=process_file(file, details=detailed)
         if not data:
             print 'No EXIF information found'
             continue
@@ -1192,3 +1242,4 @@ if __name__ == '__main__':
         if data.has_key('JPEGThumbnail'):
             print 'File has JPEG thumbnail'
         print
+
