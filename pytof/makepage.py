@@ -166,6 +166,8 @@ def main(albumName, topDir, xmlData, strip_originals,
 	thDir = join(mainDir, album, 'thumbs')
 	    
 	thumbs = os.listdir(thDir)
+	# glob like command to remove .DS_STORE files 
+	thumbs = [t for t in thumbs if t.startswith('th_')]
 	if len(thumbs) > 0:
 	    thImage = '/'.join([album, 'thumbs', thumbs[0]])
 	    dicoThumbs.append(Thumb(thLink, thImage))
