@@ -77,9 +77,12 @@ def makePhotoPage(photo, topDir, prev, next, strip_originals, albumName, style):
     pt.write('photo', dico, join(topDir, photo.id) + '.html', style)
 
 class Thumb:
-    def __init__(self, page, image):
-	self.page = page
-	self.image = image
+    def __init__(self, page, image, album=None):
+        self.page = page
+        self.image = image
+        self.album = None
+        if album != None:
+            self.album = album
 
 def main(albumName, topDir, xmlData, strip_originals,
          style, fromDir, progress=None):
@@ -158,20 +161,19 @@ def main(albumName, topDir, xmlData, strip_originals,
     mainDir = join(topDir, os.pardir)
     logger.debug('main dir: %s' % mainDir)
     for album in os.listdir(mainDir):
-	if not isdir(join(mainDir, album)): continue
-	if not exists(join(mainDir, album, '.magic')): continue
+        if not isdir(join(mainDir, album)): continue
+        if not exists(join(mainDir, album, '.magic')): continue
 
-	logger.debug('Found gallery %s' % album)
-	thLink = '/'.join([album, 'index.html'])
-	thDir = join(mainDir, album, 'thumbs')
-	    
-	thumbs = os.listdir(thDir)
-	# glob like command to remove .DS_STORE files 
-	thumbs = [t for t in thumbs if t.startswith('th_')]
-	if len(thumbs) > 0:
-	    thImage = '/'.join([album, 'thumbs', thumbs[0]])
-	    dicoThumbs.append(Thumb(thLink, thImage))
+        logger.debug('Found gallery %s' % album)
+        thLink = '/'.join([album, 'index.html'])
+        thDir = join(mainDir, album, 'thumbs')
+            
+        thumbs = os.listdir(thDir)
+        # glob like command to remove .DS_STORE files 
+        thumbs = [t for t in thumbs if t.startswith('th_')]
+        if len(thumbs) > 0:
+            thImage = '/'.join([album, 'thumbs', thumbs[0]])
+            dicoThumbs.append(Thumb(thLink, thImage, album))
 
     dico['gallery_thumb'] = dicoThumbs
-
     pt.write('main', dico, join(mainDir, 'index') + '.html', style)
