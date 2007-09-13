@@ -159,13 +159,18 @@ from colorterm import TerminalController, ProgressBar
 class ProgressMsg(object):
     """ curses progress bar """
     def __init__(self, target, output=sys.stdout):
-        term = TerminalController()
-        self.pb = ProgressBar(term, 'pytof')
+        #raise UnicodeDecodeError
         self.counter = 0
         self.target = target
+        self.term = TerminalController()
+        if output == sys.stderr:
+            logger.info('Do nothing in curses mode')
+            return
+        self.pb = ProgressBar(self.term, 'pytof')
 
     def Increment(self):
         if self.counter == 0:
+            self.pb = ProgressBar(self.term, 'pytof')
             self.pb.clear()
         self.counter += 1
         percent = self.counter / float(self.target)
