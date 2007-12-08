@@ -171,7 +171,7 @@ xmlTimestamp=0
         if self.config.has_option('Internals', 'xmlTimestamp'):
             xmlTimestamp = self.config.get('Internals', 'xmlTimestamp')
             statinfo = os.stat(xmlFileName).st_mtime
-            if statinfo == int(xmlTimestamp):
+            if statinfo == int(float(xmlTimestamp)):
                 logger.info('Caching')
                 cache = True
             else:
