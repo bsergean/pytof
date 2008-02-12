@@ -9,10 +9,20 @@ def read_input(fn):
 def random_true_or_false():
     return random.random() > 0.5
 
-def min_index(s):
-    m = min(s)
-    for i,v in enumerate(s):
-        if v == m: return i
+def mk_matrix():
+    n = random.randint(1, 40)
+    m = random.randint(1, 16)
+
+    mat = []
+    for i in range(n):
+        tmp = []
+        for i in range(m):
+            x = random.randint(0, 200)
+            if random_true_or_false(): x = -x
+            tmp += [x]
+        mat.append(tmp)
+        
+    return mat
 
 class Matrix:
     def __init__(self, m):
@@ -83,7 +93,9 @@ class Matrix:
 
     # First one to find a solution
     def solve_random_walk_grow(self):
+        iterations = 0
         while True:
+            iterations += 1
             old_s = self.S()
             if random_true_or_false():
                 x = random.randint(0, self.N-1)
@@ -102,11 +114,20 @@ class Matrix:
             print self
 
             if self.positive(): break
+        
+        return self.S(), iterations
 
     # pick the minimum
     def solve_minimum_pick(self):
 
+        def min_index(s):
+            m = min(s)
+            for i,v in enumerate(s):
+                if v == m: return i
+
+        iterations = 0
         while True:
+            iterations += 1
             old_s = self.S()
             sr = self.SR()
             sc = self.SC()
@@ -125,22 +146,88 @@ class Matrix:
                 self.flip_col(i)
 
                 if self.S() < old_s:
-                    self.flip_col(x)
+                    self.flip_col(i)
                     continue
 
             print
             print self
 
             if self.positive(): break
+
+        return self.S(), iterations
+
+    # pick the biggest negative number
+    def solve_max_negative_pick(self):
+
+        def max_negative(s):
+            negatives = [i for i in s if i < 0]
+            try:
+                return max(negatives)
+            except ValueError: # max() arg is an empty sequence
+                return 1
+
+        def max_negative_index(s):
+            negatives = [i for i in s if i < 0]
+            try:
+                m = max(negatives)
+                for i,v in enumerate(s):
+                    if v == m: return i
+            except ValueError: # max() arg is an empty sequence
+                return -1
+
+        iterations = 0
+        while True:
+            iterations += 1
+            old_s = self.S()
+            sr = self.SR()
+            sc = self.SC()
+            mn_sr = max_negative(sr) # mn for Max Negative
+            mn_sc = max_negative(sc)
+
+            print mn_sr, mn_sc
+            super_min = -10000000000000000000000000
+            if mn_sr > 0: mn_sr = super_min
+            if mn_sc > 0: mn_sc = super_min
+            print mn_sr, mn_sc
+
+            if mn_sr > mn_sc:
+                print 'sr'
+                i = max_negative_index(sr)
+                self.flip_row(i)
+
+                if self.S() < old_s:
+                    self.flip_row(i)
+                    continue
+            else:
+                print 'sc'
+                i = max_negative_index(sc)
+                self.flip_col(i)
+
+                if self.S() < old_s:
+                    self.flip_col(i)
+                    continue
+
+            print
+            print self
+
+            if self.positive(): break
+
+        return self.S(), iterations
         
-fn = 'simple.txt'
-fn = 'input.txt'
-A_input = read_input(fn)
-A = Matrix(A_input)
+# INPUT
+if False:
+    fn = 'simple.txt'
+    #fn = 'input.txt'
+    input = read_input(fn)
+else:
+    input = mk_matrix()
+    
+A = Matrix(input)
+
 
 if __name__ == "__main__":
     
-    print A.col(3)
+    #if A.M >=3: print A.col(3) FIXME
     print A.cols()
     print A.SR()
     print A.SC()
@@ -148,6 +235,18 @@ if __name__ == "__main__":
     print A
 
     #A.solve_total_random_walk()
-    #A.solve_random_walk_grow()
-    A.solve_minimum_pick()
+
+    if False:
+        #A.solve_random_walk_grow()
+        #A.solve_minimum_pick()
+        A.solve_max_negative_pick()
+    else:
+        fo = StringIO.StringIO()
+        s1, i1 = A.solve_random_walk_grow()
+        s2, i2 = A.solve_minimum_pick()
+        s3, i3 = A.solve_max_negative_pick()
+
+        print s1, i1
+        print s2, i2
+        print s3, i3
 
