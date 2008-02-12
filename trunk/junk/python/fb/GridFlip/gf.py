@@ -221,12 +221,10 @@ if False:
     input = read_input(fn)
 else:
     input = mk_matrix()
-    
-A = Matrix(input)
-
 
 if __name__ == "__main__":
     
+    A = Matrix(input)
     #if A.M >=3: print A.col(3) FIXME
     print A.cols()
     print A.SR()
@@ -234,16 +232,18 @@ if __name__ == "__main__":
     print A.S()
     print A
 
-    #A.solve_total_random_walk()
+    #A.solve_total_random_walk() # does not seem to work well, guess why ... :)
 
     if False:
         #A.solve_random_walk_grow()
         #A.solve_minimum_pick()
         A.solve_max_negative_pick()
     else:
-        fo = StringIO.StringIO()
+        A = Matrix(input)
         s1, i1 = A.solve_random_walk_grow()
+        A = Matrix(input)
         s2, i2 = A.solve_minimum_pick()
+        A = Matrix(input)
         s3, i3 = A.solve_max_negative_pick()
 
         print s1, i1
