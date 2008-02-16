@@ -213,9 +213,23 @@ class Matrix:
             if self.positive(): break
 
         return self.S(), iterations
+
+def solve_explore_all(Mat):
+
+    for i in range(A.M):
+        Mat.flip_row(i)
+        for j in range(A.N):
+            Mat.flip_col(j)
+
+            print i,j
+            if Mat.positive(): print Mat
+            Mat.flip_col(j)
+
+        Mat.flip_row(i)
+    
         
 # INPUT
-if False:
+if True:
     fn = 'simple.txt'
     #fn = 'input.txt'
     input = read_input(fn)
@@ -234,6 +248,12 @@ if __name__ == "__main__":
 
     #A.solve_total_random_walk() # does not seem to work well, guess why ... :)
 
+    A = Matrix(input)
+    try:
+        solve_explore_all(A)
+    except RuntimeError: pass
+    sys.exit(0)
+
     if False:
         #A.solve_random_walk_grow()
         #A.solve_minimum_pick()
@@ -246,7 +266,9 @@ if __name__ == "__main__":
         A = Matrix(input)
         s3, i3 = A.solve_max_negative_pick()
 
+        print
         print s1, i1
         print s2, i2
         print s3, i3
+
 
