@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import StringIO, os, time, random, sys
+import StringIO, os, time, random, sys, copy
 
 def read_input(fn):
     lines = [l for l in open(fn).read().splitlines()]
@@ -26,7 +26,7 @@ def mk_matrix():
 
 class Matrix:
     def __init__(self, m):
-        self.m = m
+        self.m = copy.deepcopy(m)
 
         self.N = len(m[0])
         self.M = len(m)
