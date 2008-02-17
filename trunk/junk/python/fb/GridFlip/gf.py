@@ -214,24 +214,36 @@ class Matrix:
 
         return self.S(), iterations
 
+
+def _solve_explore_all(Mat, N, M):
+
+    for i in M:
+        M = M[1:]
+        Mat.flip_row(i)
+        for j in N:
+            N = N[1:]
+            Mat.flip_col(j)
+
+            if Mat.positive(): 
+                print Mat
+                print
+                print 'OK'
+                sys.exit()
+                
+            _solve_explore_all(Mat, N, M)
+            Mat.flip_col(j)
+
+        Mat.flip_row(i)
+
 def solve_explore_all(Mat):
-
-    for i in range(A.M):
-        Mat.flip_row(i)
-        for j in range(A.N):
-            Mat.flip_col(j)
-
-            print i,j
-            if Mat.positive(): print Mat
-            Mat.flip_col(j)
-
-        Mat.flip_row(i)
+    _solve_explore_all(Mat, range(Mat.N), range(Mat.M)) 
+    
     
         
 # INPUT
 if True:
     fn = 'simple.txt'
-    #fn = 'input.txt'
+    fn = 'input.txt'
     input = read_input(fn)
 else:
     input = mk_matrix()
@@ -251,7 +263,7 @@ if __name__ == "__main__":
     A = Matrix(input)
     try:
         solve_explore_all(A)
-    except RuntimeError: pass
+    except RuntimeError: print 'RunTime error'
     sys.exit(0)
 
     if False:
