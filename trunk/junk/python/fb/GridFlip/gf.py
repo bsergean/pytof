@@ -248,6 +248,16 @@ if True:
 else:
     input = mk_matrix()
 
+from permutations import xpermutations
+
+L = '+' * 10 + '-' * 10
+L = [c for c in L]
+print L
+print
+for uc in xpermutations(L): print uc
+
+sys.exit(0)
+
 if __name__ == "__main__":
     
     A = Matrix(input)
