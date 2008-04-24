@@ -774,8 +774,9 @@ class Facebook(object):
 if __name__ == '__main__':
     # sample desktop application
 
-    api_key = ''
-    secret_key = ''
+    # FIXME: Get those from the config file
+    api_key = '2e505388b944970d91aa740810550181'
+    secret_key = 'b8ca4ca746137ec88eac90302a3b0176'
 
     facebook = Facebook(api_key, secret_key)
 
