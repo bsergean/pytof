@@ -13,6 +13,9 @@ and is itself a prime number.
 For example, 41 is the smallest prime number that can be expressed as
 the sum of 3 consecutive primes (11 + 13 + 17 = 41) and
 the sum of 6 consecutive primes (2 + 3 + 5 + 7 + 11 + 13 = 41). 
+
+Result: 8429539
+Time: 3 minutes
 '''
 
 def compute_primes_from_arizona():
@@ -23,6 +26,7 @@ def compute_primes_from_arizona():
     return primes
 
 import sys
+# No results for big number under 1M 
 max_int = int(sys.argv[1])
 def compute_primes_native():
     from prime_generator import gen_primes
@@ -38,7 +42,9 @@ sorted_primes = sorted(primes.keys())
 def walk_and_sum(tget):
     candidates = []
 
-    for p in xrange(len(sorted_primes)):
+    N = len(sorted_primes)
+    for p in xrange(N):
+        if p + tget >= N: break
         sum_primes = sorted_primes[p:p+tget]
 
         S = sum(sum_primes)
@@ -48,8 +54,16 @@ def walk_and_sum(tget):
     return candidates
 
 from sets import Set
+main_set = Set(walk_and_sum(5))
 
-for p in [5, 11, 775, 1151]:
-    new_set = walk_and_sum(p)
-    print p, sorted(new_set)
+for p in [11, 775, 1151]:
+    new_list = walk_and_sum(p)
+    print p, sorted(new_list)
+
+    new_set = Set(new_list)
+    main_set &= new_set
+
+    print main_set
+
+    
 
