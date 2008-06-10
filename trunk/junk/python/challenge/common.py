@@ -413,8 +413,41 @@ def level10():
 def level11():
     '''
     http://www.pythonchallenge.com/pc/return/5808.html
-    Odd or even.
+    Odd even.
     The image is like a big chess board with color variations.
     '''
+    import Image
+    photo = Image.open('cave_level11.jpg') 
+    photo.load()
+    w, h = photo.size
+    pixels = list(photo.getdata())
+
+    for j in xrange(h):
+        for i in xrange(w):
+            # try to 
+            
+
+
+
+    colors = {}
+    for p in pixels:
+        if not p in colors:
+            colors[p] = 1
+        else:
+            colors[p] += 1
+
+    dc = [(v,k) for k,v in colors.items()]
+    dc.sort()
+
+    odd = 0
+    even = 0
+    for v,k in colors.items():
+        if k % 2 == 0: even += 1
+        else: odd += 1
+
+    print odd + even
+        
+    #print dc
+    #print colors
 
 level11()
