@@ -1,17 +1,14 @@
 #!/usr/bin/env python
 
-cache = {}
+cache = []
 def set_cache_result(n, p, res):
-    key = '%d,%d' % (n, p)
-    cache[key] = res
+    cache[n][p] = res
 
 def is_in_cache(n, p):
-    key = '%d,%d' % (n, p)
-    return key in cache
+    return cache[n][p] != -1
 
 def get_cache_result(n, p):
-    key = '%d,%d' % (n, p)
-    return cache[key]
+    return cache[n][p]
 
 def robot(n, p):
 
@@ -27,6 +24,11 @@ def robot(n, p):
     return res
 
 def populate_cache(n, p):
+
+    # init
+    for i in xrange(0, n+1):
+        L = [-1 for j in xrange(0, p+1)]
+        cache.append(L)
     
     for i in xrange(1, n+1):
         for j in xrange(1, p+1):
