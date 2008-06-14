@@ -422,32 +422,30 @@ def level11():
     w, h = photo.size
     pixels = list(photo.getdata())
 
+    white = (255, 255, 255)
+    hidden_image = Image.new('RGB', (w/2, h), white)
+
+    seq = []
+    for i,p in enumerate(pixels):
+        if i % 2 != 0:
+            seq.append(p)
+
+    new_seq = []
     for j in xrange(h):
-        for i in xrange(w):
-            # try to 
-            
+        if j % 2 != 0:
+            new_seq.extend(seq[j*w/2:(j+1)*w/2])
 
+    hidden_image.putdata(new_seq)
+    hidden_image.save('cave_subpicture.png')
 
+    # we can read 'evil' in this captcha !
 
-    colors = {}
-    for p in pixels:
-        if not p in colors:
-            colors[p] = 1
-        else:
-            colors[p] += 1
+    return
 
-    dc = [(v,k) for k,v in colors.items()]
-    dc.sort()
-
-    odd = 0
-    even = 0
-    for v,k in colors.items():
-        if k % 2 == 0: even += 1
-        else: odd += 1
-
-    print odd + even
-        
-    #print dc
-    #print colors
+def level12():
+    '''
+    http://www.pythonchallenge.com/pc/return/evil.html
+    dealing evil. Nothing but a picture
+    '''
 
 level11()
