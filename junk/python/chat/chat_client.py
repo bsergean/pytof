@@ -72,11 +72,11 @@ class MyThread(Thread):
         ts = time()
 
         while not self.quit:
-            sleep(2)
             if cc.get_all(ts, user):
                 ts = time()
                 stdout.write(user + '> ')
                 stdout.flush()
+            sleep(1)
 
 class ChatInterpreter():
 
@@ -114,7 +114,7 @@ if __name__ == "__main__":
     user = ''
     parser.add_option("-s", "--host", dest="host",
             help="The host plus port number where the server is running")
-    parser.add_option("-u", "--user", dest="user", default=getuser(),
+    parser.add_option("-l", "--username", dest="user", default=getuser(),
             help="Your user name")
     options, args = parser.parse_args()
     user = options.user
