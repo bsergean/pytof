@@ -22,7 +22,8 @@ class ChatClient:
 
         self.ok = True
         try:
-            url = self.urlbase + 'status'
+            url = self.urlbase + 'up'
+            print url
             urlopen(url)
         except (IOError):
             self.ok = False
@@ -118,6 +119,7 @@ if __name__ == "__main__":
             help="Your user name")
     options, args = parser.parse_args()
     user = options.user
+    host = options.host
 
     # Start
     cc = ChatClient(host)

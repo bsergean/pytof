@@ -17,6 +17,8 @@ urls = (
   '/up', 'up',
   '/all', 'all')
 
+messages = []
+
 class up:
     def GET(self):
         return ''
@@ -31,7 +33,7 @@ class all:
         user      = urlsafe_b64decode(d.user)
 
         text = []
-        for l in open(com_fn).read().splitlines():
+        for l in messages:
             tokens = l.split(',')
 
             db_timestamp = tokens[0]
@@ -53,9 +55,8 @@ class set_msg:
         msg = d.msg
         user = d.user
 
-        fo = open(com_fn, 'a')
-        fo.write('%f,%s,%s\n' % (time(), user, msg))
-        fo.close()
+        m = '%f,%s,%s\n' % (time(), user, msg)
+        messages.extend([m])
         
         log  = 'Msg: ' + msg + ' received from ' + user + '\n'
         return log
