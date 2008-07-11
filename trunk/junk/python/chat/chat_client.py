@@ -35,7 +35,7 @@ class ChatClient:
         fmt += 'user=%s&'
         fmt += 'index=%d&'
         args = fmt % (
-                urlsafe_b64encode(user),
+                user,
                 index)
         url += args
 
