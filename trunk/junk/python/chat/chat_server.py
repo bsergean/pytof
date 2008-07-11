@@ -33,8 +33,7 @@ class all:
         index     = int(d.index)
 
         text = []
-        for i,l in enumerate(messages):
-            tokens = l.split(',')
+        for i, tokens in enumerate(messages):
 
             db_user      = tokens[0]
             msg          = urlsafe_b64decode(tokens[1])
@@ -54,8 +53,7 @@ class set_msg:
         msg = d.msg
         user = d.user
 
-        m = '%s,%s\n' % (user, msg)
-        messages.extend([m])
+        messages.append([user, msg])
         
         log  = 'Msg: ' + msg + ' received from ' + user + '\n'
         return log
