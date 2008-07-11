@@ -23,29 +23,29 @@ class ChatClient:
         self.ok = True
         try:
             url = self.urlbase + 'up'
-            print url
             urlopen(url)
         except (IOError):
             self.ok = False
 
     # Server request:
-    def get_all(self, ts, user):
+    def get_all(self, user, index):
 
         url = self.urlbase + 'all' + '?'
         fmt = ''
-        fmt += 'ts=%s&'
         fmt += 'user=%s&'
+        fmt += 'index=%d&'
         args = fmt % (
-                urlsafe_b64encode(str(ts)), 
-                urlsafe_b64encode(user))
+                urlsafe_b64encode(user),
+                index)
         url += args
 
         data = urlopen(url).read()
-        if data != 'Empty':
-            stdout.write('\r' + data + '\n')
-            return True
+        if data != 'Empty' and data != 'internal server error':
+            i, dummy, text = data.partition('\n')
+            stdout.write('\r' + text + '\n')
+            return int(i)
         else:
-            return False
+            return None
 
     # Server request:
     def send_text(self, text, user):
@@ -70,11 +70,12 @@ class MyThread(Thread):
         # We need self.quit to stop the program
         # by setting it to True
         self.quit = False 
-        ts = time()
+        index = 0
 
         while not self.quit:
-            if cc.get_all(ts, user):
-                ts = time()
+            ret = cc.get_all(user, index)
+            if ret:
+                index = ret + 1
                 stdout.write(user + '> ')
                 stdout.flush()
             sleep(1)
@@ -86,10 +87,6 @@ class ChatInterpreter():
         self.user = user
 
     def loop(self):
-
-        # Print what has been written up until now
-        print self.user
-        self.cc.get_all(0, self.user)
 
         # The writting thread
         self.t = MyThread()
