@@ -92,10 +92,14 @@ class ChatInterpreter():
         self.t = MyThread()
         self.t.start()
 
+        # Display first prompt
+        stdout.write(self.user + '> ')
+
         while True:
-            stdout.write(self.user + '> ')
             try:
                 text = raw_input()
+                stdout.write(self.user + '> ')
+                stdout.flush()
             except(EOFError,KeyboardInterrupt): # Bye bye
                 print
                 return
