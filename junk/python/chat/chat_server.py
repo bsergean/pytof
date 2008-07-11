@@ -29,24 +29,23 @@ class all:
         if not exists(com_fn): return 'Empty'
 
         d = web.input()
-        timestamp = urlsafe_b64decode(d.ts)
         user      = urlsafe_b64decode(d.user)
+        index     = int(d.index)
 
         text = []
-        for l in messages:
+        for i,l in enumerate(messages):
             tokens = l.split(',')
 
-            db_timestamp = tokens[0]
-            db_user      = tokens[1]
-            msg          = urlsafe_b64decode(tokens[2])
+            db_user      = tokens[0]
+            msg          = urlsafe_b64decode(tokens[1])
 
-            if msg and db_timestamp > timestamp and db_user != user:
+            if msg and i >= index and db_user != user:
                 text.append(db_user + '> ' + msg)
 
         if not len(text): return 'Empty'
         else: 
+            text.insert(0,str(i))
             ret_text = '\n'.join(text)
-            print timestamp, db_timestamp, ret_text
             return ret_text
 
 class set_msg:
@@ -55,7 +54,7 @@ class set_msg:
         msg = d.msg
         user = d.user
 
-        m = '%f,%s,%s\n' % (time(), user, msg)
+        m = '%s,%s\n' % (user, msg)
         messages.extend([m])
         
         log  = 'Msg: ' + msg + ' received from ' + user + '\n'
