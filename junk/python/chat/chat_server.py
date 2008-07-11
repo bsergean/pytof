@@ -29,7 +29,7 @@ class all:
         if not exists(com_fn): return 'Empty'
 
         d = web.input()
-        user      = urlsafe_b64decode(d.user)
+        user      = d.user
         index     = int(d.index)
 
         text = []
@@ -54,9 +54,7 @@ class set_msg:
         user = d.user
 
         messages.append([user, msg])
-        
-        log  = 'Msg: ' + msg + ' received from ' + user + '\n'
-        return log
+        return ''
 
 app = web.application(urls, globals(), web.reloader) # There's web.profiler too
 
