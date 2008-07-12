@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 
 '''
-Write user sent content to a file that is read at each request ...
-We should lock it in set_msg when writting
 '''
 
 import web
@@ -26,24 +24,22 @@ class up:
 class all:
     def GET(self):
 
-        if not exists(com_fn): return 'Empty'
-
         d = web.input()
         user      = d.user
         index     = int(d.index)
 
         text = []
-        for i, tokens in enumerate(messages):
+        for tokens in messages[index:]:
 
             db_user      = tokens[0]
             msg          = urlsafe_b64decode(tokens[1])
 
-            if msg and i >= index and db_user != user:
+            if db_user != user:
                 text.append(db_user + '> ' + msg)
 
         if not len(text): return 'Empty'
         else: 
-            text.insert(0,str(i))
+            text.insert(0, str(len(messages)))
             ret_text = '\n'.join(text)
             return ret_text
 
