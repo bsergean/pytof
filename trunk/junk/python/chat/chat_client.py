@@ -60,7 +60,8 @@ class ChatClient:
         url += args
         data = urlopen(url).read()
 
-# Update screen every seconds with what friends are writting (or nothing)
+# Update screen every seconds with what 
+# friends are writting (or nothing)
 class MyThread(Thread):
 
     def run(self):
@@ -75,7 +76,7 @@ class MyThread(Thread):
         while not self.quit:
             ret = cc.get_all(user, index)
             if ret:
-                index = ret + 1
+                index = ret
                 stdout.write(user + '> ')
                 stdout.flush()
             sleep(1)
