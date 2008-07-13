@@ -28,22 +28,19 @@ class ChatClient:
             self.ok = False
 
     # Server request:
-    def get_all(self, user, index):
+    def get_all(self, user):
 
         url = self.urlbase + 'all' + '?'
         fmt = ''
         fmt += 'user=%s&'
-        fmt += 'index=%d&'
         args = fmt % (
-                user,
-                index)
+                user)
         url += args
 
         data = urlopen(url).read()
         if data != 'Empty' and data != 'internal server error':
-            i, dummy, text = data.partition('\n')
-            stdout.write('\r' + text + '\n')
-            return int(i)
+            stdout.write('\r' + data + '\n')
+            return True
         else:
             return None
 
@@ -71,12 +68,10 @@ class MyThread(Thread):
         # We need self.quit to stop the program
         # by setting it to True
         self.quit = False 
-        index = 0
 
         while not self.quit:
-            ret = cc.get_all(user, index)
+            ret = cc.get_all(user)
             if ret:
-                index = ret
                 stdout.write(user + '> ')
                 stdout.flush()
             sleep(1)

@@ -16,6 +16,7 @@ urls = (
   '/all', 'all')
 
 messages = []
+last_seen = {}
 
 class up:
     def GET(self):
@@ -26,7 +27,10 @@ class all:
 
         d = web.input()
         user      = d.user
-        index     = int(d.index)
+
+        if not user in last_seen:
+            last_seen[user] = 0
+        index = last_seen[user]
 
         text = []
         for tokens in messages[index:]:
@@ -37,11 +41,10 @@ class all:
             if db_user != user:
                 text.append(db_user + '> ' + msg)
 
+        last_seen[user] = len(messages)
+
         if not len(text): return 'Empty'
-        else: 
-            text.insert(0, str(len(messages)))
-            ret_text = '\n'.join(text)
-            return ret_text
+        else: return '\n'.join(text)
 
 class set_msg:
     def GET(self):
