@@ -56,6 +56,7 @@ class set_msg:
         return ''
 
 app = web.application(urls, globals(), web.reloader) # There's web.profiler too
+# app = web.wsgifunc(web.webpyfunc(urls, globals()))
 
 if __name__ == "__main__": 
     app.run()
