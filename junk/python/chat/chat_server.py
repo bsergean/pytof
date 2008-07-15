@@ -1,8 +1,5 @@
 #!/usr/bin/env python
 
-'''
-'''
-
 import web
 from base64 import urlsafe_b64decode
 from time import time
@@ -55,10 +52,10 @@ class set_msg:
         messages.append([user, msg])
         return ''
 
-app = web.application(urls, globals(), web.reloader) # There's web.profiler too
-# app = web.wsgifunc(web.webpyfunc(urls, globals()))
+application = web.application(urls, globals(), web.reloader) # There's web.profiler too
+# application = web.application(urls, globals()).wsgifunc()
 
 if __name__ == "__main__": 
-    app.run()
+    application.run()
 
 # vim: set tabstop=4 shiftwidth=4 expandtab :
