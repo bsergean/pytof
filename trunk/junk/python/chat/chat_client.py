@@ -21,7 +21,7 @@ class ChatClient:
         port = '8080'
         self.urlbase = 'http://' + self.server_host + ':' + port + '/' 
         # self.urlbase = 'http://10.0.0.2/~benjadrine/cgi-bin/chat_server.py/'
-        self.urlbase = 'http://lisa1.corp.adobe.com/chat/'
+        # self.urlbase = 'http://lisa1.corp.adobe.com/chat/'
 
         self.ok = True
         try:
@@ -82,7 +82,7 @@ class MyThread(Thread):
         self.quit = False 
 
         while not self.quit:
-            ret = cc.get_all(user)
+            cc.get_all(user)
             sleep(1)
 
 class ChatInterpreter():
@@ -113,6 +113,39 @@ class ChatInterpreter():
             if text:
                 self.cc.send_text(text, self.user)
 
+class TkChat():
+
+    def __init__(self, cc, user):
+        self.cc = cc
+        self.user = user
+
+    def loop(self):
+
+        from Tkinter import *
+        from ScrolledText import ScrolledText
+
+        frame = Frame()
+        frame.pack(fill=BOTH, expand=YES)
+
+        # The editors
+        entry = Entry(frame)
+        entry.pack(fill=BOTH, expand=YES)
+        def my_print(arg):
+            print 'caca'
+        entry.bind('<Return>', my_print)
+
+        text = ScrolledText(frame, width=76, height=25, wrap=WORD)
+
+        text.pack(fill=BOTH, expand=YES)
+        text.focus()
+        frame.master.title("Diacritical Editor")
+        frame.mainloop()
+
+        return
+        # The writting thread
+        self.t = MyThread()
+        self.t.start()
+
 if __name__ == "__main__": 
     
     # parse args
@@ -134,8 +167,9 @@ if __name__ == "__main__":
         print 'Chat server down'
         exit(1)
 
-    ci = ChatInterpreter(cc, options.user)
+    # ci = ChatInterpreter(cc, options.user)
+    ci = TkChat(cc, options.user)
     ci.loop()
-    ci.t.quit = True
+    # ci.t.quit = True
 
 # vim: set tabstop=4 shiftwidth=4 expandtab :

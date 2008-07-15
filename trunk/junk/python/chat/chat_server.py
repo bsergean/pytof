@@ -5,8 +5,6 @@ from base64 import urlsafe_b64decode
 from time import time
 from os.path import exists
 
-com_fn = 'chat_com'
-
 urls = (
   '/set_msg', 'set_msg',
   '/up', 'up',
