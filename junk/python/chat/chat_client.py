@@ -21,7 +21,7 @@ class ChatClient:
         port = '8080'
         self.urlbase = 'http://' + self.server_host + ':' + port + '/' 
         # self.urlbase = 'http://10.0.0.2/~benjadrine/cgi-bin/chat_server.py/'
-        # self.urlbase = 'http://lisa1.corp.adobe.com/name/'
+        self.urlbase = 'http://lisa1.corp.adobe.com/chat/'
 
         self.ok = True
         try:
