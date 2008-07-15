@@ -11,15 +11,17 @@ from optparse import OptionParser
 from os import linesep
 
 class ChatClient:
-    def __init__(self, server_host):
+    def __init__(self, server_host, user):
         if server_host == None:
             self.server_host = 'localhost'
         else:  
             self.server_host = server_host
 
+        self.user = user
         port = '8080'
         self.urlbase = 'http://' + self.server_host + ':' + port + '/' 
         # self.urlbase = 'http://10.0.0.2/~benjadrine/cgi-bin/chat_server.py/'
+        # self.urlbase = 'http://lisa1.corp.adobe.com/name/'
 
         self.ok = True
         try:
@@ -28,22 +30,31 @@ class ChatClient:
         except (IOError):
             self.ok = False
 
+        self.buffer = ''
+
     # Server request:
     def get_all(self, user):
 
         url = self.urlbase + 'all' + '?'
         fmt = ''
-        fmt += 'user=%s&'
+        fmt += 'user=%s' # Watch out / last one does not have a &
         args = fmt % (
                 user)
         url += args
 
         data = urlopen(url).read()
         if data != 'Empty' and data != 'internal server error':
-            stdout.write('\r' + data + '\n')
+            self.buffer += '\r' + data + '\n'
             return True
         else:
             return None
+
+    def flush_buffer(self):
+        if self.buffer:
+            stdout.write(self.buffer)
+            stdout.flush()
+            stdout.write(self.user + '> ')
+            self.buffer = ''
 
     # Server request:
     def send_text(self, text, user):
@@ -51,7 +62,7 @@ class ChatClient:
         url = self.urlbase + 'set_msg' + '?'
         fmt = ''
         fmt += 'msg=%s&'
-        fmt += 'user=%s&'
+        fmt += 'user=%s' # Watch out / last one does not have a &
         args = fmt % (
                 urlsafe_b64encode(text), 
                 user)
@@ -72,9 +83,6 @@ class MyThread(Thread):
 
         while not self.quit:
             ret = cc.get_all(user)
-            if ret:
-                stdout.write(user + '> ')
-                stdout.flush()
             sleep(1)
 
 class ChatInterpreter():
@@ -101,6 +109,7 @@ class ChatInterpreter():
                 print
                 return
 
+            self.cc.flush_buffer()
             if text:
                 self.cc.send_text(text, self.user)
 
@@ -120,7 +129,7 @@ if __name__ == "__main__":
     host = options.host
 
     # Start
-    cc = ChatClient(host)
+    cc = ChatClient(host, user)
     if not cc.ok:
         print 'Chat server down'
         exit(1)
