@@ -10,6 +10,9 @@ from threading import Thread
 from optparse import OptionParser
 from os import linesep
 
+from Tkinter import Entry, Frame, BOTH, YES, WORD
+from ScrolledText import ScrolledText
+
 class ChatClient:
     def __init__(self, server_host, user):
         if server_host == None:
@@ -121,20 +124,21 @@ class TkChat():
 
     def loop(self):
 
-        from Tkinter import *
-        from ScrolledText import ScrolledText
-
         frame = Frame()
         frame.pack(fill=BOTH, expand=YES)
 
-        # The editors
+        # All sub-widgets
         entry = Entry(frame)
-        entry.pack(fill=BOTH, expand=YES)
-        def my_print(arg):
-            print 'caca'
-        entry.bind('<Return>', my_print)
-
         text = ScrolledText(frame, width=76, height=25, wrap=WORD)
+
+        entry.pack(fill=BOTH, expand=YES)
+
+        def my_print(arg):
+            data = entry.get() + '\n'
+            entry.delete(0, 100)
+            text.insert("end", data)
+
+        entry.bind('<Return>', my_print)
 
         text.pack(fill=BOTH, expand=YES)
         text.focus()

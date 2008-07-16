@@ -50,10 +50,10 @@ class set_msg:
         messages.append([user, msg])
         return ''
 
-application = web.application(urls, globals(), web.reloader) # There's web.profiler too
-# application = web.application(urls, globals()).wsgifunc()
+application = web.application(urls, globals()).wsgifunc()
 
 if __name__ == "__main__": 
-    application.run()
+    non_deployed_app = web.application(urls, globals(), web.reloader) # There's web.profiler too
+    non_deployed_app.run()
 
 # vim: set tabstop=4 shiftwidth=4 expandtab :
