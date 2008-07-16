@@ -131,7 +131,6 @@ class TkChat():
         entry = Entry(frame)
         text = ScrolledText(frame, width=76, height=25, wrap=WORD)
 
-        entry.pack(fill=BOTH, expand=YES)
 
         def my_print(arg):
             data = entry.get() + '\n'
@@ -140,9 +139,10 @@ class TkChat():
 
         entry.bind('<Return>', my_print)
 
+        entry.pack(fill=BOTH, expand=YES)
         text.pack(fill=BOTH, expand=YES)
-        text.focus()
-        frame.master.title("Diacritical Editor")
+        entry.focus()
+        frame.master.title("Simple chat")
         frame.mainloop()
 
         return
