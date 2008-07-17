@@ -17,7 +17,7 @@ from ScrolledText import ScrolledText
 class ChatClient:
     def __init__(self, server_host, user):
         if server_host == None:
-            if platform == 'win32'
+            if platform == 'win32':
                 self.server_host = 'lisa1.corp.adobe.com'
             else:
                 self.server_host = 'localhost'
