@@ -23,7 +23,6 @@ class ChatClient:
         self.user = user
         port = '8080'
         self.urlbase = 'http://' + self.server_host + ':' + port + '/' 
-        # self.urlbase = 'http://10.0.0.2/~benjadrine/cgi-bin/chat_server.py/'
         # self.urlbase = 'http://lisa1.corp.adobe.com/chat/'
 
         self.ok = True
@@ -54,10 +53,11 @@ class ChatClient:
 
     def flush_buffer(self):
         if self.buffer:
-            stdout.write(self.buffer)
-            stdout.flush()
-            stdout.write(self.user + '> ')
+            buf = self.buffer
             self.buffer = ''
+            return buf
+        else:
+            return None
 
     # Server request:
     def send_text(self, text, user):
@@ -86,6 +86,10 @@ class MyThread(Thread):
 
         while not self.quit:
             cc.get_all(user)
+
+            buf = cc.flush_buffer()
+            if buf:
+                self.text.insert("end", buf)
             sleep(1)
 
 class ChatInterpreter():
@@ -131,11 +135,11 @@ class TkChat():
         entry = Entry(frame)
         text = ScrolledText(frame, width=76, height=25, wrap=WORD)
 
-
         def my_print(arg):
-            data = entry.get() + '\n'
+            data = entry.get()
             entry.delete(0, 100)
-            text.insert("end", data)
+            text.insert("end", self.user + '> ' + data + '\n')
+            cc.send_text(data, self.user)
 
         entry.bind('<Return>', my_print)
 
@@ -143,12 +147,14 @@ class TkChat():
         text.pack(fill=BOTH, expand=YES)
         entry.focus()
         frame.master.title("Simple chat")
-        frame.mainloop()
 
-        return
         # The writting thread
         self.t = MyThread()
+        self.t.text = text
         self.t.start()
+
+        frame.mainloop()
+
 
 if __name__ == "__main__": 
     
@@ -174,6 +180,6 @@ if __name__ == "__main__":
     # ci = ChatInterpreter(cc, options.user)
     ci = TkChat(cc, options.user)
     ci.loop()
-    # ci.t.quit = True
+    ci.t.quit = True
 
 # vim: set tabstop=4 shiftwidth=4 expandtab :
