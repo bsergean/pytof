@@ -90,6 +90,7 @@ class MyThread(Thread):
             buf = cc.flush_buffer()
             if buf:
                 self.text.insert("end", buf)
+                self.text.see("end")
             sleep(1)
 
 class ChatInterpreter():
@@ -137,8 +138,9 @@ class TkChat():
 
         def my_print(arg):
             data = entry.get()
-            entry.delete(0, 100)
+            entry.delete(0, len(data) + 1)
             text.insert("end", self.user + '> ' + data + '\n')
+            text.see("end")
             cc.send_text(data, self.user)
 
         entry.bind('<Return>', my_print)
