@@ -9,6 +9,7 @@ from base64 import urlsafe_b64encode
 from threading import Thread
 from optparse import OptionParser
 from os import linesep
+from sys import platform
 
 from Tkinter import Entry, Frame, BOTH, YES, WORD
 from ScrolledText import ScrolledText
@@ -16,14 +17,17 @@ from ScrolledText import ScrolledText
 class ChatClient:
     def __init__(self, server_host, user):
         if server_host == None:
-            self.server_host = 'localhost'
+            if platform == 'win32'
+                self.server_host = 'lisa1.corp.adobe.com'
+            else:
+                self.server_host = 'localhost'
         else:  
             self.server_host = server_host
 
         self.user = user
         port = '8080'
         self.urlbase = 'http://' + self.server_host + ':' + port + '/' 
-        # self.urlbase = 'http://lisa1.corp.adobe.com/chat/'
+        # self.urlbase = 'http://lisa1.corp.adobe.com/chat/' # over wsgi / super slow
 
         self.ok = True
         try:
