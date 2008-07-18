@@ -1,0 +1,14 @@
+Ideas
+=====
+
+Client
+------
+
+ * Automatic signing out after some minutes being inactive (to lower
+   server activity)
+ * Handle socket error if server goes down
+
+Server
+------
+
+ * Drop memory content after a while
