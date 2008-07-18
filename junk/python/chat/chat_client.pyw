@@ -184,8 +184,10 @@ if __name__ == "__main__":
         exit(1)
 
     # ci = ChatInterpreter(cc, options.user)
-    ci = TkChat(cc, options.user)
-    ci.loop()
-    ci.t.quit = True
+    try:
+        ci = TkChat(cc, options.user)
+        ci.loop()
+    finally:
+        ci.t.quit = True
 
 # vim: set tabstop=4 shiftwidth=4 expandtab :
