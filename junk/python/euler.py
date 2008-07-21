@@ -186,4 +186,29 @@ def level7():
     
     print sorted(primes.keys())[10000]
 
-level5()
+
+def level25():
+
+    fibo_cache = {}
+    def fibo(i):
+        if i in fibo_cache:
+            return fibo_cache[i]
+
+        if i <= 1:
+            return 1
+        return fibo(i-1) + fibo(i-2)
+
+    for i in xrange(1,10): print fibo(i)
+
+    S = 0
+    i = 1
+    while True:
+        f = fibo(i)
+        fibo_cache[i] = f
+        i += 1
+        f_str = str(f)
+        if len(f_str) >= 1000:
+            print i
+            break
+
+level25()
