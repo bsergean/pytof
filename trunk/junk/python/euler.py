@@ -253,13 +253,61 @@ class Matrix:
     def rows(self):
         return [self.row(i) for i in range(self.M)]
 
-    def diag_se(self, i): # south east
-        return [self.m[i][k] for k in range(self.N)]
+    def diag_ne(self): # north east
+        diags = []
 
-    def max_func(self, _list, _size, verbose = False):
+        for k in xrange(0, self.M):
+            i,j = self.N - 1, k
+            res = []
+            while i >= 0 and j < self.M:
+                res.append(self.m[i][j])
+                i -= 1
+                j += 1
+            print res
+            if len(res) >= 4:
+                diags.append(res)
+
+        for k in xrange(0, self.N):
+            i,j = k, 0
+            res = []
+            while i >= 0 and j < self.M:
+                res.append(self.m[i][j])
+                i -= 1
+                j += 1
+            print res
+            if len(res) >= 4:
+                diags.append(res)
+        self.max_func(diags)
+
+    def diag_se(self): # south east
+        diags = []
+        for k in xrange(0, self.N):
+            i,j = k,0
+            res = []
+            while i < self.N and j < self.M:
+                res.append(self.m[i][j])
+                i += 1
+                j += 1
+            print res
+            if len(res) >= 4:
+                diags.append(res)
+        for l in xrange(0, self.M):
+            i,j = 0,l
+            res = []
+            while i < self.N and j < self.M:
+                res.append(self.m[i][j])
+                i += 1
+                j += 1
+            print res
+            if len(res) >= 4:
+                diags.append(res)
+
+        self.max_func(diags)
+
+    def max_func(self, _list, verbose = False):
         x = -1
         for c in _list:
-            for i in range(0, _size - 3):
+            for i in range(0, len(c) - 3):
                 L = c[i:i+4]
 		r = reduce(lambda x,y: x*y, L)
 		if verbose: print L, r
@@ -269,16 +317,18 @@ class Matrix:
 	return x
 
     def max_cols(self):
-        self.max_func(self.cols(), self.M)
+        self.max_func(self.cols())
 
     def max_rows(self):
-        self.max_func(self.rows(), self.N)
+        self.max_func(self.rows())
                 
 def level11():
     mat = read_input(mat_str)
     A = Matrix(mat)
     A.max_cols()
     A.max_rows()
+    A.diag_se()
+    A.diag_ne()
 
 def level25():
 
