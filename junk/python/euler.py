@@ -330,6 +330,35 @@ def level11():
     A.diag_se()
     A.diag_ne()
 
+def level12():
+    def triangle_numbers():
+        S = 1
+        i = 1
+        while True:
+            yield S
+            i += 1
+            S += i
+
+    def factors(n):
+        F = [1]
+        for i in xrange(2,n+1):
+            if fmod(n, i) == 0:
+                F.append(i)
+        return F
+
+    def nb_factors(n):
+        return len(factors(n))
+
+    if False: # Brute force takes forever
+        i = 1
+        for n in triangle_numbers():
+            N = nb_factors(n)
+            if N > 100:
+                print i, N
+            if N > 500:
+                break
+            i += 1
+
 def level25():
 
     fibo_cache = {}
@@ -354,4 +383,4 @@ def level25():
             print i
             break
 
-level11()
+level12()
