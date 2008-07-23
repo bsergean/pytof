@@ -335,15 +335,25 @@ def level12():
 
     def factors(n):
         F = [1]
-        for i in xrange(2,n/2+1):
-            if fmod(n, i) == 0:
+        for i in xrange(2,(n/2)+1):
+            if n%i == 0:
                 F.append(i)
+        F.append(n)
         return F
 
     def nb_factors(n):
         return len(factors(n))
 
-    if True: # Brute force takes forever
+    for i, n in enumerate(triangle_numbers()):
+        if i > 50000: break
+
+        L = factors(n)
+        l = len(L)
+        if l > 100:
+            print len(L), '\t', i
+
+
+    if False: # Brute force takes forever
         i = 1
         for n in triangle_numbers():
             N = nb_factors(n)
