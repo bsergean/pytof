@@ -467,6 +467,52 @@ def level13():
 
 def level14(): pass
 
+def level15():
+    ''' The same problem as in google treasure hunt (which was 
+    done after project euler ... but the problem existed before both :)
+    '''
+    cache = []
+    def set_cache_result(n, p, res):
+        cache[n][p] = res
+
+    def is_in_cache(n, p):
+        return cache[n][p] != -1
+
+    def get_cache_result(n, p):
+        return cache[n][p]
+
+    def robot(n, p):
+
+        if n == 1 or p == 1: return 1
+
+        if is_in_cache(n,p):
+            return get_cache_result(n,p)
+
+        res = 0
+        for j in xrange(1, p+1):
+            res += robot(n-1, j)
+
+        return res
+
+    def populate_cache(n, p):
+
+        # init
+        for i in xrange(0, n+1):
+            L = [-1 for j in xrange(0, p+1)]
+            cache.append(L)
+        
+        for i in xrange(1, n+1):
+            for j in xrange(1, p+1):
+                res = robot(i,j)
+                print i,j,res
+                set_cache_result(i,j,res)
+
+    print populate_cache(21, 21)
+
+def level16():
+    s = str(2 ** 1000)
+    print sum([int(i) for i in s])
+
 def num_to_letters(n):
     one_to_nineteen = ['',
 'one',
@@ -563,4 +609,4 @@ def level25():
             print i
             break
 
-level17()
+level15()
