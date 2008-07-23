@@ -88,22 +88,27 @@ def is_prime(i, primes):
   # do only odd numbers starting at 3
   s = range(3, n, 2)
 
+class Factoriser:
+    def __init__(self, N):
+        ''' http://www.btinternet.com/~se16/js/factor.htm '''
+        max_int = int((N ** 0.5) + 1)
+        primes = compute_primes_native(max_int)
+        self.primes = sorted(primes.keys())
+
+    def do_primal_factor(self, n):
+
+        max_int = int((n ** 0.5) + 1)
+
+        factors = []
+        for i in self.primes[:max_int]:
+            if n % i == 0:
+                factors.append(i)
+        return factors
+
 def level3():
     N = 600851475143.0
-    max_int = int((N ** 0.5) + 1)
-    primes = compute_primes_native(max_int)
-
-    i = 2.0
-    while i < N:
-        if fmod(N,i) == 0:
-            print i
-            print N / i
-            if i in primes and N / i in primes:
-                print i, 'is a prime ->', N / i
-            print
-        i += 1
-
-        #sys.stdout.write('\r%f' % i)
+    f = Factoriser(N)
+    print f.do_primal_factor(N)
 
 def get_pythagorean(sum):
     for a in xrange(1, sum):
@@ -329,39 +334,19 @@ def level12():
         S = 1
         i = 1
         while True:
-            yield S
+            yield i, S
             i += 1
             S += i
 
-    def factors(n):
-        F = [1]
-        for i in xrange(2,(n/2)+1):
-            if n%i == 0:
-                F.append(i)
-        F.append(n)
-        return F
+    f = Factoriser(int(1e6))
 
-    def nb_factors(n):
-        return len(factors(n))
+    for i, n in triangle_numbers():
 
-    for i, n in enumerate(triangle_numbers()):
-        if i > 50000: break
-
-        L = factors(n)
+        L = f.do_primal_factor(n)
         l = len(L)
-        if l > 100:
-            print len(L), '\t', i
+        print len(L), '\t', i , n, L
 
 
-    if False: # Brute force takes forever
-        i = 1
-        for n in triangle_numbers():
-            N = nb_factors(n)
-            if N > 100:
-                print i, N
-            if N > 500:
-                break
-            i += 1
 
 datas = ''' 37107287533902102798797998220837590246510135740250
 46376937677490009712648124896970078050417018260538
@@ -672,6 +657,13 @@ What about using gmpy / mpq type (from an email thread)
     ''' 
     pass
 
+def level48():
+    S = sum([i ** i for i in xrange(1,1001)])
+    print str(S)[-10:]
+
 start = clock()
-level12()
+level48()
 print "Time taken (seconds) = %.2f" % (clock()-start)
+
+# Try those: 46, 48, 52, 76
+# 33, 37, 45, 46, 55
