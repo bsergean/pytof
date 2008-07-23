@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
 import sys
-from math import fmod
+import calendar
+from math import fmod, log10
+from time import clock
 
 def infinite():
     i = 0
@@ -82,15 +84,14 @@ def compute_primes_native(max_int):
         primes[p] = None
     return primes
 
-N = 600851475143.0
-max_int = int((N ** 0.5) + 1)
-primes = compute_primes_native(max_int)
-
 def is_prime(i, primes):
   # do only odd numbers starting at 3
   s = range(3, n, 2)
 
 def level3():
+    N = 600851475143.0
+    max_int = int((N ** 0.5) + 1)
+    primes = compute_primes_native(max_int)
 
     i = 2.0
     while i < N:
@@ -104,9 +105,6 @@ def level3():
 
         #sys.stdout.write('\r%f' % i)
 
-#level3()
-
-
 def get_pythagorean(sum):
     for a in xrange(1, sum):
         for b in xrange(a, sum):
@@ -118,9 +116,6 @@ def get_pythagorean(sum):
 def level9():
     print get_pythagorean(1000)
 
-#level9()
-
-
 def is_palindrome_str(num):
     liste = list(str(num))
     liste2 = list(str(num))
@@ -129,7 +124,6 @@ def is_palindrome_str(num):
         return True
     return False
 
-from math import log10
 def is_palindrome_num(num):
     liste = [int(s) for s in str(num)]
     i = 0
@@ -341,7 +335,7 @@ def level12():
 
     def factors(n):
         F = [1]
-        for i in xrange(2,n+1):
+        for i in xrange(2,n/2+1):
             if fmod(n, i) == 0:
                 F.append(i)
         return F
@@ -349,7 +343,7 @@ def level12():
     def nb_factors(n):
         return len(factors(n))
 
-    if False: # Brute force takes forever
+    if True: # Brute force takes forever
         i = 1
         for n in triangle_numbers():
             N = nb_factors(n)
@@ -614,6 +608,10 @@ def level18():
 04 62 98 27 23 09 70 98 73 93 38 53 60 04 23
 '''
 
+def level19():
+    C = [calendar.monthcalendar(y, m)[0][1] == 1 for y in xrange(1901, 2001) for m in xrange(1,13)]
+    print sum([1 if i == True else 0 for i in C])
+
 def level20():
     def fact(n):
         if n == 1: return 1
@@ -621,6 +619,14 @@ def level20():
     s = str(fact(100))
     print sum([int(i) for i in s])
 
+def level22():
+    names = [n for n in open('names_level22.txt').read().replace('"','').split(',')]
+    names.sort()
+
+    def weight(name): 
+        return sum((ord(l) - ord('A') + 1 for l in name))
+
+    print sum((i+1) * weight(n) for i, n in enumerate(names))
 
 def level25():
 
@@ -656,4 +662,6 @@ What about using gmpy / mpq type (from an email thread)
     ''' 
     pass
 
-level14()
+start = clock()
+level12()
+print "Time taken (seconds) = %.2f" % (clock()-start)
