@@ -84,9 +84,10 @@ def compute_primes_native(max_int):
         primes[p] = None
     return primes
 
-def is_prime(i, primes):
-  # do only odd numbers starting at 3
-  s = range(3, n, 2)
+def compute_sorted_primes(n):
+    primes = compute_primes_native(n)
+    primes = sorted(primes.keys())
+    return primes
 
 class Factoriser:
     def __init__(self, N):
@@ -657,13 +658,50 @@ What about using gmpy / mpq type (from an email thread)
     ''' 
     pass
 
+def level37():
+    N = 1000000
+    primes = compute_sorted_primes(N)
+    primes_dict = compute_primes_native(N)
+
+    # 1 is not a prime ...
+    def is_prime(i): return i in primes_dict
+
+    Lp = []
+    for p in primes:
+        if p <= 7:
+            continue
+        S = str(p)
+
+        '''>> ['3', '37', '379', '3797']'''
+        trunc_left = [S[:i] for i in xrange(1,len(S)+1)]
+
+        '''>> ['3797', '797', '97', '7'] '''
+        trunc_right = [S[i:] for i in xrange(0,len(S))]
+
+        t = trunc_left + trunc_right
+        if all(is_prime(int(i)) for i in t):
+            print p, t
+            Lp.append(p)
+
+    print 'res', sum(Lp)
+    print 'res (11)', Lp[0:11], sum(Lp[0:11])
+    print 'res (:11)', Lp[-11:], sum(Lp[-11:])
+
+def level47():
+    N = 600851475143.0
+    f = Factoriser(N)
+    print f.do_primal_factor(N)
+
 def level48():
     S = sum([i ** i for i in xrange(1,1001)])
     print str(S)[-10:]
 
-start = clock()
-level48()
-print "Time taken (seconds) = %.2f" % (clock()-start)
+if __name__ == '__main__':
+    start = clock()
+    level47()
+    print "Time taken (seconds) = %.2f" % (clock()-start)
 
 # Try those: 46, 48, 52, 76
-# 33, 37, 45, 46, 55
+# 33, 45, 46, 55
+
+# 165 does not look too hard for such a big number
