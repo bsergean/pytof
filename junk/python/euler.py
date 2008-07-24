@@ -106,6 +106,17 @@ class Factoriser:
                 factors.append(i)
         return factors
 
+    def do_factorize_primal_factors(self, n):
+        factors = self.do_primal_factor(n)
+        x = reduce(lambda x,y: x*y, factors)
+        while x != n:
+            try_mul = n / x
+            for f in factors:
+                for i in xrange(1,5):
+
+                return factors + [try_mul]
+            
+
 def level3():
     N = 600851475143.0
     f = Factoriser(N)
@@ -688,9 +699,34 @@ def level37():
     print 'res (:11)', Lp[-11:], sum(Lp[-11:])
 
 def level47():
-    N = 600851475143.0
+    N  = 100000
+    N1 = 100000
+    primes_dict = compute_primes_native(N)
     f = Factoriser(N)
-    print f.do_primal_factor(N)
+
+    # 1 is not a prime ...
+    def is_prime(i): 
+        return i in primes_dict
+
+    print f.do_factorize_primal_factors(644)
+    print f.do_factorize_primal_factors(645)
+    print f.do_factorize_primal_factors(646)
+
+    for i in xrange(N1):
+        if is_prime(i) or is_prime(i+1) \
+                or is_prime(i+2) or is_prime(i+3):
+            continue
+
+        A = f.do_primal_factor(i)
+        B = f.do_primal_factor(i+1)
+        C = f.do_primal_factor(i+2)
+        D = f.do_primal_factor(i+3)
+
+        if len(A) == len(B) == len(C) == len(D) == 4:
+            all = A + B + C + D
+            if len(set(all)) == len(all):
+                print i,A,B,C,D
+        
 
 def level48():
     S = sum([i ** i for i in xrange(1,1001)])
