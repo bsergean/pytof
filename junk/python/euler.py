@@ -98,7 +98,8 @@ class Factoriser:
 
     def do_primal_factor(self, n):
 
-        max_int = int((n ** 0.5) + 1)
+        #max_int = int((n ** 0.5) + 1)
+        max_int = n / 2 + 1
 
         factors = []
         for i in self.primes[:max_int]:
@@ -108,14 +109,23 @@ class Factoriser:
 
     def do_factorize_primal_factors(self, n):
         factors = self.do_primal_factor(n)
+        print 'do_factorize_primal_factors', n, factors
+        factors_power = [1 for f in factors]
+
         x = reduce(lambda x,y: x*y, factors)
         while x != n:
             try_mul = n / x
-            for f in factors:
-                for i in xrange(1,5):
+            print try_mul
+            f_new = self.do_primal_factor(try_mul)
+            print f_new 
+            x_new = reduce(lambda x,y: x*y, f_new)
 
-                return factors + [try_mul]
-            
+            x *= x_new
+            for f in f_new:
+                print 'fff', factors, f
+                factors_power[factors.index(f)] += 1
+
+        return [f ** power for f, power in zip(factors, factors_power)]
 
 def level3():
     N = 600851475143.0
@@ -706,6 +716,7 @@ def level47():
 
     # 1 is not a prime ...
     def is_prime(i): 
+        print i, 'is prime ?'
         return i in primes_dict
 
     print f.do_factorize_primal_factors(644)
@@ -713,16 +724,16 @@ def level47():
     print f.do_factorize_primal_factors(646)
 
     for i in xrange(N1):
-        if is_prime(i) or is_prime(i+1) \
-                or is_prime(i+2) or is_prime(i+3):
+        if is_prime(i) or is_prime(i+1) or is_prime(i+2) or is_prime(i+3):
             continue
 
-        A = f.do_primal_factor(i)
-        B = f.do_primal_factor(i+1)
-        C = f.do_primal_factor(i+2)
-        D = f.do_primal_factor(i+3)
+        A = f.do_factorize_primal_factors(i)
+        B = f.do_factorize_primal_factors(i+1)
+        C = f.do_factorize_primal_factors(i+2)
+        D = f.do_factorize_primal_factors(i+3)
 
         if len(A) == len(B) == len(C) == len(D) == 4:
+            print 'youpi'
             all = A + B + C + D
             if len(set(all)) == len(all):
                 print i,A,B,C,D
