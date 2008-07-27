@@ -606,9 +606,7 @@ def level17():
         S += L
     print S
 
-def level18():
-    triangle = '''
-75
+triangle_big = '''75
 95 64
 17 47 82
 18 35 87 10
@@ -624,6 +622,25 @@ def level18():
 63 66 04 68 89 53 67 30 73 16 69 87 40 31
 04 62 98 27 23 09 70 98 73 93 38 53 60 04 23
 '''
+
+triangle_small = '''3
+7 5
+2 4 6
+8 5 9 3
+'''
+
+def level18():
+    #mat_str = read_input(triangle_small)
+    mat_str = read_input(triangle_big)
+    print mat_str[0][0]
+    N = len(mat_str)
+
+    def triangle_rec(i,j,N):
+        if i>N: return 0
+        return mat_str[i][j] + max(triangle_rec(i+1, j, N), triangle_rec(i+1, j+1, N))
+
+    print triangle_rec(0,0,N-1)
+
 
 def level19():
     C = [calendar.monthcalendar(y, m)[0][1] == 1 for y in xrange(1901, 2001) for m in xrange(1,13)]
@@ -745,7 +762,7 @@ def level48():
 
 if __name__ == '__main__':
     start = clock()
-    level47()
+    level18()
     print "Time taken (seconds) = %.2f" % (clock()-start)
 
 # Try those: 46, 48, 52, 76
