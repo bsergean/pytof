@@ -5,12 +5,6 @@ import calendar
 from math import fmod, log10
 from time import clock
 
-def infinite():
-    i = 0
-    while True:
-        yield i
-        i += 1
-
 def multiple_fmod(x, Max):
     return [i for i in xrange(x, Max) if fmod(i, x) == 0]
 
@@ -662,6 +656,21 @@ def level22():
 
     print sum((i+1) * weight(n) for i, n in enumerate(names))
 
+def permutations(L):
+    if len(L) <= 1:
+        yield L
+    else:
+        a = [L.pop(0)]
+        for p in permutations(L):
+            for i in range(len(p)+1):
+                yield p[:i] + a + p[i:]
+
+def level24():
+    N = 10
+    S = [''.join(str(l) for l in p) for p in permutations(range(0,N))]
+    S.sort()
+    print S[int(1e6)-1]
+
 def level25():
 
     fibo_cache = {}
@@ -760,9 +769,32 @@ def level48():
     S = sum([i ** i for i in xrange(1,1001)])
     print str(S)[-10:]
 
+def level52():
+    ''' permutations '''
+    def same_digits(a, b):
+        return set(str(a)) == set(str(b))
+
+    i = 1
+    while True:
+        if same_digits(i, 2*i) and \
+            same_digits(i, 3*i) and \
+            same_digits(i, 4*i) and \
+            same_digits(i, 5*i) and \
+            same_digits(i, 6*i):
+            print i
+            break
+        i += 1
+
+def rewrite(n):
+    if n == 1: return 1
+    print n, rewrite(n-1)
+
+def level76():
+    rewrite(5)
+
 if __name__ == '__main__':
     start = clock()
-    level18()
+    level24()
     print "Time taken (seconds) = %.2f" % (clock()-start)
 
 # Try those: 46, 48, 52, 76
