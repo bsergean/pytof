@@ -911,4 +911,8 @@ if __name__ == '__main__':
 # Try those: 46, 48, 52, 76
 # 33, 45, 46, 55
 
+# Next: 29 ?
+# Do-able: the spiral: 28
+# 1 /d : 26
+
 # 165 does not look too hard for such a big number
