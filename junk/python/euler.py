@@ -121,6 +121,16 @@ class Factoriser:
 
         return [f ** power for f, power in zip(factors, factors_power)]
 
+    def do_proper_divisors(self, n):
+
+        max_int = n / 2 + 1
+
+        factors = []
+        for i in xrange(1,max_int):
+            if n % i == 0:
+                factors.append(i)
+        return factors
+
 def level3():
     N = 600851475143.0
     f = Factoriser(N)
@@ -647,6 +657,26 @@ def level20():
     s = str(fact(100))
     print sum([int(i) for i in s])
 
+def level21():
+
+    D = Factoriser(5)
+    def d(n, D):
+        return sum(D.do_proper_divisors(n))
+
+    tables_amicables = {}
+    for i in xrange(1, 10000):
+        tables_amicables[i] = d(i,D)
+
+    S = 0
+    for i in xrange(1, 10000):
+        a = tables_amicables[i]
+        if a in tables_amicables:
+            if tables_amicables[a] == i:
+                if a != i:
+                    print a, i
+                    S += i
+    print S
+
 def level22():
     names = [n for n in open('names_level22.txt').read().replace('"','').split(',')]
     names.sort()
@@ -794,7 +824,7 @@ def level76():
 
 if __name__ == '__main__':
     start = clock()
-    level24()
+    level21()
     print "Time taken (seconds) = %.2f" % (clock()-start)
 
 # Try those: 46, 48, 52, 76
