@@ -189,7 +189,7 @@ def level5():
     divisors = range(1,21)
     divisors.reverse()
     while True:
-        if all((fmod(X,i) == 0.0 for i in divisors)):
+        if all((X % i == 0 for i in divisors)):
             print X
             return
         X += 20
@@ -826,6 +826,59 @@ def level48():
     S = sum([i ** i for i in xrange(1,1001)])
     print str(S)[-10:]
 
+def pair_rewrite(n):
+    i = 1
+    j = n - 1
+    res = []
+    while i <= j:
+        res.append([j,i])
+        i += 1
+        j -= 1
+    #print 'pair rewrite', n, '->', len(res), '\t', res
+    return res
+
+all = {}
+def rewrite(n, L):
+
+    A = L + [n]
+    A.sort()
+    key = ('').join([str(i) for i in A])
+    if not key in all:
+        all[key] = True
+        print len(all) - 1
+    #print 'A', A
+
+    if (n == 1): return 0
+
+    res = 0
+    pairs = pair_rewrite(n)
+
+    for i,j in pairs:
+        L.append(j)
+        res += rewrite(i, L)
+        L.remove(j)
+
+        L.append(i)
+        res += rewrite(j, L)
+        L.remove(i)
+
+    return res
+
+def level76():
+    if False:
+        print 'Test'
+        for i in xrange(1,6):
+            print '------', i
+            for k,l in pair_rewrite(i):
+                print k,l
+
+    print 'Start'
+    N = 5
+    N = 20
+    res = rewrite(N, [])
+    print 'Result:', len(all) - 1
+
+
 def level52():
     ''' permutations '''
     def same_digits(a, b):
@@ -851,6 +904,7 @@ def level76():
 
 if __name__ == '__main__':
     start = clock()
+    #level76()
     level23()
     print "Time taken (seconds) = %.2f" % (clock()-start)
 
