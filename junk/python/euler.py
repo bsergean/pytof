@@ -700,7 +700,7 @@ def level23():
     abundant = {}
     for i in xrange(10, 28123 + 1):
         s = D.proper_divisor_sum(i)
-        if s >= i:
+        if s > i:
             abundant[i] = s
             print i,s
 
@@ -710,7 +710,7 @@ def level23():
                 return True
         return False
 
-    print sum(i for i in xrange(10, 28123 + 1) if abundant_sumable(i))
+    print sum(i for i in xrange(10, 28123 + 1) if not abundant_sumable(i))
 
 
 def permutations(L):
