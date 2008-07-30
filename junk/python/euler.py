@@ -710,7 +710,7 @@ def level23():
                 return True
         return False
 
-    print sum(i for i in xrange(10, 28123 + 1) if not abundant_sumable(i))
+    print sum(i for i in xrange(1, 28123 + 1) if not abundant_sumable(i))
 
 
 def permutations(L):
