@@ -122,7 +122,6 @@ class Factoriser:
         return [f ** power for f, power in zip(factors, factors_power)]
 
     def do_proper_divisors(self, n):
-
         max_int = n / 2 + 1
 
         factors = []
@@ -130,6 +129,9 @@ class Factoriser:
             if n % i == 0:
                 factors.append(i)
         return factors
+
+    def proper_divisor_sum(self, n):
+        return sum(self.do_proper_divisors(n))
 
 def level3():
     N = 600851475143.0
@@ -660,12 +662,10 @@ def level20():
 def level21():
 
     D = Factoriser(5)
-    def d(n, D):
-        return sum(D.do_proper_divisors(n))
 
     tables_amicables = {}
     for i in xrange(1, 10000):
-        tables_amicables[i] = d(i,D)
+        tables_amicables[i] = D.proper_divisor_sum(i)
 
     S = 0
     for i in xrange(1, 10000):
@@ -685,6 +685,33 @@ def level22():
         return sum((ord(l) - ord('A') + 1 for l in name))
 
     print sum((i+1) * weight(n) for i, n in enumerate(names))
+
+def pair_sum(n):
+    i = 1
+    j = n - 1
+    while i <= j:
+        yield i,j
+        i += 1
+        j -= 1
+
+def level23():
+    D = Factoriser(5)
+
+    abundant = {}
+    for i in xrange(10, 28123 + 1):
+        s = D.proper_divisor_sum(i)
+        if s >= i:
+            abundant[i] = s
+            print i,s
+
+    def abundant_sumable(n):
+        for i,j in pair_sum(n):
+            if i in abundant and j in abundant:
+                return True
+        return False
+
+    print sum(i for i in xrange(10, 28123 + 1) if abundant_sumable(i))
+
 
 def permutations(L):
     if len(L) <= 1:
@@ -824,7 +851,7 @@ def level76():
 
 if __name__ == '__main__':
     start = clock()
-    level21()
+    level23()
     print "Time taken (seconds) = %.2f" % (clock()-start)
 
 # Try those: 46, 48, 52, 76
