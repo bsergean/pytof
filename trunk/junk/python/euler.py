@@ -4,6 +4,7 @@ import sys
 import calendar
 from math import fmod, log10
 from time import clock
+from copy import deepcopy
 
 def multiple_fmod(x, Max):
     return [i for i in xrange(x, Max) if fmod(i, x) == 0]
@@ -262,7 +263,6 @@ def read_input(var):
 
 class Matrix:
     def __init__(self, m):
-        from copy import deepcopy
         self.m = deepcopy(m)
 
         self.N = len(m[0])
@@ -369,10 +369,12 @@ def level12():
     f = Factoriser(int(1e6))
 
     for i, n in triangle_numbers():
-
-        L = f.do_primal_factor(n)
-        l = len(L)
-        print len(L), '\t', i , n, L
+        if i < 7564: continue
+        if True: #n % 10 == 0:
+            L = f.do_proper_divisors(n)
+            #if len(L) > 200:
+            print len(L), '\t', i , n, L
+            #print len(L), i
 
 
 
@@ -837,12 +839,20 @@ def pair_rewrite(n):
     #print 'pair rewrite', n, '->', len(res), '\t', res
     return res
 
+from bisect import insort
 all = {}
+
 def rewrite(n, L):
 
-    A = L + [n]
-    A.sort()
-    key = ('').join([str(i) for i in A])
+    #if False:
+    #    A = L + [n]
+    #    A.sort()
+    #else:
+    A = deepcopy(L)
+    insort(A,n)
+    key = ('').join([str(i) for i in A]) # key is a string
+    #key = sum([v * 10 ** (len(A)-i-1) for i,v in enumerate(A)]) # key is a number
+
     if not key in all:
         all[key] = True
         print len(all) - 1
@@ -895,17 +905,10 @@ def level52():
             break
         i += 1
 
-def rewrite(n):
-    if n == 1: return 1
-    print n, rewrite(n-1)
-
-def level76():
-    rewrite(5)
-
 if __name__ == '__main__':
     start = clock()
-    #level76()
-    level23()
+    level76()
+    #level12()
     print "Time taken (seconds) = %.2f" % (clock()-start)
 
 # Try those: 46, 48, 52, 76
