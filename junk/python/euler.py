@@ -884,7 +884,7 @@ def level76():
 
     print 'Start'
     N = 5
-    N = 20
+    N = 100
     res = rewrite(N, [])
     print 'Result:', len(all) - 1
 
