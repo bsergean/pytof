@@ -9,6 +9,9 @@ from copy import deepcopy
 def multiple_fmod(x, Max):
     return [i for i in xrange(x, Max) if fmod(i, x) == 0]
 
+def list_of_int_to_int(L):
+    return sum([v * 10 ** (len(L)-i-1) for i,v in enumerate(L)])
+
 def level1():
 
     Max = 1000
@@ -828,67 +831,6 @@ def level48():
     S = sum([i ** i for i in xrange(1,1001)])
     print str(S)[-10:]
 
-def pair_rewrite(n):
-    i = 1
-    j = n - 1
-    res = []
-    while i <= j:
-        res.append([j,i])
-        i += 1
-        j -= 1
-    #print 'pair rewrite', n, '->', len(res), '\t', res
-    return res
-
-from bisect import insort
-all = {}
-
-def rewrite(n, L):
-
-    #if False:
-    #    A = L + [n]
-    #    A.sort()
-    #else:
-    A = deepcopy(L)
-    insort(A,n)
-    key = ('').join([str(i) for i in A]) # key is a string
-    #key = sum([v * 10 ** (len(A)-i-1) for i,v in enumerate(A)]) # key is a number
-
-    if not key in all:
-        all[key] = True
-        print len(all) - 1
-    #print 'A', A
-
-    if (n == 1): return 0
-
-    res = 0
-    pairs = pair_rewrite(n)
-
-    for i,j in pairs:
-        L.append(j)
-        res += rewrite(i, L)
-        L.remove(j)
-
-        L.append(i)
-        res += rewrite(j, L)
-        L.remove(i)
-
-    return res
-
-def level76():
-    if False:
-        print 'Test'
-        for i in xrange(1,6):
-            print '------', i
-            for k,l in pair_rewrite(i):
-                print k,l
-
-    print 'Start'
-    N = 5
-    N = 100
-    res = rewrite(N, [])
-    print 'Result:', len(all) - 1
-
-
 def level52():
     ''' permutations '''
     def same_digits(a, b):
@@ -905,11 +847,74 @@ def level52():
             break
         i += 1
 
+# Level 76
+def pair_rewrite(n):
+    i = 1
+    j = n - 1
+
+    while i <= j:
+        yield i,j
+        i += 1
+        j -= 1
+
+from bisect import insort
+all = {}
+
+def rewrite_list(n, L):
+
+    insort(L,n)
+
+    if sum(L) == 5:
+        key = ('').join([str(i) for i in L]) # key is a string
+        if not key in all:
+            all[key] = True
+            print 'L', L, len(all) - 1
+
+    L.remove(n)
+
+    for i,j in pair_rewrite(n):
+
+        insort(L,j)
+        #print 'Cand_i:', L, n, i
+        rewrite_list(i, L)
+        L.remove(j)
+
+        insort(L,i)
+        #print 'Cand_j:', L, n, j
+        rewrite_list(j, L)
+        L.remove(i)
+
+def rewrite_int(n, S):
+
+    if n + S == 20:
+        print 'youpi'
+
+    for i,j in pair_rewrite(n):
+
+        rewrite_int(i, S + j)
+        rewrite_int(j, S + i)
+
+def level76():
+    if False:
+        print 'Test'
+        for i,j in pair_rewrite(-5):
+            print i,j
+        print 'toto'
+        import sys
+        sys.exit(0)
+
+    print 'Start'
+    N = 5
+    #rewrite_int(N, 0)
+    rewrite_list(N, [])
+
+
+
 if __name__ == '__main__':
     start = clock()
     level76()
     #level12()
-    print "Time taken (seconds) = %.2f" % (clock()-start)
+    print "Time taken (seconds) = %.6f" % (clock()-start)
 
 # Try those: 46, 48, 52, 76
 # 33, 45, 46, 55
