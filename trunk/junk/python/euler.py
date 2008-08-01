@@ -860,11 +860,11 @@ def pair_rewrite(n):
 from bisect import insort
 all = {}
 
-def rewrite_list(n, L):
+def rewrite_list(n, L, N):
 
     insort(L,n)
 
-    if sum(L) == 5:
+    if sum(L) == N:
         key = ('').join([str(i) for i in L]) # key is a string
         if not key in all:
             all[key] = True
@@ -876,12 +876,12 @@ def rewrite_list(n, L):
 
         insort(L,j)
         #print 'Cand_i:', L, n, i
-        rewrite_list(i, L)
+        rewrite_list(i, L, N)
         L.remove(j)
 
         insort(L,i)
         #print 'Cand_j:', L, n, j
-        rewrite_list(j, L)
+        rewrite_list(j, L, N)
         L.remove(i)
 
 def rewrite_int(n, S):
@@ -904,10 +904,23 @@ def level76():
         sys.exit(0)
 
     print 'Start'
-    N = 5
-    #rewrite_int(N, 0)
-    rewrite_list(N, [])
+    N = 10 
+    rewrite_list(N, [], N)
+    del all[str(N)]
 
+    B = []
+    for i in all.keys():
+        t = list(i)
+        t.reverse()
+        B.append(''.join(t))
+
+    print B
+    A = [(len(i), str(i), i) for i in B]
+    A.sort()
+    for i in A:
+        print i[2], len(i[2])
+
+    #rewrite_int(N, 0)
 
 
 if __name__ == '__main__':
