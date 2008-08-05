@@ -936,12 +936,13 @@ def level76():
 
         L = ['%3d' % dico[k] for k in dico.keys()]
         L.reverse()
-        print ' '.join(L)
+        res = ' '.join(L)
 
         all.clear()
+        return res
 
     for i in xrange(21):
-        rewrite(i)
+        print i, rewrite(i)
 
     #rewrite_int(N, 0)
 
