@@ -6,6 +6,12 @@ from math import fmod, log10
 from time import clock
 from copy import deepcopy
 
+try:
+    import psyco
+    psyco.full()
+except ImportError:
+    pass
+
 def multiple_fmod(x, Max):
     return [i for i in xrange(x, Max) if fmod(i, x) == 0]
 
@@ -860,7 +866,7 @@ def pair_rewrite(n):
 from bisect import insort
 all = {}
 
-def rewrite_list(n, L, N):
+def rewrite_list(n, L, N, verbose):
 
     insort(L,n)
 
@@ -868,7 +874,8 @@ def rewrite_list(n, L, N):
         key = ('').join([str(i) for i in L]) # key is a string
         if not key in all:
             all[key] = True
-            print 'L', L, len(all) - 1
+            if verbose:
+                print 'L', L, len(all) - 1
 
     L.remove(n)
 
@@ -876,12 +883,12 @@ def rewrite_list(n, L, N):
 
         insort(L,j)
         #print 'Cand_i:', L, n, i
-        rewrite_list(i, L, N)
+        rewrite_list(i, L, N, verbose)
         L.remove(j)
 
         insort(L,i)
         #print 'Cand_j:', L, n, j
-        rewrite_list(j, L, N)
+        rewrite_list(j, L, N, verbose)
         L.remove(i)
 
 def rewrite_int(n, S):
@@ -903,22 +910,38 @@ def level76():
         import sys
         sys.exit(0)
 
-    print 'Start'
-    N = 10 
-    rewrite_list(N, [], N)
-    del all[str(N)]
+    def rewrite(N):
+        verbose = False
+        rewrite_list(N, [], N, verbose)
+        del all[str(N)]
 
-    B = []
-    for i in all.keys():
-        t = list(i)
-        t.reverse()
-        B.append(''.join(t))
+        B = []
+        for i in all.keys():
+            t = list(i)
+            t.reverse()
+            B.append(''.join(t))
 
-    print B
-    A = [(len(i), str(i), i) for i in B]
-    A.sort()
-    for i in A:
-        print i[2], len(i[2])
+        if verbose: print B
+        A = [(len(i), str(i), i) for i in B]
+        A.sort()
+
+        l = 0
+        dico = {}
+        dico.setdefault
+        for i in A:
+            l = len(i[2])
+            if verbose: print i[2], l
+            v = dico.get(l, 0) 
+            dico[l] = v + 1
+
+        L = ['%3d' % dico[k] for k in dico.keys()]
+        L.reverse()
+        print ' '.join(L)
+
+        all.clear()
+
+    for i in xrange(21):
+        rewrite(i)
 
     #rewrite_int(N, 0)
 
