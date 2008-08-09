@@ -873,7 +873,7 @@ def rewrite_list(n, L, N, verbose):
     if sum(L) == N:
         key = ('').join([str(i) for i in L]) # key is a string
         if not key in all:
-            all[key] = True
+            all[key] = len(L)
             if verbose:
                 print 'L', L, len(all) - 1
 
@@ -910,30 +910,29 @@ def level76():
         import sys
         sys.exit(0)
 
-    def rewrite(N):
-        verbose = False
+    def rewrite(N, verbose = False):
         rewrite_list(N, [], N, verbose)
         del all[str(N)]
 
-        B = []
-        for i in all.keys():
-            t = list(i)
-            t.reverse()
-            B.append(''.join(t))
+        if False:
+            B = []
+            for i in all.keys():
+                t = list(i)
+                t.reverse()
+                B.append(''.join(t))
 
-        if verbose: print B
-        A = [(len(i), str(i), i) for i in B]
-        A.sort()
+            if verbose: print B
+            A = [(len(i), str(i), i) for i in B]
+            A.sort()
 
         l = 0
         dico = {}
-        dico.setdefault
-        for i in A:
-            l = len(i[2])
-            if verbose: print i[2], l
+        for k in all.keys():
+            l = all[k]
             v = dico.get(l, 0) 
             dico[l] = v + 1
 
+        #print dico
         L = ['%3d' % dico[k] for k in dico.keys()]
         L.reverse()
         res = ' '.join(L)
@@ -941,8 +940,14 @@ def level76():
         all.clear()
         return res
 
-    for i in xrange(21):
-        print i, rewrite(i)
+    # Show one example solved
+    N = 10 
+    print '[%2d]' % N, rewrite(N, verbose = True)
+
+    # Show the triangle
+    Range = 22
+    for N in xrange(Range):
+        print '[%2d]' % N, rewrite(N)
 
     #rewrite_int(N, 0)
 
