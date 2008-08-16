@@ -1029,6 +1029,9 @@ def level34():
 
 
 def rotate(tmp):
+    '''
+    This works too l.insert(0,l.pop())
+    '''
     for i in range(len(tmp)): 
         tmp = [tmp[-1]] + tmp[:-1]
         yield int(''.join(tmp))
@@ -1107,6 +1110,17 @@ def level37():
     print 'res', sum(Lp)
     print 'res (11)', Lp[0:11], sum(Lp[0:11])
     print 'res (:11)', Lp[-11:], sum(Lp[-11:])
+
+def level40():
+    N = int(21)
+    N = int(1e6)
+    d = ''.join((str(i) for i in xrange(1,N)))
+
+    print d[11] # 12th digit
+    print d[10] # 12th digit
+
+    factors = (int(d[-1 + 10 ** i]) for i in xrange(6+1))
+    print reduce(lambda x,y: x*y, factors)
 
 def level47():
     N  = 100000
@@ -1260,7 +1274,7 @@ def level76():
 
 if __name__ == '__main__':
     start = clock()
-    level35()
+    level40()
     print "Time taken (seconds) = %.6f" % (clock()-start)
 
 # Try those: 46, 48, 52, 76
