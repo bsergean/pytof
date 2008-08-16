@@ -273,10 +273,22 @@ def read_input(var):
 
 class Matrix:
     def __init__(self, m):
+        '''
+                M
+           0 1 0 0 10 1
+           0 1 0 0 10 1
+        N  0 1 0 0 10 1
+           0 1 0 0 10 1
+           0 1 0 0 10 1
+        '''
         self.m = deepcopy(m)
 
         self.N = len(m[0])
         self.M = len(m)
+
+        self.i_cur = 0
+        self.j_cur = 0
+        self.value = 0
 
     def col(self, i):
         return [self.m[k][i] for k in range(self.M)]
@@ -358,6 +370,77 @@ class Matrix:
 
     def max_rows(self):
         self.max_func(self.rows())
+
+    def set_decrement(self, i, j):
+        self.m[i][j] = self.value
+        self.value -= 1
+
+    def set_increment(self):
+        self.value += 1
+
+    def fill_S(self):
+        print 'fill_S'
+        while True:
+            i,j = self.i_cur, self.j_cur
+            self.set_decrement(i,j)
+
+            if i+1 == self.M or self.m[i+1][j] != 0:
+                self.set_increment()
+                break
+
+            self.i_cur += 1
+
+        print self.i_cur, self.j_cur
+
+    def fill_N(self):
+        print 'fill_N'
+        while True:
+            i,j = self.i_cur, self.j_cur
+            self.set_decrement(i,j)
+
+            if i == 0 or self.m[i-1][j] != 0:
+                self.set_increment()
+                break
+
+            self.i_cur -= 1
+
+        print self.i_cur, self.j_cur
+
+    def fill_E(self):
+        print 'fill_E'
+        while True:
+            i,j = self.i_cur, self.j_cur
+            self.set_decrement(i,j)
+
+            if j+1 == self.N or self.m[i][j+1] != 0:
+                self.set_increment()
+                break
+
+            self.j_cur += 1
+
+        print self.i_cur, self.j_cur
+
+    def fill_W(self):
+        print 'fill_W'
+        while True:
+            i,j = self.i_cur, self.j_cur
+            self.set_decrement(i,j)
+
+            if j == 0 or self.m[i][j-1] != 0:
+                self.set_increment()
+                break
+
+            self.j_cur -= 1
+
+        print self.i_cur, self.j_cur
+
+    def filled(self):
+        for c in self.cols():
+            for i in c:
+                if i == 0:
+                    return False
+        return True
+
 
     def __str__(self):
         fo = StringIO.StringIO()
@@ -813,7 +896,7 @@ def level28():
     assert sample(0.5,3) == 1
     assert sample(0.8,3) == 2
 
-    def draw_spiral(n):
+    def draw_circle(n):
         mat_str = ''' 21 22 23 24 25
 20  7  8  9 10
 19  6  1  2 11
@@ -837,7 +920,7 @@ def level28():
                 angle_denominator = 8
                 max_sample = 3
             elif j == 25:
-                angle_denominator = 16
+                angle_denominator = 12
                 max_sample = 4
 
             for i in xrange((max_sample+1)**2 ):
@@ -863,8 +946,22 @@ def level28():
 
         return A
 
-    A = draw_spiral(5)
-    print A
+    def draw_spiral():
+
+        N = 7
+        mat = [[0 for i in xrange(N)] for j in xrange(N)]
+        A = Matrix(mat)
+
+        A.value = N ** 2
+
+        while not A.filled():
+            A.fill_S()
+            A.fill_E()
+            A.fill_N()
+            A.fill_W()
+            print A
+
+    draw_spiral()
 
 def level37():
     N = 1000000
