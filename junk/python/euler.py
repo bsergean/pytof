@@ -287,8 +287,11 @@ class Matrix:
         self.M = len(m)
 
         self.i_cur = 0
-        self.j_cur = 0
+        self.j_cur = self.M - 1
         self.value = 0
+
+        self.i_center = self.N / 2
+        self.j_center = self.M / 2
 
     def col(self, i):
         return [self.m[k][i] for k in range(self.M)]
@@ -377,6 +380,9 @@ class Matrix:
 
     def set_increment(self):
         self.value += 1
+
+    def center(self):
+        return self.m[self.i_center][self.j_center]
 
     def fill_S(self):
         print 'fill_S'
@@ -948,18 +954,18 @@ def level28():
 
     def draw_spiral():
 
-        N = 7
+        N = 1001
         mat = [[0 for i in xrange(N)] for j in xrange(N)]
         A = Matrix(mat)
 
         A.value = N ** 2
 
-        while not A.filled():
+        while not A.center():
+            A.fill_W()
             A.fill_S()
             A.fill_E()
             A.fill_N()
-            A.fill_W()
-            print A
+        print A
 
     draw_spiral()
 
