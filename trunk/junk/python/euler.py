@@ -820,26 +820,25 @@ def level28():
 18  5  4  3 12
 17 16 15 14 13'''
 
-        mat_str = ''' 0 0 0 0 0
-0 0 0 0 0
-0 0 0 0 0
-0 0 0 0 0
-0 0 0 0 0'''
-
         mat = read_input(mat_str)
+        N = 7
+        mat = [[0 for i in xrange(N)] for j in xrange(N)]
         A = Matrix(mat)
-        k = 2
-        l = 2
+        k = N / 2
+        l = N / 2
 
         from math import cos, sin, pi
-        for j in [0,9]:
+        for j in [0,9,25]:
 
             if j == 0:
                 angle_denominator = 4
                 max_sample = 2
-            else:
+            elif j == 9:
                 angle_denominator = 8
                 max_sample = 3
+            elif j == 25:
+                angle_denominator = 16
+                max_sample = 4
 
             for i in xrange((max_sample+1)**2 ):
 
