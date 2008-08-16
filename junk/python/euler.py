@@ -1028,6 +1028,35 @@ def level34():
     print 'res =', S
 
 
+def rotate(tmp):
+    for i in range(len(tmp)): 
+        tmp = [tmp[-1]] + tmp[:-1]
+        yield int(''.join(tmp))
+
+def level35():
+    N = 1000000
+    primes = compute_sorted_primes(N)
+    primes_dict = compute_primes_native(N)
+
+    # 1 is not a prime ...
+    def is_prime(i): return i in primes_dict
+
+    Lp = []
+    for p in primes:
+        if p <= 10:
+            continue
+
+        tmp = list(str(p))
+        if '0' in tmp:
+            continue
+
+        if all(is_prime(i) for i in rotate(tmp)):
+            print p
+            Lp.append(p)
+
+    print 'res', len(Lp + [2,3,5,7])
+
+
 def level36():
     ''' Computing the list of candidates is useless / checking
     both properties at the same time is equally fast'''
@@ -1141,7 +1170,7 @@ def pair_rewrite(n):
         j -= 1
 
 from bisect import insort
-all = {}
+dico_all = {}
 
 def rewrite_list(n, L, N, verbose):
 
@@ -1149,10 +1178,10 @@ def rewrite_list(n, L, N, verbose):
 
     if sum(L) == N:
         key = ('').join([str(i) for i in L]) # key is a string
-        if not key in all:
-            all[key] = len(L)
+        if not key in dico_all:
+            dico_all[key] = len(L)
             if verbose:
-                print 'L', L, len(all) - 1
+                print 'L', L, len(dico_all) - 1
 
     L.remove(n)
 
@@ -1189,11 +1218,11 @@ def level76():
 
     def rewrite(N, verbose = False):
         rewrite_list(N, [], N, verbose)
-        del all[str(N)]
+        del dico_all[str(N)]
 
         if False:
             B = []
-            for i in all.keys():
+            for i in dico_all.keys():
                 t = list(i)
                 t.reverse()
                 B.append(''.join(t))
@@ -1204,8 +1233,8 @@ def level76():
 
         l = 0
         dico = {}
-        for k in all.keys():
-            l = all[k]
+        for k in dico_all.keys():
+            l = dico_all[k]
             v = dico.get(l, 0) 
             dico[l] = v + 1
 
@@ -1214,7 +1243,7 @@ def level76():
         L.reverse()
         res = ' '.join(L)
 
-        all.clear()
+        dico_all.clear()
         return res
 
     # Show one example solved
@@ -1231,7 +1260,7 @@ def level76():
 
 if __name__ == '__main__':
     start = clock()
-    level29()
+    level35()
     print "Time taken (seconds) = %.6f" % (clock()-start)
 
 # Try those: 46, 48, 52, 76
