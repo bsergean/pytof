@@ -2,6 +2,7 @@
 
 import sys
 import calendar
+import StringIO
 from math import fmod, log10
 from time import clock
 from copy import deepcopy
@@ -357,7 +358,14 @@ class Matrix:
 
     def max_rows(self):
         self.max_func(self.rows())
-                
+
+    def __str__(self):
+        fo = StringIO.StringIO()
+        for r in self.rows():
+            s = '[ ' + '\t'.join(map(str, r)) + ' ] ' + '\n'
+            fo.write(s)
+        return fo.getvalue()
+
 def level11():
     mat = read_input(mat_str)
     A = Matrix(mat)
@@ -368,6 +376,9 @@ def level11():
 
 def level12():
     def triangle_numbers():
+
+        fo.write('\t'.join(map(str, self.SC())))
+        fo.write(' ' + str(self.S()))
         S = 1
         i = 1
         while True:
@@ -773,6 +784,89 @@ What about using gmpy / mpq type (from an email thread)
     ''' 
     pass
 
+def level28():
+
+    def sample(s, Max=0):
+
+        def sample_positive(s, Max=0):
+            for i in range(Max):
+                if s < float(i+1) / Max:
+                    return i
+            return Max - 1
+
+        if s > 0:
+            return sample_positive(s, Max)
+        else:
+            return sample_positive(-s, Max) * -1
+
+    assert sample(0.7,2) == 1
+    assert sample(0.3,2) == 0
+
+    assert sample(-0.2,3) == 0
+    assert sample(-0.5,3) == -1
+    assert sample(-0.8,3) == -2
+
+    assert sample(-0.7,2) == -1
+    assert sample(-0.3,2) == 0
+
+    assert sample(0.2,3) == 0
+    assert sample(0.5,3) == 1
+    assert sample(0.8,3) == 2
+
+    def draw_spiral(n):
+        mat_str = ''' 21 22 23 24 25
+20  7  8  9 10
+19  6  1  2 11
+18  5  4  3 12
+17 16 15 14 13'''
+
+        mat_str = ''' 0 0 0 0 0
+0 0 0 0 0
+0 0 0 0 0
+0 0 0 0 0
+0 0 0 0 0'''
+
+        mat = read_input(mat_str)
+        A = Matrix(mat)
+        k = 2
+        l = 2
+
+        from math import cos, sin, pi
+        for j in [0,9]:
+
+            if j == 0:
+                angle_denominator = 4
+                max_sample = 2
+            else:
+                angle_denominator = 8
+                max_sample = 3
+
+            for i in xrange((max_sample+1)**2 ):
+
+                angle = -1 * float(i) * pi / angle_denominator
+
+                c = cos(angle)
+                s = sin(angle)
+
+                c_d = sample(c, max_sample)
+                s_d = sample(s, max_sample)
+
+                K = k + c_d
+                L = l + s_d
+
+                print 'i = %d [%d,%d]' %(i, L, K)
+                print 'angle %d*pi/%d(%f) cos %f sin %f' %(i, angle_denominator, angle, c, s)
+                print 'sample %d %d' %(c_d, s_d)
+                A.m[L][K] = i + j
+
+
+                print A
+
+        return A
+
+    A = draw_spiral(5)
+    print A
+
 def level37():
     N = 1000000
     primes = compute_sorted_primes(N)
@@ -954,7 +1048,7 @@ def level76():
 
 if __name__ == '__main__':
     start = clock()
-    level76()
+    level28()
     #level12()
     print "Time taken (seconds) = %.6f" % (clock()-start)
 
