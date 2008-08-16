@@ -179,8 +179,13 @@ def is_palindrome_num(num):
         j -= 1
     return True
 
+def is_palindrome_builtin(num):
+    ''' way faster ... slice magic ! '''
+    s = str(num)
+    return s == s[::-1]
+
 def is_palindrome(num):
-    return is_palindrome_num(num)
+    return is_palindrome_builtin(num)
 
 def find_palindromic():
     results = {} 
@@ -769,6 +774,7 @@ def level19():
     C = [calendar.monthcalendar(y, m)[0][1] == 1 for y in xrange(1901, 2001) for m in xrange(1,13)]
     print sum([1 if i == True else 0 for i in C])
 
+
 def level20():
     def fact(n):
         if n == 1: return 1
@@ -960,7 +966,7 @@ def level28():
 
     def draw_spiral():
 
-        N = 1001
+        N = 7
         mat = [[0 for i in xrange(N)] for j in xrange(N)]
         A = Matrix(mat)
 
@@ -971,9 +977,65 @@ def level28():
             A.fill_S()
             A.fill_E()
             A.fill_N()
+        print A
         print A.the_diag() + A.the_other_diag() - 1
 
     draw_spiral()
+
+def level30():
+    N = 4
+    N = 5
+    Max = N * 9 ** N
+
+    S = 0
+    for j in range(2,Max):
+        if j == sum(int(i) ** N for i in list(str(j))):
+            print j
+            S += j
+
+    print 'res =', S
+
+def level34():
+
+    def fact(n):
+        res = 1
+        while n > 1:
+            res *= n
+            n -= 1
+        return res
+
+    all_fact = {}
+    for i in range(10):
+        all_fact[i] = fact(i)
+
+    Max = 5 * fact(9)
+
+    S = 0
+    for j in range(2,Max):
+        if j == sum(all_fact[int(i)] for i in list(str(j))):
+            print j
+            S += j
+
+    print 'res =', S
+
+
+def level36():
+    def base2(val):
+        out = ''
+        while val:
+            out = str( val & 1 ) + out
+            val >>=1
+        return out
+
+    Max = int(1e6)
+
+    S = 0
+    for i in range(1,Max+1):
+        if is_palindrome(i) and is_palindrome(base2(i)):
+            print i, base2(i)
+            S += i
+
+    print 'res =', S
 
 def level37():
     N = 1000000
@@ -1156,8 +1218,7 @@ def level76():
 
 if __name__ == '__main__':
     start = clock()
-    level28()
-    #level12()
+    level36()
     print "Time taken (seconds) = %.6f" % (clock()-start)
 
 # Try those: 46, 48, 52, 76
