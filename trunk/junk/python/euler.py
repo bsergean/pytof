@@ -305,6 +305,12 @@ class Matrix:
     def rows(self):
         return [self.row(i) for i in range(self.M)]
 
+    def the_diag(self):
+        return sum(self.m[i][i] for i in range(self.M))
+
+    def the_other_diag(self):
+        return sum(self.m[self.M - i - 1][i] for i in range(self.M))
+
     def diag_ne(self): # north east
         diags = []
 
@@ -965,7 +971,7 @@ def level28():
             A.fill_S()
             A.fill_E()
             A.fill_N()
-        print A
+        print A.the_diag() + A.the_other_diag() - 1
 
     draw_spiral()
 
