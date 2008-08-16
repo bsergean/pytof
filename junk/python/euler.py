@@ -982,6 +982,15 @@ def level28():
 
     draw_spiral()
 
+def level29():
+    s = set()
+    N = 5
+    N = 100
+    for a in xrange(2,N+1):
+        s = s.union(set(a ** b for b in xrange(2,N+1)))
+    print len(s)
+
+
 def level30():
     N = 4
     N = 5
@@ -1020,6 +1029,8 @@ def level34():
 
 
 def level36():
+    ''' Computing the list of candidates is useless / checking
+    both properties at the same time is equally fast'''
     def base2(val):
         out = ''
         while val:
@@ -1029,11 +1040,13 @@ def level36():
 
     Max = int(1e6)
 
+    candidates = (i for i in range(1,Max+1) if is_palindrome(i))
+
     S = 0
-    for i in range(1,Max+1):
-        if is_palindrome(i) and is_palindrome(base2(i)):
-            print i, base2(i)
-            S += i
+    for c in candidates:
+        if is_palindrome(base2(c)):
+            print c, base2(c)
+            S += c
 
     print 'res =', S
 
@@ -1218,7 +1231,7 @@ def level76():
 
 if __name__ == '__main__':
     start = clock()
-    level36()
+    level29()
     print "Time taken (seconds) = %.6f" % (clock()-start)
 
 # Try those: 46, 48, 52, 76
