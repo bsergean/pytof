@@ -876,6 +876,28 @@ def level25():
             break
 
 def level26():
+
+    def divide(a, b):
+        precision = 10
+
+        div = a * 10
+
+        for i in range(precision):
+
+            mod = div % b
+            div /= b
+
+            print div
+            if mod == 0: break
+
+            div = mod * 10
+
+    divide(1, 4)
+    return
+        
+
+
+
     '''
 Best precision for a remainder of a float ?
 >>> print "%.100g" % (1 /7.0)
