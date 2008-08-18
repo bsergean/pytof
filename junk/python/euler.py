@@ -882,8 +882,39 @@ Best precision for a remainder of a float ?
 0.142857142857142849212692681248881854116916656494140625
 
 What about using gmpy / mpq type (from an email thread)
+http://code.google.com/p/gmpy/
     ''' 
-    pass
+    from gmpy import fdigits, mpf
+    precision = len('140142857142857142857')
+    
+    def find_recurring_part(a):
+        dico = {}
+        res = None
+        for j in range(1,len(a)/2):
+            L = []
+            for i in range(0,len(a),j): 
+                if i + j < len(a):
+                    slice = a[i:i+j] 
+                    s_len = len(slice)
+                    
+                    L.append(slice)
+                    if len(L) == 2:
+                        if L[0] == L[1]:
+                            res = slice
+        return res
+
+    a = '142857142857142857143'
+    find_recurring_part(a)
+    #return
+
+    for i in xrange(1,1000+1):
+        one_by_i = fdigits(1/mpf(i),0,50,0,-1,2)[0]
+        if len(one_by_i) == precision:
+            res = find_recurring_part(one_by_i)
+            if res and len(res) > 6:
+                print i, res
+
+        #print "%.100g" % (1 /float(i))
 
 def level28():
 
@@ -1274,7 +1305,7 @@ def level76():
 
 if __name__ == '__main__':
     start = clock()
-    level40()
+    level26()
     print "Time taken (seconds) = %.6f" % (clock()-start)
 
 # Try those: 46, 48, 52, 76
