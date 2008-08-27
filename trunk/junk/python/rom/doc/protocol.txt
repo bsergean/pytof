@@ -1,0 +1,36 @@
+Links
+=====
+
+ * telnetlib - http://docs.python.org/lib/telnet-objects.html
+ * elixir (DB ORM) - http://elixir.ematia.de/trac/wiki/TutorialDivingIn
+
+Protocol
+========
+
+ServerDisconnect: Disconnected
+ServerDisconnect: TransactionComplete
+
+Init
+====
+
+ListServers list available servers
+ServerConnect [server index] will connect to a music server. First call ListServers.
+GetConnectedServer will tell you if anyone is around
+ServerDisconnect will disconnect current user
+
+Content selection
+=================
+
+ListSongs
+ListArtists
+ListAlbums
+
+Playing some music
+==================
+
+See page 153
+
+Looks like you have to add music to the Now Playing play list, and
+select a song from this playlist, with `PlayIndex` [n]
+
+NowPlayingInsert seems to be the one you want.

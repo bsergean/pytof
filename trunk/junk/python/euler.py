@@ -17,6 +17,7 @@ def multiple_fmod(x, Max):
     return [i for i in xrange(x, Max) if fmod(i, x) == 0]
 
 def list_of_int_to_int(L):
+    ''' int(''.join(L)) will should be way faster ... '''
     return sum([v * 10 ** (len(L)-i-1) for i,v in enumerate(L)])
 
 def level1():
@@ -880,7 +881,8 @@ def level26():
     def divide(a, b):
         precision = 10
 
-        div = a * 10
+        ratio = 10 ** (len(str(b)) - 1) # 10 for i < 10, 100 for i < 100, etc ...
+        div = a * ratio
 
         for i in range(precision):
 
@@ -888,11 +890,11 @@ def level26():
             div /= b
 
             print div
-            if mod == 0: break
+            # if mod == 0: break
 
-            div = mod * 10
+            div = mod * ratio
 
-    divide(1, 4)
+    divide(1, 7)
     return
         
 
