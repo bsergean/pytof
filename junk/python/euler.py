@@ -3,6 +3,7 @@
 import sys
 import calendar
 import StringIO
+import re
 from math import fmod, log10
 from time import clock
 from copy import deepcopy
@@ -895,34 +896,36 @@ def level26():
 
             div = mod * ratio
 
-    res_all = []
-    def find_recurring_part(a, i, found):
+    def find_recurring_part(a, found):
         '''
-        >>> re.findall(r'(\d+)\1', '32323232'
-        ... )
+        >>> re.findall(r'(\d+)\1', '32323232')
         ['3232']
         '''
-        import re
         res = re.findall(r'(\d+)\1', a)
-        if res != []:
-            find_recurring_part(res[0], i, True)
+        print a, res, found
+        if len(res) == 0:
+            return a if found else None
         else:
-            if found:
-                res_all.append( (int(a), i) )
+            find_recurring_part(res[0], True)
 
-    a = '142857142857142857143'
-    a = '33333333'
-    getcontext().prec = 1000
-
-    nb_max = 100
-
-    for i in xrange(2, nb_max+1):
+    def recurring_cycle(i):
         q = Decimal(1) / Decimal(i)
         q = str(q)[2:]
-        
-        res = find_recurring_part(q, i, found = False)
+        find_recurring_part(q, False)
+        print res_find_recurring_part
+        return res_find_recurring_part
 
-    res_all.sort()
+    getcontext().prec = 1000
+    assert ( recurring_cycle(2) == None)
+    assert ( recurring_cycle(3) == '3')
+    return
+
+    nb_max = 1000
+
+    for i in xrange(2, nb_max+1):
+        recurring_cycle(i)
+
+    res_all.sort(key=lambda x: len(x[0]))
     print res_all
 
 def level28():
