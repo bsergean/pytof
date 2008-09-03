@@ -6,6 +6,7 @@ import StringIO
 from math import fmod, log10
 from time import clock
 from copy import deepcopy
+from decimal import *
 
 try:
     import psyco
@@ -894,51 +895,35 @@ def level26():
 
             div = mod * ratio
 
-    divide(1, 7)
-    return
-        
-
-
-
-    '''
-Best precision for a remainder of a float ?
->>> print "%.100g" % (1 /7.0)
-0.142857142857142849212692681248881854116916656494140625
-
-What about using gmpy / mpq type (from an email thread)
-http://code.google.com/p/gmpy/
-    ''' 
-    from gmpy import fdigits, mpf
-    precision = len('140142857142857142857')
-    
-    def find_recurring_part(a):
-        dico = {}
-        res = None
-        for j in range(1,len(a)/2):
-            L = []
-            for i in range(0,len(a),j): 
-                if i + j < len(a):
-                    slice = a[i:i+j] 
-                    s_len = len(slice)
-                    
-                    L.append(slice)
-                    if len(L) == 2:
-                        if L[0] == L[1]:
-                            res = slice
-        return res
+    res_all = []
+    def find_recurring_part(a, i, found):
+        '''
+        >>> re.findall(r'(\d+)\1', '32323232'
+        ... )
+        ['3232']
+        '''
+        import re
+        res = re.findall(r'(\d+)\1', a)
+        if res != []:
+            find_recurring_part(res[0], i, True)
+        else:
+            if found:
+                res_all.append( (int(a), i) )
 
     a = '142857142857142857143'
-    find_recurring_part(a)
-    #return
+    a = '33333333'
+    getcontext().prec = 1000
 
-    for i in xrange(1,1000+1):
-        one_by_i = fdigits(1/mpf(i),0,50,0,-1,2)[0]
-        if len(one_by_i) == precision:
-            res = find_recurring_part(one_by_i)
-            if res and len(res) > 6:
-                print i, res
+    nb_max = 100
 
-        #print "%.100g" % (1 /float(i))
+    for i in xrange(2, nb_max+1):
+        q = Decimal(1) / Decimal(i)
+        q = str(q)[2:]
+        
+        res = find_recurring_part(q, i, found = False)
+
+    res_all.sort()
+    print res_all
 
 def level28():
 
