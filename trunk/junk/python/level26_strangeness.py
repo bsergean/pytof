@@ -11,7 +11,7 @@ def find_recurring_part(a, found):
     if len(result) == 0:
         return a if found else None
     else:
-        find_recurring_part(result[0], True)
+        return find_recurring_part(result[0], True)
 
 def recurring_cycle(i):
     q = Decimal(1) / Decimal(i)
