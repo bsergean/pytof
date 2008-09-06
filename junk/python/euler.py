@@ -896,37 +896,80 @@ def level26():
 
             div = mod * ratio
 
-    def find_recurring_part(a, found):
+    regexp = re.compile(r'(\d+)\1')
+    def recurring_cycle(i):
         '''
-        >>> re.findall(r'(\d+)\1', '32323232')
+        >>> re.findall(r'(\d)*\1', '32323232')
         ['3232']
         '''
-        res = re.findall(r'(\d+)\1', a)
-        print a, res, found
-        if len(res) == 0:
-            return a if found else None
-        else:
-            find_recurring_part(res[0], True)
-
-    def recurring_cycle(i):
         q = Decimal(1) / Decimal(i)
-        q = str(q)[2:]
-        find_recurring_part(q, False)
-        print res_find_recurring_part
-        return res_find_recurring_part
+        a = str(q)[2:]
 
-    getcontext().prec = 1000
+        length = 1
+        found = False
+        L = []
+
+        while length:
+            res = regexp.findall(a)
+            length = len(res)
+            #print a, res, found, length
+            if length == 0:
+                break
+            else:
+                if found:
+                    L.append(res)
+                found = True
+                a = res[0]
+
+        if found:
+
+            # Try to find the first local maximum
+            # [1,2,3,4,5,4,3,3,1,7,8,9] -> 5
+
+            L.reverse()
+            
+            v_max = -1
+            i_max = 0 
+            yop = False
+            for i,v in enumerate(L):
+                #print 'i, v =', i, v
+                if v:
+                    if len(v) > v_max:
+                        v_max = len(v)
+                        i_max = i
+                        #print 'imax, vmax =', i_max, v_max
+                    else:
+                        if len(v) < v_max:
+                            if v_max != -1:
+                                yop = True
+                                break
+
+            #print i_max, v_max
+            if v_max == -1:
+                return None
+
+            if yop: return L[i_max+1][0]
+            else: return L[i_max][0]
+
+        else:
+            return None
+
+    getcontext().prec = 10000
     assert ( recurring_cycle(2) == None)
     assert ( recurring_cycle(3) == '3')
+    assert ( recurring_cycle(7) == '142857')
+    assert ( recurring_cycle(101) == '0099')
+    assert ( recurring_cycle(91) == '010989')
+    assert ( recurring_cycle(77) == '012987')
+    print len(recurring_cycle(823))
+    assert ( len(recurring_cycle(823)) == 2466 )
     return
 
     nb_max = 1000
-
-    for i in xrange(2, nb_max+1):
-        recurring_cycle(i)
-
-    res_all.sort(key=lambda x: len(x[0]))
-    print res_all
+    all_cycles = [(recurring_cycle(i),i) for i in xrange(2, nb_max+1)]
+    all_cycles = [i for i in all_cycles if i[0] != None] # some None elements
+    all_cycles.sort(key=lambda x: len(x[0]))
+    print all_cycles
 
 def level28():
 
