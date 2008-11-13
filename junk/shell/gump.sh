@@ -11,8 +11,8 @@ fatal() {
   exit 1
 }
 
-#repos=`cat ../cubicweb_full_hg_repos.txt`
-repos=`cat ../cubicweb_public_hg_repos.txt`
+repos=`cat ../cubicweb_full_hg_repos.txt`
+#repos=`cat ../cubicweb_public_hg_repos.txt`
 test -d yams || fatal "Exec me in the topmost directory"
 
 # helpers
