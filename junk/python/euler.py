@@ -963,13 +963,57 @@ def level26():
     assert ( recurring_cycle(77) == '012987')
     print len(recurring_cycle(823))
     assert ( len(recurring_cycle(823)) == 2466 )
-    return
+    #return
 
     nb_max = 1000
-    all_cycles = [(recurring_cycle(i),i) for i in xrange(2, nb_max+1)]
+    all_cycles = []
+    for i in xrange(2, nb_max+1):
+        R = recurring_cycle(i)
+        if R:
+            print i, len(R)
+        all_cycles.append((R,i))
     all_cycles = [i for i in all_cycles if i[0] != None] # some None elements
     all_cycles.sort(key=lambda x: len(x[0]))
     print all_cycles
+
+def level27():
+    
+    def quadratic(a, b, n):
+        '''n^2 + a.n + b'''
+        return n * n + a * n + b
+
+    N = 2e6
+    primes_dict = compute_primes_native(N)
+
+    # 1 is not a prime ...
+    def is_prime(i): return i in primes_dict
+
+    a, b = 1, 41
+    a, b = -79, 1601 
+    for k in xrange(40):
+        p = quadratic(a, b, k)
+        assert(is_prime(p))
+
+    def prod(a,b):
+        k = 0
+        while True:
+            p = quadratic(a, b, k)
+            if not is_prime(p):
+                break
+            k += 1
+        return k, a * b
+
+    print prod(a,b)
+
+    k_max = 0
+    for a in range(-999, 1000, 1):
+        for b in range(-999, 1000, 1):
+            k, p = prod(a,b)
+            if k > k_max:
+                k_max = k
+                print k, p
+
+    
 
 def level28():
 
@@ -1360,7 +1404,7 @@ def level76():
 
 if __name__ == '__main__':
     start = clock()
-    level26()
+    level27()
     print "Time taken (seconds) = %.6f" % (clock()-start)
 
 # Try those: 46, 48, 52, 76
