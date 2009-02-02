@@ -1156,32 +1156,19 @@ def level31():
     i = 0
     for p100 in range(2):
         for p50 in range(4):
-            if over_2pound(p100, p50):
-                print 'break p50'
-                break
+            if over_2pound(p100, p50): break
             for p20 in range(10):
-                if over_2pound(p100, p50, p20):
-                    print 'break p20'
-                    break
+                if over_2pound(p100, p50, p20): break
                 for p10 in range(20):
-                    if over_2pound(p100, p50, p20, p10):
-                        print 'break p10'
-                        break
+                    if over_2pound(p100, p50, p20, p10): break
                     for p5 in range(40):
-                        if over_2pound(p100, p50, p20, p10, p5):
-                            print 'break'
-                            break
+                        if over_2pound(p100, p50, p20, p10, p5): break
                         for p2 in range(100):
-                            if over_2pound(p100, p50, p20, p10, p5, p2):
-                                print 'break'
-                                break
+                            if over_2pound(p100, p50, p20, p10, p5, p2): break
                             for p1 in range(200):
-                                if over_2pound(p100, p50, p20, p10, p5, p2, p1):
-                                    print 'break'
-                                    break
+                                if over_2pound(p100, p50, p20, p10, p5, p2, p1): break
                                 if is_2pound(p100, p50, p20, p10, p5, p2, p1):
                                     i += 1
-                                    print i
     print i + 8 #  1 2pounds
 
 def level34():
