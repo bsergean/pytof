@@ -1134,6 +1134,56 @@ def level30():
 
     print 'res =', S
 
+def level31():
+    ''' Solution += 1 because 2 pounds = 200p '''
+
+    def coin_sum(p100, p50 = 0, p20 = 0, p10 = 0, p5 = 0, p2 = 0, p1 = 0):
+        return p1 * 1 + p2 * 2 + p5 * 5 + p10 * 10 \
+            + p20 * 20 + p50 * 50 + p100 * 100
+
+    def is_2pound(p100, p50 = 0, p20 = 0, p10 = 0, p5 = 0, p2 = 0, p1 = 0):
+        if coin_sum(p100, p50, p20, p10, p5, p2, p1) == 200:
+            print p100, p50, p20, p10, p5, p2, p1
+            return True
+        return False
+
+    def over_2pound(p100, p50 = 0, p20 = 0, p10 = 0, p5 = 0, p2 = 0, p1 = 0):
+        return coin_sum(p100, p50, p20, p10, p5, p2, p1) > 200
+        
+    assert (is_2pound(1, 1, 2, 0, 1, 1, 3))
+    assert (over_2pound(2, 1))
+
+    i = 0
+    for p100 in range(2):
+        for p50 in range(4):
+            if over_2pound(p100, p50):
+                print 'break p50'
+                break
+            for p20 in range(10):
+                if over_2pound(p100, p50, p20):
+                    print 'break p20'
+                    break
+                for p10 in range(20):
+                    if over_2pound(p100, p50, p20, p10):
+                        print 'break p10'
+                        break
+                    for p5 in range(40):
+                        if over_2pound(p100, p50, p20, p10, p5):
+                            print 'break'
+                            break
+                        for p2 in range(100):
+                            if over_2pound(p100, p50, p20, p10, p5, p2):
+                                print 'break'
+                                break
+                            for p1 in range(200):
+                                if over_2pound(p100, p50, p20, p10, p5, p2, p1):
+                                    print 'break'
+                                    break
+                                if is_2pound(p100, p50, p20, p10, p5, p2, p1):
+                                    i += 1
+                                    print i
+    print i + 8 #  1 2pounds
+
 def level34():
 
     def fact(n):
@@ -1404,7 +1454,7 @@ def level76():
 
 if __name__ == '__main__':
     start = clock()
-    level27()
+    level31()
     print "Time taken (seconds) = %.6f" % (clock()-start)
 
 # Try those: 46, 48, 52, 76
