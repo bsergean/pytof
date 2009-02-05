@@ -1,7 +1,7 @@
 #!/bin/sh
 
-i=0
-while test ! $i = 200
+i=200
+while test ! $i = 230
 do
 	url="http://projecteuler.net/index.php?section=problems&id="
 	i=`expr $i + 1`
