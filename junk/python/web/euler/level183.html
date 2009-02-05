@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta name="author" content="Colin Hughes" />
+<meta name="description" content="A website dedicated to the fascinating world of mathematics and programming" />
+<meta name="keywords" content="programming,mathematics,problems,puzzles" />
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+<title>Problem 183 - Project Euler</title>
+<link rel="stylesheet" type="text/css" href="style_main.css" />
+<link rel="shortcut icon" href="http://projecteuler.net/favicon.ico" />
+</head>
+
+<body>
+<div id="top" class="noprint">
+
+   <div class="rbroundbox1">
+   <div class="rbtop"><div></div></div>
+   <div class="rbcontent">
+
+      <table cellpadding="0" cellspacing="0" border="0" width="100%">
+      <tr>
+         <td style="padding:10px;">
+            <img src="images/logo.jpg" alt="Project Euler" title="Project Euler" />
+         </td>
+      </tr>
+      </table>
+      <div id="menu_bar">
+         <ul>
+<li><img src="images/icon_about.png" style="border:none;vertical-align:middle;" alt="About" /> <a href="index.php?section=about" title="About"><span>About</span></a></li>
+<li><img src="images/icon_register.png" style="border:none;vertical-align:middle;" alt="Register" /> <a href="index.php?section=register" title="Register"><span>Register</span></a></li>
+<li id="current"><img src="images/icon_problems.png" style="border:none;vertical-align:middle;" alt="Problems" /> <a href="index.php?section=problems" title="Problems"><span>Problems</span></a></li>
+<li><img src="images/icon_login.png" style="border:none;vertical-align:middle;" alt="Login" /> <a href="index.php?section=login" title="Login"><span>Login</span></a></li>
+         </ul>
+      </div>
+
+   </div><!-- /rbcontent -->
+   <div class="rbbot"><div></div></div>
+   </div><!-- /rbroundbox -->
+
+</div>
+
+<div id="main_page">
+   <br />
+   <div class="rbroundbox2">
+   <div class="rbtop"><div></div></div>
+   <div class="rbcontent">
+<div style="text-align:center;" class="print"><img src="images/logo.jpg" width="203" height="71" alt="projecteuler.net logo" style="border:none;" /></div>
+<h2>Problem 183</h2>
+<div style="color:#666;font-size:80%;">22 February 2008</div><br />
+<div class="problem_content">
+<p>Let N be a positive integer and let N be split into <var>k</var> equal parts, <var>r</var> = N/<var>k</var>, so that N = <var>r</var> + <var>r</var> + ... + <var>r</var>.<br />
+Let P be the product of these parts, P = <var>r</var> <img src='images/symbol_times.gif' width='9' height='9' alt='&times;' border='0' style='vertical-align:middle;' /> <var>r</var> <img src='images/symbol_times.gif' width='9' height='9' alt='&times;' border='0' style='vertical-align:middle;' /> ... <img src='images/symbol_times.gif' width='9' height='9' alt='&times;' border='0' style='vertical-align:middle;' /> <var>r</var> = <var>r</var><img src="" style="display:none;" alt="^(" /><sup><var>k</var></sup><img src="" style="display:none;" alt=")" />.</p>
+
+<p>For example, if 11 is split into five equal parts, 11 = 2.2 + 2.2 + 2.2 + 2.2 + 2.2, then P = 2.2<img src="" style="display:none;" alt="^(" /><sup>5</sup><img src="" style="display:none;" alt=")" /> = 51.53632.</p>
+
+<p>Let M(N) = P<img src="" style="display:none;" alt="_(" /><sub>max</sub><img src="" style="display:none;" alt=")" /> for a given value of N.</p>
+
+<p>It turns out that the maximum for N = 11 is found by splitting eleven into four equal parts which leads to P<img src="" style="display:none;" alt="_(" /><sub>max</sub><img src="" style="display:none;" alt=")" /> = (11/4)<img src="" style="display:none;" alt="^(" /><sup>4</sup><img src="" style="display:none;" alt=")" />; that is, M(11) = 14641/256 = 57.19140625, which is a terminating decimal.</p>
+
+<p>However, for N = 8 the maximum is achieved by splitting it into three equal parts, so M(8) = 512/27, which is a non-terminating decimal.</p>
+
+<p>Let D(N) = N if M(N) is a non-terminating decimal and D(N) = -N if M(N) is a terminating decimal.</p>
+
+<p>For example, &Sigma;D(N) for 5 <img src='images/symbol_le.gif' width='10' height='12' alt='&le;' border='0' style='vertical-align:middle;' /> N <img src='images/symbol_le.gif' width='10' height='12' alt='&le;' border='0' style='vertical-align:middle;' /> 100 is 2438.</p>
+
+<p>Find &Sigma;D(N) for 5 <img src='images/symbol_le.gif' width='10' height='12' alt='&le;' border='0' style='vertical-align:middle;' /> N <img src='images/symbol_le.gif' width='10' height='12' alt='&le;' border='0' style='vertical-align:middle;' /> 10000.</p>
+
+</div><br />
+<br />   </div><!-- /rbcontent -->
+   <div class="rbbot"><div></div></div>
+   </div><!-- /rbroundbox -->
+</div>
+
+<div id="bottom" class="noprint">
+<a href="index.php?section=copyright">Project Euler Copyright Information</a>
+<!--/Creative Commons License--><!-- <rdf:RDF xmlns="http://web.resource.org/cc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+   <Work rdf:about="">
+      <license rdf:resource="http://creativecommons.org/licenses/by-nc-sa/2.0/uk/" />
+   <dc:type rdf:resource="http://purl.org/dc/dcmitype/Text" />
+   </Work>
+   <License rdf:about="http://creativecommons.org/licenses/by-nc-sa/2.0/uk/"><permits rdf:resource="http://web.resource.org/cc/Reproduction"/><permits rdf:resource="http://web.resource.org/cc/Distribution"/><requires rdf:resource="http://web.resource.org/cc/Notice"/><requires rdf:resource="http://web.resource.org/cc/Attribution"/><prohibits rdf:resource="http://web.resource.org/cc/CommercialUse"/><permits rdf:resource="http://web.resource.org/cc/DerivativeWorks"/><requires rdf:resource="http://web.resource.org/cc/ShareAlike"/></License></rdf:RDF> -->
+</div>
+</body>
+</html>

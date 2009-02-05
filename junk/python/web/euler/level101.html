@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta name="author" content="Colin Hughes" />
+<meta name="description" content="A website dedicated to the fascinating world of mathematics and programming" />
+<meta name="keywords" content="programming,mathematics,problems,puzzles" />
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+<title>Problem 101 - Project Euler</title>
+<link rel="stylesheet" type="text/css" href="style_main.css" />
+<link rel="shortcut icon" href="http://projecteuler.net/favicon.ico" />
+</head>
+
+<body>
+<div id="top" class="noprint">
+
+   <div class="rbroundbox1">
+   <div class="rbtop"><div></div></div>
+   <div class="rbcontent">
+
+      <table cellpadding="0" cellspacing="0" border="0" width="100%">
+      <tr>
+         <td style="padding:10px;">
+            <img src="images/logo.jpg" alt="Project Euler" title="Project Euler" />
+         </td>
+      </tr>
+      </table>
+      <div id="menu_bar">
+         <ul>
+<li><img src="images/icon_about.png" style="border:none;vertical-align:middle;" alt="About" /> <a href="index.php?section=about" title="About"><span>About</span></a></li>
+<li><img src="images/icon_register.png" style="border:none;vertical-align:middle;" alt="Register" /> <a href="index.php?section=register" title="Register"><span>Register</span></a></li>
+<li id="current"><img src="images/icon_problems.png" style="border:none;vertical-align:middle;" alt="Problems" /> <a href="index.php?section=problems" title="Problems"><span>Problems</span></a></li>
+<li><img src="images/icon_login.png" style="border:none;vertical-align:middle;" alt="Login" /> <a href="index.php?section=login" title="Login"><span>Login</span></a></li>
+         </ul>
+      </div>
+
+   </div><!-- /rbcontent -->
+   <div class="rbbot"><div></div></div>
+   </div><!-- /rbroundbox -->
+
+</div>
+
+<div id="main_page">
+   <br />
+   <div class="rbroundbox2">
+   <div class="rbtop"><div></div></div>
+   <div class="rbcontent">
+<div style="text-align:center;" class="print"><img src="images/logo.jpg" width="203" height="71" alt="projecteuler.net logo" style="border:none;" /></div>
+<h2>Problem 101</h2>
+<div style="color:#666;font-size:80%;">29 July 2005</div><br />
+<div class="problem_content">
+<p>If we are presented with the first <i>k</i> terms of a sequence it is impossible to say with certainty the value of the next term, as there are infinitely many polynomial functions that can model the sequence.</p>
+<p>As an example, let us consider the sequence of cube numbers. This is defined by the generating function, <i>u</i><img src="" style="display:none;" alt="_(" /><sub>n</sub><img src="" style="display:none;" alt=")" /> = <i>n</i><img src="" style="display:none;" alt="^(" /><sup>3</sup><img src="" style="display:none;" alt=")" />: 1, 8, 27, 64, 125, 216, ...</p>
+<p>Suppose we were only given the first two terms of this sequence. Working on the principle that &quot;simple is best&quot; we should assume a linear relationship and predict the next term to be 15 (common difference 7). Even if we were presented with the first three terms, by the same principle of simplicity, a quadratic relationship should be assumed.</p>
+<p>We shall define OP(<i>k</i>, <i>n</i>) to be the <i>n</i>th term of the optimum polynomial generating function for the first <i>k</i> terms of a sequence. It should be clear that OP(<i>k</i>, <i>n</i>) will accurately generate the terms of the sequence for <i>n</i> <img src='images/symbol_le.gif' width='10' height='12' alt='&le;' border='0' style='vertical-align:middle;' /> <i>k</i>, and potentially the <i>first incorrect term</i> (FIT) will be OP(<i>k</i>, <i>k</i>+1); in which case we shall call it a <i>bad OP</i> (BOP).</p>
+<p>As a basis, if we were only given the first term of sequence, it would be most sensible to assume constancy; that is, for <i>n</i> <img src='images/symbol_ge.gif' width='10' height='12' alt='&ge;' border='0' style='vertical-align:middle;' /> 2, OP(1, <i>n</i>) = <i>u</i><img src="" style="display:none;" alt="_(" /><sub>1</sub><img src="" style="display:none;" alt=")" />.</p>
+<p>Hence we obtain the following OPs for the cubic sequence:</p>
+<div style='margin-left:50px;'>
+<table>
+<tr>
+<td>OP(1, <i>n</i>) = 1</td>
+<td>1, <span style='color:red;'>1</span>, 1, 1, ...</td>
+</tr>
+<tr>
+<td>OP(2, <i>n</i>) = 7<i>n</i><img src='images/symbol_minus.gif' width='9' height='3' alt='&minus;' border='0' style='vertical-align:middle;' />6</td>
+<td>1, 8, <span style='color:red;'>15</span>, ...</td>
+</tr>
+<tr>
+<td>OP(3, <i>n</i>) = 6<i>n</i><img src="" style="display:none;" alt="^(" /><sup>2</sup><img src="" style="display:none;" alt=")" /><img src='images/symbol_minus.gif' width='9' height='3' alt='&minus;' border='0' style='vertical-align:middle;' />11<i>n</i>+6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td>1, 8, 27, <span style='color:red;'>58</span>, ...</td>
+</tr>
+<tr>
+<td>OP(4, <i>n</i>) = <i>n</i><img src="" style="display:none;" alt="^(" /><sup>3</sup><img src="" style="display:none;" alt=")" /></td>
+<td>1, 8, 27, 64, 125, ...</td>
+</tr>
+</table>
+</div>
+<p>Clearly no BOPs exist for <i>k</i> <img src='images/symbol_ge.gif' width='10' height='12' alt='&ge;' border='0' style='vertical-align:middle;' /> 4.</p>
+<p>By considering the sum of FITs generated by the BOPs (indicated in <span style='color:red;'>red</span> above), we obtain 1 + 15 + 58 = 74.</p>
+<p>Consider the following tenth degree polynomial generating function:</p>
+<p style='text-align:center;'><i>u</i><img src="" style="display:none;" alt="_(" /><sub>n</sub><img src="" style="display:none;" alt=")" /> = 1 <img src='images/symbol_minus.gif' width='9' height='3' alt='&minus;' border='0' style='vertical-align:middle;' /> <i>n</i> + <i>n</i><img src="" style="display:none;" alt="^(" /><sup>2</sup><img src="" style="display:none;" alt=")" /> <img src='images/symbol_minus.gif' width='9' height='3' alt='&minus;' border='0' style='vertical-align:middle;' /> <i>n</i><img src="" style="display:none;" alt="^(" /><sup>3</sup><img src="" style="display:none;" alt=")" /> + <i>n</i><img src="" style="display:none;" alt="^(" /><sup>4</sup><img src="" style="display:none;" alt=")" /> <img src='images/symbol_minus.gif' width='9' height='3' alt='&minus;' border='0' style='vertical-align:middle;' /> <i>n</i><img src="" style="display:none;" alt="^(" /><sup>5</sup><img src="" style="display:none;" alt=")" /> + <i>n</i><img src="" style="display:none;" alt="^(" /><sup>6</sup><img src="" style="display:none;" alt=")" /> <img src='images/symbol_minus.gif' width='9' height='3' alt='&minus;' border='0' style='vertical-align:middle;' /> <i>n</i><img src="" style="display:none;" alt="^(" /><sup>7</sup><img src="" style="display:none;" alt=")" /> + <i>n</i><img src="" style="display:none;" alt="^(" /><sup>8</sup><img src="" style="display:none;" alt=")" /> <img src='images/symbol_minus.gif' width='9' height='3' alt='&minus;' border='0' style='vertical-align:middle;' /> <i>n</i><img src="" style="display:none;" alt="^(" /><sup>9</sup><img src="" style="display:none;" alt=")" /> + <i>n</i><img src="" style="display:none;" alt="^(" /><sup>10</sup><img src="" style="display:none;" alt=")" /></p>
+<p>Find the sum of FITs for the BOPs.</p>
+
+</div><br />
+<br />   </div><!-- /rbcontent -->
+   <div class="rbbot"><div></div></div>
+   </div><!-- /rbroundbox -->
+</div>
+
+<div id="bottom" class="noprint">
+<a href="index.php?section=copyright">Project Euler Copyright Information</a>
+<!--/Creative Commons License--><!-- <rdf:RDF xmlns="http://web.resource.org/cc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+   <Work rdf:about="">
+      <license rdf:resource="http://creativecommons.org/licenses/by-nc-sa/2.0/uk/" />
+   <dc:type rdf:resource="http://purl.org/dc/dcmitype/Text" />
+   </Work>
+   <License rdf:about="http://creativecommons.org/licenses/by-nc-sa/2.0/uk/"><permits rdf:resource="http://web.resource.org/cc/Reproduction"/><permits rdf:resource="http://web.resource.org/cc/Distribution"/><requires rdf:resource="http://web.resource.org/cc/Notice"/><requires rdf:resource="http://web.resource.org/cc/Attribution"/><prohibits rdf:resource="http://web.resource.org/cc/CommercialUse"/><permits rdf:resource="http://web.resource.org/cc/DerivativeWorks"/><requires rdf:resource="http://web.resource.org/cc/ShareAlike"/></License></rdf:RDF> -->
+</div>
+</body>
+</html>

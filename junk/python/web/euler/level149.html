@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta name="author" content="Colin Hughes" />
+<meta name="description" content="A website dedicated to the fascinating world of mathematics and programming" />
+<meta name="keywords" content="programming,mathematics,problems,puzzles" />
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+<title>Problem 149 - Project Euler</title>
+<link rel="stylesheet" type="text/css" href="style_main.css" />
+<link rel="shortcut icon" href="http://projecteuler.net/favicon.ico" />
+</head>
+
+<body>
+<div id="top" class="noprint">
+
+   <div class="rbroundbox1">
+   <div class="rbtop"><div></div></div>
+   <div class="rbcontent">
+
+      <table cellpadding="0" cellspacing="0" border="0" width="100%">
+      <tr>
+         <td style="padding:10px;">
+            <img src="images/logo.jpg" alt="Project Euler" title="Project Euler" />
+         </td>
+      </tr>
+      </table>
+      <div id="menu_bar">
+         <ul>
+<li><img src="images/icon_about.png" style="border:none;vertical-align:middle;" alt="About" /> <a href="index.php?section=about" title="About"><span>About</span></a></li>
+<li><img src="images/icon_register.png" style="border:none;vertical-align:middle;" alt="Register" /> <a href="index.php?section=register" title="Register"><span>Register</span></a></li>
+<li id="current"><img src="images/icon_problems.png" style="border:none;vertical-align:middle;" alt="Problems" /> <a href="index.php?section=problems" title="Problems"><span>Problems</span></a></li>
+<li><img src="images/icon_login.png" style="border:none;vertical-align:middle;" alt="Login" /> <a href="index.php?section=login" title="Login"><span>Login</span></a></li>
+         </ul>
+      </div>
+
+   </div><!-- /rbcontent -->
+   <div class="rbbot"><div></div></div>
+   </div><!-- /rbroundbox -->
+
+</div>
+
+<div id="main_page">
+   <br />
+   <div class="rbroundbox2">
+   <div class="rbtop"><div></div></div>
+   <div class="rbcontent">
+<div style="text-align:center;" class="print"><img src="images/logo.jpg" width="203" height="71" alt="projecteuler.net logo" style="border:none;" /></div>
+<h2>Problem 149</h2>
+<div style="color:#666;font-size:80%;">13 April 2007</div><br />
+<div class="problem_content">
+<p>Looking at the table below, it is easy to verify that the maximum possible sum of adjacent numbers in any direction (horizontal, vertical, diagonal or anti-diagonal) <span style="white-space:nowrap">is 16 (= 8 + 7 + 1).</span></p>
+
+<div style="text-align:center">
+<table border="1" cellpadding="6" cellspacing="0" style="margin:auto"><tbody align="right"><tr><td><img src='images/symbol_minus.gif' width='9' height='3' alt='&minus;' border='0' style='vertical-align:middle;' />2</td ><td >5</td><td>3</td><td>2</td></tr>
+<tr><td>9</td><td><img src='images/symbol_minus.gif' width='9' height='3' alt='&minus;' border='0' style='vertical-align:middle;' />6</td><td>5</td><td>1</td></tr>
+<tr><td>3</td><td>2</td><td>7</td><td>3</td></tr>
+<tr><td><img src='images/symbol_minus.gif' width='9' height='3' alt='&minus;' border='0' style='vertical-align:middle;' />1</td><td>8</td><td><img src='images/symbol_minus.gif' width='9' height='3' alt='&minus;' border='0' style='vertical-align:middle;' />4</td><td>&nbsp; 8</td></tr></tbody></table>
+</div>
+
+<p>Now, let us repeat the search, but on a much larger scale:</p>
+
+<p>First, generate four million pseudo-random numbers using a specific form of what is known as a "Lagged Fibonacci Generator":</p>
+
+<p>For 1 <img src='images/symbol_le.gif' width='10' height='12' alt='&le;' border='0' style='vertical-align:middle;' /> <i>k</i> <img src='images/symbol_le.gif' width='10' height='12' alt='&le;' border='0' style='vertical-align:middle;' /> 55, <i>s</i><img src="" style="display:none;" alt="_(" /><sub><i>k</i></sub><img src="" style="display:none;" alt=")" /> = [100003 <img src='images/symbol_minus.gif' width='9' height='3' alt='&minus;' border='0' style='vertical-align:middle;' /> 200003<i>k</i> + 300007<i>k</i><img src="" style="display:none;" alt="^(" /><sup>3</sup><img src="" style="display:none;" alt=")" />] (modulo 1000000) <img src='images/symbol_minus.gif' width='9' height='3' alt='&minus;' border='0' style='vertical-align:middle;' /> 500000.<br />
+For 56 <img src='images/symbol_le.gif' width='10' height='12' alt='&le;' border='0' style='vertical-align:middle;' /> <i>k</i> <img src='images/symbol_le.gif' width='10' height='12' alt='&le;' border='0' style='vertical-align:middle;' /> 4000000, <i>s</i><img src="" style="display:none;" alt="_(" /><sub><i>k</i></sub><img src="" style="display:none;" alt=")" /> = [<i>s</i><img src="" style="display:none;" alt="_(" /><sub><i>k<img src='images/symbol_minus.gif' width='9' height='3' alt='&minus;' border='0' style='vertical-align:middle;' />24</i></sub><img src="" style="display:none;" alt=")" /> + <i>s</i><img src="" style="display:none;" alt="_(" /><sub><i>k<img src='images/symbol_minus.gif' width='9' height='3' alt='&minus;' border='0' style='vertical-align:middle;' />55</i></sub><img src="" style="display:none;" alt=")" /> + 1000000] (modulo 1000000) <img src='images/symbol_minus.gif' width='9' height='3' alt='&minus;' border='0' style='vertical-align:middle;' /> 500000.</p>
+
+<p>Thus, <i>s</i><img src="" style="display:none;" alt="_(" /><sub>10</sub><img src="" style="display:none;" alt=")" /> = <img src='images/symbol_minus.gif' width='9' height='3' alt='&minus;' border='0' style='vertical-align:middle;' />393027 and <i>s</i><img src="" style="display:none;" alt="_(" /><sub>100</sub><img src="" style="display:none;" alt=")" /> = 86613.</p>
+
+<p>The terms of <i>s</i> are then arranged in a 2000<img src='images/symbol_times.gif' width='9' height='9' alt='&times;' border='0' style='vertical-align:middle;' />2000 table, using the first 2000 numbers to fill the first row (sequentially), the next 2000 numbers to fill the second row, and so on.</p>
+
+<p>Finally, find the greatest sum of (any number of) adjacent entries in any direction (horizontal, vertical, diagonal or anti-diagonal).</p>
+</div><br />
+<br />   </div><!-- /rbcontent -->
+   <div class="rbbot"><div></div></div>
+   </div><!-- /rbroundbox -->
+</div>
+
+<div id="bottom" class="noprint">
+<a href="index.php?section=copyright">Project Euler Copyright Information</a>
+<!--/Creative Commons License--><!-- <rdf:RDF xmlns="http://web.resource.org/cc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+   <Work rdf:about="">
+      <license rdf:resource="http://creativecommons.org/licenses/by-nc-sa/2.0/uk/" />
+   <dc:type rdf:resource="http://purl.org/dc/dcmitype/Text" />
+   </Work>
+   <License rdf:about="http://creativecommons.org/licenses/by-nc-sa/2.0/uk/"><permits rdf:resource="http://web.resource.org/cc/Reproduction"/><permits rdf:resource="http://web.resource.org/cc/Distribution"/><requires rdf:resource="http://web.resource.org/cc/Notice"/><requires rdf:resource="http://web.resource.org/cc/Attribution"/><prohibits rdf:resource="http://web.resource.org/cc/CommercialUse"/><permits rdf:resource="http://web.resource.org/cc/DerivativeWorks"/><requires rdf:resource="http://web.resource.org/cc/ShareAlike"/></License></rdf:RDF> -->
+</div>
+</body>
+</html>
