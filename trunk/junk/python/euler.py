@@ -477,7 +477,7 @@ def level11():
     A.diag_se()
     A.diag_ne()
 
-def level12():
+def level12(): # Not solved
     def triangle_numbers():
 
         fo.write('\t'.join(map(str, self.SC())))
@@ -878,7 +878,7 @@ def level25():
             print i
             break
 
-def level26():
+def level26(): # Not solved
 
     def divide(a, b):
         precision = 10
@@ -1171,6 +1171,59 @@ def level31():
                                     i += 1
     print i + 8 #  1 2pounds
 
+def level32():
+    def num_to_chars(x):
+        return [i for i in str(x)]
+
+    def is_pandigital(a,b):
+        p = a * b
+
+        return len(str(a) + str(b) + str(p)) == 9 and \
+                all( \
+                [ \
+                    str(i) in num_to_chars(a) or \
+                    str(i) in num_to_chars(b) or \
+                    str(i) in num_to_chars(p) \
+                        for i in xrange(1,10)
+                ]
+            )
+
+    # 10^1 * 10^2 -> 10^3 / 1 + 2 + 3 = 6
+    # 6 + 3 = 9
+
+    assert is_pandigital(39, 186)
+    pandigitals = []
+    prods = []
+    # To make sure everything works, use a_max = 40 and b_max = 200 to start
+    a_max, b_max = 40, 200
+    a_max, b_max = 10000, 10000
+
+    for a_max, b_max in [
+            [10, 1000000], 
+            [100, 100000], 
+            [1000, 10000], 
+            [1000,  1000], 
+            ]:
+        for a in range(a_max):
+            for b in range(b_max):
+                p = a * b
+                if len(str(a) + str(b) + str(p)) > 9: break
+
+                if not p in prods:
+                    if is_pandigital(a,b):
+                        pandigitals.append( [a,b,p] )
+                        prods.append(p)
+
+    print pandigitals
+    print sum(prods)
+
+def level33():
+
+    for a in range(10,100):
+        for b in range(10,100):
+            if simplified(a, b):
+                print a, '/', b
+
 def level34():
 
     def fact(n):
@@ -1289,7 +1342,7 @@ def level40():
     factors = (int(d[-1 + 10 ** i]) for i in xrange(6+1))
     print reduce(lambda x,y: x*y, factors)
 
-def level47():
+def level47(): # Not solved
     N  = 100000
     N1 = 100000
     primes_dict = compute_primes_native(N)
@@ -1388,7 +1441,7 @@ def rewrite_int(n, S):
         rewrite_int(i, S + j)
         rewrite_int(j, S + i)
 
-def level76():
+def level76(): # Not solved
     if False:
         print 'Test'
         for i,j in pair_rewrite(-5):
@@ -1441,7 +1494,7 @@ def level76():
 
 if __name__ == '__main__':
     start = clock()
-    level31()
+    level33()
     print "Time taken (seconds) = %.6f" % (clock()-start)
 
 # Try those: 46, 48, 52, 76
@@ -1452,3 +1505,5 @@ if __name__ == '__main__':
 # 1 /d : 26
 
 # 165 does not look too hard for such a big number
+
+# http://projecteuler.net/
