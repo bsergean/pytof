@@ -1218,11 +1218,54 @@ def level32():
     print sum(prods)
 
 def level33():
+    getcontext().prec = 100
+
+    def fake_simplified(n, d):
+        n1 = n / 10
+        n2 = n % 10
+        d1 = d / 10
+        d2 = d % 10
+
+        if n2 == 0 or n1 == 0: return False
+        if d2 == 0 or d1 == 0: return False
+
+        q_real = Decimal(n) / Decimal(d)
+        if n1 == d2:
+            q_fake = Decimal(n2) / Decimal(d1)
+            return q_real == q_fake
+        elif n1 == d1:
+            q_fake = Decimal(n2) / Decimal(d2)
+            return q_real == q_fake
+        elif n2 == d1:
+            q_fake = Decimal(n1) / Decimal(d2)
+            return q_real == q_fake
+        elif n2 == d2:
+            q_fake = Decimal(n1) / Decimal(d1)
+            return q_real == q_fake
+        else:
+            return False
+
+    assert fake_simplified(49, 98)
+    assert fake_simplified(48, 98) == False
+    assert fake_simplified(50, 60) == False
 
     for a in range(10,100):
         for b in range(10,100):
-            if simplified(a, b):
+            if a >= b: continue # only numbers < 1
+
+            if fake_simplified(a, b):
                 print a, '/', b
+    # 16 / 64
+    # 19 / 95
+    # 26 / 65
+    # 49 / 98
+
+    N = 16 * 19 * 26 * 49
+    D = 64 * 95 * 65 * 98
+
+    print N, D
+    # 387296 38729600
+    # answer equals D when N / D is simplified -> answer = 100
 
 def level34():
 
