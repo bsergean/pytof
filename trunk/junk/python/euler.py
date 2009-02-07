@@ -1457,23 +1457,36 @@ def level41(): # Not solved
 
 def level42(): # Not solved
 
-    def triangle_numbers():
+    def is_triangle_number(n):
         S = 1
         i = 1
-        while True:
-            yield i, S
+        while S < n:
             i += 1
             S += i
+        return S == n
+
+    assert is_triangle_number(1)
+    assert is_triangle_number(3)
+    assert is_triangle_number(6)
+    assert is_triangle_number(21)
+    assert not is_triangle_number(25)
+    assert is_triangle_number(28)
+    assert is_triangle_number(55)
+
+    words = open('words.txt').read()[:-1].replace('"','').split(',')
 
     def lweight(letter):
-        return ord('b') - ord('a') + 1
+        return ord(letter) - ord('A') + 1
 
-    for i, n in triangle_numbers():
-        if i > 26 : break
-        print i, n
+    def triangle_weight(index):
+        return index
+
+    def wweight(word):
+        return sum( lweight(l) for l in word )
 
     # SKY is 19 + 11 + 25 = 55 = t10
-    assert wweigth('SKY') == 55
+    assert wweight('SKY') == 55
+    print sum([1 for w in words if is_triangle_number(wweight(w))])
 
 def level47(): # Not solved
     N  = 100000
