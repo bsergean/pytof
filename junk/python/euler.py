@@ -1374,6 +1374,52 @@ def level37():
     print 'res (11)', Lp[0:11], sum(Lp[0:11])
     print 'res (:11)', Lp[-11:], sum(Lp[-11:])
 
+def level38():
+    def num_to_chars(x):
+        return [i for i in str(x)]
+
+    def is_pandigital(a):
+        return all( str(i) in num_to_chars(a) for i in xrange(1,10) )
+
+    assert is_pandigital('192384576')
+
+    # for M in [9, 192]:
+    # Born max = 1e9
+    pans = []
+    for M in xrange(int(1e9)):
+        s = ''
+        i = 1
+        while len(s) < 9:
+            s += str(M * i)
+            i += 1
+        if is_pandigital(s) and len(s) == 9:
+            pans.append(s)
+            print M, s
+
+    # let it run for a while, and the last one it prints is the good one
+
+def level39():
+
+    from math import sqrt, modf
+    perimeters = {}
+    # First try with t_max = 122
+    for p in range(1000):
+        print p
+        for a in range(1,p):
+            for b in range(a,p):
+                c = sqrt(a*a + b*b)
+                if modf(c)[0] != 0.0: continue
+                c = int(c)
+                if a+b+c == p:
+                    v = perimeters.get(p, 0) 
+                    perimeters[p] = v + 1
+                    print a, b, c
+    print perimeters
+    L = [[v, k] for k,v in perimeters.iteritems()]
+    L.sort()
+    print L
+    # sol: 840 ?
+                        
 def level40():
     N = int(21)
     N = int(1e6)
@@ -1384,6 +1430,50 @@ def level40():
 
     factors = (int(d[-1 + 10 ** i]) for i in xrange(6+1))
     print reduce(lambda x,y: x*y, factors)
+
+def level41(): # Not solved
+    def num_to_chars(x):
+        return [i for i in str(x)]
+
+    def is_n_pandigital(a, n = 9):
+        return len(str(a)) == n and \
+                all( str(i) in num_to_chars(a) for i in xrange(1,n+1) )
+
+    assert is_n_pandigital('192384576')
+    assert is_n_pandigital('1324', 4)
+    assert is_n_pandigital('13247568', 8)
+    assert not is_n_pandigital('124', 4)
+
+    N  = int(1e8)
+    primes_dict = compute_primes_native(N)
+
+    n_max = 2
+    for p in sorted(primes_dict.keys()):
+        for n in range(n_max,9+1):
+            if is_n_pandigital(p, n):
+                n_max = n
+                print p, n
+    # 7652413 ?
+
+def level42(): # Not solved
+
+    def triangle_numbers():
+        S = 1
+        i = 1
+        while True:
+            yield i, S
+            i += 1
+            S += i
+
+    def lweight(letter):
+        return ord('b') - ord('a') + 1
+
+    for i, n in triangle_numbers():
+        if i > 26 : break
+        print i, n
+
+    # SKY is 19 + 11 + 25 = 55 = t10
+    assert wweigth('SKY') == 55
 
 def level47(): # Not solved
     N  = 100000
@@ -1537,7 +1627,9 @@ def level76(): # Not solved
 
 if __name__ == '__main__':
     start = clock()
-    level33()
+    level42()
+
+    # def level answers to be submited: 
     print "Time taken (seconds) = %.6f" % (clock()-start)
 
 # Try those: 46, 48, 52, 76
