@@ -1651,12 +1651,27 @@ def level49():
     primes = compute_sorted_primes(N)
     primes_dict = compute_primes_native(N)
 
-    # 1009 is the first prime above 1000
-
-    for p in primes:
+    # 1009 is the first prime above 1000, index 168
+    # 9973 is the last prime below 10000, 
+    for i, p in enumerate(primes):
         if p > 1000: 
-            print p
+            #print primes[i]
+            #print i
             break
+
+    def same_digits(a, b):
+        return set(str(a)) == set(str(b))
+
+    Lp = len(primes)
+    for j in xrange(168,Lp):
+        inc = 3330
+        p1 = primes[j]
+        p2 = p1 + inc
+        p3 = p1 + inc + inc
+        if p1 in primes_dict and p2 in primes_dict and p3 in primes_dict \
+            and same_digits(p1, p2) and same_digits(p1, p3):
+            print 'res:', p1, p2, p3
+            print ''.join(map(str, [p1,p2,p3]))
 
 def level50():
     x = 6
