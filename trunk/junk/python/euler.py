@@ -15,6 +15,46 @@ try:
 except ImportError:
     pass
 
+# http://code.activestate.com/recipes/466320/
+from cPickle import dumps, PicklingError # for memoize
+class memoize(object):
+    """Decorator that caches a function's return value each time it is called.
+    If called later with the same arguments, the cached value is returned, and
+    not re-evaluated. Slow for mutable types."""
+    # Ideas from MemoizeMutable class of Recipe 52201 by Paul Moore and
+    # from memoized decorator of http://wiki.python.org/moin/PythonDecoratorLibrary
+    # For a version with timeout see Recipe 325905
+    # For a self cleaning version see Recipe 440678
+    # Weak references (a dict with weak values) can be used, like this:
+    #   self._cache = weakref.WeakValueDictionary()
+    #   but the keys of such dict can't be int
+    def __init__(self, func):
+        self.func = func
+        self._cache = {}
+    def __call__(self, *args, **kwds):
+        key = args
+        if kwds:
+            items = kwds.items()
+            items.sort()
+            key = key + tuple(items)
+        try:
+            if key in self._cache:
+                return self._cache[key]
+            self._cache[key] = result = self.func(*args, **kwds)
+            return result
+        except TypeError:
+            try:
+                dump = dumps(key)
+            except PicklingError:
+                return self.func(*args, **kwds)
+            else:
+                if dump in self._cache:
+                    return self._cache[dump]
+                self._cache[dump] = result = self.func(*args, **kwds)
+                return result
+
+
+
 def multiple_fmod(x, Max):
     return [i for i in xrange(x, Max) if fmod(i, x) == 0]
 
@@ -83,8 +123,8 @@ def gen_primes(n):
         j += m
     i = i + 1
     m = 2 * i + 3
-  # make exception for 2
-  return [2]+[x for x in s if x]
+  # make exception for 2, we say that 1 is not a prime
+  return [2] + [x for x in s if x]
 
 def compute_primes_native(max_int):
     primes = {}
@@ -1455,7 +1495,7 @@ def level41(): # Not solved
                 print p, n
     # 7652413 ?
 
-def level42(): # Not solved
+def level42():
 
     def is_triangle_number(n):
         S = 1
@@ -1488,6 +1528,89 @@ def level42(): # Not solved
     assert wweight('SKY') == 55
     print sum([1 for w in words if is_triangle_number(wweight(w))])
 
+def level44(): # Not solved
+
+    # 1, 5, 12, 22, 35, 51, 70, 92, 117, 145, ...
+    @memoize
+    def pentagonal(n):
+        return n * (3*n - 1) / 2
+
+    pentagonals_bool = {}
+    def is_pentagonal(n):
+        if n in pentagonals_bool:
+            return pentagonals_bool[n]
+        S = 1
+        i = 1
+        while S < n:
+            S = pentagonal(i)
+            i += 1
+        pentagonals_bool[n] = S == n
+        return S == n
+
+    assert is_pentagonal(1)
+    assert is_pentagonal(5)
+    assert is_pentagonal(12)
+    assert is_pentagonal(22)
+    assert not is_pentagonal(23)
+
+    res = []
+    j_max, k_max = 10000, 10000
+    for j in range(1, j_max):
+        for k in range(j, j + 1000):
+            pk = pentagonal(k)
+            pj = pentagonal(j)
+            S = pj + pk
+            if is_pentagonal(S):
+                print j,k
+                print 'S', S
+                D = pk - pj
+                print 'D', D
+                if is_pentagonal(D):
+                    D_abs = abs( pj - pk )
+                    print j, k, S, D, D_abs
+                    return
+
+def level45():
+
+    def pentagonal(n):
+        return n * (3*n - 1) / 2
+
+    def is_pentagonal(n):
+        S = 1
+        i = 1
+        while S < n:
+            S = pentagonal(i)
+            i += 1
+        return S == n
+
+    def hexagonal(n):
+        return n * (2*n - 1)
+
+    def is_hexagonal(n):
+        S = 1
+        i = 1
+        while S < n:
+            S = hexagonal(i)
+            i += 1
+        return S == n
+
+    def triangle_numbers():
+        S = 1
+        i = 1
+        while True:
+            yield S
+            i += 1
+            S += i
+
+    for i, t in enumerate(triangle_numbers()):
+        if i > 284 and is_pentagonal(t) and is_hexagonal(t):
+            print i, t 
+            return 
+
+    # bash-3.2$ ./euler.py
+    # 55384 1533776805
+    # Time taken (seconds) = 877.720000
+
 def level47(): # Not solved
     N  = 100000
     N1 = 100000
@@ -1517,11 +1640,58 @@ def level47(): # Not solved
             all = A + B + C + D
             if len(set(all)) == len(all):
                 print i,A,B,C,D
-        
 
 def level48():
     S = sum([i ** i for i in xrange(1,1001)])
     print str(S)[-10:]
+
+def level49():
+    x = 4
+    N  = 10 ** x
+    primes = compute_sorted_primes(N)
+    primes_dict = compute_primes_native(N)
+
+    # 1009 is the first prime above 1000
+
+    for p in primes:
+        if p > 1000: 
+            print p
+            break
+
+def level50():
+    x = 6
+    N  = 10 ** x
+    primes = compute_sorted_primes(N)
+    primes_dict = compute_primes_native(N)
+
+    if False: # does not work ... guess why ...
+        L_max = 1
+        for j in xrange(0, len(primes)):
+            for k in xrange(j+1, len(primes)):
+                # print j,k
+                if k - j + 1 < L_max: continue
+                s = primes[j:k]
+
+                if len(s) >= L_max and sum(s) in primes_dict:
+                    print sum(s), len(s)
+                    L_max = len(s)
+    else:
+        L_max = 1
+        Lp = len(primes)
+
+        for j in xrange(0, Lp):
+            S = primes[j] 
+            #print 'top'
+            for k in xrange(j+1, Lp):
+                L = k - j + 1
+
+                S += primes[k]
+
+                if S > N: break
+
+                if L > L_max and S in primes_dict:
+                    print S, L
+                    L_max = L
 
 def level52():
     ''' permutations '''
@@ -1640,7 +1810,14 @@ def level76(): # Not solved
 
 if __name__ == '__main__':
     start = clock()
-    level42()
+
+    # Just in case, to kill the process
+    from os import getpid
+    pid_fd = open('euler.pid', 'w')
+    pid_fd.write(str(getpid()))
+    pid_fd.close()
+
+    level49()
 
     # def level answers to be submited: 
     print "Time taken (seconds) = %.6f" % (clock()-start)
