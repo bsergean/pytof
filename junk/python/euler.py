@@ -1531,44 +1531,36 @@ def level42():
 def level44(): # Not solved
 
     # 1, 5, 12, 22, 35, 51, 70, 92, 117, 145, ...
-    @memoize
-    def pentagonal(n):
-        return n * (3*n - 1) / 2
 
-    pentagonals_bool = {}
-    def is_pentagonal(n):
-        if n in pentagonals_bool:
-            return pentagonals_bool[n]
-        S = 1
-        i = 1
-        while S < n:
-            S = pentagonal(i)
-            i += 1
-        pentagonals_bool[n] = S == n
-        return S == n
+    N = 10 ** 6
+    pentagonal = [-1] * N
+    pentagonal_dict = {}
+    for i in xrange(N):
+        p = i * (3*i - 1) / 2
+        pentagonal[i] = p 
+        pentagonal_dict[p] = None
 
-    assert is_pentagonal(1)
-    assert is_pentagonal(5)
-    assert is_pentagonal(12)
-    assert is_pentagonal(22)
-    assert not is_pentagonal(23)
+    assert 1 in pentagonal_dict
+    assert 5 in pentagonal_dict
+    assert 12 in pentagonal_dict
+    assert 22 in pentagonal_dict
+    assert not 23 in pentagonal_dict
 
     res = []
     j_max, k_max = 10000, 10000
     for j in range(1, j_max):
-        for k in range(j, j + 1000):
-            pk = pentagonal(k)
-            pj = pentagonal(j)
+        for k in range(j+1, k_max):
+            pk = pentagonal[k]
+            pj = pentagonal[j]
             S = pj + pk
-            if is_pentagonal(S):
-                print j,k
-                print 'S', S
+            if S in pentagonal_dict:
+                #print j,k
+                #print 'S', S
                 D = pk - pj
-                print 'D', D
-                if is_pentagonal(D):
+                #print 'D', D
+                if D in pentagonal_dict:
                     D_abs = abs( pj - pk )
                     print j, k, S, D, D_abs
-                    return
 
 def level45():
 
@@ -1724,6 +1716,28 @@ def level52():
             break
         i += 1
 
+def level53():
+    cnr_table = []
+    N = R = 100+1
+    for i in xrange(0, N):
+        L = [-1 for j in xrange(0, R)]
+        cnr_table.append(L)
+
+    @memoize
+    def fact(n):
+        if n == 1 or n <= 0: return 1
+        else: return n * fact(n -1)
+
+    for r in xrange(0, R):
+        for n in xrange(r+1, N):
+            cnr_table[n][r] = fact(n) / (fact(r) * fact (n-r))
+
+    print cnr_table[23][10]
+    print sum(1 for r in xrange(0, R) for n in xrange(r+1, N) \
+            if cnr_table[n][r] > 10 ** 6)
+
+
+
 # Level 76
 def pair_rewrite(n):
     i = 1
@@ -1828,11 +1842,11 @@ if __name__ == '__main__':
 
     # Just in case, to kill the process
     from os import getpid
-    pid_fd = open('euler.pid', 'w')
+    pid_fd = open('pid.euler', 'w')
     pid_fd.write(str(getpid()))
     pid_fd.close()
 
-    level49()
+    level53()
 
     # def level answers to be submited: 
     print "Time taken (seconds) = %.6f" % (clock()-start)
