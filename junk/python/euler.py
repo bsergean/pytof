@@ -1736,7 +1736,9 @@ def level53():
     print sum(1 for r in xrange(0, R) for n in xrange(r+1, N) \
             if cnr_table[n][r] > 10 ** 6)
 
-
+def level56():
+    print max(sum([int(s) for s in str(a ** b)]) \
+            for a in xrange(100) for b in xrange(100))
 
 # Level 76
 def pair_rewrite(n):
@@ -1836,6 +1838,8 @@ def level76(): # Not solved
 
     #rewrite_int(N, 0)
 
+def level79():
+    print 'toto'
 
 if __name__ == '__main__':
     start = clock()
@@ -1846,7 +1850,7 @@ if __name__ == '__main__':
     pid_fd.write(str(getpid()))
     pid_fd.close()
 
-    level53()
+    level56()
 
     # def level answers to be submited: 
     print "Time taken (seconds) = %.6f" % (clock()-start)
