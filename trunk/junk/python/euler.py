@@ -1736,6 +1736,31 @@ def level53():
     print sum(1 for r in xrange(0, R) for n in xrange(r+1, N) \
             if cnr_table[n][r] > 10 ** 6)
 
+def level55():
+    print 'palindromes '
+    assert is_palindrome(7337)
+
+    def invert(x):
+        a = str(x)
+        return int(a[::-1])
+
+    def is_lychrel(n):
+        x = n
+        for i in xrange(51):
+            x += invert(x)
+            if is_palindrome(x):
+                #print n, 'False'
+                return False
+        #print n, 'True'
+        return True
+
+    #assert not is_lychrel(7337)
+    #assert not is_lychrel(349)
+    #assert not is_lychrel(10677)
+    print sum(1 for i in xrange(10 ** 4) if is_lychrel(i))
+
+
+
 def level56():
     print max(sum([int(s) for s in str(a ** b)]) \
             for a in xrange(100) for b in xrange(100))
@@ -1753,6 +1778,7 @@ def pair_rewrite(n):
 from bisect import insort
 dico_all = {}
 
+@memoize
 def rewrite_list(n, L, N, verbose):
 
     insort(L,n)
@@ -1788,7 +1814,7 @@ def rewrite_int(n, S):
         rewrite_int(i, S + j)
         rewrite_int(j, S + i)
 
-def level76(): # Not solved
+def level76_old(): # Not solved
     if False:
         print 'Test'
         for i,j in pair_rewrite(-5):
@@ -1828,15 +1854,26 @@ def level76(): # Not solved
         return res
 
     # Show one example solved
-    N = 10 
+    N = 30
     print '[%2d]' % N, rewrite(N, verbose = True)
 
     # Show the triangle
-    Range = 22
+    Range = 30
     for N in xrange(Range):
         print '[%2d]' % N, rewrite(N)
 
     #rewrite_int(N, 0)
+
+def level76():
+    level76_old()
+
+    def rec(n):
+        if n == 1: return 1
+        return 1 + rec(n-1)
+    N = 10
+    print N, rec(N)
+
+    assert 6 == rec(5)
 
 def level79():
     print 'toto'
@@ -1850,7 +1887,7 @@ if __name__ == '__main__':
     pid_fd.write(str(getpid()))
     pid_fd.close()
 
-    level56()
+    level55()
 
     # def level answers to be submited: 
     print "Time taken (seconds) = %.6f" % (clock()-start)
