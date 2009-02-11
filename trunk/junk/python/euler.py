@@ -1699,6 +1699,29 @@ def level50():
                 if L > L_max and S in primes_dict:
                     print S, L
                     L_max = L
+def level51():
+    N = 10 ** 3
+    primes = compute_sorted_primes(N)
+    primes_dict = compute_primes_native(N)
+
+    def prime_family(n):
+        N = str(n)
+        for j in xrange(len(N)): # pick the digit
+            L = list(str(n))
+            good = 0
+            for k in xrange(10): # try to replace it (j) with all values
+                
+                L[j] = str(k)
+                candidate = int(''.join(L))
+                if candidate in primes_dict:
+                    good += 1
+                    #print i, N, candidate, k, j
+
+        print 'good', good 
+
+    for p in primes:
+        if p < 100: continue
+        prime_family(p)
 
 def level52():
     ''' permutations '''
