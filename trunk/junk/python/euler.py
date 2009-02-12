@@ -1978,11 +1978,12 @@ def level102():
             return self.A.imaging_coords() + self.B.imaging_coords() + \
                    self.C.imaging_coords() + self.A.imaging_coords()
 
-        def is_inside(self, P):
+        def is_inside(self, P, verbose = False):
             b1 = cross_product_2d( Vector(P,self.A), Vector(P,self.B) ) >= 0
             b2 = cross_product_2d( Vector(P,self.B), Vector(P,self.C) ) >= 0
             b3 = cross_product_2d( Vector(P,self.C), Vector(P,self.A) ) >= 0
-            return b1 and b2 and b3
+            if verbose: print b1, b2, b3
+            return b1 == b2 == b3
 
     Origin = Point(0, 0)
     triangles = []
@@ -2017,11 +2018,27 @@ def level102():
     white = (255, 255, 255)
     photo = Image.new('RGB', (2000, 2000), white)
     draw = ImageDraw.Draw(photo)
+    blue = (0, 0, 255)
+    draw.line( [1000, 0, 1000, 2000] , blue)
+    draw.line( [0, 1000, 2000, 1000] , blue)
 
     # font_file = "arial.ttf"
     font_file = "/usr/share/fonts/TTF/Vera.ttf"
     font = ImageFont.truetype(font_file, 40)
     draw.setfont(font)
+
+    t = Triangle( Point(5,-850), Point(-438,659), Point(745,-773) )
+    draw.setink( blue )
+    draw.line( t.imaging_coords(), None, 20 )
+    photo.save('level102.png', "PNG")
+    assert Triangle( Point(5,-850), Point(-438,659), Point(745,-773) ).is_inside(Origin, True)
+    return
+
+    # Bugs with those one as of rev 466
+    # 5,-850,-438,659,745,-773
+    assert Triangle( Point(5,-850), Point(-438,659), Point(745,-773) ).is_inside(Origin, True)
+    # -158,251,419,-394,-655,-895
+    assert Triangle( Point(-158,251), Point(419,-394), Point(-655,-895) ).is_inside(Origin, True)
 
     for i,t in enumerate(bad_triangles):
         if i % 50 == 0 and not i % 100 == 0:
@@ -2039,9 +2056,6 @@ def level102():
             draw.text( t.C.imaging_coords(), t.C.__str__())
 
     # Axes
-    blue = (0, 0, 255)
-    draw.line( [1000, 0, 1000, 2000] , blue)
-    draw.line( [0, 1000, 2000, 1000] , blue)
     photo.save('level102.png', "PNG")
 
 if __name__ == '__main__':
