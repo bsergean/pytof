@@ -2106,6 +2106,8 @@ if __name__ == '__main__':
 # 26: 1/d repeating pattern
 # 76: Rewrite
 # 46: every odd composite number can be written as the sum of a prime and twice a square
-# 81: Point inside a triangle. (3 vectorial products)
+# 81: Moving inside a matrix
+# 99: Something with log ?
 
 # http://projecteuler.net/
+# http://projecteuler.net/index.php?section=problems&id=99
