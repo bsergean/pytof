@@ -9,12 +9,6 @@ from time import clock
 from copy import deepcopy
 from decimal import *
 
-try:
-    import psyco
-    psyco.full()
-except ImportError:
-    pass
-
 # http://code.activestate.com/recipes/466320/
 from cPickle import dumps, PicklingError # for memoize
 class memoize(object):
@@ -1760,7 +1754,6 @@ def level53():
             if cnr_table[n][r] > 10 ** 6)
 
 def level55():
-    print 'palindromes '
     assert is_palindrome(7337)
 
     def invert(x):
@@ -1772,17 +1765,10 @@ def level55():
         for i in xrange(51):
             x += invert(x)
             if is_palindrome(x):
-                #print n, 'False'
                 return False
-        #print n, 'True'
         return True
 
-    #assert not is_lychrel(7337)
-    #assert not is_lychrel(349)
-    #assert not is_lychrel(10677)
     print sum(1 for i in xrange(10 ** 4) if is_lychrel(i))
-
-
 
 def level56():
     print max(sum([int(s) for s in str(a ** b)]) \
@@ -1848,7 +1834,9 @@ def level76_old(): # Not solved
 
     def rewrite(N, verbose = False):
         rewrite_list(N, [], N, verbose)
+        res = len(dico_all) - 1
         del dico_all[str(N)]
+        return res
 
         if False:
             B = []
@@ -1878,30 +1866,194 @@ def level76_old(): # Not solved
 
     # Show one example solved
     N = 30
-    print '[%2d]' % N, rewrite(N, verbose = True)
+    print '[%2d]' % N, rewrite(N, verbose = False)
 
-    # Show the triangle
-    Range = 30
-    for N in xrange(Range):
-        print '[%2d]' % N, rewrite(N)
+    rew = (N+1) * [-1]
+    rew[1] = 1
+    rew[3] = 2
+    rew[4] = 4
+    rew[5] = 6
+    rew[6] = 10
+    rew[7] = 14
+    rew[8] = 21
+    rew[9] = 29
+    rew[10] = 41
+    rew[11] = 55
+    rew[12] = 76
+    rew[13] = 100
+    rew[14] = 134
+    rew[15] = 175
+    rew[16] = 230
+    rew[17] = 296
+    rew[18] = 384
+    rew[19] = 489
+    rew[20] = 626
+    rew[21] = 791
+    rew[22] = 1001
+    rew[23] = 1254
+    rew[24] = 1574
+    rew[25] = 1957
+    rew[26] = 2435
+    rew[27] = 3009
+    rew[28] = 3717
+    rew[29] = 4564
+    #rew[30] = 5603
+    #rew[31] = 6841
+    #rew[32] = 8348
 
-    #rewrite_int(N, 0)
+    # 30 -> s
+    # 40 -> 21s
+    # 50 -> 157s
+
+    for i,r in enumerate(rew):
+        print i, rew[i], i**2, i**3
 
 def level76():
     level76_old()
+    return
 
     def rec(n):
-        if n == 1: return 1
-        return 1 + rec(n-1)
-    N = 10
-    print N, rec(N)
+        i = 1
+        j = n - 1
 
-    assert 6 == rec(5)
+        C = 0
+        while i <= j:
+            C += 1
+            i += 1
+            j -= 1
+
+        return C
+
+    def print_rec(N):
+        res = sum( rec(i) for i in xrange(1,N+1) )
+        print 'res[%d]:'%N, res
+
+    N = 7
+    for i in xrange(N):
+        print_rec(i)
 
 def level79():
-    print 'toto'
+    answers = map(int, open('keylog.txt').read().splitlines())
+    print answers
+
+def level102():
+    lines = open('triangles.txt').read().splitlines()
+
+    def cross_product_2d(U, V):
+        return U.x * V.y - U.y * V.x
+
+    class Point():
+        def __init__(self, x,y):
+            self.x = x
+            self.y = y
+        def __str__(self):
+            return '[%d,%d]' % (self.x, self.y)
+        def imaging_coords(self):
+            ''' Checked: logic OK '''
+            return [self.x + 1000, 1000 - self.y]
+
+    class Vector():
+        def __init__(self, A, B):
+            self.x = B.x - A.x
+            self.y = B.y - A.y
+        def __str__(self):
+            return '[%d,%d]' % (self.x, self.y)
+
+    assert cross_product_2d( Point(1, 0), Point(0, 1) ) > 0
+    assert cross_product_2d( Point(0, 1), Point(1, 0) ) < 0
+
+    class Triangle():
+        def __init__(self, A, B, C):
+            self.A = A
+            self.B = B
+            self.C = C
+
+        def __str__(self):
+            return '(%s, %s, %s)' % (
+                    self.A.__str__(), 
+                    self.B.__str__(), 
+                    self.C.__str__())
+
+        def imaging_coords(self):
+            return self.A.imaging_coords() + self.B.imaging_coords() + \
+                   self.C.imaging_coords() + self.A.imaging_coords()
+
+        def is_inside(self, P):
+            b1 = cross_product_2d( Vector(P,self.A), Vector(P,self.B) ) >= 0
+            b2 = cross_product_2d( Vector(P,self.B), Vector(P,self.C) ) >= 0
+            b3 = cross_product_2d( Vector(P,self.C), Vector(P,self.A) ) >= 0
+            return b1 and b2 and b3
+
+    Origin = Point(0, 0)
+    triangles = []
+    bad_triangles = []
+    print 'Processing', len(lines), 'triangles'
+    for i,line in enumerate(lines):
+        coords = line.split(',')
+        coords = map(int, coords)
+        A = Point(coords[0], coords[1])
+        B = Point(coords[2], coords[3])
+        C = Point(coords[4], coords[5])
+
+        T = Triangle(A,B,C)
+        if T.is_inside(Origin):
+            triangles.append(T)
+        else:
+            bad_triangles.append(T)
+    print len(triangles), 'inside'
+
+    # Debug
+    A = Point(0,0)
+    B = Point(300,0)
+    C = Point(0,300)
+    P = Point(100,100)
+    T = Triangle(A, B, C)
+    assert T.is_inside(P) is True
+
+    assert Triangle( Point(-340,495), Point(-153,-910), Point(835,-947) ).is_inside(Origin)
+    assert not Triangle( Point(-175,41), Point(-421,-714), Point(574,-645) ).is_inside(Origin)
+
+    import Image, ImageDraw, ImageFont
+    white = (255, 255, 255)
+    photo = Image.new('RGB', (2000, 2000), white)
+    draw = ImageDraw.Draw(photo)
+
+    # font_file = "arial.ttf"
+    font_file = "/usr/share/fonts/TTF/Vera.ttf"
+    font = ImageFont.truetype(font_file, 40)
+    draw.setfont(font)
+
+    for i,t in enumerate(bad_triangles):
+        if i % 50 == 0 and not i % 100 == 0:
+            coords = t.imaging_coords()
+            import random
+            color = tuple([random.randint(0,255) for i in range(3)])
+            draw.setink( color )
+
+            # triangle
+            draw.line( coords, None, 20 )
+
+            # vertex coordinates
+            draw.text( t.A.imaging_coords(), t.A.__str__())
+            draw.text( t.B.imaging_coords(), t.B.__str__())
+            draw.text( t.C.imaging_coords(), t.C.__str__())
+
+    # Axes
+    blue = (0, 0, 255)
+    draw.line( [1000, 0, 1000, 2000] , blue)
+    draw.line( [0, 1000, 2000, 1000] , blue)
+    photo.save('level102.png', "PNG")
 
 if __name__ == '__main__':
+
+    do_profile = False
+    if not do_profile:
+        try:
+            import psyco
+            psyco.full()
+        except ImportError:
+            pass
+
     start = clock()
 
     # Just in case, to kill the process
@@ -1910,18 +2062,36 @@ if __name__ == '__main__':
     pid_fd.write(str(getpid()))
     pid_fd.close()
 
-    level55()
+    which_level = level102
+    if do_profile:
+        # FIXME: factorize me in utils
+        from profile import Profile
+        myprofiler = Profile()
+        myprofiler.create_stats()
+
+        myprofiler.runcall(which_level)
+
+        from tempfile import mktemp
+        statfile = mktemp()
+        myprofiler.dump_stats(statfile)
+
+        import pstats
+        p = pstats.Stats(statfile)
+        from os import remove
+        remove(statfile) # remove temp file
+        p.strip_dirs()
+        p.sort_stats('cumulative').print_stats(30)
+    else:
+        which_level()
 
     # def level answers to be submited: 
     print "Time taken (seconds) = %.6f" % (clock()-start)
 
-# Try those: 46, 48, 52, 76
-# 33, 45, 46, 55
-
-# Next: 29 ?
-# Do-able: the spiral: 28
-# 1 /d : 26
-
-# 165 does not look too hard for such a big number
+# Missing:
+# 12: Sigma(n)
+# 26: 1/d repeating pattern
+# 76: Rewrite
+# 46: every odd composite number can be written as the sum of a prime and twice a square
+# 81: Point inside a triangle. (3 vectorial products)
 
 # http://projecteuler.net/
