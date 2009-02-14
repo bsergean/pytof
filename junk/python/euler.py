@@ -797,9 +797,15 @@ triangle_small = '''3
 def level18():
     #mat_str = read_input(triangle_small)
     mat_str = read_input(triangle_big)
+
+    if True: # using memoize make it work for problem 67 ...
+        input = 'triangle.txt'
+        mat_str = read_input(open(input).read())
+
     print mat_str[0][0]
     N = len(mat_str)
 
+    @memoize
     def triangle_rec(i,j,N):
         if i>N: return 0
         return mat_str[i][j] + max(triangle_rec(i+1, j, N), triangle_rec(i+1, j+1, N))
@@ -1774,6 +1780,55 @@ def level56():
     print max(sum([int(s) for s in str(a ** b)]) \
             for a in xrange(100) for b in xrange(100))
 
+
+def level67():
+    input = 'triangle_small.txt'
+    input = 'triangle.txt'
+    input = 'triangle_level18.txt'
+    M = read_input(open(input).read())
+    # print M
+
+    # Get python-graph from google code
+    import graph
+    gr = graph.digraph()
+    gr.add_node('root')
+
+    for i in xrange(len(M)):
+
+        for j in xrange(len(M[i])):
+
+            node_id = '[%d,%d]' % (i,j)
+            gr.add_node(node_id)
+
+            wt = M[i][j]
+            #wt = 1. / M[i][j]
+
+            if i == 0:
+                node_id_A = 'root'
+                gr.add_edge( node_id_A, node_id, wt )
+            else:
+                if j != 0:
+                    node_id_A = '[%d,%d]' % (i-1,j-1)
+                    gr.add_edge( node_id_A, node_id, wt )
+                if j != len(M[i]) - 1:
+                    node_id_B = '[%d,%d]' % (i-1,j)
+                    gr.add_edge( node_id_B, node_id, wt )
+
+    # write does not work ...
+    # print gr.write(fmt='xml')
+    a,b = gr.shortest_path('root')
+    print a, b
+
+    N = len(M) - 1
+    L = []
+    for j in xrange(N+1):
+        node_id = '[%d,%d]' % (N,j)
+        L.append( (b[node_id], node_id ) )
+
+    L.sort()
+    print max(L)
+
+
 # Level 76
 def pair_rewrite(n):
     i = 1
@@ -2076,7 +2131,7 @@ if __name__ == '__main__':
     pid_fd.write(str(getpid()))
     pid_fd.close()
 
-    which_level = level102
+    which_level = level67
     if do_profile:
         # FIXME: factorize me in utils
         from profile import Profile
