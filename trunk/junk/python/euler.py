@@ -1780,6 +1780,17 @@ def level56():
     print max(sum([int(s) for s in str(a ** b)]) \
             for a in xrange(100) for b in xrange(100))
 
+def level63():
+    S = 0
+    for a in xrange(1000):
+        for b in xrange(150):
+            x = a ** b
+            l = len(str(x))
+            if b == l:
+                print b,x
+                S += 1
+
+    print 'res', S - 1 # looks like 1 ** 0 does not count
 
 def level67():
     input = 'triangle_small.txt'
@@ -2131,7 +2142,7 @@ if __name__ == '__main__':
     pid_fd.write(str(getpid()))
     pid_fd.close()
 
-    which_level = level67
+    which_level = level63
     if do_profile:
         # FIXME: factorize me in utils
         from profile import Profile
