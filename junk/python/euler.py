@@ -134,6 +134,7 @@ def compute_sorted_primes(n):
 class Factoriser:
     def __init__(self, N):
         ''' http://www.btinternet.com/~se16/js/factor.htm '''
+        ''' http://mathschallenge.net/index.php?section=faq&ref=number/number_of_divisors '''
         max_int = int((N ** 0.5) + 1)
         primes = compute_primes_native(max_int)
         self.primes = sorted(primes.keys())
@@ -172,11 +173,14 @@ class Factoriser:
     def do_proper_divisors(self, n):
         max_int = n / 2 + 1
 
-        factors = []
+        #factors = []
+        S = 0
         for i in xrange(1,max_int):
             if n % i == 0:
-                factors.append(i)
-        return factors
+                S += 1
+                #factors.append(i)
+        return S
+        #return factors
 
     def proper_divisor_sum(self, n):
         return sum(self.do_proper_divisors(n))
@@ -512,27 +516,25 @@ def level11():
     A.diag_ne()
 
 def level12(): # Not solved
-    def triangle_numbers():
 
-        fo.write('\t'.join(map(str, self.SC())))
-        fo.write(' ' + str(self.S()))
-        S = 1
-        i = 1
-        while True:
-            yield i, S
-            i += 1
-            S += i
+    L_max = 1
+    n = 1
+    k = 1
 
-    f = Factoriser(int(1e6))
+    while True:
 
-    for i, n in triangle_numbers():
-        if i < 7564: continue
-        if True: #n % 10 == 0:
-            L = f.do_proper_divisors(n)
-            #if len(L) > 200:
-            print len(L), '\t', i , n, L
-            #print len(L), i
+        k += 1
+        n += k
 
+        L = 0
+        max_int = n / 2 + 1
+        for i in xrange(1, max_int):
+            if n % i == 0:
+                L += 1
+        
+        if L > L_max:
+            print L
+            L_max = L
 
 
 datas = ''' 37107287533902102798797998220837590246510135740250
@@ -1441,23 +1443,20 @@ def level38():
 def level39():
 
     from math import sqrt, modf
-    perimeters = {}
+    S = 0
     # First try with t_max = 122
     for p in range(1000):
         print p
         for a in range(1,p):
             for b in range(a,p):
-                c = sqrt(a*a + b*b)
+                #c = sqrt(a*a + b*b)
+                c = (a*a + b*b) ** 0.5
+                if c < b: continue
                 if modf(c)[0] != 0.0: continue
                 c = int(c)
                 if a+b+c == p:
-                    v = perimeters.get(p, 0) 
-                    perimeters[p] = v + 1
-                    print a, b, c
-    print perimeters
-    L = [[v, k] for k,v in perimeters.iteritems()]
-    L.sort()
-    print L
+                    S += 1
+    print S
     # sol: 840 ?
                         
 def level40():
@@ -2124,6 +2123,28 @@ def level102():
     # Axes
     photo.save('level102.png', "PNG")
 
+def level224():
+
+    from math import sqrt, modf
+    perimeters = {}
+    # First try with t_max = 122
+    for p in range(75000000 + 1):
+        print p
+        for a in range(1,p):
+            for b in range(a,p):
+                c = sqrt(a*a + b*b) + 1
+                if modf(c)[0] != 0.0: continue
+                c = int(c)
+                if a+b+c == p:
+                    v = perimeters.get(p, 0) 
+                    perimeters[p] = v + 1
+                    print a, b, c
+    print perimeters
+    L = [[v, k] for k,v in perimeters.iteritems()]
+    L.sort()
+    print L
+    # sol: 840 ?
+
 if __name__ == '__main__':
 
     do_profile = False
@@ -2142,7 +2163,7 @@ if __name__ == '__main__':
     pid_fd.write(str(getpid()))
     pid_fd.close()
 
-    which_level = level63
+    which_level = level12
     if do_profile:
         # FIXME: factorize me in utils
         from profile import Profile
@@ -2177,3 +2198,4 @@ if __name__ == '__main__':
 
 # http://projecteuler.net/
 # http://projecteuler.net/index.php?section=problems&id=99
+# http://projecteuler.net/index.php?section=scores&country=France&page=2
