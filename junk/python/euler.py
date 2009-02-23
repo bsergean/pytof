@@ -2195,7 +2195,9 @@ if __name__ == '__main__':
 # 46: every odd composite number can be written as the sum of a prime and twice a square
 # 81: Moving inside a matrix
 # 99: Something with log ?
-
+# 
 # http://projecteuler.net/
 # http://projecteuler.net/index.php?section=problems&id=99
 # http://projecteuler.net/index.php?section=scores&country=France&page=2
+# 
+# Fast is_prime http://eli.thegreenplace.net/2009/02/21/rabin-miller-primality-test-implementation/
