@@ -22,4 +22,9 @@ Global
 		Release|Win32 = Release|Win32
 		Release|x64 = Release|x64
 	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{26440A35-51C0-4469-B5F7-5001077118C1}.Debug - Web OCX|Win32.ActiveCfg = Debug|Win32
+		{26440A35-51C0-4469-B5F7-5001077118C1}.Debug - Web OCX|Win32.Build.0 = Debug|Win32
+		{26440A35-51C0-4469-B5F7-5001077118C1}.Debug - Web OCX|x64.ActiveCfg = DebugWithFlash|Win32
+	EndGlobalSection
 EndGlobal

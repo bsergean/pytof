@@ -23,6 +23,7 @@ tokens = (
     'PROJECTDEPENDENCIES', 'POSTPROJECT',
     'GLOBAL', 'GLOBALSECTION', 'ENDGLOBAL', 'ENDGLOBALSECTION',
     'SOLUTIONCONFIGURATIONPLATFORMS', 'PRESOLUTION', 'DOT', 'NESTEDPROJECTS',
+    'PROJECTCONFIGURATIONPLATFORMS',  'POSTSOLUTION',
     'WIN32', 'X64', 'ACTIVECONFIG', 'BUILD0',
     )
 
@@ -42,8 +43,8 @@ t_GLOBAL              = r'Global'
 t_GLOBALSECTION       = r'GlobalSection'
 t_ENDGLOBAL           = r'EndGlobal'
 t_ENDGLOBALSECTION    = r'EndGlobalSection'
-t_SOLUTIONCONFIGURATIONPLATFORMS = 'SolutionConfigurationPlatforms'
 t_PRESOLUTION         = r'preSolution'
+t_POSTSOLUTION        = r'postSolution'
 t_POSTPROJECT         = r'postProject'
 t_NESTEDPROJECTS      = r'NestedProjects'
 t_WIN32               = r'Win32'
@@ -54,6 +55,8 @@ t_VCPROJPATH          = r'[a-zA-Z0-9\\.]+.vcproj' # Don't need to escape \
 t_CONF                = r'\w[\w \-]+\|'
 t_NAME                = r'\w+'
 t_GUID                = r'\{{0,1}[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}\}'
+t_SOLUTIONCONFIGURATIONPLATFORMS = 'SolutionConfigurationPlatforms'
+t_PROJECTCONFIGURATIONPLATFORMS  = 'ProjectConfigurationPlatforms'
 
 # t_GUID                = r'\{.*\}$'
 
@@ -99,67 +102,78 @@ names = { }
 def p_main_statement_group(t):
     '''main_statement_group : main_statement main_statement_group
                             | main_statement'''
-    pass
 
 def p_main_statement(t):
     '''main_statement : PROJECT project_statement
                       | GLOBAL  global_statement'''
-    pass
 
 def p_project_statement(t):
     '''project_statement : LPAREN quoted RPAREN project_3_uple project_section ENDPROJECT
                          | LPAREN quoted RPAREN project_3_uple ENDPROJECT'''
-    pass
 
 def p_project_section(t):
     'project_section : PROJECTSECTION LPAREN PROJECTDEPENDENCIES RPAREN project_section_body ENDPROJECTSECTION'
-    pass
 
 def p_project_section_body(t):
     'project_section_body : EQUALS POSTPROJECT post_project_list'
-    pass
 
 def p_post_project_list(t):
     '''post_project_list : GUID EQUALS GUID post_project_list
                          | GUID EQUALS GUID '''
-    print t[0], t[1], t[2], t[3]
-    if len(t) == 5:
-        print t[4] # it's None ...
+    print t[1], t[3]
     
 def p_project_3_uple(t):
     'project_3_uple : EQUALS quoted COMMA quoted COMMA quoted'
-    pass
 
 def p_quoted(t):
     'quoted : DOUBLEQUOTE expr DOUBLEQUOTE'
-    pass
 
 def p_expr(t):
     '''expr : GUID
             | NAME
             | VCPROJPATH'''
-    print 'Expr:', t[1]
+    print 'Expr', t[1]
 
 ###
 #  GLOBAL
 ### 
 def p_global_statement(t):
-    '''global_statement : GLOBALSECTION globalsection_statement ENDGLOBALSECTION ENDGLOBAL
-                        | ENDGLOBAL'''
+    'global_statement : globalsection_statement_group ENDGLOBAL'
+
+def p_global_statement_group(t):
+    '''globalsection_statement_group : GLOBALSECTION globalsection_statement ENDGLOBALSECTION globalsection_statement_group
+                                     | GLOBALSECTION globalsection_statement ENDGLOBALSECTION '''
 
 def p_globalsection_statement(t):
-    'globalsection_statement : LPAREN SOLUTIONCONFIGURATIONPLATFORMS RPAREN globalsection_body'
+    '''globalsection_statement : LPAREN SOLUTIONCONFIGURATIONPLATFORMS RPAREN solution_conf_body
+                               | LPAREN PROJECTCONFIGURATIONPLATFORMS RPAREN project_conf_body'''
 
-def p_globalsection_body(t):
-    'globalsection_body : EQUALS PRESOLUTION pre_solution_list'
+def p_solution_conf_body(t):
+    'solution_conf_body : EQUALS PRESOLUTION solution_conf_list'
 
 def p_pre_solution_list(t):
-    '''pre_solution_list : CONF arch EQUALS CONF arch pre_solution_list
-                         | CONF arch EQUALS CONF arch '''
+    '''solution_conf_list : CONF arch EQUALS CONF arch solution_conf_list
+                          | CONF arch EQUALS CONF arch '''
+    print t[1]
+    return
+    for i,e in enumerate(t):
+        print 'pre_solution_list', i, e
 
 def p_arch(t):
     '''arch : WIN32
             | X64'''
+
+def p_project_conf_body(t):
+    'project_conf_body : EQUALS POSTSOLUTION project_conf_list'
+
+def p_project_conf_list(t):
+    '''project_conf_list : GUID DOT CONF arch DOT build_conf EQUALS CONF arch project_conf_list
+                         | GUID DOT CONF arch DOT build_conf EQUALS CONF arch '''
+    print t[1]
+
+def p_build_conf(t):
+    '''build_conf : ACTIVECONFIG
+                  | BUILD0'''
 
 def p_error(t):
     print "Syntax error at '%s'" % t.value
