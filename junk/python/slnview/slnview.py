@@ -1,16 +1,18 @@
 # Doc: http://www.dabeaz.com/ply/ply.html
 lex_verbose = False
 
-sln_input = {
-        'simple': '\n'.join(open('simple.sln').read().splitlines()[2:]),
-        'simple_complete': '\n'.join(open('simple_complete.sln').read().splitlines()[2:]),
-        'full': '\n'.join(open('a3d.sln').read().splitlines()[2:]),
-        'project': open('project.sln').read(),
-        'global': open('global.sln').read(),
-        'nested': open('nested.sln').read(),
-        'platforms': open('platforms.sln').read(),
-        }
-sometext = sln_input['simple_complete']
+def sln_input():
+    input = 'simple'
+    input = 'full'
+    input = 'project'
+    input = 'global'
+    input = 'nested'
+    input = 'platforms'
+
+    input = 'simple_complete'
+    return open(input + '.sln').read()
+        
+sometext = sln_input()
 
 tokens = (
     'NAME', 'CONF',
@@ -24,7 +26,7 @@ tokens = (
     'GLOBAL', 'GLOBALSECTION', 'ENDGLOBAL', 'ENDGLOBALSECTION',
     'SOLUTIONCONFIGURATIONPLATFORMS', 'PRESOLUTION', 'DOT', 'NESTEDPROJECTS',
     'PROJECTCONFIGURATIONPLATFORMS',  'POSTSOLUTION',
-    'WIN32', 'X64', 'ACTIVECONFIG', 'BUILD0',
+    'WIN32', 'X64', 'ACTIVECONFIG', 'BUILD0', 'FLOAT'
     )
 
 # Tokens
@@ -57,11 +59,11 @@ t_NAME                = r'\w+'
 t_GUID                = r'\{{0,1}[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}\}'
 t_SOLUTIONCONFIGURATIONPLATFORMS = 'SolutionConfigurationPlatforms'
 t_PROJECTCONFIGURATIONPLATFORMS  = 'ProjectConfigurationPlatforms'
-
-# t_GUID                = r'\{.*\}$'
+t_FLOAT               = r'\d+\.\d+'
 
 # Ignored characters
 # t_ignore = " \t"
+t_ignore_COMMENT = r'\#.*'
 
 def t_newline(t):
     r'\n+'
@@ -70,7 +72,6 @@ def t_newline(t):
 def t_error(t):
     if lex_verbose: print "Illegal character '%s'" % t.value[0]
     t.lexer.skip(1)
-    
 
 # Build the lexer
 import ply.lex as lex
@@ -99,6 +100,15 @@ if False:
 names = { }
 
 # TODO: project_section is optional
+def p_main_file(t):
+    'main_file : header main_statement_group'
+
+# Cannot Use lex to take the long string below as a single lex token
+# Microsoft Visual Studio Solution File, Format Version 9.00
+# 1         2      3      4        5   , 6      7
+def p_header(t):
+    'header : NAME NAME NAME NAME NAME COMMA NAME NAME FLOAT'
+
 def p_main_statement_group(t):
     '''main_statement_group : main_statement main_statement_group
                             | main_statement'''
