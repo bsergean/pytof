@@ -1,0 +1,16 @@
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{26440A35-51C0-4469-B5F7-5001077118C1}.Debug - Web OCX|Win32.ActiveCfg = Debug|Win32
+		{26440A35-51C0-4469-B5F7-5001077118C1}.Debug - Web OCX|Win32.Build.0 = Debug|Win32
+		{26440A35-51C0-4469-B5F7-5001077118C1}.Debug - Web OCX|x64.ActiveCfg = DebugWithFlash|Win32
+		{26440A35-51C0-4469-B5F7-5001077118C1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{26440A35-51C0-4469-B5F7-5001077118C1}.Debug|Win32.Build.0 = Debug|Win32
+		{26440A35-51C0-4469-B5F7-5001077118C1}.Debug|x64.ActiveCfg = Debug|Win32
+		{26440A35-51C0-4469-B5F7-5001077118C1}.Release - Web OCX|Win32.ActiveCfg = Release|Win32
+		{26440A35-51C0-4469-B5F7-5001077118C1}.Release - Web OCX|Win32.Build.0 = Release|Win32
+		{26440A35-51C0-4469-B5F7-5001077118C1}.Release - Web OCX|x64.ActiveCfg = Release|Win32
+		{26440A35-51C0-4469-B5F7-5001077118C1}.Release|Win32.ActiveCfg = Release|Win32
+		{26440A35-51C0-4469-B5F7-5001077118C1}.Release|Win32.Build.0 = Release|Win32
+		{26440A35-51C0-4469-B5F7-5001077118C1}.Release|x64.ActiveCfg = Release|Win32
+		{26440A35-51C0-4469-B5F7-5001077118C1}.ReleaseAEC|Win32.ActiveCfg = Release - Photoshop|Win32
+		{26440A35-51C0-4469-B5F7-5001077118C1}.ReleaseAEC|Win32.Build.0 = Release - Photoshop|Win32
+	EndGlobalSection
