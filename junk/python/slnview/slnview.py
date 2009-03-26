@@ -3,13 +3,14 @@ lex_verbose = False
 
 sln_input = {
         'simple': '\n'.join(open('simple.sln').read().splitlines()[2:]),
+        'simple_complete': '\n'.join(open('simple_complete.sln').read().splitlines()[2:]),
         'full': '\n'.join(open('a3d.sln').read().splitlines()[2:]),
         'project': open('project.sln').read(),
         'global': open('global.sln').read(),
         'nested': open('nested.sln').read(),
         'platforms': open('platforms.sln').read(),
         }
-sometext = sln_input['simple']
+sometext = sln_input['simple_complete']
 
 tokens = (
     'NAME', 'CONF',
@@ -137,13 +138,13 @@ def p_expr(t):
     '''expr : GUID
             | NAME
             | VCPROJPATH'''
-    print t[1]
+    print 'Expr:', t[1]
 
 ###
 #  GLOBAL
 ### 
 def p_global_statement(t):
-    '''global_statement : GLOBALSECTION globalsection_statement ENDGLOBALSECTION
+    '''global_statement : GLOBALSECTION globalsection_statement ENDGLOBALSECTION ENDGLOBAL
                         | ENDGLOBAL'''
 
 def p_globalsection_statement(t):

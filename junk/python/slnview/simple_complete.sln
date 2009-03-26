@@ -11,3 +11,15 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "a3dRT", "..\..\source\a3dRT
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IA3DServer", "..\..\dev\A3DServer\A3DServer\IA3DServer.vcproj", "{0C4B9B74-0F88-4EFC-965A-90301E376F8E}"
 EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug - Web OCX|Win32 = Debug - Web OCX|Win32
+		Debug - Web OCX|x64 = Debug - Web OCX|x64
+		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
+		Release - Web OCX|Win32 = Release - Web OCX|Win32
+		Release - Web OCX|x64 = Release - Web OCX|x64
+		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
+	EndGlobalSection
+EndGlobal
