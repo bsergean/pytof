@@ -27,4 +27,12 @@ Global
 		{26440A35-51C0-4469-B5F7-5001077118C1}.Debug - Web OCX|Win32.Build.0 = Debug|Win32
 		{26440A35-51C0-4469-B5F7-5001077118C1}.Debug - Web OCX|x64.ActiveCfg = DebugWithFlash|Win32
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{974B041E-1FC0-406C-9699-BC984301B2A8} = {82720F02-54F9-40D8-BEA5-83B879775CC4}
+		{814D8110-3112-4AF8-A490-8A49DAFD4A2E} = {82720F02-54F9-40D8-BEA5-83B879775CC4}
+		{49905821-ED90-43EB-AB37-C433D0116D55} = {82720F02-54F9-40D8-BEA5-83B879775CC4}
+	EndGlobalSection
 EndGlobal
