@@ -1,0 +1,25 @@
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "a3dRT", "..\..\source\a3dRT\a3dRT.vcproj", "{26440A35-51C0-4469-B5F7-5001077118C1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{49905821-ED90-43EB-AB37-C433D0116D55} = {49905821-ED90-43EB-AB37-C433D0116D55}
+		{0C4B9B74-0F88-4EFC-965A-90301E376F8E} = {0C4B9B74-0F88-4EFC-965A-90301E376F8E}
+		{FC69CD96-3C88-4CCC-85A8-B3769B68B59A} = {FC69CD96-3C88-4CCC-85A8-B3769B68B59A}
+		{B46CEB4F-07C7-4F18-9364-FA1B99247564} = {B46CEB4F-07C7-4F18-9364-FA1B99247564}
+		{3EF13430-BBF5-415F-BE98-BE6EFD6CFEFD} = {3EF13430-BBF5-415F-BE98-BE6EFD6CFEFD}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IA3DServer", "..\..\dev\A3DServer\A3DServer\IA3DServer.vcproj", "{0C4B9B74-0F88-4EFC-965A-90301E376F8E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug - Web OCX|Win32 = Debug - Web OCX|Win32
+		Debug - Web OCX|x64 = Debug - Web OCX|x64
+		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
+		Release - Web OCX|Win32 = Release - Web OCX|Win32
+		Release - Web OCX|x64 = Release - Web OCX|x64
+		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
+	EndGlobalSection
+EndGlobal

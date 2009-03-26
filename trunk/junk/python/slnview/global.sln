@@ -1,0 +1,14 @@
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug - Web OCX|Win32 = Debug - Web OCX|Win32
+		Debug - Web OCX|x64 = Debug - Web OCX|x64
+		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
+		Release - Web OCX|Win32 = Release - Web OCX|Win32
+		Release - Web OCX|x64 = Release - Web OCX|x64
+		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
+		ReleaseAEC|Win32 = ReleaseAEC|Win32
+		ReleaseAEC|x64 = ReleaseAEC|x64
+	EndGlobalSection
+EndGlobal
