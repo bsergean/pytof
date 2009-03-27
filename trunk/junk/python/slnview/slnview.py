@@ -158,7 +158,8 @@ def p_global_statement_group(t):
 def p_globalsection_statement(t):
     '''globalsection_statement : LPAREN SOLUTIONCONFIGURATIONPLATFORMS RPAREN solution_conf_body
                                | LPAREN PROJECTCONFIGURATIONPLATFORMS RPAREN project_conf_body
-                               | LPAREN SOLUTIONPROPERTIES RPAREN properties_body'''
+                               | LPAREN SOLUTIONPROPERTIES RPAREN properties_body
+                               | LPAREN NESTEDPROJECTS RPAREN nested_body'''
 
 def p_solution_conf_body(t):
     'solution_conf_body : EQUALS PRESOLUTION solution_conf_list'
@@ -181,7 +182,10 @@ def p_project_conf_body(t):
 def p_project_conf_list(t):
     '''project_conf_list : GUID DOT CONF arch DOT build_conf EQUALS CONF arch project_conf_list
                          | GUID DOT CONF arch DOT build_conf EQUALS CONF arch '''
-    print t[1]
+    print t[1], t[3], t[7]
+    return
+    for i,e in enumerate(t):
+        print 'pre_solution_list', i, e
 
 def p_build_conf(t):
     '''build_conf : ACTIVECONFIG
@@ -193,6 +197,13 @@ def p_properties_body(t):
 def p_properties_list(t):
     '''properties_list : NAME EQUALS NAME properties_list
                        | NAME EQUALS NAME'''
+
+def p_nested_body(t):
+    'nested_body : EQUALS PRESOLUTION nested_body_list'
+
+def p_nested_body_list(t):
+    '''nested_body_list : GUID EQUALS GUID nested_body_list
+                        | GUID EQUALS GUID '''
     print t[1], t[3]
 
 def p_error(t):
