@@ -3,13 +3,12 @@ lex_verbose = False
 
 def sln_input():
     input = 'simple'
-    input = 'full'
     input = 'project'
     input = 'global'
     input = 'nested'
     input = 'platforms'
-
     input = 'simple_complete'
+    input = 'a3d'
     return open(input + '.sln').read()
         
 sometext = sln_input()
@@ -54,7 +53,7 @@ t_WIN32               = r'Win32'
 t_X64                 = r'x64'
 t_ACTIVECONFIG        = r'ActiveCfg'
 t_BUILD0              = r'Build.0'
-t_VCPROJPATH          = r'[a-zA-Z0-9\\.]+.vcproj' # Don't need to escape \
+t_VCPROJPATH          = r'[\w\\.]+.vcproj' # Don't need to escape \
 t_CONF                = r'\w[\w \-]+\|'
 t_NAME                = r'\w+'
 t_GUID                = r'\{{0,1}[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}\}'
@@ -141,9 +140,13 @@ def p_quoted(t):
 
 def p_expr(t):
     '''expr : GUID
-            | NAME
+            | name_list
             | VCPROJPATH'''
     print 'Expr', t[1]
+
+def p_name_list(t):
+    '''name_list : NAME name_list
+                 | NAME'''
 
 ###
 #  GLOBAL
