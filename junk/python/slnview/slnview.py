@@ -25,7 +25,7 @@ tokens = (
     'PROJECTDEPENDENCIES', 'POSTPROJECT',
     'GLOBAL', 'GLOBALSECTION', 'ENDGLOBAL', 'ENDGLOBALSECTION',
     'SOLUTIONCONFIGURATIONPLATFORMS', 'PRESOLUTION', 'DOT', 'NESTEDPROJECTS',
-    'PROJECTCONFIGURATIONPLATFORMS',  'POSTSOLUTION',
+    'PROJECTCONFIGURATIONPLATFORMS',  'POSTSOLUTION', 'SOLUTIONPROPERTIES',
     'WIN32', 'X64', 'ACTIVECONFIG', 'BUILD0', 'FLOAT'
     )
 
@@ -49,6 +49,7 @@ t_PRESOLUTION         = r'preSolution'
 t_POSTSOLUTION        = r'postSolution'
 t_POSTPROJECT         = r'postProject'
 t_NESTEDPROJECTS      = r'NestedProjects'
+t_SOLUTIONPROPERTIES  = r'SolutionProperties'
 t_WIN32               = r'Win32'
 t_X64                 = r'x64'
 t_ACTIVECONFIG        = r'ActiveCfg'
@@ -156,7 +157,8 @@ def p_global_statement_group(t):
 
 def p_globalsection_statement(t):
     '''globalsection_statement : LPAREN SOLUTIONCONFIGURATIONPLATFORMS RPAREN solution_conf_body
-                               | LPAREN PROJECTCONFIGURATIONPLATFORMS RPAREN project_conf_body'''
+                               | LPAREN PROJECTCONFIGURATIONPLATFORMS RPAREN project_conf_body
+                               | LPAREN SOLUTIONPROPERTIES RPAREN properties_body'''
 
 def p_solution_conf_body(t):
     'solution_conf_body : EQUALS PRESOLUTION solution_conf_list'
@@ -184,6 +186,14 @@ def p_project_conf_list(t):
 def p_build_conf(t):
     '''build_conf : ACTIVECONFIG
                   | BUILD0'''
+
+def p_properties_body(t):
+    'properties_body : EQUALS PRESOLUTION properties_list'
+
+def p_properties_list(t):
+    '''properties_list : NAME EQUALS NAME properties_list
+                       | NAME EQUALS NAME'''
+    print t[1], t[3]
 
 def p_error(t):
     print "Syntax error at '%s'" % t.value
