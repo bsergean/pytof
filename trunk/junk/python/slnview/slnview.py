@@ -1,4 +1,5 @@
 # Doc: http://www.dabeaz.com/ply/ply.html
+# Complicated example: http://code.google.com/p/pycparser/source/browse/trunk/pycparser/c_parser.py
 lex_verbose = False
 
 def sln_input():
@@ -8,7 +9,6 @@ def sln_input():
     input = 'nested'
     input = 'platforms'
     input = 'simple_complete'
-    input = 'a3d'
     return open(input + '.sln').read()
         
 sometext = sln_input()
@@ -87,130 +87,120 @@ if do_lex_only:
 
     import sys ; sys.exit(0)
 
-# Parsing rules
-
-if False:
-    precedence = (
-        ('left','PLUS','MINUS'),
-        ('left','TIMES','DIVIDE'),
-        ('right','UMINUS'),
-        )
-
-# dictionary of names
-names = { }
+# YACC
 
 # TODO: project_section is optional
-def p_main_file(t):
+def p_main_file(p):
     'main_file : header main_statement_group'
 
 # Cannot Use lex to take the long string below as a single lex token
 # Microsoft Visual Studio Solution File, Format Version 9.00
 # 1         2      3      4        5   , 6      7
-def p_header(t):
+def p_header(p):
     'header : NAME NAME NAME NAME NAME COMMA NAME NAME FLOAT'
 
-def p_main_statement_group(t):
+def p_main_statement_group(p):
     '''main_statement_group : main_statement main_statement_group
                             | main_statement'''
 
-def p_main_statement(t):
+def p_main_statement(p):
     '''main_statement : PROJECT project_statement
                       | GLOBAL  global_statement'''
 
-def p_project_statement(t):
+def p_project_statement(p):
     '''project_statement : LPAREN quoted RPAREN project_3_uple project_section ENDPROJECT
                          | LPAREN quoted RPAREN project_3_uple ENDPROJECT'''
 
-def p_project_section(t):
+def p_project_section(p):
     'project_section : PROJECTSECTION LPAREN PROJECTDEPENDENCIES RPAREN project_section_body ENDPROJECTSECTION'
 
-def p_project_section_body(t):
+def p_project_section_body(p):
     'project_section_body : EQUALS POSTPROJECT post_project_list'
 
-def p_post_project_list(t):
+def p_post_project_list(p):
     '''post_project_list : GUID EQUALS GUID post_project_list
                          | GUID EQUALS GUID '''
-    print t[1], t[3]
+    print p[1], p[3]
     
-def p_project_3_uple(t):
+def p_project_3_uple(p):
     'project_3_uple : EQUALS quoted COMMA quoted COMMA quoted'
 
-def p_quoted(t):
+def p_quoted(p):
     'quoted : DOUBLEQUOTE expr DOUBLEQUOTE'
 
-def p_expr(t):
+def p_expr(p):
     '''expr : GUID
             | name_list
             | VCPROJPATH'''
-    print 'Expr', t[1]
+    print 'Expr', p[1]
 
-def p_name_list(t):
+def p_name_list(p):
     '''name_list : NAME name_list
                  | NAME'''
 
 ###
 #  GLOBAL
 ### 
-def p_global_statement(t):
+def p_global_statement(p):
     'global_statement : globalsection_statement_group ENDGLOBAL'
 
-def p_global_statement_group(t):
+def p_global_statement_group(p):
     '''globalsection_statement_group : GLOBALSECTION globalsection_statement ENDGLOBALSECTION globalsection_statement_group
                                      | GLOBALSECTION globalsection_statement ENDGLOBALSECTION '''
 
-def p_globalsection_statement(t):
+def p_globalsection_statement(p):
     '''globalsection_statement : LPAREN SOLUTIONCONFIGURATIONPLATFORMS RPAREN solution_conf_body
                                | LPAREN PROJECTCONFIGURATIONPLATFORMS RPAREN project_conf_body
                                | LPAREN SOLUTIONPROPERTIES RPAREN properties_body
                                | LPAREN NESTEDPROJECTS RPAREN nested_body'''
 
-def p_solution_conf_body(t):
+def p_solution_conf_body(p):
     'solution_conf_body : EQUALS PRESOLUTION solution_conf_list'
 
-def p_pre_solution_list(t):
+def p_pre_solution_list(p):
     '''solution_conf_list : CONF arch EQUALS CONF arch solution_conf_list
                           | CONF arch EQUALS CONF arch '''
-    print t[1]
+    print p[1]
     return
-    for i,e in enumerate(t):
+    for i,e in enumerate(p):
         print 'pre_solution_list', i, e
 
-def p_arch(t):
+def p_arch(p):
     '''arch : WIN32
             | X64'''
 
-def p_project_conf_body(t):
+def p_project_conf_body(p):
     'project_conf_body : EQUALS POSTSOLUTION project_conf_list'
 
-def p_project_conf_list(t):
+def p_project_conf_list(p):
     '''project_conf_list : GUID DOT CONF arch DOT build_conf EQUALS CONF arch project_conf_list
                          | GUID DOT CONF arch DOT build_conf EQUALS CONF arch '''
-    print t[1], t[3], t[7]
+    print p[1], p[3], p[7]
     return
-    for i,e in enumerate(t):
+    for i,e in enumerate(p):
         print 'pre_solution_list', i, e
 
-def p_build_conf(t):
+def p_build_conf(p):
     '''build_conf : ACTIVECONFIG
                   | BUILD0'''
 
-def p_properties_body(t):
+def p_properties_body(p):
     'properties_body : EQUALS PRESOLUTION properties_list'
 
-def p_properties_list(t):
+def p_properties_list(p):
     '''properties_list : NAME EQUALS NAME properties_list
                        | NAME EQUALS NAME'''
 
-def p_nested_body(t):
+def p_nested_body(p):
     'nested_body : EQUALS PRESOLUTION nested_body_list'
 
-def p_nested_body_list(t):
+def p_nested_body_list(p):
     '''nested_body_list : GUID EQUALS GUID nested_body_list
                         | GUID EQUALS GUID '''
-    print t[1], t[3]
+    print p[1], p[3]
 
-def p_error(t):
-    print "Syntax error at '%s'" % t.value
+def p_error(p):
+    print "Syntax error at '%s'" % p.value
 
 import ply.yacc as yacc
 yacc.yacc()
