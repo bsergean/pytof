@@ -2,18 +2,6 @@
 # Complicated example: http://code.google.com/p/pycparser/source/browse/trunk/pycparser/c_parser.py
 lex_verbose = False
 
-def sln_input():
-    input = 'simple'
-    input = 'project'
-    input = 'global'
-    input = 'nested'
-    input = 'platforms'
-    input = 'simple_complete'
-    input = 'a3d'
-    return open(input + '.sln').read()
-        
-sometext = sln_input()
-
 tokens = (
     'NAME', 'CONF',
     'VCPROJPATH',
@@ -73,20 +61,6 @@ def t_newline(t):
 def t_error(t):
     if lex_verbose: print "Illegal character '%s'" % t.value[0]
     t.lexer.skip(1)
-
-# Build the lexer
-import ply.lex as lex
-lex.lex()
-
-do_lex_only = False
-if do_lex_only:
-    lex.input(sometext)
-    while 1:
-        tok = lex.token()
-        if not tok: break
-        print tok
-
-    import sys ; sys.exit(0)
 
 # YACC
 # Node class not used for now.
@@ -268,9 +242,42 @@ def p_nested_body_core(p):
 def p_error(p):
     print "Syntax error at '%s'" % p.value
 
-import ply.yacc as yacc
-yacc.yacc()
+def do_lex():
+    # Build the lexer
+    import ply.lex as lex
+    lex.lex()
+    return
 
-yacc.parse(sometext)
-print the_ast
+    lex.input(sometext)
+    while 1:
+        tok = lex.token()
+        if not tok: break
+        print tok
+
+def do_yacc():
+    import ply.yacc as yacc
+    yacc.yacc()
+    yacc.parse(sometext)
+
+def do_parse():
+    do_lex()
+    do_yacc()
+    process_ast()
+
+def sln_input():
+    input = 'simple'
+    input = 'project'
+    input = 'global'
+    input = 'nested'
+    input = 'platforms'
+    input = 'simple_complete'
+    input = 'a3d'
+    return open(input + '.sln').read()
+        
+sometext = sln_input()
+
+def process_ast():
+    version = the_ast[0]
+    print 'version:', version
+    pass #for 
 
