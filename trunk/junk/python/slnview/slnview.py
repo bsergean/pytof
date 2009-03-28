@@ -8,8 +8,8 @@ def sln_input():
     input = 'global'
     input = 'nested'
     input = 'platforms'
-    input = 'a3d'
     input = 'simple_complete'
+    input = 'a3d'
     return open(input + '.sln').read()
         
 sometext = sln_input()
@@ -177,7 +177,9 @@ def p_expr(p):
 def p_name_list(p):
     '''name_list : NAME name_list
                  | NAME'''
-    p[0] = [p[1]] if len(p) == 2 else p[1] + p[2]
+    p1 = [p[1]] # needs that because NAME is a string and 
+                # concat list + string does not work
+    p[0] = p1 if len(p) == 2 else p1 + p[2]
 
 ###
 #  GLOBAL
