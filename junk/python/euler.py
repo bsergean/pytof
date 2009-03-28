@@ -2001,6 +2001,26 @@ def level79():
     answers = map(int, open('keylog.txt').read().splitlines())
     print answers
 
+def level235():
+    def u(k, r):
+        return (900-3*k) * r ** (k-1)
+
+    def s(n, r):
+        return sum(u(i,r) for i in xrange(1,n+1))
+
+    tget = -6 * 1e11
+    def bin_search(low, high):
+        mid = (low + high) / 2.0
+        x = s(5000, mid)
+        print '%1.12f' % mid
+
+        if x < tget:
+            bin_search(low, mid)
+        else:
+            bin_search(mid, high)
+
+    bin_search(1.0, 1.01)
+
 def level102():
     lines = open('triangles.txt').read().splitlines()
 
@@ -2163,12 +2183,16 @@ if __name__ == '__main__':
     pid_fd.write(str(getpid()))
     pid_fd.close()
 
+<<<<<<< .mine
+    level235()
+=======
     which_level = level12
     if do_profile:
         # FIXME: factorize me in utils
         from profile import Profile
         myprofiler = Profile()
         myprofiler.create_stats()
+>>>>>>> .r472
 
         myprofiler.runcall(which_level)
 
