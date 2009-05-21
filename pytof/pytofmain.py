@@ -17,6 +17,7 @@ import makepage, makefs
 from shutil import rmtree
 from ftp import ftpPush
 from string import rstrip
+from facebook_download import facebook_download
 
 class Pytof(object):
 
@@ -39,6 +40,7 @@ class Pytof(object):
         self.stripOriginals = po.options.stripOriginals
         self.fromDir = po.options.fromDir
         self.style = po.options.style
+        self.fb = po.options.fb
 
         self.progress = progress
         
@@ -55,7 +57,16 @@ class Pytof(object):
 
         ##
         # get iPhoto datas or flat dir pictures list
-        if not self.fromDir:
+        if self.fb:
+            logger.info('generate gallery from photos in %s dir' % self.fromDir)
+            xmlData = None
+            self.albumName = 'My Facebook pictures'
+            self.fromDir = '/tmp/fb_files'
+
+            facebook_download(self.fromDir)
+            # sys.exit(0)
+
+        elif not self.fromDir:
             try:
                 adp = AlbumDataParser(libraryPath, xmlFileName)
                 xmlData = adp.maybeLoadFromXML(conf)
