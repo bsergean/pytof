@@ -20,7 +20,7 @@ class PytofOptions(object):
 
     def __init__(self):
 
-	pt = pytofTemplate()
+        pt = pytofTemplate()
 
         # parse args
         parser = OptionParser(usage = "usage: python %prog <options>",
@@ -62,12 +62,15 @@ class PytofOptions(object):
                           help="The style of the HTML gallery.")
         parser.add_option("-p", "--profile", action="store_true", dest="pyprofile",
                           default=False, help="Enable python profile module profiling  [default=%default]")
+        parser.add_option("-b", "--fb", action="store_true", dest="fb",
+                          default=False, help="Use user Facebook gallery as input")
 
         self.options, args = parser.parse_args()
 
     def check(self):
     
         if self.options.info: pass
+        elif self.options.fb: pass
         elif self.options.fromDir:
             if not isdir(self.options.fromDir):
                 _err_exit('Not a directory: %s' % self.options.fromDir)
@@ -76,5 +79,7 @@ class PytofOptions(object):
             
         if not self.options.verbose:
             quiet()
+
+        # Handle fb
 
 
