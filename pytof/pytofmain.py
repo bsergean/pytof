@@ -41,6 +41,7 @@ class Pytof(object):
         self.fromDir = po.options.fromDir
         self.style = po.options.style
         self.fb = po.options.fb
+        self.fb_uid = po.options.fb_uid
 
         self.progress = progress
         
@@ -63,7 +64,7 @@ class Pytof(object):
             self.albumName = 'My Facebook pictures'
             self.fromDir = '/tmp/fb_files'
 
-            facebook_download(self.fromDir)
+            facebook_download(self.fromDir, self.fb_uid)
             # sys.exit(0)
 
         elif not self.fromDir:

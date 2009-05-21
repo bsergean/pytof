@@ -6,7 +6,7 @@ import os, sys
 from utils import _err_exit
 from utils import ProgressMsg
 
-def facebook_download(outDir):
+def facebook_download(outDir, fb_uid = None):
 
     # out dir setup
     if exists(outDir):
@@ -33,8 +33,15 @@ def facebook_download(outDir):
     # photos = facebook.photos.getAlbums(friends[1]['uid'])
     # photos = facebook.photos.get('', '5307080636404757', '')
 
+    friends = facebook.friends.get()
+    names = facebook.users.getInfo(friends, ['name'])
+    for n in names:
+        print n['name'].encode('utf-8'), ':', n['uid']
+
     # By user id
-    photos = facebook.photos.get(facebook.uid)
+    if fb_uid is None:
+        fb_uid = facebook.uid
+    photos = facebook.photos.get(fb_uid)
 
     progress = ProgressMsg(len(photos), output=sys.stderr)
     for p in photos:
