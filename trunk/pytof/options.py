@@ -64,6 +64,8 @@ class PytofOptions(object):
                           default=False, help="Enable python profile module profiling  [default=%default]")
         parser.add_option("-b", "--fb", action="store_true", dest="fb",
                           default=False, help="Use user Facebook gallery as input")
+        parser.add_option("-g", "--fb-uid", dest="fb_uid", default=None,
+                          help="The facebook user you want pictures from")
 
         self.options, args = parser.parse_args()
 
