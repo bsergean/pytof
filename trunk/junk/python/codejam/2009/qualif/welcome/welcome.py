@@ -7,9 +7,14 @@ from os.path import expanduser, join
 import os
 from pdb import set_trace
 from time import clock
+from shutil import copy
 
 in_fn = 'in'
 out_fn = 'out'
+
+this_file = join(os.getcwd(), __file__)
+desktop = join(expanduser('~'), 'Desktop')
+copy(this_file, desktop)
 
 # http://code.activestate.com/recipes/466320/
 from cPickle import dumps, PicklingError # for memoize
@@ -117,7 +122,7 @@ def process(input):
 
 if __name__ == "__main__":
 
-    if False:
+    if True:
         with open(in_fn) as f:
             input = f.read()
             output = process(input)
@@ -127,7 +132,7 @@ if __name__ == "__main__":
                 fo.write(output)
 
     import sys
-    # sys.exit(0)
+    sys.exit(0)
     
     test = True
     if test:
