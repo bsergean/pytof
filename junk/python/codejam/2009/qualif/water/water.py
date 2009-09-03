@@ -44,11 +44,39 @@ def process(input):
             break
 
     def compute_labels(Map):
+        '''
+9 6 3
+5 9 6
+3 5 9
+
+a b b
+a a b
+a a a
+        '''
+        altitudes = {}
 
         rows = []
-        for row in Map:
-            rows.append( ['a' for col in row] )
+        for r, row in enumerate(Map):
+            new_row = []
+            for c, col in enumerate(row):
 
+                # print Map[r][c]
+                alt = Map[r][c]
+                if alt in altitudes:
+                    altitudes[ alt ].append( (r,c) )
+                else:
+                    altitudes[ alt ] = [(r,c)]
+
+                new_row.append('a')
+
+            rows.append(new_row)
+                
+        alts = altitudes.keys()
+        alts.sort()
+        alts.reverse()
+        for a in alts:
+            print a, altitudes[a]
+        # print altitudes
         return rows
 
     if False:
@@ -60,6 +88,9 @@ def process(input):
         print 2 * 'xxxxxxx\n' + 'cnt:', cnt
         print 2 * 'xxxxxxx\n'
         # return ''
+
+    compute_labels(maps[0])
+    return ''
 
     out = []
     for i, Map in enumerate(maps): 
