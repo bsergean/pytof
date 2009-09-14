@@ -79,6 +79,28 @@ a a a
         # print altitudes
         return rows
 
+    def rec(Map, N, M, i, j, tab):
+        print tab, i,j
+
+        if i < 0 or i >= N or \
+            j < 0 or j >= M:
+            return
+
+        visited[i][j] = True
+        
+        # East
+        print 'east'
+        rec(Map,N,M, i, j+1, tab + ' ')
+        # North
+        print 'north'
+        rec(Map,N,M, i-1, j, tab + ' ')
+        # West
+        print 'west'
+        rec(Map,N,M, i, j-1, tab + ' ')
+        # South
+        print 'south'
+        rec(Map,N,M, i+1, j, tab + ' ')
+
     if False:
         start = clock()
         cnt = compute_test_case_rec(samples[1], 'welcome to code jam')
@@ -89,8 +111,16 @@ a a a
         print 2 * 'xxxxxxx\n'
         # return ''
 
-    compute_labels(maps[0])
+    # Single test
+    Mat= maps[0]
+    N = len(Mat)
+    M = len(Mat[0])
+    print N, M
+    visited = [ [False for i in xrange(M)] for j in xrange(N)]
+    rec(Mat, N, M, 0, 0, tab = '')
     return ''
+
+    compute_labels(maps[0])
 
     out = []
     for i, Map in enumerate(maps): 
