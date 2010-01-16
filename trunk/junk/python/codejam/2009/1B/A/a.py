@@ -6,6 +6,7 @@ from contextlib import nested
 from os.path import expanduser, join
 import os
 import re
+import sys
 from pdb import set_trace
 from time import clock
 from shutil import copy
@@ -30,6 +31,8 @@ def process(input):
         text = text.replace(')', '),')
 
         print text
+        import simplejson
+        # tree = simplejson.loads(text)
         tree = eval(text)
         print type(tree)
 
