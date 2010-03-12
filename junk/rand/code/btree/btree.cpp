@@ -243,6 +243,7 @@ int main()
     wprint(n);
     n->remove(3);
     wprint(n);
+    printf("youpi");
     n->remove(6);
     wprint(n);
     exit(1);
