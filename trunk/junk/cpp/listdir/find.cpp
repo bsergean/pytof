@@ -51,6 +51,7 @@ void find2(const char* prefix)
 
     size_t P = strlen(prefix);
 	while (de = readdir(d)) {
+        /*
         size_t E = strlen(de->d_name);
         size_t S = P + E + 2;
         char* absp = (char*) alloca(P + E + 2);
@@ -58,17 +59,25 @@ void find2(const char* prefix)
         absp[P] = '/';
         memcpy(absp + P + 1, de->d_name, E);
         absp[S-1] = '\0';
+        */
 
         if ( de->d_type == DT_DIR ) {
+            size_t E = strlen(de->d_name);
+            size_t S = P + E + 2;
+            char* absp = (char*) alloca(P + E + 2);
+
+            sprintf(absp, "%s/%s", prefix, de->d_name);
             find2(absp);
         } else if ( de->d_type == DT_REG ) {
-            puts(absp);
+            // puts(absp);
+            printf("%s/%s\n", prefix, de->d_name);
         }
     }
 
     closedir(d);
 }
 
+// BUGGY
 void find3(const char* prefix) 
 {
     puts(prefix);
@@ -80,11 +89,7 @@ void find3(const char* prefix)
 	struct dirent *de = readdir(d);
 	de = readdir(d);
 
-    char filepath[1024];
     size_t P = strlen(prefix);
-    memcpy(filepath, prefix, strlen(prefix));
-    filepath[P] = '/';
-
 	while (de = readdir(d)) {
         if ( de->d_type == DT_DIR ) {
             size_t E = strlen(de->d_name);
@@ -97,18 +102,79 @@ void find3(const char* prefix)
 
             find3(absp);
         } else if ( de->d_type == DT_REG ) {
-            printf("%s/", prefix);
-            size_t E = strlen(de->d_name);
-            memcpy(filepath + P + 1, de->d_name, E);
-            filepath[P + E + 1] = '\0';
-            puts(filepath);
+            printf("%s/%s\n", prefix, de->d_name);
         }
     }
 
     closedir(d);
 }
 
+// BUGGY
+void find4(const char* prefix) 
+{
+    puts(prefix);
+
+	DIR* d = opendir(prefix);
+	if (!d) return;
+
+    /* Those two guys for . and .. */
+	struct dirent *de = readdir(d);
+	de = readdir(d);
+
+	while (de = readdir(d)) {
+        if ( de->d_type == DT_DIR ) {
+            static char path[1024];
+            sprintf(path, "%s/%s", prefix, de->d_name);
+
+            find4(path);
+        } else if ( de->d_type == DT_REG ) {
+            printf("%s/%s\n", prefix, de->d_name);
+        }
+    }
+
+    closedir(d);
+}
+
+void find5_rec(const char* prefix) 
+{
+    puts(prefix);
+
+	DIR* d = opendir(".");
+	if (!d) return;
+
+    /* Those two guys for . and .. */
+	struct dirent *de = readdir(d);
+	de = readdir(d);
+
+	while (de = readdir(d)) {
+        string abspath(prefix);
+        abspath += "/";
+        abspath += de->d_name;
+        const char* absp = abspath.c_str();
+
+        if ( de->d_type == DT_DIR ) {
+            chdir(de->d_name);
+            find5_rec(absp);
+            chdir("..");
+        } else if ( de->d_type == DT_REG ) {
+            puts(absp);
+        }
+
+        // free mem if you use alloca instead of malloc
+        // free(absp);
+    }
+
+    closedir(d);
+}
+
+void find5(const char* prefix) 
+{
+    chdir(prefix);
+    find5_rec(prefix);
+}
+
 int main(int argc, char** argv)
 {
-    find3(argv[1]);
+    setbuf(stdout, _IOFBF);
+    find2(argv[1]);
 }

@@ -45,9 +45,44 @@ void listDir(const char* prefix, vector<string>& files, vector<string>& dirs)
     }
 }
 
+void find(const char* prefix) 
+{
+    puts(prefix);
+
+    DIR *d;
+	struct dirent *de;
+
+	d = opendir(prefix);
+	if (!d) {
+		return;
+	}
+
+    int i = 0;
+	while (de = readdir(d)) {
+        if (i < 2) {
+            i++;
+            continue;
+        }
+
+        string abspath(prefix);
+        abspath += "/";
+        abspath += de->d_name;
+        const char* absp = abspath.c_str();
+
+        if ( de->d_type == DT_DIR ) {
+            find(absp);
+        } else if ( de->d_type == DT_DIR ) {
+            puts(absp);
+        }
+    }
+
+    closedir(d);
+}
+
 int main(int argc, char** argv)
 {
     vector<string> files, dirs;
-    listDir(argv[1], files, dirs);
+    // listDir(argv[1], files, dirs);
 
+    find(argv[1]);
 }
