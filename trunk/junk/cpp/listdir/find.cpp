@@ -27,7 +27,7 @@ void find1(const char* prefix)
 
         if ( de->d_type == DT_DIR ) {
             find1(absp);
-        } else if ( de->d_type == DT_REG ) {
+        } else {
             puts(absp);
         }
 
@@ -64,11 +64,11 @@ void find2(const char* prefix)
         if ( de->d_type == DT_DIR ) {
             size_t E = strlen(de->d_name);
             size_t S = P + E + 2;
-            char* absp = (char*) alloca(P + E + 2);
+            char* absp = (char*) alloca(S);
 
             sprintf(absp, "%s/%s", prefix, de->d_name);
             find2(absp);
-        } else if ( de->d_type == DT_REG ) {
+        } else {
             // puts(absp);
             printf("%s/%s\n", prefix, de->d_name);
         }
@@ -173,8 +173,31 @@ void find5(const char* prefix)
     find5_rec(prefix);
 }
 
+void find6(char* buffer, int cur)
+{
+  puts(buffer);
+  DIR* dir = opendir(buffer);
+  if (dir) {
+    buffer[cur++] = '/';
+    readdir(dir);  // .
+    readdir(dir);  // ..
+    while (struct dirent* entry = readdir(dir)) {
+      strcpy(buffer + cur, entry->d_name);
+      find6(buffer, cur + strlen(entry->d_name));
+      buffer[cur] = 0;
+    }
+  }
+  if (dir)
+      closedir(dir);
+}
+
 int main(int argc, char** argv)
 {
-    setbuf(stdout, _IOFBF);
+#if 1
+    // setbuf(stdout, _IOFBF);
     find2(argv[1]);
+#else
+    char buffer[640 << 10];  // That should be enough.
+    find6(strcpy(buffer, argv[1]), strlen(argv[1]));
+#endif
 }
