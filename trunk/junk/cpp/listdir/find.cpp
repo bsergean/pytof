@@ -62,7 +62,8 @@ void find2(const char* prefix)
         */
 
         if ( de->d_type == DT_DIR ) {
-            size_t E = strlen(de->d_name);
+            // size_t E = strlen(de->d_name);
+            size_t E = de->d_namlen;
             size_t S = P + E + 2;
             char* absp = (char*) alloca(S);
 
@@ -205,7 +206,7 @@ void find7(const char* prefix)
 
     size_t P = strlen(prefix);
 	while (de = readdir(d)) {
-        size_t E = strlen(de->d_name);
+        size_t E = de->d_namlen; // strlen(de->d_name);
         size_t S = P + E + 2;
         static char absp[1024];
         // char* absp = (char*) alloca(S);
@@ -229,7 +230,7 @@ int main(int argc, char** argv)
 {
 #if 1
     // setbuf(stdout, _IOFBF);
-    find4(argv[1]);
+    find7(argv[1]);
 #else
     char buffer[640 << 10];  // That should be enough.
     find6(strcpy(buffer, argv[1]), strlen(argv[1]));
