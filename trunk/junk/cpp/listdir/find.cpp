@@ -77,7 +77,6 @@ void find2(const char* prefix)
     closedir(d);
 }
 
-// BUGGY
 void find3(const char* prefix) 
 {
     puts(prefix);
@@ -91,25 +90,25 @@ void find3(const char* prefix)
 
     size_t P = strlen(prefix);
 	while (de = readdir(d)) {
-        if ( de->d_type == DT_DIR ) {
-            size_t E = strlen(de->d_name);
-            size_t S = P + E + 2;
-            char* absp = (char*) alloca(P + E + 2);
-            memcpy(absp, prefix, P);
-            absp[P] = '/';
-            memcpy(absp + P + 1, de->d_name, E);
-            absp[S-1] = '\0';
+        size_t E = strlen(de->d_name);
+        size_t S = P + E + 2;
+        char* absp = (char*) alloca(S);
+        memcpy(absp, prefix, P);
+        absp[P] = '/';
+        memcpy(absp + P + 1, de->d_name, E);
+        absp[S-1] = '\0';
 
+        if ( de->d_type == DT_DIR ) {
             find3(absp);
-        } else if ( de->d_type == DT_REG ) {
-            printf("%s/%s\n", prefix, de->d_name);
+        } else {
+            // printf("%s/%s\n", prefix, de->d_name);
+            puts(absp);
         }
     }
 
     closedir(d);
 }
 
-// BUGGY
 void find4(const char* prefix) 
 {
     puts(prefix);
@@ -122,13 +121,15 @@ void find4(const char* prefix)
 	de = readdir(d);
 
 	while (de = readdir(d)) {
+        char path[1024];
         if ( de->d_type == DT_DIR ) {
-            static char path[1024];
             sprintf(path, "%s/%s", prefix, de->d_name);
 
             find4(path);
-        } else if ( de->d_type == DT_REG ) {
-            printf("%s/%s\n", prefix, de->d_name);
+        } else {
+            sprintf(path, "%s/%s", prefix, de->d_name);
+            puts(path);
+            // printf("%s/%s\n", prefix, de->d_name);
         }
     }
 
@@ -191,11 +192,44 @@ void find6(char* buffer, int cur)
       closedir(dir);
 }
 
+void find7(const char* prefix) 
+{
+    puts(prefix);
+
+	DIR* d = opendir(prefix);
+	if (!d) return;
+
+    /* Those two guys for . and .. */
+	struct dirent *de = readdir(d);
+	de = readdir(d);
+
+    size_t P = strlen(prefix);
+	while (de = readdir(d)) {
+        size_t E = strlen(de->d_name);
+        size_t S = P + E + 2;
+        static char absp[1024];
+        // char* absp = (char*) alloca(S);
+        memcpy(absp, prefix, P);
+        absp[P] = '/';
+        memcpy(absp + P + 1, de->d_name, E);
+        absp[S-1] = '\0';
+
+        if ( de->d_type == DT_DIR ) {
+            find7(absp);
+        } else {
+            // printf("%s/%s\n", prefix, de->d_name);
+            puts(absp);
+        }
+    }
+
+    closedir(d);
+}
+
 int main(int argc, char** argv)
 {
 #if 1
     // setbuf(stdout, _IOFBF);
-    find2(argv[1]);
+    find4(argv[1]);
 #else
     char buffer[640 << 10];  // That should be enough.
     find6(strcpy(buffer, argv[1]), strlen(argv[1]));
