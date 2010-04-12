@@ -703,7 +703,22 @@ def level15():
                 print i,j,res
                 set_cache_result(i,j,res)
 
-    print populate_cache(21, 21)
+    # print populate_cache(21, 21)
+    @memoize
+    def fact(n):
+        if n <= 1: return 1
+        else: return n * fact(n -1)
+
+    def combination(i, j):
+        return fact(i) / (fact(j) * fact(i-j))
+
+    def closed_form_all(n, p):
+        for i in xrange(1, n+1):
+            for j in xrange(1, p+1):
+                res = combination(j, i)
+                print i,j,res
+
+    print closed_form_all(21, 21)
 
 def level16():
     s = str(2 ** 1000)
@@ -2183,7 +2198,7 @@ if __name__ == '__main__':
     pid_fd.write(str(getpid()))
     pid_fd.close()
 
-    which_level = level12
+    which_level = level15
     if do_profile:
         # FIXME: factorize me in utils
         from profile import Profile
