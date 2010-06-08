@@ -1,9 +1,10 @@
 #include <regex.h>
-#include <pcre.h>
 
 #include <vector>
 #include <string>
 using namespace std;
+
+#include "toto.h"
 
 // http://en.wikipedia.org/wiki/Regular_expression#POSIX_character_classes
 class Regexp
@@ -40,6 +41,7 @@ Regexp::Regexp(string re, unsigned groupCount)
 Regexp::~Regexp()
 {
 	regfree(regpattern);
+	delete regpattern;
 }
 
 bool Regexp::match(const string& in)
@@ -47,19 +49,16 @@ bool Regexp::match(const string& in)
 	groups.clear();
 
 	regmatch_t* rm = new regmatch_t[mGroupCount];
-	// regmatch_t* rm = (regmatch_t*) malloc(mGroupCount * sizeof(regmatch_t));
 	bool matched = regexec(regpattern, in.c_str(), mGroupCount, rm, 0) == 0;
 
-	printf("%s match %s ? %d\n", in.c_str(), mRe.c_str(), matched);
-
+	// printf("%s match %s ? %d\n", in.c_str(), mRe.c_str(), matched);
 	if (matched) {
 		for (unsigned i = 0; i < mGroupCount; ++i) {
-			printf("match %d %d\n", rm[i].rm_so, rm[i].rm_eo);
 			int begin = rm[i].rm_so;
-			int end = rm[i].rm_eo;
+			int end   = rm[i].rm_eo;
+			// printf("match %d %d\n", begin, end);
 			if (begin != -1 && end != -1) {
-				string group( in.substr(begin, end - 1) );
-				printf("group[%d] = %s\n", i, group.c_str());
+				string group = in.substr(begin, end - begin);
 				groups.push_back( group );
 			}
 		}
@@ -83,11 +82,9 @@ int main()
 		printf("group 1: %s\n", re1.groups[1].c_str());
 	}
 
-	// >>> re.match(r'^(.*)\.([0-9]*)\.([0-9]*)\.(.*)$', 'foo.100.5.mm').groups()
-	// ('foo', '100', '5', 'mm')
-
 	Regexp re2("(.*)\\.([0-9]*)\\.([0-9]*)\\.(.*)$", 4);
 	if ( re2.match("foo.100.5.mm") ) {
+	// if ( re2.match("...aasdfdsf.foo.100.5.mm") ) {
 		printf("group 1: %s\n", re2.groups[1].c_str());
 	}
 }
