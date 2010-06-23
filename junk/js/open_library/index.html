@@ -1,0 +1,94 @@
+<html>
+    <head>
+
+    <!-- jQuery from google CDN -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
+
+    <style type="text/css">
+    div.img {
+        margin:15px;
+        /* border:1px solid #0000ff; */
+        height:auto;
+        width:auto;
+        float:left;
+        text-align:center;
+    }
+    div.img img {
+        display:inline;
+        margin:3px;
+        border:1px solid #ffffff;
+    }
+    div.img a:hover img {
+        border:1px solid purple;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+    }
+    div.desc {
+        text-align:center;
+        font-weight:normal;
+        width:128px;
+        margin:2px;
+    }
+    </style>
+
+    <script>
+
+	$(document).ready(function(){
+
+		$.ajax({
+		  // url: 'http://api.twitter.com/1/statuses/user_timeline.json?id=RedWolves&count=3&callback=?',
+		  // url: 'http://openlibrary.org/query.json?type=/type/edition&authors=/authors/OL1A&*=',
+		  url: 'http://openlibrary.org/query.json?type=/type/edition&authors=/authors/OL190100A&*=',
+		  dataType: 'jsonp',
+		  jsonpCallback: "renderTweets"
+		});
+       });
+
+       function renderTweets(data) {
+
+	       $.each(data, function(i) {
+
+		       // stuff = data[i].the attribute (...)
+		       var href = 'http://openlibrary.org/' + data[i].key;
+
+		       $node = $('<a></a>').attr({'href': href});
+
+			var cover;
+			if (data[i].covers != null) {
+				cover = data[i].covers[0];
+			}
+
+		       $node.append(
+			       $('<img />').attr({
+				       // 'src': 'REPLACE WITH THE IMAGE URL',
+				       'src': 'http://covers.openlibrary.org/b/id/' + cover + '-L.jpg',
+				       'width':  120,
+				       'height': 180,
+				       })
+			       );
+
+		       // TODO - shorten the filename if it's too long ?
+		       bookname = data[i].title;
+
+		       var $node_name = $('<div></div>').text(bookname).addClass('desc');
+		       var $container = $('<div></div>').addClass('img');
+		       $container
+			       .append( $node )
+			       .append( $node_name );
+
+		       // TODO - add some animation here (fadeIn)
+		       $container.appendTo('div.books');
+		});
+	}
+
+    </script>
+
+    </head>
+
+    <body>
+	    <div class="books">
+	    </div>
+
+    </body>
+
+</html>
