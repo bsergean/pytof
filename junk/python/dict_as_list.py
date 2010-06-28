@@ -3,6 +3,21 @@ from os import listdir
 from os.path import exists
 
 class MyDict(dict):
+    '''
+
+    Missing methods:
+
+    __iter__
+    >>> a = {}
+    >>> a['foo'] = 1
+    >>> a['bar'] = 2
+    >>> it = a.__iter__()
+    >>> it.next()
+    'foo'
+    >>> it.next()
+    'bar'
+
+    '''
 
     def __init__(self):
         self._items = list()
