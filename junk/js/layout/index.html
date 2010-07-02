@@ -1,0 +1,77 @@
+<html>
+<!-- vim:set tabstop=4 shiftwidth=4 expandtab: -->
+<head>
+
+    <!-- jQuery from google CDN -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
+
+    <!-- Blueprint css -->
+    <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css">
+
+    <!-- Flaskr css -->
+    <link rel="stylesheet" href="style.css" type="text/css">
+
+    <!-- jQuery UI -->
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+
+</head>
+
+<body>
+<div class="container">
+    <br />
+
+    <input id="autocomplete" />
+
+	<div class="span-4">
+		<h1>Nerd</h1>
+	</div>
+	<div class="span-16">
+		<h1>Work</h1>
+	</div>
+	<div class="span-4 last">
+		<h1>Home</h1>
+	</div>	
+
+	<div class="span-24"> <br /> </div>
+
+	<div class="span-4" id="left">
+	</div>
+	<div class="span-16" id="main">
+	</div>
+	<div class="span-4 last">
+	</div>	
+
+</div>
+<script>
+// https://developer.mozilla.org/en/JavaScript/Guide
+
+$(document).ready(function(){
+    $("input#autocomplete").autocomplete({
+        source: ["c++", "java", "php", "coldfusion", "javascript", "asp", "ruby"]
+    });
+
+	var work = {
+		'Google': 'http://www.google.com'
+	};
+	addLinks(work, 'left');
+
+	var fun = {
+		'Yahoo': 'http://www.yahoo.com'
+	};
+	addLinks(fun, 'main');
+});
+
+function addLinks(obj, id) {
+    $list = $('<li></li>');
+    for (var i in obj) {
+        $node = $('<a></a>').attr({'href': obj[i]}).html(i);
+        $node.appendTo( $list );
+    }
+    $list.appendTo('#' + id);
+}
+
+</script>
+
+</body>
+</html>
