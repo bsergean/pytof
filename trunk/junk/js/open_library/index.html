@@ -40,11 +40,11 @@
 		  // url: 'http://openlibrary.org/query.json?type=/type/edition&authors=/authors/OL1A&*=',
 		  url: 'http://openlibrary.org/query.json?type=/type/edition&authors=/authors/OL190100A&*=',
 		  dataType: 'jsonp',
-		  jsonpCallback: "renderTweets"
+		  jsonpCallback: "renderAuthors"
 		});
        });
 
-       function renderTweets(data) {
+       function renderAuthors(data) {
 
 	       $.each(data, function(i) {
 
