@@ -1,4 +1,4 @@
-import re
+import re, sys
 
 def fix1(fn):
     lines = open(fn).read().splitlines()
@@ -40,7 +40,7 @@ def fix2(fn):
 
             line = hit * ' '
             fmt = re.search(r'"(.*)"', tokens[3]).group(1)
-            if len(tokens) > 4:
+            if len(tokens) == 4:
                 line += 'throw %s("%s");' % (t, fmt)
             else:
                 if '%d' in fmt: fmt = re.sub('%d', '%%', fmt)
@@ -55,5 +55,7 @@ def fix2(fn):
         print line
         i += 1
 
-# fix1('regplace.txt')
-fix2('regplace2.txt')
+if sys.argv[1] == '1':
+    fix1('regplace.txt')
+else:
+    fix2('regplace2.txt')
