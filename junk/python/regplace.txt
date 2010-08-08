@@ -1,0 +1,25 @@
+
+int bar() {
+  if (true) {
+    foo(A(), 
+        BABAR, 
+        TOTO, 
+        "Bada boom.",
+    );
+    return -1;
+  }
+}
+
+int baz(){
+  if (true) {
+    foo(A(), 
+        BABAR, 
+        TATA, 
+        "Tu as %d ans.",
+        12
+    );
+    return -1;
+  }
+}
+
+
