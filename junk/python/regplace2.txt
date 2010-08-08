@@ -1,15 +1,15 @@
-None
 
 int bar() {
   if (true) {
-    foo(A(),         BABAR,         TATA,         "Tu as 4 ans.");
+    foo(A(),         BABAR,         TOTO,         "Bada boom."    );
     return -1;
   }
 }
 
 int baz(){
   if (true) {
-    foo(A(),         BABAR,         TOTO,         "Tu as %d ans.",        12    );
+    foo(A(),         BABAR,         TATA,         "Tu as %d ans.",        12    );
+    foo(A(),         BABAR,         TATA,         "Tu as %d ans. %s.",        12,         "babar");
     return -1;
   }
 }
