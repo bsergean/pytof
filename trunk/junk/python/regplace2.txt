@@ -1,0 +1,17 @@
+None
+
+int bar() {
+  if (true) {
+    foo(A(),         BABAR,         TATA,         "Tu as 4 ans.");
+    return -1;
+  }
+}
+
+int baz(){
+  if (true) {
+    foo(A(),         BABAR,         TOTO,         "Tu as %d ans.",        12    );
+    return -1;
+  }
+}
+
+
