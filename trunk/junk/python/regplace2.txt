@@ -9,7 +9,7 @@ int bar() {
 int baz(){
   if (true) {
     foo(A(),         BABAR,         TATA,         "Tu as %d ans.",        12    );
-    foo(A(),         BABAR,         TATA,         "Tu as %d ans. %s.",        12,         "babar");
+    foo(A(),         BABAR,         TATA,         "Tu as %d ans. %s.", 12, "babar");
     return -1;
   }
 }

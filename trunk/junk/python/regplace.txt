@@ -21,9 +21,7 @@ int baz(){
     foo(A(), 
         BABAR, 
         TATA, 
-        "Tu as %d ans. %s.",
-        12, 
-        "babar");
+        "Tu as %d ans. %s.", 12, "babar");
     return -1;
   }
 }
