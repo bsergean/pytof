@@ -29,6 +29,8 @@ def write_header(f, fn):
         L = len(s)
         return s + (size - L) * '\0'
         
+    if isdir(fn) and not fn.endswith('/'): 
+        fn += '/'
     header  = rpad(fn, 100) 
     header += rpad('%o' % stat(fn).st_mode, 8)
     header += rpad('%o' % stat(fn).st_uid, 8)
@@ -50,8 +52,10 @@ def write_header(f, fn):
     header = header[:-364] + '%06o\0' % cksum + header[-357:]
 
     f.write( header )
+    assert f.tell() % 512 == 0
 
 def write_body(f, fn):
+    print 'b %s %d ' % (fn, f.tell())
     fo = open(fn)
     bytes = fo.read()
     fo.close()
@@ -59,11 +63,13 @@ def write_body(f, fn):
     f.write(bytes)
     zeros = 512 - len(bytes) % 512
     f.write(zeros * '\0')
+    assert f.tell() % 512 == 0
 
 def write(files, out):
     f = open(out, 'wb')
 
     for fn in files:
+        print 'a %s' % (fn)
         write_header(f, fn)
         if isfile(fn) and not islink(fn): write_body(f, fn)
 
