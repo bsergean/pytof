@@ -53,8 +53,12 @@ def rec(n,p):
     if n <= 1 or p <= 1: return 1
     return rec(n-1,p) + rec(n,p-1)
 
-N, P = 100, 100
-for i in xrange(1, N):
-    for j in xrange(1, P):
-        print 'DP', i, j, rec(i,j)
-        assert rec(i,j) == closed_form(i,j)
+import sys
+print rec( int(sys.argv[1]), int(sys.argv[2]) )
+
+if False:
+    N, P = 100, 100
+    for i in xrange(1, N):
+        for j in xrange(1, P):
+            print 'DP', i, j, rec(i,j)
+            assert rec(i,j) == closed_form(i,j)

@@ -2198,7 +2198,7 @@ if __name__ == '__main__':
     pid_fd.write(str(getpid()))
     pid_fd.close()
 
-    which_level = level15
+    which_level = level1
     if do_profile:
         # FIXME: factorize me in utils
         from profile import Profile

@@ -1,14 +1,19 @@
 #!/usr/bin/env python
 import os, sys, zlib
+from time import clock
 
 def deflate(fn, files):
     fo = open(fn, 'w')
 
     buffers = []
     for f in files:
-        if os.path.isfile(f):
-            bytes = open(f).read()
-            buffer = zlib.compress(bytes)
+        if os.path.isfile(f) and not os.path.islink(f):
+            print 'deflate', f
+            try:
+                bytes = open(f).read()
+                buffer = zlib.compress(bytes)
+            except IOError:
+                continue
             buffers.append( (f, len(bytes), len(buffer), buffer) )
 
     header = []
@@ -28,6 +33,7 @@ def deflate(fn, files):
 
     fo.close()
 
+# 49% inflateBack / 9% adler32 / 26% write_nocancel
 def inflate(fn):
     fo = open(fn)
     file_count = int(fo.readline())
@@ -42,6 +48,7 @@ def inflate(fn):
 
     for i in xrange(file_count):
         f, len_uncompressed, len_compressed = header[i]
+        print 'inflate', f
 
         bytes = fo.read(len_compressed)
         fw = open(f, 'w')
@@ -49,5 +56,14 @@ def inflate(fn):
         fw.close()
 
 if __name__ == '__main__':
-    inflate(sys.argv[1])
-    # deflate(sys.argv[1], sys.argv[2:])
+    start = clock()
+
+    argv = sys.argv
+    if len(argv) == 1:
+        print 'Incorrect use'
+    elif len(argv) == 2:
+        inflate(sys.argv[1])
+    else:
+        deflate(sys.argv[1], sys.argv[2:])
+
+    print "Time taken (seconds) = %.6f" % (clock()-start)
