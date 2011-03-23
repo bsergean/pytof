@@ -47,6 +47,7 @@ def draw_cube_helper(Front   = None,
     glBegin(GL_QUADS)
 
     # Front Face
+    print Front
     glColor3ub(*Front)
     print Front
     glVertex3f( xmin,  ymin,  zmax)	# Bottom Left Of The Texture and Quad
@@ -143,78 +144,94 @@ def init():
     glClearColor (0.0, 0.0, 0.0, 0.0)
     glShadeModel (GL_FLAT)
 
-def draw_rubics():
+def draw_rubics(f1, f2, f3):
     # One
     glPushMatrix()
     glTranslatef(0.0, 0.0, -1.0)
-    draw_face()
+    draw_face(f1)
     glPopMatrix()
 
     # two
     glPushMatrix()
-    draw_face()
+    draw_face(f2)
     glPopMatrix()
 
     # three
     glPushMatrix()
     glTranslatef(0.0, 0.0, 1.0)
-    draw_face()
+    draw_face(f3)
     glPopMatrix()
 
-def draw_face():
+def draw_face(facets):
+    c1, c2, c3, c4, c5, c6, c7, c8, c9 = facets
 
     # One
     glPushMatrix()
-
     glTranslatef(-1.0, 0.0, 0.0)
-    # glutWireCube (1.0)
-    draw_cube()
-
+    draw_cube(*c4)
     glTranslatef(1.0, 0.0, 0.0)
-    # glutWireCube (1.0)
-    draw_cube()
-
+    draw_cube(*c5)
     glTranslatef(1.0, 0.0, 0.0)
-    # glutWireCube (1.0)
-    draw_cube()
-
+    draw_cube(*c6)
     glPopMatrix()
 
     # Two
     glPushMatrix()
-
     glTranslatef(0.0, 1.0, 0.0)
     glTranslatef(-1.0, 0.0, 0.0)
-    # glutWireCube (1.0)
-    draw_cube()
-
+    draw_cube(*c1)
     glTranslatef(1.0, 0.0, 0.0)
-    # glutWireCube (1.0)
-    draw_cube()
-
+    draw_cube(*c2)
     glTranslatef(1.0, 0.0, 0.0)
-    # glutWireCube (1.0)
-    draw_cube()
-
+    draw_cube(*c3)
     glPopMatrix()
 
     # Three
     glPushMatrix()
-
     glTranslatef(0.0, -1.0, 0.0)
     glTranslatef(-1.0, 0.0, 0.0)
-    # glutWireCube (1.0)
-    draw_cube()
-
+    draw_cube(*c7)
     glTranslatef(1.0, 0.0, 0.0)
-    # glutWireCube (1.0)
-    draw_cube()
-
+    draw_cube(*c8)
     glTranslatef(1.0, 0.0, 0.0)
-    # glutWireCube (1.0)
-    draw_cube()
-
+    draw_cube(*c9)
     glPopMatrix()
+
+def draw():
+    f1 = [
+        [green, red, white, yellow, red, orange],
+        [green, red, white, yellow, red, orange],
+        [green, red, white, yellow, red, orange],
+        [green, red, white, yellow, red, orange],
+        [green, red, white, yellow, red, orange],
+        [green, red, white, yellow, red, orange],
+        [green, red, white, yellow, red, orange],
+        [green, red, white, yellow, red, orange],
+        [green, red, white, yellow, red, orange]
+    ]
+    f2 = [
+        [green, red, white, yellow, red, orange],
+        [green, red, white, yellow, red, orange],
+        [green, red, white, yellow, red, orange],
+        [green, red, white, yellow, red, orange],
+        [green, red, white, yellow, red, orange],
+        [green, red, white, yellow, red, orange],
+        [green, red, white, yellow, red, orange],
+        [green, red, white, yellow, red, orange],
+        [green, red, white, yellow, red, orange]
+    ]
+    f3 = [
+        [green, red, white, yellow, red, orange],
+        [green, red, white, yellow, red, orange],
+        [green, red, white, yellow, red, orange],
+        [green, red, white, yellow, red, orange],
+        [green, red, white, yellow, red, orange],
+        [green, red, white, yellow, red, orange],
+        [green, red, white, yellow, red, orange],
+        [green, red, white, yellow, red, orange],
+        [green, red, white, yellow, red, orange]
+    ]
+    draw_rubics(f1, f2, f3)
 
 def display():
     glClear (GL_COLOR_BUFFER_BIT)
@@ -231,7 +248,7 @@ def display():
     gluLookAt (+4.0, +4.0, +5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
 
     glScalef (1.3, 1.3, 1.3)      # modeling transformation
-    draw_rubics()
+    draw()
 
     glFlush ()
 
