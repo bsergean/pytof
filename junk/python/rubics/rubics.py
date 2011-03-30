@@ -1,7 +1,13 @@
 #! /usr/bin/env python
+# coding: utf-8
 ''' Initial glut display code From cube.py, 
 Converted to Python by Jason Petrone 6/00
 (there was no depth bit, took some time to figure it out ...)
+
+http://rubikscube.info/beginner-corners.php
+
+Unicode arrows
+http://en.wikipedia.org/wiki/Arrow_(symbol)
 '''
 
 import sys
@@ -15,16 +21,50 @@ except:
   ERROR: PyOpenGL not installed properly.
           '''
 
-# http://en.wikipedia.org/wiki/Web_colors
-black = [0, 0, 0]
-white = [0xFF, 0xFF, 0xFF]
+from colors import *
+from cube_ops import *
+from rotate_ops import *
 
-red =   [0xFF, 0, 0]
-green = [0x22, 0x8B, 0]
-blue =  [0x46, 0x82, 0xB4]
+# ↷ 
+# def R():
+#     return None    
 
-yellow = [0xFF, 0xD7, 0]
-orange = [0xFF, 0x45, 0]
+# Back to front: f1, f2, f3
+f1 = [
+    [green, blue, white, yellow, red, orange],
+    [green, blue, white, yellow, red, orange],
+    [green, blue, white, yellow, red, orange],
+    [green, blue, white, yellow, red, orange],
+    [green, blue, white, yellow, red, orange],
+    [green, blue, white, yellow, red, orange],
+    [green, blue, white, yellow, red, orange],
+    [green, blue, white, yellow, red, orange],
+    [green, blue, white, yellow, red, orange]
+]
+f2 = [
+    [green, blue, white, yellow, red, orange],
+    [green, blue, white, yellow, red, orange],
+    [green, blue, white, yellow, red, orange],
+    [green, blue, white, yellow, red, orange],
+    [green, blue, white, yellow, red, orange],
+    [green, blue, white, yellow, red, orange],
+    [green, blue, white, yellow, red, orange],
+    [green, blue, white, yellow, red, orange],
+    [green, blue, white, yellow, red, orange]
+]
+f3 = [
+    [green, blue, white, yellow, red, orange],
+    [green, blue, white, yellow, red, orange],
+    [green, blue, white, yellow, red, orange],
+    [green, blue, white, yellow, red, orange],
+    [green, blue, white, yellow, red, orange],
+    [green, blue, white, yellow, red, orange],
+    [green, blue, white, yellow, red, orange],
+    [green, blue, white, yellow, red, orange],
+    [green, blue, white, yellow, red, orange]
+]
+
+X, Y, Z = +4.0, +4.0, +5.0
 
 def draw_cube_helper(Front   = None,
                      Back    = None,
@@ -47,9 +87,7 @@ def draw_cube_helper(Front   = None,
     glBegin(GL_QUADS)
 
     # Front Face
-    print Front
     glColor3ub(*Front)
-    print Front
     glVertex3f( xmin,  ymin,  zmax)	# Bottom Left Of The Texture and Quad
     glVertex3f( xmax,  ymin,  zmax)	# Bottom Right Of The Texture and Quad
     glVertex3f( xmax,  ymax,  zmax)	# Top Right Of The Texture and Quad
@@ -198,39 +236,7 @@ def draw_face(facets):
     glPopMatrix()
 
 def draw():
-    f1 = [
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange]
-    ]
-    f2 = [
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange]
-    ]
-    f3 = [
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange]
-    ]
+    # Back to front: f1, f2, f3
     draw_rubics(f1, f2, f3)
 
 def display():
@@ -245,7 +251,8 @@ def display():
     glColor3f (1.0, 1.0, 1.0)
     glLoadIdentity ()             # clear the matrix
     # viewing transformation
-    gluLookAt (+4.0, +4.0, +5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
+    print X, Y, Z
+    gluLookAt (X, Y, Z, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
 
     glScalef (1.3, 1.3, 1.3)      # modeling transformation
     draw()
@@ -260,15 +267,79 @@ def reshape (w, h):
     glMatrixMode (GL_MODELVIEW)
 
 def keyboard(key, x, y):
+    global f1, f2, f3
+    global X, Y, Z
+
     if key == chr(27):
         import sys
         sys.exit(0)
 
+    # Views
+    elif key == '1':
+        X, Y, Z = +4.0, +4.0, +5.0
+        print 'typed 1'
+        display()
+    elif key == '2':
+        print 'typed 2'
+        X, Y, Z = -4.5, +4.0, +5.0
+        display()
+    elif key == '3':
+        print 'typed 3'
+        X, Y, Z = +4.0, +4.0, -5.0
+        display()
+    elif key == '4':
+        print 'typed 4'
+        X, Y, Z = -4.0, +4.0, -5.0
+        display()
+
+    elif key == '0':
+        f1, f2, f3 = rubicUpsideDown(f1, f2, f3)
+        display()
+    elif key == '9':
+        f1, f2, f3 = rubicRight(f1, f2, f3)
+        display()
+    elif key == '8':
+        f1, f2, f3 = rubicLeft(f1, f2, f3)
+        display()
+
+    # Moves
+    elif key == 'y':
+        f1, f2, f3 = rubicC(f1, f2, f3)
+        display()
+    elif key == 'r':
+        f1, f2, f3 = rubicCC(f1, f2, f3)
+        display()
+    elif key == 'h':
+        f1, f2, f3 = rubicF2C(f1, f2, f3)
+        display()
+    elif key == 'n':
+        f1, f2, f3 = rubicF1C(f1, f2, f3)
+        display()
+
+    elif key == 'e':
+        f1, f2, f3 = rubicTR(f1, f2, f3)
+        display()
+    elif key == 'q':
+        f1, f2, f3 = rubicTL(f1, f2, f3)
+        display()
+    elif key == 'd':
+        f1, f2, f3 = rubicMR(f1, f2, f3)
+        display()
+    elif key == 'a':
+        f1, f2, f3 = rubicML(f1, f2, f3)
+        display()
+    elif key == 'c':
+        f1, f2, f3 = rubicBR(f1, f2, f3)
+        display()
+    elif key == 'z':
+        f1, f2, f3 = rubicBL(f1, f2, f3)
+        display()
+
 glutInit(sys.argv)
 glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH)
 glutInitWindowSize (500, 500)
-glutInitWindowPosition (100, 100)
-glutCreateWindow ('cube')
+glutInitWindowPosition (1200, 100)
+glutCreateWindow ('Rubicul')
 init ()
 glutDisplayFunc(display)
 glutReshapeFunc(reshape)
