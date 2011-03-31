@@ -5,6 +5,7 @@
 
 from colors import *
 from cube_ops import *
+import random
 
 def rubicC(f1, f2, f3):
     c1, c2, c3, c4, c5, c6, c7, c8, c9 = f3
@@ -339,8 +340,6 @@ def rubicLU(f1, f2, f3):
     c21, c22, c23, c24, c25, c26, c27, c28, c29 = f2
     c31, c32, c33, c34, c35, c36, c37, c38, c39 = f3
 
-    print 'rubicLU'
-
     f1 = [
         cubeU(*c31),
         c12,
@@ -424,6 +423,54 @@ def rubicDown(f1, f2, f3):
     f1, f2, f3 = rubicRD(f1, f2, f3)
     f1, f2, f3 = rubicMD(f1, f2, f3)
     f1, f2, f3 = rubicLD(f1, f2, f3)
+
+    return f1, f2, f3
+
+def randomize(f1, f2, f3):
+    for i in xrange(500):
+        code = random.randint(0, 20)
+        if code == 0:
+            f1, f2, f3 = rubicUpsideDown(f1, f2, f3)
+        elif code == 1:
+            f1, f2, f3 = rubicRight(f1, f2, f3)
+        elif code == 2:
+            f1, f2, f3 = rubicLeft(f1, f2, f3)
+        elif code == 3:
+            f1, f2, f3 = rubicUp(f1, f2, f3)
+        elif code == 4:
+            f1, f2, f3 = rubicDown(f1, f2, f3)
+        elif code == 5:
+            f1, f2, f3 = rubicC(f1, f2, f3)
+        elif code == 6:
+            f1, f2, f3 = rubicCC(f1, f2, f3)
+        elif code == 7:
+            f1, f2, f3 = rubicF2C(f1, f2, f3)
+        elif code == 8:
+            f1, f2, f3 = rubicF1C(f1, f2, f3)
+        elif code == 9:
+            f1, f2, f3 = rubicTR(f1, f2, f3)
+        elif code == 10:
+            f1, f2, f3 = rubicTL(f1, f2, f3)
+        elif code == 11:
+            f1, f2, f3 = rubicMR(f1, f2, f3)
+        elif code == 12:
+            f1, f2, f3 = rubicML(f1, f2, f3)
+        elif code == 13:
+            f1, f2, f3 = rubicBR(f1, f2, f3)
+        elif code == 14:
+            f1, f2, f3 = rubicBL(f1, f2, f3)
+        elif code == 15:
+            f1, f2, f3 = rubicRU(f1, f2, f3)
+        elif code == 16:
+            f1, f2, f3 = rubicRD(f1, f2, f3)
+        elif code == 17:
+            f1, f2, f3 = rubicMU(f1, f2, f3)
+        elif code == 18:
+            f1, f2, f3 = rubicMD(f1, f2, f3)
+        elif code == 19:
+            f1, f2, f3 = rubicLU(f1, f2, f3)
+        elif code == 20:
+            f1, f2, f3 = rubicLD(f1, f2, f3)
 
     return f1, f2, f3
 

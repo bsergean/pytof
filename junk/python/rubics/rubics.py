@@ -366,6 +366,11 @@ def keyboard(key, x, y):
         f1, f2, f3 = rubicLD(f1, f2, f3)
         display()
 
+    # twist randomly
+    elif key == '`':
+        f1, f2, f3 = randomize(f1, f2, f3)
+        display()
+
 glutInit(sys.argv)
 glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH)
 glutInitWindowSize (500, 500)
