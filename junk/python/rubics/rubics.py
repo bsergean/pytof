@@ -292,17 +292,27 @@ def keyboard(key, x, y):
         X, Y, Z = -4.0, +4.0, -5.0
         display()
 
+    # 0 = useless ?
     elif key == '0':
         f1, f2, f3 = rubicUpsideDown(f1, f2, f3)
         display()
-    elif key == '9':
+
+    # vi forever ;)
+    elif key == 'l':
         f1, f2, f3 = rubicRight(f1, f2, f3)
         display()
-    elif key == '8':
+    elif key == 'h':
         f1, f2, f3 = rubicLeft(f1, f2, f3)
+        display()
+    elif key == 'k':
+        f1, f2, f3 = rubicUp(f1, f2, f3)
+        display()
+    elif key == 'j':
+        f1, f2, f3 = rubicDown(f1, f2, f3)
         display()
 
     # Moves
+    # Frontal rotation
     elif key == 'y':
         f1, f2, f3 = rubicC(f1, f2, f3)
         display()
@@ -316,6 +326,7 @@ def keyboard(key, x, y):
         f1, f2, f3 = rubicF1C(f1, f2, f3)
         display()
 
+    # Slice rotation
     elif key == 'e':
         f1, f2, f3 = rubicTR(f1, f2, f3)
         display()
@@ -333,6 +344,26 @@ def keyboard(key, x, y):
         display()
     elif key == 'z':
         f1, f2, f3 = rubicBL(f1, f2, f3)
+        display()
+
+    # Up and down
+    elif key == 'o':
+        f1, f2, f3 = rubicRU(f1, f2, f3)
+        display()
+    elif key == '.':
+        f1, f2, f3 = rubicRD(f1, f2, f3)
+        display()
+    elif key == 'i':
+        f1, f2, f3 = rubicMU(f1, f2, f3)
+        display()
+    elif key == ',':
+        f1, f2, f3 = rubicMD(f1, f2, f3)
+        display()
+    elif key == 'u':
+        f1, f2, f3 = rubicLU(f1, f2, f3)
+        display()
+    elif key == 'm':
+        f1, f2, f3 = rubicLD(f1, f2, f3)
         display()
 
 glutInit(sys.argv)
