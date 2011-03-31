@@ -429,6 +429,7 @@ def rubicDown(f1, f2, f3):
 def randomize(f1, f2, f3):
     for i in xrange(500):
         code = random.randint(0, 20)
+        print code
         if code == 0:
             f1, f2, f3 = rubicUpsideDown(f1, f2, f3)
         elif code == 1:
