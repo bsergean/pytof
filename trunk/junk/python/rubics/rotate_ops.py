@@ -234,6 +234,159 @@ def rubicBL(f1, f2, f3):
     f1, f2, f3 = rubicBR( f1, f2, f3 )
     return rubicBR( f1, f2, f3 )
 
+def rubicRU(f1, f2, f3):
+    c11, c12, c13, c14, c15, c16, c17, c18, c19 = f1
+    c21, c22, c23, c24, c25, c26, c27, c28, c29 = f2
+    c31, c32, c33, c34, c35, c36, c37, c38, c39 = f3
+
+    f1 = [
+        c11, # 1 2 4 5 7 8 invariants
+        c12,
+        cubeU(*c33),
+        c14,
+        c15,
+        cubeU(*c23),
+        c17,
+        c18,
+        cubeU(*c13),
+    ]
+
+    f2 = [
+        c21, # 1 2 4 5 7 8 invariants
+        c22,
+        cubeU(*c36),
+        c24,
+        c25,
+        cubeU(*c26),
+        c27,
+        c28,
+        cubeU(*c16),
+    ]
+
+    f3 = [
+        c21, # 1 2 4 5 7 8 invariants
+        c22,
+        cubeU(*c39),
+        c24,
+        c25,
+        cubeU(*c29),
+        c27,
+        c28,
+        cubeU(*c19),
+    ]
+
+    return f1, f2, f3
+
+def rubicRD(f1, f2, f3):
+    ''' Right Down
+    '''
+    f1, f2, f3 = rubicRU( f1, f2, f3 )
+    f1, f2, f3 = rubicRU( f1, f2, f3 )
+    return rubicRU( f1, f2, f3 )
+
+def rubicMU(f1, f2, f3):
+    c11, c12, c13, c14, c15, c16, c17, c18, c19 = f1
+    c21, c22, c23, c24, c25, c26, c27, c28, c29 = f2
+    c31, c32, c33, c34, c35, c36, c37, c38, c39 = f3
+
+    f1 = [
+        c11,
+        cubeU(*c32),
+        c13,
+        c14,
+        cubeU(*c22),
+        c16,
+        c17,
+        cubeU(*c12),
+        c19,
+    ]
+
+    f2 = [
+        c21,
+        cubeU(*c35),
+        c23,
+        c24,
+        cubeU(*c25),
+        c26,
+        c27,
+        cubeU(*c15),
+        c29,
+    ]
+
+    f3 = [
+        c31,
+        cubeU(*c38),
+        c33,
+        c34,
+        cubeU(*c28),
+        c36,
+        c37,
+        cubeU(*c18),
+        c39,
+    ]
+
+    return f1, f2, f3
+
+def rubicMD(f1, f2, f3):
+    ''' Middle Down
+    '''
+    f1, f2, f3 = rubicMU( f1, f2, f3 )
+    f1, f2, f3 = rubicMU( f1, f2, f3 )
+    return rubicMU( f1, f2, f3 )
+
+def rubicLU(f1, f2, f3):
+    c11, c12, c13, c14, c15, c16, c17, c18, c19 = f1
+    c21, c22, c23, c24, c25, c26, c27, c28, c29 = f2
+    c31, c32, c33, c34, c35, c36, c37, c38, c39 = f3
+
+    print 'rubicLU'
+
+    f1 = [
+        cubeU(*c31),
+        c12,
+        c13,
+        cubeU(*c21),
+        c15,
+        c16,
+        cubeU(*c11),
+        c18,
+        c19,
+    ]
+
+    f2 = [
+        cubeU(*c34),
+        c22,
+        c23,
+        cubeU(*c24),
+        c25,
+        c26,
+        cubeU(*c14),
+        c28,
+        c29,
+    ]
+
+    f3 = [
+        cubeU(*c37),
+        c32,
+        c33,
+        cubeU(*c27),
+        c35,
+        c36,
+        cubeU(*c17),
+        c38,
+        c39,
+    ]
+
+    return f1, f2, f3
+
+def rubicLD(f1, f2, f3):
+    ''' Middle Down
+    '''
+    f1, f2, f3 = rubicLU( f1, f2, f3 )
+    f1, f2, f3 = rubicLU( f1, f2, f3 )
+    return rubicLU( f1, f2, f3 )
+
+# ~ Views
 def rubicUpsideDown(f1, f2, f3):
     f1, f2, f3 = rubicC(f1, f2, f3)
     f1, f2, f3 = rubicC(f1, f2, f3)
@@ -260,40 +413,20 @@ def rubicLeft(f1, f2, f3):
 
     return f1, f2, f3
 
+def rubicUp(f1, f2, f3):
+    f1, f2, f3 = rubicRU(f1, f2, f3)
+    f1, f2, f3 = rubicMU(f1, f2, f3)
+    f1, f2, f3 = rubicLU(f1, f2, f3)
+
+    return f1, f2, f3
+
+def rubicDown(f1, f2, f3):
+    f1, f2, f3 = rubicRD(f1, f2, f3)
+    f1, f2, f3 = rubicMD(f1, f2, f3)
+    f1, f2, f3 = rubicLD(f1, f2, f3)
+
+    return f1, f2, f3
+
 if __name__ == '__main__':
     # Back to front: f1, f2, f3
-    f1 = [
-        [green, blue, white, yellow, red, orange],
-        [green, blue, white, yellow, red, orange],
-        [green, blue, white, yellow, red, orange],
-        [green, blue, white, yellow, red, orange],
-        [green, blue, white, yellow, red, orange],
-        [green, blue, white, yellow, red, orange],
-        [green, blue, white, yellow, red, orange],
-        [green, blue, white, yellow, red, orange],
-        [green, blue, white, yellow, red, orange]
-    ]
-    f2 = [
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange]
-    ]
-    f3 = [
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange],
-        [green, red, white, yellow, red, orange]
-    ]
-
-    f1, f2, f3 = rubicC(f1, f2, f3)
+    print "J'écrirais un unittest un jour, promis"
