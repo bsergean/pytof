@@ -265,14 +265,14 @@ def rubicRU(f1, f2, f3):
     ]
 
     f3 = [
-        c21, # 1 2 4 5 7 8 invariants
-        c22,
+        c31, # 1 2 4 5 7 8 invariants
+        c32,
         cubeU(*c39),
-        c24,
-        c25,
+        c34,
+        c35,
         cubeU(*c29),
-        c27,
-        c28,
+        c37,
+        c38,
         cubeU(*c19),
     ]
 
@@ -399,6 +399,7 @@ def rubicUpsideDown(f1, f2, f3):
     return f1, f2, f3
 
 def rubicRight(f1, f2, f3):
+    # XXX louche
     f1, f2, f3 = rubicTR(f1, f2, f3)
     f1, f2, f3 = rubicMR(f1, f2, f3)
     f1, f2, f3 = rubicBR(f1, f2, f3)
@@ -406,6 +407,7 @@ def rubicRight(f1, f2, f3):
     return f1, f2, f3
 
 def rubicLeft(f1, f2, f3):
+    # XXX louche
     f1, f2, f3 = rubicTL(f1, f2, f3)
     f1, f2, f3 = rubicML(f1, f2, f3)
     f1, f2, f3 = rubicBL(f1, f2, f3)
