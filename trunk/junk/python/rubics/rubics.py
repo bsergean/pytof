@@ -30,39 +30,42 @@ from rotate_ops import *
 #     return None    
 
 # Back to front: f1, f2, f3
-f1 = [
-    [green, blue, white, yellow, red, orange],
-    [green, blue, white, yellow, red, orange],
-    [green, blue, white, yellow, red, orange],
-    [green, blue, white, yellow, red, orange],
-    [green, blue, white, yellow, red, orange],
-    [green, blue, white, yellow, red, orange],
-    [green, blue, white, yellow, red, orange],
-    [green, blue, white, yellow, red, orange],
-    [green, blue, white, yellow, red, orange]
-]
-f2 = [
-    [green, blue, white, yellow, red, orange],
-    [green, blue, white, yellow, red, orange],
-    [green, blue, white, yellow, red, orange],
-    [green, blue, white, yellow, red, orange],
-    [green, blue, white, yellow, red, orange],
-    [green, blue, white, yellow, red, orange],
-    [green, blue, white, yellow, red, orange],
-    [green, blue, white, yellow, red, orange],
-    [green, blue, white, yellow, red, orange]
-]
-f3 = [
-    [green, blue, white, yellow, red, orange],
-    [green, blue, white, yellow, red, orange],
-    [green, blue, white, yellow, red, orange],
-    [green, blue, white, yellow, red, orange],
-    [green, blue, white, yellow, red, orange],
-    [green, blue, white, yellow, red, orange],
-    [green, blue, white, yellow, red, orange],
-    [green, blue, white, yellow, red, orange],
-    [green, blue, white, yellow, red, orange]
-]
+def reset():
+    f1 = [
+        [green, blue, white, yellow, red, orange],
+        [green, blue, white, yellow, red, orange],
+        [green, blue, white, yellow, red, orange],
+        [green, blue, white, yellow, red, orange],
+        [green, blue, white, yellow, red, orange],
+        [green, blue, white, yellow, red, orange],
+        [green, blue, white, yellow, red, orange],
+        [green, blue, white, yellow, red, orange],
+        [green, blue, white, yellow, red, orange]
+    ]
+    f2 = [
+        [green, blue, white, yellow, red, orange],
+        [green, blue, white, yellow, red, orange],
+        [green, blue, white, yellow, red, orange],
+        [green, blue, white, yellow, red, orange],
+        [green, blue, white, yellow, red, orange],
+        [green, blue, white, yellow, red, orange],
+        [green, blue, white, yellow, red, orange],
+        [green, blue, white, yellow, red, orange],
+        [green, blue, white, yellow, red, orange]
+    ]
+    f3 = [
+        [green, blue, white, yellow, red, orange],
+        [green, blue, white, yellow, red, orange],
+        [green, blue, white, yellow, red, orange],
+        [green, blue, white, yellow, red, orange],
+        [green, blue, white, yellow, red, orange],
+        [green, blue, white, yellow, red, orange],
+        [green, blue, white, yellow, red, orange],
+        [green, blue, white, yellow, red, orange],
+        [green, blue, white, yellow, red, orange]
+    ]
+
+    return f1, f2, f3
 
 X, Y, Z = +4.0, +4.0, +5.0
 
@@ -277,36 +280,24 @@ def keyboard(key, x, y):
     # Views
     elif key == '1':
         X, Y, Z = +4.0, +4.0, +5.0
-        print 'typed 1'
-        display()
     elif key == '2':
-        print 'typed 2'
         X, Y, Z = -4.5, +4.0, +5.0
-        display()
     elif key == '3':
-        print 'typed 3'
         X, Y, Z = +4.0, +4.0, -5.0
-        display()
     elif key == '4':
-        print 'typed 4'
         X, Y, Z = -4.0, +4.0, -5.0
-        display()
 
     # 0 = useless ?
     elif key == '0':
         f1, f2, f3 = rubicUpsideDown(f1, f2, f3)
-        display()
 
     # vi forever ;)
     elif key == 'l':
         f1, f2, f3 = rubicRight(f1, f2, f3)
-        display()
     elif key == 'h':
         f1, f2, f3 = rubicLeft(f1, f2, f3)
-        display()
     elif key == 'k':
         f1, f2, f3 = rubicUp(f1, f2, f3)
-        display()
     elif key == 'j':
         f1, f2, f3 = rubicDown(f1, f2, f3)
         display()
@@ -315,61 +306,61 @@ def keyboard(key, x, y):
     # Frontal rotation
     elif key == 'y':
         f1, f2, f3 = rubicC(f1, f2, f3)
-        display()
     elif key == 'r':
         f1, f2, f3 = rubicCC(f1, f2, f3)
-        display()
     elif key == 'h':
         f1, f2, f3 = rubicF2C(f1, f2, f3)
-        display()
     elif key == 'n':
         f1, f2, f3 = rubicF1C(f1, f2, f3)
-        display()
 
     # Slice rotation
     elif key == 'e':
         f1, f2, f3 = rubicTR(f1, f2, f3)
-        display()
     elif key == 'q':
         f1, f2, f3 = rubicTL(f1, f2, f3)
-        display()
     elif key == 'd':
         f1, f2, f3 = rubicMR(f1, f2, f3)
-        display()
     elif key == 'a':
         f1, f2, f3 = rubicML(f1, f2, f3)
-        display()
     elif key == 'c':
         f1, f2, f3 = rubicBR(f1, f2, f3)
-        display()
     elif key == 'z':
         f1, f2, f3 = rubicBL(f1, f2, f3)
-        display()
 
     # Up and down
     elif key == 'o':
         f1, f2, f3 = rubicRU(f1, f2, f3)
-        display()
     elif key == '.':
         f1, f2, f3 = rubicRD(f1, f2, f3)
-        display()
     elif key == 'i':
         f1, f2, f3 = rubicMU(f1, f2, f3)
-        display()
     elif key == ',':
         f1, f2, f3 = rubicMD(f1, f2, f3)
-        display()
     elif key == 'u':
         f1, f2, f3 = rubicLU(f1, f2, f3)
-        display()
     elif key == 'm':
         f1, f2, f3 = rubicLD(f1, f2, f3)
-        display()
 
     # twist randomly
     elif key == '`':
         f1, f2, f3 = randomize(f1, f2, f3)
-        display()
+    # reset
+    elif key == '~':
+        f1, f2, f3 = reset()
+
+    if key == '-':
+        if stack:
+            f1, f2, f3 = stack.pop()
+        else: # not sure we need that else
+            f1, f2, f3 = reset() 
+    else:
+        stack.append( (f1, f2, f3) )
+
+    display()
+
+# globals
+f1, f2, f3 = reset() 
+stack = []
 
 glutInit(sys.argv)
 glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH)
