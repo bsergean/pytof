@@ -10,7 +10,7 @@ Unicode arrows
 http://en.wikipedia.org/wiki/Arrow_(symbol)
 '''
 
-import sys
+import sys, os
 
 try:
     from OpenGL.GLUT import *
@@ -24,6 +24,9 @@ except:
 from colors import *
 from cube_ops import *
 from rotate_ops import *
+
+import pickle
+fn = 'floppy.pickle'
 
 # ↷ 
 # def R():
@@ -267,6 +270,7 @@ def reshape (w, h):
     glMatrixMode (GL_PROJECTION)
     glLoadIdentity ()
     glFrustum (-1.0, 1.0, -1.0, 1.0, 1.5, 20.0)
+    # glOrtho (-1.0, 1.0, -1.0, 1.0, 1.5, 20.0)
     glMatrixMode (GL_MODELVIEW)
 
 def keyboard(key, x, y):
@@ -274,6 +278,9 @@ def keyboard(key, x, y):
     global X, Y, Z
 
     if key == chr(27):
+
+        pickle.dump( (f1, f2, f3, stack), open( fn, "wb" ) ) 
+
         import sys
         sys.exit(0)
 
@@ -359,8 +366,11 @@ def keyboard(key, x, y):
     display()
 
 # globals
-f1, f2, f3 = reset() 
-stack = []
+if os.path.exists(fn):
+    f1, f2, f3, stack = pickle.load(open(fn))
+else: 
+    f1, f2, f3 = reset() 
+    stack = []
 
 glutInit(sys.argv)
 glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH)
