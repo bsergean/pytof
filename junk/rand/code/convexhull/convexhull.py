@@ -6,7 +6,47 @@ from pdb import set_trace
 from random import randint
 import Image, ImageDraw
 
-sys.setrecursionlimit(sys.maxint) # not enought ... :)
+# alpha shape wrapper
+import sys, os
+import tempfile
+import subprocess
+
+# sys.setrecursionlimit(sys.maxint) # not enought ... :)
+
+def get_alpha_shape(points, hull_path):
+    # Write points to tempfile
+    tmpfile = tempfile.NamedTemporaryFile(delete=False)
+    for point in points:
+        tmpfile.write("%0.7f %0.7f\n" % point)
+    tmpfile.close()
+
+    # Run hull
+    command = "%s -A -m1000000 -oN < %s" % (hull_path, tmpfile.name)
+    print >> sys.stderr, "Running command: %s" % command
+    retcode = subprocess.call(command, shell=True)
+    if retcode != 0:
+        print >> sys.stderr, "Warning: bad retcode returned by hull.  Retcode value:" % retcode
+    os.remove(tmpfile.name)
+
+    # Parse results
+    results_file = open("hout-alf")
+    results_file.next() # skip header
+    results_indices = [[int(i) for i in line.rstrip().split()] for line in results_file]
+#    print "results length = %d" % len(results_indices)
+    results_file.close()
+    os.remove(results_file.name)
+
+    # return [(points[i], points[j]) for i,j in results_indices]
+    out = [(points[i], points[j]) for i,j in results_indices]
+
+    flattened_output = []
+    # for point_i, point_j in get_alpha_shape(points):
+    for point_i, point_j in out:
+        # sys.stdout.write("%0.7f,%0.7f\t%0.7f,%0.7f\n" % (point_i[0], point_i[1], point_j[0], point_j[1]))
+        flattened_output.append(point_i)
+        flattened_output.append(point_j)
+
+    return flattened_output, out
 
 class Canvas():
     def __init__(self, W, H):
@@ -71,6 +111,11 @@ else:
     W, H = k, k
     points = [ (randint(1, k), randint(1, k)) for _ in xrange(k/10) ]
 
+    for p in points:
+        print p[0], p[1]
+
+    # sys.exit(0)
+
 c = Canvas(W, H)
 
 M = ( 
@@ -107,8 +152,15 @@ for p in sorted_points:
     print p
 
 hull = convex_hull(sorted_points)
+print hull
 c.draw_lines(hull, blue)
 c.draw_points(points, black)
 c.draw_points( [bottom], red )
+
+if True:
+    hull_path = '/tmp/hull.exe'
+    flattened_lines, lines = get_alpha_shape(sorted_points, hull_path)
+    for A, B in lines:
+        c.draw_lines([A, B], black)
 
 c.save('out.png')
