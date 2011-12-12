@@ -46,7 +46,7 @@ def get_alpha_shape(points, hull_path):
         flattened_output.append(point_i)
         flattened_output.append(point_j)
 
-    return flattened_output, out
+    return results_indices, flattened_output, out
 
 class Canvas():
     def __init__(self, W, H):
@@ -159,8 +159,60 @@ c.draw_points( [bottom], red )
 
 if True:
     hull_path = '/tmp/hull.exe'
-    flattened_lines, lines = get_alpha_shape(sorted_points, hull_path)
-    for A, B in lines:
-        c.draw_lines([A, B], black)
+    indices, flattened_lines, lines = get_alpha_shape(sorted_points, hull_path)
+
+    #for A, B in lines:
+    #    c.draw_lines([A, B], black)
+    print indices
+
+    out = []
+    i, j = indices[0]
+    out.append(i)
+    out.append(j)
+    suivant = j
+    indices.pop(0)
+
+    while len(indices) > 0:
+        for i, (a, b) in enumerate(indices):
+            if a == suivant:
+                out.append(b)
+                suivant = b
+                indices.pop(i)
+                break
+            if b == suivant:
+                out.append(a)
+                suivant = a
+                indices.pop(i)
+                break
+    
+    c.draw_lines([sorted_points[i] for i in out], black)
+    print indices
+    print out
+
+    if False:
+        from collections import defaultdict
+        table = defaultdict(list)
+        for i,j in indices:
+            table[i].append(j)
+            table[j].append(i)
+        
+        lineset = []
+        cur = indices[0][0]
+        visited = set([cur])
+        print indices
+
+        print table
+        for i in xrange(len(indices)):
+            print table[cur]
+            cur = table[cur]
+
+            candidate = cur[0]
+            if not candidate in visited:
+                candidate = cur[1]
+
+            visited.add(candidate)
+            cur = candidate
+
+            print candidate
 
 c.save('out.png')
