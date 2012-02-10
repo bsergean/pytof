@@ -116,6 +116,20 @@ class Mesh
         for f, faces of @faceFace
             console.log("face #{ f } ->", faces)
 
+    toDot: (fn) ->
+        fd = fs.openSync(absmtl, 'w')
+        fs.writeSync(fd, "graph faceFace {\n")
+        for f, faces of @faceFace
+            for g in faces
+                text = "  #{ f } -- #{ color[1] } #{ color[2] }\n\n"
+                fs.writeSync(fd, text)
+                
+            console.log("face #{ f } ->", faces)
+            text += "Kd #{ color[0] } #{ color[1] } #{ color[2] }\n\n"
+            fs.writeSync(fd, text)
+        fs.writeSync(fd, "}\n")
+        fs.closeSync(fd)
+
     print: ->
         console.log "Verts:"
         for vert, i in @verts
