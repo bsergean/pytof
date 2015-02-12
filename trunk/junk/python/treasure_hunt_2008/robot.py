@@ -41,4 +41,4 @@ if len(sys.argv) == 3:
     n, p = sys.argv[1:]
     print populate_cache(int(n), int(p))
 else:
-    print populate_cache(47, 43)
+    print populate_cache(67, 31)

@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include <vector>
+#include <sstream>
 using namespace std;
 
 #include "chrono.h"
@@ -13,11 +14,28 @@ using namespace std;
 class Node
 {
 public:
-	Node(int val, Node* parent = 0): mVal(val), mLeft(0), mRight(0) {}
+	Node(int val, Node* parent = NULL) 
+    : mVal(val)
+    , mLeft(NULL)
+    , mRight(NULL) 
+    , mParent(parent) 
+    {
+        ;
+    }
+
 	~Node()
 	{
-		if (mLeft) delete mLeft;
+		if (mLeft)  delete mLeft;
 		if (mRight) delete mRight;
+
+        if (mParent) {
+            if (mParent->mLeft == this) {
+                mParent->mLeft = NULL;
+            }
+            if (mParent->mRight == this) {
+                mParent->mRight = NULL;
+            }
+        }
 	}
 
 	void insert(int val);
@@ -25,83 +43,107 @@ public:
 	void remove(int val);
 	void walk(vector<int> *out);
 	int elemCnt();
+    void dotPrint(const std::string& fileName);
 
 private:
-    void nullify_node(Node* cur, Node* parent);
+    void dotPrint(std::stringstream& ss);
 
 	Node* mLeft;
 	Node* mRight;
+	Node* mParent;
 	int mVal;
 };
 
-Node* Node::search(int val)
+Node* 
+Node::search(int val)
 {
-	if (val < mVal)
-		if (mLeft)
+	if (val < mVal) {
+		if (mLeft) {
 			return mLeft->search(val);
-        else
-            return 0;
+        } else {
+            return NULL;
+        }
+    }
 
-	if (val > mVal)
-		if (mRight)
+	if (val > mVal) {
+		if (mRight) {
 			return mRight->search(val);
-        else
-            return 0;
+        } else {
+            return NULL;
+        }
+    }
 
     return this;
 }
 
-void Node::nullify_node(Node* cur, Node* parent)
+void 
+Node::insert(int val)
 {
-    if (parent->mRight == cur)
-        parent->mRight = 0;
-    else
-        parent->mLeft = 0;
+	if (val < mVal) {
+		if (mLeft) {
+			mLeft->insert(val);
+        } else {
+			mLeft = new Node(val, this);
+        }
+    }
+
+	if (val > mVal) {
+		if (mRight) {
+			mRight->insert(val);
+        } else {
+			mRight = new Node(val, this);
+        }
+    }
 }
 
-void Node::remove(int val)
+void 
+Node::remove(int val)
 {
-    Node* cur = this;
-    Node* parent;
+    Node* cur    = this;
     while (cur && cur->mVal != val) {
-        parent = cur;
-        if (val > cur->mVal)
+        mParent = cur;
+        if (val > cur->mVal) {
             cur = cur->mRight;
-        else
+        } else {
             cur = cur->mLeft;
+        }
     }
 
     if (!cur || cur->mVal != val) return;
 
     // The node has zero children
-    if (cur->mLeft == 0 && cur->mRight == 0) {
-        nullify_node(cur, parent);
+    if (cur->mLeft == NULL && cur->mRight == NULL) {
         delete cur;
         return;
     }
 
     // The node has one children
-    bool left = parent->mLeft && parent->mLeft == cur;
+    bool left = mParent && mParent->mLeft && mParent->mLeft == cur;
 
-    if (cur->mRight == 0) {
-        if (parent)
-            if (left)
-                parent->mLeft = cur->mLeft;
-            else
-                parent->mRight = cur->mLeft;
+    if (cur->mRight == NULL) {
+        if (mParent) {
+            if (left) {
+                mParent->mLeft = cur->mLeft;
+            } else {
+                mParent->mRight = cur->mLeft;
+            }
+        }
 
-        cur->mLeft = 0;
+        cur->mLeft = NULL;
         delete cur;
         return;
     }
-    if (cur->mLeft == 0) {
-        if (parent)
-            if (left)
-                parent->mLeft = cur->mRight;
-            else
-                parent->mRight = cur->mRight;
 
-        cur->mRight = 0;
+    if (cur->mLeft == NULL) {
+        if (mParent) {
+            if (left) {
+                mParent->mLeft = cur->mRight;
+            } else {
+                mParent->mRight = cur->mRight;
+            }
+        }
+
+        cur->mRight = NULL;
         delete cur;
         return;
     }
@@ -133,47 +175,24 @@ Here we looked for the biggest node on the left branch
 
     // Search the biggest node on the left side
     Node* bigLeft = cur->mLeft;
-    while (bigLeft->mRight)
+    while (bigLeft->mRight) {
         bigLeft = bigLeft->mRight;
+    }
 
-    // bigLeft right node is NULL, set it to the right subtree
-    bigLeft->mRight = cur->mRight;
-    if (parent)
-        parent->mLeft = bigLeft; 
-    
-    if (bigLeft != cur->mLeft)
-        bigLeft->mLeft = cur->mLeft;
-
-    // delete cur
-    cur->mRight = cur->mLeft = 0;
-    delete cur;
-    
-    // printf("%d\n", bigLeft->mVal);
+    cur->mVal = bigLeft->mVal;
+    bigLeft->remove(cur->mVal);
 }
 
-void Node::insert(int val)
-{
-	if (val < mVal)
-		if (mLeft)
-			mLeft->insert(val);
-		else
-			mLeft = new Node(val, this);
-
-	if (val > mVal)
-		if (mRight)
-			mRight->insert(val);
-		else
-			mRight = new Node(val, this);
-}
-
-void Node::walk(vector<int> *out)
+void 
+Node::walk(vector<int> *out)
 {
 	if (mLeft) mLeft->walk(out);
 	out->push_back( mVal );
 	if (mRight) mRight->walk(out);
 }
 
-int Node::elemCnt()
+int 
+Node::elemCnt()
 {
 	int res = 1;
 	if (mLeft)  res += mLeft->elemCnt();
@@ -182,8 +201,51 @@ int Node::elemCnt()
 	return res;
 }
 
+/*
+graph tree {
+    5 -- 3;
+    5 -- 7;
+    3 -- 1;
+    3 -- 4;
+    7 -- 6;
+}
+*/
+void 
+Node::dotPrint(std::stringstream& ss)
+{
+    if (mLeft) {
+        ss << "\t" << mVal << " -- " << mLeft->mVal << ";\n";
+        mLeft->dotPrint(ss);
+    }
+    if (mRight) {
+        ss << "\t" << mVal << " -- " << mRight->mVal << ";\n";
+        mRight->dotPrint(ss);
+    }
+}
+
+void 
+Node::dotPrint(const std::string& fileName)
+{
+    std::stringstream ss;
+    ss << "graph tree {\n";
+    dotPrint(ss);
+    ss << "}\n";
+
+    if (fileName.empty()) {
+        std::cout << ss.str();
+    } else {
+        FILE* stream = fopen(fileName.c_str(), "w");
+        fprintf(stream, "%s", ss.str().c_str());
+        fclose(stream);
+
+        std::string command;
+    }
+}
+
 /* walk and print */
-void wprint(Node* n) {
+void 
+wprint(Node* n) 
+{
 	vector<int> output;
 	n->walk(&output);
 
@@ -199,7 +261,8 @@ showsecs(long msecs)
     fprintf(stderr, "%3.5f S\n", ((float)msecs) / 1000.0);
 }
 
-int main()
+int 
+main()
 {
     /* Our tree
        5
@@ -215,6 +278,8 @@ int main()
 	n->insert(7);
 	n->insert(6);
 
+    n->dotPrint("tree.dot");
+
     wprint(n);
     // zero child
     n->remove(1);
@@ -229,6 +294,7 @@ int main()
     wprint(n);
 
     delete n;
+
     // Two childs
     /* The node has two children
      */
@@ -240,13 +306,27 @@ int main()
 	n->insert(4);
 	n->insert(5);
 
+    //        6
+    //      /   \
+    //     3     8
+    //    / \   /
+    //   1   4 7
+    //        \
+    //         5
+
+    n->dotPrint("tree.dot");
+
     wprint(n);
     n->remove(3);
+    n->dotPrint("tree2.dot");
     wprint(n);
-    printf("youpi");
     n->remove(6);
+
+    n->dotPrint("tree3.dot");
+
+    // return 0;
     wprint(n);
-    exit(1);
+    // exit(1);
 
 	vector<int> input;
 	FILE* fo = fopen("input.txt", "r");

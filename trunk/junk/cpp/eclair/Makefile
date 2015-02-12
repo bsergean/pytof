@@ -1,3 +1,3 @@
 all:
-	llvm-g++ -o ceclair eclair.cc -lz
+	llvm-g++ -o ceclair eclair.cc -lz -lpthread
 
