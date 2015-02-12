@@ -1,0 +1,28 @@
+<xml>
+    <node name="A">
+        <verts>
+            <vert>
+                <position x="1.0" y="1.0" z="1.0" />
+                <attribute name="foo" type="int">
+                    <int value="12"/>
+                </attribute>
+            </vert>
+        </verts>
+        <faces>
+            <face>
+                <indices v0="1" v1="2" v2="3" />
+                <facevert />
+            </face>
+        </faces>
+        <edges>
+            <edge>
+                
+            </edge>
+        </edges>
+    </node>
+    <node name="B">
+        <vert>
+            <position x="0.0" y="0.0" z=0.0" />
+        </vert>
+    </node>
+</xml>
