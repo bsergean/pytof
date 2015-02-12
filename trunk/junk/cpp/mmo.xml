@@ -1,0 +1,45 @@
+<mm>
+    <file>
+        <attribute name="mmo::version" type="int">
+            <int value="0"/>
+        </attribute>
+        <attribute name="mmo::tol" type="float">
+            <int value="0.000221"/>
+        </attribute>
+        <attribute name="mmo::max_depth" type="int">
+            <int value="20"/>
+        </attribute>
+        <attribute name="mmo::uuid" type="string">
+            <string value="b5f5453e-0576-11e0-991c-7c6d628d69c8"/>
+        </attribute>
+        <attribute name="mmo::type" type="string">
+            <string value="predict_correct"/>
+        </attribute>
+        <attribute name="mmo::rel_path" type="string">
+            <string value="foo.ref.mm"/>
+        </attribute>
+        <attribute name="mmo::abs_path" type="string">
+            <string value="/usr/pic1/tmp/foo.ref.mm"/>
+        </attribute>
+    </file>
+    <meshes>
+        <mesh name="A">
+            <part name="default">
+                <verts>
+                    <vert>
+                        <position x="0.0" y="0.0" z="0.0" />
+                        <attribute name="px" type="int">
+                            <int value="12"/>
+                        </attribute>
+                        <attribute name="py" type="int">
+                            <int value="12"/>
+                        </attribute>
+                        <attribute name="pz" type="int">
+                            <int value="12"/>
+                        </attribute>
+                    </vert>
+                </verts>
+            </part>
+        </mesh>
+    </meshes>
+</mm>
