@@ -24,11 +24,12 @@ except:
 from colors import *
 from cube_ops import *
 from rotate_ops import *
+from solver import *
 
 import pickle
 fn = 'floppy.pickle'
 
-# ↷ 
+#[ ↷ 
 # def R():
 #     return None    
 
@@ -257,7 +258,6 @@ def display():
     glColor3f (1.0, 1.0, 1.0)
     glLoadIdentity ()             # clear the matrix
     # viewing transformation
-    print X, Y, Z
     gluLookAt (X, Y, Z, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0)
 
     glScalef (1.3, 1.3, 1.3)      # modeling transformation
@@ -285,14 +285,14 @@ def keyboard(key, x, y):
         sys.exit(0)
 
     # Views
-    elif key == '1':
-        X, Y, Z = +4.0, +4.0, +5.0
-    elif key == '2':
-        X, Y, Z = -4.5, +4.0, +5.0
-    elif key == '3':
-        X, Y, Z = +4.0, +4.0, -5.0
-    elif key == '4':
-        X, Y, Z = -4.0, +4.0, -5.0
+    # elif key == '1':
+    #     X, Y, Z = +4.0, +4.0, +5.0
+    # elif key == '2':
+    #     X, Y, Z = -4.5, +4.0, +5.0
+    # elif key == '3':
+    #     X, Y, Z = +4.0, +4.0, -5.0
+    # elif key == '4':
+    #     X, Y, Z = -4.0, +4.0, -5.0
 
     # 0 = useless ?
     elif key == '0':
@@ -354,6 +354,9 @@ def keyboard(key, x, y):
     # reset
     elif key == '~':
         f1, f2, f3 = reset()
+
+    if key == '1':
+        f1, f2, f3 = whiteUp(f1, f2, f3)
 
     if key == '-':
         if stack:

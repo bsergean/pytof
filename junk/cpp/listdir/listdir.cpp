@@ -8,9 +8,14 @@
 #include <vector>
 #include <string>
 #include <map>
+#include <iostream>
 using namespace std;
 
-void listDir(const char* prefix, vector<string>& files, vector<string>& dirs) 
+void 
+listDirs(
+    const char* prefix, 
+    vector<string>& dirs
+)
 {
     DIR *d;
 	struct dirent *de;
@@ -18,12 +23,48 @@ void listDir(const char* prefix, vector<string>& files, vector<string>& dirs)
 
 	d = opendir(prefix);
 	if (!d) {
+        std::cerr << "cannot opendir " << prefix << "\n";
 		return;
 	}
 
-    multimap<size_t, char*> container;
+    int i = 0;
+	while ((de = readdir(d))) {
+        if (i < 2) {
+            i++;
+            continue;
+        }
+    
+        struct stat sb;
+        string abspath(prefix);
+        abspath += "/";
+        abspath += de->d_name;
 
-	while (de = readdir(d)) {
+        dirs.push_back(abspath);
+	}
+}
+
+void* 
+listFiles(
+    void* input
+)
+{
+    const char* prefix = (const char*) input;
+    // printf("listFiles %s\n", prefix);
+    DIR *d;
+	struct dirent *de;
+
+	d = opendir(prefix);
+	if (!d) {
+		return NULL;
+	}
+
+    int i = 0;
+	while ((de = readdir(d))) {
+        if (i < 2) {
+            i++;
+            continue;
+        }
+
         struct stat sb;
         string abspath(prefix);
         abspath += "/";
@@ -32,57 +73,47 @@ void listDir(const char* prefix, vector<string>& files, vector<string>& dirs)
         stat(abspath.c_str(), &sb);
 
         size_t modtime = sb.st_mtimespec.tv_sec;
-        // printf("%s - %d\n", abspath.c_str(), modtime);
-
-        container.insert(pair<size_t, char*>(modtime, de->d_name));
+        printf("%s - %ld\n", abspath.c_str(), modtime);
 	}
 
-    for (multimap<size_t, char*>::iterator it = container.begin();
-            it != container.end();
-            ++it)
-    {
-       printf("%d %s\n", (*it).first, (*it).second);
-    }
+    pthread_exit(NULL);
+    return NULL;
 }
 
-void find(const char* prefix) 
+void 
+listLogFiles(
+    const char* prefix
+)
 {
-    puts(prefix);
+    vector<string> dirs;
+    listDirs(prefix, dirs);
 
-    DIR *d;
-	struct dirent *de;
+    bool threaded = true;
 
-	d = opendir(prefix);
-	if (!d) {
-		return;
-	}
-
-    int i = 0;
-	while (de = readdir(d)) {
-        if (i < 2) {
-            i++;
-            continue;
+    if (!threaded) {
+        for (unsigned i = 0; i < dirs.size(); ++i) {
+            listFiles((void*) dirs[i].c_str());
         }
+    } else {
+        unsigned threadCount = dirs.size();
+        pthread_t threads[threadCount];
 
-        string abspath(prefix);
-        abspath += "/";
-        abspath += de->d_name;
-        const char* absp = abspath.c_str();
+        for (unsigned i = 0; i < dirs.size(); ++i) {
+            int rc = pthread_create(&threads[i], NULL, 
+                                    listFiles, (void *) dirs[i].c_str());
+            if (rc) {
+                printf("ERROR; return code from pthread_create() is %d\n",
+                       rc);
+                exit(-1);
+            }
+        }        
 
-        if ( de->d_type == DT_DIR ) {
-            find(absp);
-        } else if ( de->d_type == DT_DIR ) {
-            puts(absp);
-        }
+       /* Last thing that main() should do */
+       pthread_exit(NULL);
     }
-
-    closedir(d);
 }
 
 int main(int argc, char** argv)
 {
-    vector<string> files, dirs;
-    // listDir(argv[1], files, dirs);
-
-    find(argv[1]);
+    listLogFiles(argv[1]);
 }
