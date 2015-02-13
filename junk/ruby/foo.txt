@@ -1,0 +1,5 @@
+.
+..
+foo.rb
+foo.txt
+ruby_20m.rb
