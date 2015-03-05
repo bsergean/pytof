@@ -1,6 +1,7 @@
 #include "QuickUnionFind.h"
 
 #include <iostream>
+#include <cassert>
 
 QuickUnionFind::QuickUnionFind(int n)
     : UnionFind()
@@ -43,3 +44,8 @@ QuickUnionFind::Union(int n, int p)
     mVec[n] = root(p);
 }
 
+void 
+QuickUnionFind::printConnectedComponants()
+{
+    assert(false && "not implemented");
+}

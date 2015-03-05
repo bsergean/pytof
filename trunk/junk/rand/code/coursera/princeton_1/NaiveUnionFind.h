@@ -8,6 +8,7 @@ public:
     void print();
     bool find(int n, int p);
     void Union(int n, int p);
+    void printConnectedComponants();
 
 private:
     std::vector<uint> mVec;
