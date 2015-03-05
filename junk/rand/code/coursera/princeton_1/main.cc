@@ -1,10 +1,14 @@
 
 #include "NaiveUnionFind.h"
+#include "QuickUnionFind.h"
 #include <cassert>
+#include <iostream>
 
 void
 test(UnionFind& uf)
 {
+    std::cout << "test" << std::endl;
+
     uf.print();
     
     uf.Union(3, 4);
@@ -23,11 +27,36 @@ test(UnionFind& uf)
     uf.print();
 }
 
+void
+exercise1()
+{
+    std::cout << "exercise1" << std::endl;
+    // 3-9 5-2 8-1 5-0 1-0 3-4 
+    NaiveUnionFind nuf(10);
+
+    nuf.Union(3, 9);
+    nuf.Union(5, 2);
+    nuf.Union(8, 1);
+    nuf.Union(5, 0);
+    nuf.Union(1, 0);
+    nuf.Union(3, 4);
+
+    nuf.print();
+}
+
 int
 main()
 {
-    NaiveUnionFind uf(10);
-    test(uf);
+    NaiveUnionFind nuf(10);
+    test(nuf);
+
+    QuickUnionFind quf(10);
+    test(quf);
+
+    QuickUnionFind wuf(10);
+    test(wuf);
+
+    exercise1();
 
     return 0;
 }
