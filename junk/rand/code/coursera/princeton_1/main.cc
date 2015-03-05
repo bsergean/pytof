@@ -1,6 +1,7 @@
 
 #include "NaiveUnionFind.h"
 #include "QuickUnionFind.h"
+#include "WeightedQuickUnionFind.h"
 #include <cassert>
 #include <iostream>
 
@@ -42,6 +43,32 @@ exercise1()
     nuf.Union(3, 4);
 
     nuf.print();
+
+    std::cout << "exercise1-test" << std::endl;
+    nuf.printConnectedComponants();
+}
+
+void
+exercise2()
+{
+    std::cout << "exercise2" << std::endl;
+    // 6-9 5-7 2-4 1-5 5-8 8-0 4-6 1-9 3-7 
+    WeightedQuickUnionFind wuf(10);
+
+    wuf.Union(6, 9);
+    wuf.Union(5, 7);
+    wuf.Union(2, 4);
+    wuf.Union(1, 5);
+    wuf.Union(5, 8);
+    wuf.Union(8, 0);
+    wuf.Union(4, 6);
+    wuf.Union(1, 9);
+    wuf.Union(3, 7);
+
+    wuf.print();
+
+    std::cout << "exercise2-test" << std::endl;
+    wuf.printConnectedComponants();
 }
 
 int
@@ -53,10 +80,11 @@ main()
     QuickUnionFind quf(10);
     test(quf);
 
-    QuickUnionFind wuf(10);
+    WeightedQuickUnionFind wuf(10);
     test(wuf);
 
     exercise1();
+    exercise2();
 
     return 0;
 }
