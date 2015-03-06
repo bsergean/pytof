@@ -25,7 +25,7 @@ WeightedQuickUnionFind::print()
 }
 
 int
-WeightedQuickUnionFind::root(int n)
+WeightedQuickUnionFind::root(int n) const
 {
     uint result = mVec[n];
     while (result != mVec[result]) {
@@ -36,12 +36,11 @@ WeightedQuickUnionFind::root(int n)
 }
 
 int
-WeightedQuickUnionFind::distanceToRoot(int n)
+WeightedQuickUnionFind::distanceToRoot(int n) const
 {
     uint i = 0;
     uint result = mVec[n];
     while (result != mVec[result]) {
-        assert(false);
         result = mVec[result];
         i++;
     }
@@ -50,7 +49,7 @@ WeightedQuickUnionFind::distanceToRoot(int n)
 }
 
 bool
-WeightedQuickUnionFind::find(int n, int p)
+WeightedQuickUnionFind::find(int n, int p) const
 {
     return root(n) == root(p);
 }
@@ -62,22 +61,52 @@ WeightedQuickUnionFind::Union(int n, int p)
         return;
     }
 
-    if (mWeights[n] > mWeights[p]) {
-        mVec[p] = root(n);
+    int rootN = root(n);
+    int rootP = root(p);
+
+    if (mWeights[rootN] < mWeights[rootP]) {
+        int r = root(n);
+        mVec[rootP] = r;
         mWeights[n] += mWeights[p];
     } else {
-        mVec[n] = root(p);
+        int r = root(p);
+        mVec[rootN] = r;
         mWeights[p] += mWeights[n];
     }
 }
 
 void 
-WeightedQuickUnionFind::printConnectedComponants()
+WeightedQuickUnionFind::printStats() const
 {
+    std::cout << "caca" << std::endl;
     for (uint i = 0; i < mVec.size(); ++i) {
+        std::cout << "pipi" << std::endl;
         std::cout << i 
                   << " root " << root(i) 
                   << " distance " << distanceToRoot(i) 
                   << std::endl;
+    }
+}
+
+int
+WeightedQuickUnionFind::printConnectedComponants() const
+{
+    ConnectedComponants sets;
+
+    for (uint i = 0; i < mVec.size(); ++i) {
+        sets[root(mVec[i])].push_back(i);
+    }
+
+    printSets(sets);
+
+    return sets.size();
+}
+
+void 
+WeightedQuickUnionFind::reset(uint* input, uint size)
+{
+    mVec.clear();
+    for (uint i = 0; i < size; ++i) {
+        mVec.push_back(input[i]);
     }
 }

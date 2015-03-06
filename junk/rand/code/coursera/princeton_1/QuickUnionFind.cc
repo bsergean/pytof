@@ -22,7 +22,7 @@ QuickUnionFind::print()
 }
 
 int
-QuickUnionFind::root(int n)
+QuickUnionFind::root(int n) const
 {
     uint result = mVec[n];
     while (result != mVec[result]) {
@@ -33,7 +33,7 @@ QuickUnionFind::root(int n)
 }
 
 bool
-QuickUnionFind::find(int n, int p)
+QuickUnionFind::find(int n, int p) const
 {
     return root(n) == root(p);
 }
@@ -41,11 +41,20 @@ QuickUnionFind::find(int n, int p)
 void 
 QuickUnionFind::Union(int n, int p)
 {
-    mVec[n] = root(p);
+    int r = root(p);
+    mVec[r] = mVec[n];
 }
 
-void 
-QuickUnionFind::printConnectedComponants()
+int
+QuickUnionFind::printConnectedComponants() const
 {
-    assert(false && "not implemented");
+    ConnectedComponants sets;
+
+    for (uint i = 0; i < mVec.size(); ++i) {
+        sets[root(mVec[i])].push_back(i);
+    }
+
+    printSets(sets);
+
+    return sets.size();
 }
