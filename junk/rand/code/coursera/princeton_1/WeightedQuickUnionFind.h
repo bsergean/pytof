@@ -12,6 +12,7 @@ public:
     int printConnectedComponants() const;
     void printStats() const;
     void reset(uint* input, uint size);
+    void printAsDot() const;
 
 private:
     int root(int n) const;
