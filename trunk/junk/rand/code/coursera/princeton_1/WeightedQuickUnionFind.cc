@@ -110,3 +110,13 @@ WeightedQuickUnionFind::reset(uint* input, uint size)
         mVec.push_back(input[i]);
     }
 }
+
+//
+// http://eli.thegreenplace.net/2009/11/23/visualizing-binary-trees-with-graphviz
+//
+void 
+WeightedQuickUnionFind::printAsDot() const
+{
+    std::cout << "digraph UF {" << std::endl;
+    std::cout << "}" << std::endl;
+}
