@@ -29,46 +29,57 @@ test(UnionFind& uf)
 }
 
 void
-exercise1()
+exercise1(UnionFind& uf)
 {
     std::cout << "exercise1" << std::endl;
-    // 3-9 5-2 8-1 5-0 1-0 3-4 
-    NaiveUnionFind nuf(10);
 
-    nuf.Union(3, 9);
-    nuf.Union(5, 2);
-    nuf.Union(8, 1);
-    nuf.Union(5, 0);
-    nuf.Union(1, 0);
-    nuf.Union(3, 4);
+    uf.Union(3, 9);
+    assert(uf.printConnectedComponants() == 9);
+    uf.Union(5, 2);
+    assert(uf.printConnectedComponants() == 8);
+    uf.Union(8, 1);
+    assert(uf.printConnectedComponants() == 7);
+    uf.Union(5, 0);
+    assert(uf.printConnectedComponants() == 6);
+    uf.Union(1, 0);
+    assert(uf.printConnectedComponants() == 5);
+    uf.Union(3, 4);
+    assert(uf.printConnectedComponants() == 4);
 
-    nuf.print();
+    uf.print();
 
     std::cout << "exercise1-test" << std::endl;
-    nuf.printConnectedComponants();
+    uf.printConnectedComponants();
 }
 
 void
-exercise2()
+exercise2(UnionFind& uf)
 {
     std::cout << "exercise2" << std::endl;
     // 6-9 5-7 2-4 1-5 5-8 8-0 4-6 1-9 3-7 
-    WeightedQuickUnionFind wuf(10);
 
-    wuf.Union(6, 9);
-    wuf.Union(5, 7);
-    wuf.Union(2, 4);
-    wuf.Union(1, 5);
-    wuf.Union(5, 8);
-    wuf.Union(8, 0);
-    wuf.Union(4, 6);
-    wuf.Union(1, 9);
-    wuf.Union(3, 7);
+    uf.Union(6, 9);
+    uf.Union(5, 7);
+    uf.Union(2, 4);
+    uf.Union(1, 5);
+    uf.Union(5, 8);
+    uf.Union(8, 0);
+    uf.Union(4, 6);
+    uf.Union(1, 9);
+    uf.Union(3, 7);
 
-    wuf.print();
+    uf.print();
 
     std::cout << "exercise2-test" << std::endl;
-    wuf.printConnectedComponants();
+    uf.printConnectedComponants();
+}
+
+void
+exercise3(WeightedQuickUnionFind& uf)
+{
+    uint input1[] = { 2, 7, 1, 7, 7, 1, 7, 0, 7, 3 };
+    uf.reset(input1, 10);
+    uf.printStats();
 }
 
 int
@@ -83,8 +94,19 @@ main()
     WeightedQuickUnionFind wuf(10);
     test(wuf);
 
-    exercise1();
-    exercise2();
+    // 3-9 5-2 8-1 5-0 1-0 3-4 
+    NaiveUnionFind nuf2(10);
+    exercise1(nuf2);
+    QuickUnionFind quf2(10);
+    exercise1(quf2);
+    WeightedQuickUnionFind wuf2(10);
+    exercise1(wuf2);
+
+    //WeightedQuickUnionFind wuf2(10);
+    //exercise2(wuf2);
+
+    WeightedQuickUnionFind wuf3(10);
+    exercise3(wuf3);
 
     return 0;
 }
