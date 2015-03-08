@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <cassert>
+#include <unistd.h>
 
 WeightedQuickUnionFind::WeightedQuickUnionFind(int n)
     : UnionFind()
@@ -57,22 +58,22 @@ WeightedQuickUnionFind::find(int n, int p) const
 void 
 WeightedQuickUnionFind::Union(int n, int p)
 {
-    if (root(n) == root(p)) {
-        return;
-    }
-
     int rootN = root(n);
     int rootP = root(p);
 
-    if (mWeights[rootN] < mWeights[rootP]) {
-        int r = root(n);
-        mVec[rootP] = r;
-        mWeights[n] += mWeights[p];
-    } else {
-        int r = root(p);
-        mVec[rootN] = r;
-        mWeights[p] += mWeights[n];
+    if (rootN == rootP) {
+        return;
     }
+
+    if (mWeights[rootN] < mWeights[rootP]) {
+        mVec[rootN] = rootP;
+        mWeights[p] += mWeights[n];
+    } else {
+        mVec[rootP] = rootN;
+        mWeights[n] += mWeights[p];
+    }
+
+    print();
 }
 
 void 
@@ -111,12 +112,53 @@ WeightedQuickUnionFind::reset(uint* input, uint size)
     }
 }
 
+void 
+WeightedQuickUnionFind::init(const std::string& str)
+{
+    mVec.clear();
+
+    std::stringstream ss;
+    ss << str;
+
+    while (! ss.eof()) {
+        uint i;
+        ss >> i;
+        mVec.push_back(i);
+    }
+}
+
 //
 // http://eli.thegreenplace.net/2009/11/23/visualizing-binary-trees-with-graphviz
 //
 void 
-WeightedQuickUnionFind::printAsDot() const
+WeightedQuickUnionFind::printAsDot(std::stringstream& ss) const
 {
-    std::cout << "digraph UF {" << std::endl;
-    std::cout << "}" << std::endl;
+    ss << "digraph UF {" << std::endl;
+    for (uint i = 0, N = mVec.size(); i < N; ++i) {
+        ss << "\t" << i << " -> " << mVec[i] << std::endl;
+    }
+    ss << "}" << std::endl;
+}
+
+void 
+WeightedQuickUnionFind::toPng(const std::string& filename) const
+{
+    std::string dotFilename(filename);
+    dotFilename += ".dot";
+    unlink(dotFilename.c_str());
+
+    std::stringstream ss;
+    printAsDot(ss);
+    FILE* stream = fopen(dotFilename.c_str(), "w");
+    fprintf(stream, "%s", ss.str().c_str());
+    fclose(stream);
+
+    char cmd[128];
+    sprintf(cmd, "dot -Tpng %s > %s", 
+            dotFilename.c_str(), filename.c_str());
+    int ret = system(cmd);
+    assert(ret == 0);
+
+    // cleanup
+    unlink(dotFilename.c_str());
 }
