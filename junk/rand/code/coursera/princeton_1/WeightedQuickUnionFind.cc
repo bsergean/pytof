@@ -52,12 +52,17 @@ WeightedQuickUnionFind::distanceToRoot(int n) const
 bool
 WeightedQuickUnionFind::find(int n, int p) const
 {
+    assert(n < mVec.size() && n > 0);
+    assert(p < mVec.size() && p > 0);
+
     return root(n) == root(p);
 }
 
 void 
 WeightedQuickUnionFind::Union(int n, int p)
 {
+    assert(n != p);
+
     int rootN = root(n);
     int rootP = root(p);
 
@@ -72,8 +77,6 @@ WeightedQuickUnionFind::Union(int n, int p)
         mVec[rootP] = rootN;
         mWeights[n] += mWeights[p];
     }
-
-    print();
 }
 
 void 

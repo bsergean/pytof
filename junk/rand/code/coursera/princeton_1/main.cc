@@ -2,6 +2,7 @@
 #include "NaiveUnionFind.h"
 #include "QuickUnionFind.h"
 #include "WeightedQuickUnionFind.h"
+#include "Percolation.h"
 #include <cassert>
 #include <iostream>
 
@@ -154,8 +155,8 @@ exercise3Bis(WeightedQuickUnionFind& uf)
     uf.toPng("out5.png");
 }
 
-int
-main()
+void
+exercise()
 {
     NaiveUnionFind nuf(10);
     //test(nuf);
@@ -182,6 +183,62 @@ main()
     //exercise3(wuf4);
 
     //exercise3Bis(wuf4);
+}
+
+void
+testAssignment1()
+{
+    Percolation percolation(5);
+    // percolation.print();
+
+    percolation.open(0, 0);
+    percolation.open(1, 0);
+    percolation.open(2, 0);
+    percolation.open(3, 0);
+    percolation.open(4, 0);
+
+    // percolation.debug();
+
+    std::cout << std::endl;
+    // percolation.print();
+
+    assert(percolation.percolates());
+}
+
+void
+testAssignment2()
+{
+    Percolation percolation(5);
+    percolation.print();
+
+    percolation.open(0, 4);
+    percolation.open(1, 4);
+    percolation.open(1, 3);
+    percolation.open(2, 3);
+    percolation.open(3, 3);
+    percolation.open(3, 4);
+    percolation.open(4, 4);
+
+    // percolation.debug();
+
+    std::cout << std::endl;
+    percolation.print();
+
+    std::cout << "Percolates: " 
+              << percolation.percolates() << std::endl;
+}
+
+void
+assignment()
+{
+    testAssignment1();
+    testAssignment2();
+}
+
+int
+main()
+{
+    assignment();
 
     return 0;
 }
