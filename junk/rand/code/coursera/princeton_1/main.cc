@@ -237,7 +237,8 @@ assignment()
 
     // PercolationStats ps(20, 100);
     // PercolationStats ps(2, 10000);
-    PercolationStats ps(5, 10);
+    // PercolationStats ps(5, 10);
+    PercolationStats ps(200, 100);
     std::cout << "mean -> " << ps.mean() << std::endl;
 }
 

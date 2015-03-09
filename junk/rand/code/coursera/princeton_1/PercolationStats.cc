@@ -28,8 +28,13 @@ PercolationStats::PercolationStats(int N, int T)
     mMean = 0;
     double mean = 0;
 
+    const bool debug = false;
+
     for (uint i = 0; i < T; ++i) {
-        std::cout << "Test " << i << std::endl << std::endl;
+
+        if (debug) {
+            std::cout << "Test " << i << std::endl << std::endl;
+        }
 
         Percolation percolation(N);
         uint j = 0;
@@ -41,14 +46,19 @@ PercolationStats::PercolationStats(int N, int T)
                 percolation.open(iRand, jRand);
                 j++;
 
-                std::cout << j << std::endl;
-                percolation.print();
+                if (debug) {
+                    std::cout << j << std::endl;
+                    percolation.print();
+                }
             }
 
         } while (!percolation.percolates());
 
-        std::cout << j << std::endl;
-        mean += (double) j / (N*N);
+        mean += (double) j / (double) (N*N);
+
+        if (debug) {
+            std::cout << j << std::endl;
+        }
     }
 
     mMean = mean / T;
