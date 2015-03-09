@@ -79,7 +79,7 @@ WeightedQuickUnionFind::Union(int n, int p)
     }
 }
 
-void 
+void
 WeightedQuickUnionFind::printStats() const
 {
     std::cout << "caca" << std::endl;

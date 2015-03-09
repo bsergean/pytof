@@ -87,10 +87,19 @@ Percolation::isOpen(int i, int j)
 {
     int N = mSize;
     int k = N * i + j;
-    return mVec[k];
+
+    bool ret = mVec[k];
+
+    const bool debug = false;
+    if (debug) {
+        std::cout << "isOpen " << i << " " 
+                  << j << " -> " << ret << std::endl;
+    }
+
+    return ret;
 }
 
-bool 
+bool
 Percolation::isFull(int i, int j)
 {
     int N = mSize;
