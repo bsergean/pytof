@@ -1,10 +1,13 @@
 FLAGS = -g
 
-uf: main.o NaiveUnionFind.o QuickUnionFind.o WeightedQuickUnionFind.o UnionFind.o
+uf: main.o NaiveUnionFind.o QuickUnionFind.o WeightedQuickUnionFind.o UnionFind.o Percolation.o
 	g++ ${FLAGS} -o uf *.o
 
-main.o: NaiveUnionFind.h QuickUnionFind.h main.cc UnionFind.h
+main.o: NaiveUnionFind.h QuickUnionFind.h main.cc UnionFind.h Percolation.h
 	g++ ${FLAGS} -c -o main.o main.cc
+
+Percolation.o: WeightedQuickUnionFind.h Percolation.cc
+	g++ ${FLAGS} -c -o Percolation.o Percolation.cc
 
 UnionFind.cc: UnionFind.h
 	g++ ${FLAGS} -c -o UnionFind.o UnionFind.cc

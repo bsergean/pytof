@@ -1,3 +1,5 @@
+#pragma once
+
 #include "UnionFind.h"
 #include <vector>
 #include <sstream>
