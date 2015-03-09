@@ -3,6 +3,7 @@
 #include "QuickUnionFind.h"
 #include "WeightedQuickUnionFind.h"
 #include "Percolation.h"
+#include "PercolationStats.h"
 #include <cassert>
 #include <iostream>
 
@@ -231,8 +232,13 @@ testAssignment2()
 void
 assignment()
 {
-    testAssignment1();
-    testAssignment2();
+    // testAssignment1();
+    // testAssignment2();
+
+    // PercolationStats ps(20, 100);
+    // PercolationStats ps(2, 10000);
+    PercolationStats ps(5, 10);
+    std::cout << "mean -> " << ps.mean() << std::endl;
 }
 
 int
