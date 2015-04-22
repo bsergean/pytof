@@ -2,6 +2,21 @@
 #include <iostream>
 #include <cassert>
 
+// insertion sort
+// selection sort
+// shell sort (h-sort with 3h+1 knuth sequence)
+// merge sort
+// bottom up merge sort
+
+void
+print(const std::vector<int>& vec)
+{
+    for (int i = 0; i < vec.size(); ++i) {
+        std::cout << vec[i] << " ";
+    }
+    std::cout << std::endl;
+}
+
 void
 print(const std::vector<int>& vec)
 {
@@ -98,12 +113,6 @@ sort2(std::vector<int>& vec)
     sortRec(vec, 0, vec.size() - 1);
 }
 
-#if 0
-i j  prev vec
-0 0       3 4 2 1 -1
-1 1  0    3 4 2 1 -1  .... 
-#endif
-
 // insertion sort
 void
 sort3(std::vector<int>& vec)
@@ -113,16 +122,21 @@ sort3(std::vector<int>& vec)
 
         for (int j = i; j > 0; --j) {
 
-            int prev = j-1; // FIXME bound pb ?
+            int prev = j-1;
+            assert(prev >= 0);
 
             if (vec[prev] > vec[j]) { // need to re-order
                 int tmp = vec[j];
                 vec[j] = vec[prev];
                 vec[prev] = tmp;
+            } else {
+                break;
             }
         }
     }
 }
+
+// shell sort with knuth increment sequence
 
 int
 main()
