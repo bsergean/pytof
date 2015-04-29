@@ -146,11 +146,11 @@ solve(int N, Ops& ops)
 int
 main()
 {
-    int N = 3;
+    int N = 6;
 
     init(N);
     Ops ops;
-    solve(3, ops);
+    solve(N, ops);
 
     for (int i = 0; i < ops.size(); ++i) {
         const Op& op = ops[i];
