@@ -3,6 +3,10 @@
 #include <assert.h>
 #include <stdint.h>
 
+//
+// FIXME / bring back timers to compare performances
+//
+
 // Cool article about memoization and dynamic programming 
 // http://marknelson.us/2007/08/01/memoization/
 
@@ -34,8 +38,6 @@ namespace __gnu_cxx
 #include <list>
 #include <string>
 using namespace std;
-
-#include "chrono.h"
 
 extern unsigned int MurmurHash2 ( const void * key, int len, unsigned int seed );
 extern uint64_t MurmurHash64A ( const void * key, int len, unsigned int seed );
@@ -148,7 +150,6 @@ int main()
 	FILE *fd;
 	char line[100];
 	vector<string> V;
-	Chrono chrono;
 
 	fd = fopen ("/usr/share/dict/words", "r");
 	while (fgets (line , 100 , fd)) {
@@ -165,7 +166,6 @@ int main()
 	// STL Map
 	//
 	puts("STL Map");
-	chrono.restart();
 	map<string, int> M;
 	map<string, int>::iterator it;
 
@@ -174,9 +174,7 @@ int main()
 	{
 		M[ V[i] ] = V[i].length();
 	}
-	showsecs(chrono.millis());
 
-	chrono.restart();
 	// Search
 	for (int i = 0; i < V.size(); i++)
 	{
@@ -185,13 +183,11 @@ int main()
 		it = M.find( V[i] );
 		assert( it != M.end() );
 	}
-	showsecs(chrono.millis());
 	
 	//
 	// STL GNU hash map
 	//
 	puts("STL GNU hash map");
-	chrono.restart();
 	hash_map<string, int> HM;
 	hash_map<string, int>::iterator hm_it;
 
@@ -200,9 +196,7 @@ int main()
 	{
 		HM[ V[i] ] = V[i].length();
 	}
-	showsecs(chrono.millis());
 
-	chrono.restart();
 	// Search
 	for (int i = 0; i < V.size(); i++)
 	{
@@ -211,13 +205,11 @@ int main()
 		hm_it = HM.find( V[i] );
 		assert( hm_it != HM.end() );
 	}
-	showsecs(chrono.millis());
 
 	//
 	// Ben Map
 	//
 	puts("Ben hash map");
-	chrono.restart();
 	HashMap hm(V.size());
 
 	// Insertion
@@ -225,11 +217,9 @@ int main()
 	{
 		hm.insert( V[i], V[i].size() );
 	}
-	showsecs(chrono.millis());
 
 	// hm.print();
 
-	chrono.restart();
 	// Search
 	for (int i = 0; i < V.size(); i++)
 	{
@@ -238,7 +228,6 @@ int main()
 		int val = hm.get( V[i] );
 		assert( val != -1 );
 	}
-	showsecs(chrono.millis());
 
 	return 0;
 }
