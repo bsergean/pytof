@@ -9,10 +9,7 @@ from PIL import Image, ImageDraw
 #
 
 white = (255, 255, 255)
-black = (0, 0, 0)
 blue = (0, 0, 255)
-red = (255, 0, 0)
-green = (0, 255, 0)
 
 class Canvas():
     def __init__(self, W, H):
@@ -20,20 +17,6 @@ class Canvas():
         self.H = H
         self.photo = Image.new('RGB', (W, H), white)
         self.draw = ImageDraw.Draw(self.photo)
-
-    def draw_points(self, points, color = None):
-        if color is None:
-            color = green
-
-        for p in points:
-            self.draw.point( p, color )
-
-    def draw_lines(self, points, color = None):
-        if color is None:
-            color = blue
-
-        self.draw.line( points, color, 5 )
-        self.draw.line( [points[-1], points[0]], color, 5 )
 
     def draw_stack(self, delta, stack):
         color = blue
@@ -57,7 +40,6 @@ class Canvas():
             self.draw.line([A, B, C, D, A], color, 5)
 
     def save(self, output):
-        self.photo.rotate(180)
         self.photo.save(output, "PNG")
 
 import sys
