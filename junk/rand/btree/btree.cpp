@@ -1,4 +1,10 @@
 // vim: set tabstop=4 shiftwidth=4 expandtab:
+//
+// Binary search tree, with a parent pointer which makes it easier (for me :) to implement deletion.
+// Not templated, storing integers
+//
+// walk method can be used to make sure to output and array and see if it's sorted.
+//
 
 #include <stdio.h>
 #include <assert.h>
@@ -9,24 +15,19 @@
 #include <sstream>
 using namespace std;
 
-#include "chrono.h"
-
 class Node
 {
 public:
-	Node(int val, Node* parent = NULL) 
-    : mVal(val)
-    , mLeft(NULL)
-    , mRight(NULL) 
-    , mParent(parent) 
-    {
-        ;
-    }
+    Node(int val, Node* parent = NULL) 
+        : mVal(val)
+        , mLeft(NULL)
+        , mRight(NULL) 
+        , mParent(parent) {}
 
-	~Node()
-	{
-		if (mLeft)  delete mLeft;
-		if (mRight) delete mRight;
+    ~Node()
+    {
+        if (mLeft)  delete mLeft;
+        if (mRight) delete mRight;
 
         if (mParent) {
             if (mParent->mLeft == this) {
@@ -36,38 +37,38 @@ public:
                 mParent->mRight = NULL;
             }
         }
-	}
+    }
 
-	void insert(int val);
-	Node* search(int val);
-	void remove(int val);
-	void walk(vector<int> *out);
-	int elemCnt();
+    void insert(int val);
+    Node* search(int val);
+    void remove(int val);
+    void walk(vector<int> *out);
+    int elemCnt();
     void dotPrint(const std::string& fileName);
 
 private:
     void dotPrint(std::stringstream& ss);
 
-	Node* mLeft;
-	Node* mRight;
-	Node* mParent;
-	int mVal;
+    Node* mLeft;
+    Node* mRight;
+    Node* mParent;
+    int mVal;
 };
 
 Node* 
 Node::search(int val)
 {
-	if (val < mVal) {
-		if (mLeft) {
-			return mLeft->search(val);
+    if (val < mVal) {
+        if (mLeft) {
+            return mLeft->search(val);
         } else {
             return NULL;
         }
     }
 
-	if (val > mVal) {
-		if (mRight) {
-			return mRight->search(val);
+    if (val > mVal) {
+        if (mRight) {
+            return mRight->search(val);
         } else {
             return NULL;
         }
@@ -79,19 +80,19 @@ Node::search(int val)
 void 
 Node::insert(int val)
 {
-	if (val < mVal) {
-		if (mLeft) {
-			mLeft->insert(val);
+    if (val < mVal) {
+        if (mLeft) {
+            mLeft->insert(val);
         } else {
-			mLeft = new Node(val, this);
+            mLeft = new Node(val, this);
         }
     }
 
-	if (val > mVal) {
-		if (mRight) {
-			mRight->insert(val);
+    if (val > mVal) {
+        if (mRight) {
+            mRight->insert(val);
         } else {
-			mRight = new Node(val, this);
+            mRight = new Node(val, this);
         }
     }
 }
@@ -150,28 +151,28 @@ Node::remove(int val)
 
     /* The node has two children: let's delete 3
        6
-     /   \
-    3     8
-   / \   /
-  1   4 7
+       /   \
+       3     8
+       / \   /
+       1   4 7
        \
-        5
-    Become
-       6
-     /   \
-    1     8
-     \   /
-      4 7
-       \
-        5
-     If we delete 6
        5
-     /   \
-    1     8
-     \   /
-      4 7
-Here we looked for the biggest node on the left branch
-      */
+       Become
+       6
+       /   \
+       1     8
+       \   /
+       4 7
+       \
+       5
+       If we delete 6
+       5
+       /   \
+       1     8
+       \   /
+       4 7
+       Here we looked for the biggest node on the left branch
+       */
 
     // Search the biggest node on the left side
     Node* bigLeft = cur->mLeft;
@@ -186,30 +187,30 @@ Here we looked for the biggest node on the left branch
 void 
 Node::walk(vector<int> *out)
 {
-	if (mLeft) mLeft->walk(out);
-	out->push_back( mVal );
-	if (mRight) mRight->walk(out);
+    if (mLeft) mLeft->walk(out);
+    out->push_back( mVal );
+    if (mRight) mRight->walk(out);
 }
 
 int 
 Node::elemCnt()
 {
-	int res = 1;
-	if (mLeft)  res += mLeft->elemCnt();
-	if (mRight) res += mRight->elemCnt();
+    int res = 1;
+    if (mLeft)  res += mLeft->elemCnt();
+    if (mRight) res += mRight->elemCnt();
 
-	return res;
+    return res;
 }
 
 /*
-graph tree {
-    5 -- 3;
-    5 -- 7;
-    3 -- 1;
-    3 -- 4;
-    7 -- 6;
-}
-*/
+   graph tree {
+   5 -- 3;
+   5 -- 7;
+   3 -- 1;
+   3 -- 4;
+   7 -- 6;
+   }
+   */
 void 
 Node::dotPrint(std::stringstream& ss)
 {
@@ -246,8 +247,8 @@ Node::dotPrint(const std::string& fileName)
 void 
 wprint(Node* n) 
 {
-	vector<int> output;
-	n->walk(&output);
+    vector<int> output;
+    n->walk(&output);
 
     for (int i = 0; i < output.size(); i++) {
         cout << output[i] << " ";
@@ -255,28 +256,22 @@ wprint(Node* n)
     cout << endl;
 }
 
-void
-showsecs(long msecs)
-{
-    fprintf(stderr, "%3.5f S\n", ((float)msecs) / 1000.0);
-}
-
 int 
 main()
 {
     /* Our tree
        5
-     /   \
-    3     7
-   / \   /
-  1   4 6
-      */
-	Node* n = new Node(5);
-	n->insert(3);
-	n->insert(1);
-	n->insert(4);
-	n->insert(7);
-	n->insert(6);
+       /   \
+       3     7
+       / \   /
+       1   4 6
+       */
+    Node* n = new Node(5);
+    n->insert(3);
+    n->insert(1);
+    n->insert(4);
+    n->insert(7);
+    n->insert(6);
 
     n->dotPrint("tree.dot");
 
@@ -297,14 +292,14 @@ main()
 
     // Two childs
     /* The node has two children
-     */
-	n = new Node(6);
-	n->insert(3);
-	n->insert(8);
-	n->insert(7);
-	n->insert(1);
-	n->insert(4);
-	n->insert(5);
+    */
+    n = new Node(6);
+    n->insert(3);
+    n->insert(8);
+    n->insert(7);
+    n->insert(1);
+    n->insert(4);
+    n->insert(5);
 
     //        6
     //      /   \
@@ -328,37 +323,33 @@ main()
     wprint(n);
     // exit(1);
 
-	vector<int> input;
-	FILE* fo = fopen("input.txt", "r");
-	int cnt, tmp;
-	fscanf(fo, "%d", &cnt);
-	for (int i = 0; i < cnt; i++) {
-		fscanf(fo, "%d", &tmp);
-		input.push_back(tmp);
-	}
+    vector<int> input;
+    FILE* fo = fopen("input.txt", "r");
+    int cnt, tmp;
+    fscanf(fo, "%d", &cnt);
+    for (int i = 0; i < cnt; i++) {
+        fscanf(fo, "%d", &tmp);
+        input.push_back(tmp);
+    }
 
-    Chrono chrono;
-	n = new Node(input[0]);
-	for (int i = 1; i < input.size(); i++) {
-		n->insert(input[i]);
-	}
-    showsecs(chrono.millis());
-    chrono.restart();
-	
-	vector<int> output;
-	// output.reserve(n->elemCnt());
-	output.reserve(100000);
-	n->walk(&output);
-    showsecs(chrono.millis());
+    n = new Node(input[0]);
+    for (int i = 1; i < input.size(); i++) {
+        n->insert(input[i]);
+    }
+
+    vector<int> output;
+    // output.reserve(n->elemCnt());
+    output.reserve(100000);
+    n->walk(&output);
 
     // search | remove
-    assert( n->search(7298116) ); 
+    assert( n->search(4925087) ); 
     printf( "%d\n", n->elemCnt() ); 
-    n->remove(729811);
+    n->remove(729811); // not present in input
     printf( "%d\n", n->elemCnt() ); 
 
-    n->remove(7298116);
+    n->remove(4925087);
     assert( n->elemCnt() == 99 ); 
-	
-	return 0;
+
+    return 0;
 }
