@@ -66,83 +66,91 @@ stl_next_prime(unsigned long __n)
 class HashMap
 {
 public:
-	HashMap(int size) {
-		printf("New hash map with %d elems\n", size);
-		int bucket_cnt = stl_next_prime(size);
-		m_table.resize(bucket_cnt);
-	}
-
-	int hash(string key) {
-		/*
-		 * The hash I remember from school is terrible 
-		 * for dictionary strings
-		int res = 0;
-		for (int i = 0; i < key.length(); i++) res += key[i];
-		return res % m_table.size();
-		*/
-
-		/*
-		int res = MurmurHash2( key.c_str(), key.length(), 0);
-		return res % m_table.size();
-		uint64_t res = MurmurHash64A( key.c_str(), key.length(), 0);
-		*/
-
-		unsigned long __h = 0;
-		const char* __s = key.c_str();
-		for ( ; *__s; ++__s)
-			__h = 5 * __h + *__s;
-
-		return __h % m_table.size();
-	}
-
-	void insert(string key, int value) {
-		// printf("Insert %s - %d\n", key.c_str(), value);
-		int row = hash(key);
-		// printf("row: %d\n", row);
-		pair<string, int> p(key, value);
-		m_table[row].push_back(p);
-	}
-
-	int get(string key) {
-		// printf("Insert %s - %d\n", key.c_str(), value);
-		int row = hash(key);
-		// printf("row: %d\n", row);
-
-		list< pair<string, int> >::const_iterator it;
-		for (	it = m_table[row].begin();
-			it != m_table[row].end();
-			it++) {
-			if (key == it->first)
-				return it->second;
-		}
-		return -1;
-	}
-
-	void print() {
-		for (int i = 0; i < m_table.size(); i++)
-		{
-			printf("%d ", m_table[i].size());
-			list< pair<string, int> >::const_iterator it;
-			for (	it = m_table[i].begin();
-				it != m_table[i].end();
-				it++) {
-				("");
-				printf("%s %d ", 
-					it->first.c_str(), 
-					it->second);
-			}
-			puts("");
-		}
-	}
+	HashMap(int size);
+	void insert(const std::string& key, int value);
+	int get(const std::string& key) const;
+	void print() const;
 
 private:
-	vector< list< pair<string, int> > > m_table;
+    int hash(const string& key) const;
+
+    std::vector< std::list< std::pair<string, int> > > mTable;
 };
 
-void
-showsecs(long msecs)
+HashMap::HashMap(int size) 
 {
-    fprintf(stderr, "%3.5f S\n", ((float)msecs) / 1000.0);
+    printf("New hash map with %d elems\n", size);
+    int bucket_cnt = stl_next_prime(size);
+    mTable.resize(bucket_cnt);
+}
+
+int 
+HashMap::hash(const string& key) const
+{
+    // The hash I remember from school is terrible 
+    // for dictionary strings
+#if 0
+    int res = 0;
+    for (int i = 0; i < key.length(); i++) res += key[i];
+    return res % mTable.size();
+#endif
+
+    int res = MurmurHash2(key.c_str(), key.length(), 0);
+    return res % mTable.size();
+
+#if 0
+    uint64_t res = MurmurHash64A( key.c_str(), key.length(), 0);
+#endif
+
+#if 0
+    unsigned long __h = 0;
+    const char* __s = key.c_str();
+    for ( ; *__s; ++__s) {
+        __h = 5 * __h + *__s;
+    }
+
+    return __h % mTable.size();
+#endif
+}
+
+void 
+HashMap::insert(const std::string& key, int value) 
+{
+    int row = hash(key);
+    mTable[row].push_back(pair<std::string, int>(key, value));
+}
+
+int 
+HashMap::get(const std::string& key) const
+{
+    int row = hash(key);
+    list< pair<string, int> >::const_iterator it, itEnd;
+
+    it    = mTable[row].begin();
+    itEnd = mTable[row].end();
+
+    for (; it != itEnd; ++it) {
+        if (key == it->first) {
+            return it->second;
+        }
+    }
+
+    return -1;
+}
+
+void 
+HashMap::print() const
+{
+    for (int i = 0; i < mTable.size(); i++) {
+        printf("%zu ", mTable[i].size());
+        list< pair<string, int> >::const_iterator it;
+
+        for (it = mTable[i].begin(); it != mTable[i].end(); it++) {
+            printf("%s %d ", 
+                   it->first.c_str(), it->second);
+        }
+        puts("");
+    }
 }
 
 int main()
@@ -170,14 +178,12 @@ int main()
 	map<string, int>::iterator it;
 
 	// Insertion
-	for (int i = 0; i < V.size(); i++)
-	{
+	for (int i = 0; i < V.size(); i++) {
 		M[ V[i] ] = V[i].length();
 	}
 
 	// Search
-	for (int i = 0; i < V.size(); i++)
-	{
+	for (int i = 0; i < V.size(); i++) {
 		// puts(V[i].c_str());
 
 		it = M.find( V[i] );
@@ -192,14 +198,12 @@ int main()
 	hash_map<string, int>::iterator hm_it;
 
 	// Insertion
-	for (int i = 0; i < V.size(); i++)
-	{
+	for (int i = 0; i < V.size(); i++) {
 		HM[ V[i] ] = V[i].length();
 	}
 
 	// Search
-	for (int i = 0; i < V.size(); i++)
-	{
+	for (int i = 0; i < V.size(); i++) {
 		// puts(V[i].c_str());
 
 		hm_it = HM.find( V[i] );
@@ -213,16 +217,14 @@ int main()
 	HashMap hm(V.size());
 
 	// Insertion
-	for (int i = 0; i < V.size(); i++)
-	{
+	for (int i = 0; i < V.size(); i++) {
 		hm.insert( V[i], V[i].size() );
 	}
 
 	// hm.print();
 
 	// Search
-	for (int i = 0; i < V.size(); i++)
-	{
+	for (int i = 0; i < V.size(); i++) {
 		// puts(V[i].c_str());
 
 		int val = hm.get( V[i] );
