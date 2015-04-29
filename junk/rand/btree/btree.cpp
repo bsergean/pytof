@@ -150,27 +150,32 @@ Node::remove(int val)
     }
 
     /* The node has two children: let's delete 3
+
        6
-       /   \
-       3     8
-       / \   /
-       1   4 7
+     /   \
+    3     8
+   / \   /
+  1   4 7
+       \
+        5
+
+     Become
+
+       6
+     /   \
+    1     8
+     \   /
+      4 7
        \
        5
-       Become
-       6
-       /   \
-       1     8
-       \   /
-       4 7
-       \
+
+   If we delete 6
        5
-       If we delete 6
-       5
-       /   \
-       1     8
-       \   /
-       4 7
+     /   \
+    1     8
+     \   /
+      4 7
+
        Here we looked for the biggest node on the left branch
        */
 
