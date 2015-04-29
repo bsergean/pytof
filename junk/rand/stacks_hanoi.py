@@ -5,6 +5,7 @@ from PIL import Image, ImageDraw
 # ffmpeg -i out_%03d.png -c:v libx264 -r 30 -pix_fmt yuv420p out.mp4
 # I think this still didn't work when played under Safari with <video> so 
 # I had to convert it with Handbrake.
+# -> http://jeanserge.com/hanoi_tower.mp4
 #
 
 white = (255, 255, 255)
