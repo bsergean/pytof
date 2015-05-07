@@ -1,6 +1,7 @@
 
 #include "Texture.h"
 #include <iostream>
+#include <stack>
 
 #include <OpenEXR/ImfRgba.h>
 #include <OpenEXR/ImfArray.h>
@@ -71,14 +72,54 @@ Texture::read(const char fn [])
         for (int i = 0; i < width; ++i) {
 
             unsigned char R, G, B, A;
-            R = toChar(pixels[i][j].r);
-            G = toChar(pixels[i][j].g);
-            B = toChar(pixels[i][j].b);
-            A = toChar(pixels[i][j].a);
+            R = toChar(pixels[j][i].r);
+            G = toChar(pixels[j][i].g);
+            B = toChar(pixels[j][i].b);
+            A = toChar(pixels[j][i].a);
 
             mImage[mDepth * (j * width + i)]   = B;
             mImage[mDepth * (j * width + i)+1] = G;
             mImage[mDepth * (j * width + i)+2] = R;
+            mImage[mDepth * (j * width + i)+3] = A;
+        }
+    }
+
+    // now flip using a stack (lame)
+    std::stack<unsigned char> tmp;
+
+    for (int j = 0; j < height; ++j) {
+        for (int i = 0; i < width; ++i) {
+
+            unsigned char R, G, B, A;
+            R = mImage[mDepth * (j * width + i)];
+            G = mImage[mDepth * (j * width + i)+1];
+            B = mImage[mDepth * (j * width + i)+2];
+            A = mImage[mDepth * (j * width + i)+3];
+
+            tmp.push(R);
+            tmp.push(G);
+            tmp.push(B);
+            tmp.push(A);
+        }
+    }
+
+    // now flip using a stack (lame)
+    for (int j = 0; j < height; ++j) {
+        for (int i = 0; i < width; ++i) {
+
+            unsigned char R, G, B, A;
+            A = tmp.top();
+            tmp.pop();
+            B = tmp.top();
+            tmp.pop();
+            G = tmp.top();
+            tmp.pop();
+            R = tmp.top();
+            tmp.pop();
+
+            mImage[mDepth * (j * width + i)]   = R;
+            mImage[mDepth * (j * width + i)+1] = G;
+            mImage[mDepth * (j * width + i)+2] = B;
             mImage[mDepth * (j * width + i)+3] = A;
         }
     }
