@@ -49,6 +49,11 @@ toChar(double val)
     return (unsigned char) csi;
 }
 
+//
+// Array2D accesses are not what you would expect.
+// foo[u][v] / u are lines and v are column
+// (I wonder if it's a good idea to use it ...)
+//
 bool
 Texture::read(const char fn [])
 {
@@ -85,6 +90,7 @@ Texture::read(const char fn [])
     }
 
     // now flip using a stack (lame)
+    // step 1
     std::stack<unsigned char> tmp;
 
     for (int j = 0; j < height; ++j) {
@@ -103,7 +109,7 @@ Texture::read(const char fn [])
         }
     }
 
-    // now flip using a stack (lame)
+    // step 2;
     for (int j = 0; j < height; ++j) {
         for (int i = 0; i < width; ++i) {
 
