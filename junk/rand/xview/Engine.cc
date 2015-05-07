@@ -49,7 +49,10 @@ Engine::render()
               0.0, 1.0, 0.0); // Y+ is up
 #endif
 
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    // (222, 222, 222, 255)
+    float grey = 222. / 255;
+    glClearColor(grey, grey, grey, 1.0f);
+    // glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glEnable(GL_TEXTURE_2D);

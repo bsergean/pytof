@@ -1,7 +1,9 @@
 
 #include "Texture.h"
 #include <iostream>
+
 #include <stack>
+#include <vector>
 
 #include <OpenEXR/ImfRgba.h>
 #include <OpenEXR/ImfArray.h>
@@ -89,11 +91,17 @@ Texture::read(const char fn [])
         }
     }
 
+    // return true;
+
     // now flip using a stack (lame)
     // step 1
-    std::stack<unsigned char> tmp;
+    std::stack< std::vector<unsigned char> > tmp;
+
+    std::vector<unsigned char> line;
+    line.resize(mDepth * width);
 
     for (int j = 0; j < height; ++j) {
+
         for (int i = 0; i < width; ++i) {
 
             unsigned char R, G, B, A;
@@ -102,32 +110,35 @@ Texture::read(const char fn [])
             B = mImage[mDepth * (j * width + i)+2];
             A = mImage[mDepth * (j * width + i)+3];
 
-            tmp.push(R);
-            tmp.push(G);
-            tmp.push(B);
-            tmp.push(A);
+            line[mDepth*i + 0] = R;
+            line[mDepth*i + 1] = G; 
+            line[mDepth*i + 2] = B; 
+            line[mDepth*i + 3] = A;
         }
+
+        tmp.push(line);
     }
 
     // step 2;
     for (int j = 0; j < height; ++j) {
+
+        std::vector<unsigned char>& line = tmp.top();
+
         for (int i = 0; i < width; ++i) {
 
             unsigned char R, G, B, A;
-            A = tmp.top();
-            tmp.pop();
-            B = tmp.top();
-            tmp.pop();
-            G = tmp.top();
-            tmp.pop();
-            R = tmp.top();
-            tmp.pop();
+            R = line[mDepth*i];
+            G = line[mDepth*i + 1];
+            B = line[mDepth*i + 2];
+            A = line[mDepth*i + 3];
 
             mImage[mDepth * (j * width + i)]   = R;
             mImage[mDepth * (j * width + i)+1] = G;
             mImage[mDepth * (j * width + i)+2] = B;
             mImage[mDepth * (j * width + i)+3] = A;
         }
+
+        tmp.pop();
     }
 
     return true;
@@ -156,9 +167,9 @@ Texture::init()
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glPixelStorei(GL_PACK_ALIGNMENT, 1);
 
-    glTexImage2D(GL_TEXTURE_2D, level, GL_RGBA, 
-                 width, height, border, 
-                 GL_BGRA_EXT, GL_UNSIGNED_BYTE, 
+    glTexImage2D(GL_TEXTURE_2D, level, GL_RGBA,
+                 width, height, border,
+                 GL_BGRA_EXT, GL_UNSIGNED_BYTE,
                  mImage);
 
     return mTexname;
