@@ -1,4 +1,5 @@
 #include "Texture.h"
+#include <string>
 
 namespace xview {
 
@@ -7,7 +8,7 @@ class Engine
 public:
     Engine() : mInitialized(false) {}
 
-    void init();
+    void init(const std::string& filename);
 
     void render();
     void reshape(int w, int h);

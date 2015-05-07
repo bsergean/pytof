@@ -8,9 +8,9 @@
 namespace xview {
 
 void
-Engine::init()
+Engine::init(const std::string& filename)
 {
-    mTexture.read("foo.exr");
+    mTexture.read(filename.c_str());
 
     mWidth  = mTexture.width();
     mHeight = mTexture.height();

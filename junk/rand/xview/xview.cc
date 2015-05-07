@@ -53,11 +53,18 @@ xview_processSpecialKeys(int key, int x, int y)
 int 
 main(int argc, char** argv) 
 {
+    if (argc != 2) {
+        puts("Usage: xview <filename>");
+        return -1;
+    }
+
+    std::string filename(argv[1]);
+
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGBA  | GLUT_DOUBLE |
                         GLUT_DEPTH | GLUT_MULTISAMPLE);
 
-    engine.init();
+    engine.init(filename);
     glutInitWindowSize(engine.width(), engine.height());
     (void) glutCreateWindow("xview");
     // glutFullScreen();
