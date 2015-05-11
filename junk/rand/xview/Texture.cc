@@ -91,9 +91,14 @@ Texture::read(const char fn [])
         }
     }
 
-    // return true;
+    // FIXME: the flipping should be conditioned on the y line ordering:
+    // exrheader foo.exr
+    // ...
+    // lineOrder (type lineOrder): increasing y
+    // 
 
     // now flip using a stack (lame)
+    // FIXME: 
     // step 1
     std::stack< std::vector<unsigned char> > tmp;
 
