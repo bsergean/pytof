@@ -43,6 +43,13 @@ CXXFLAGS:=-g -Wno-deprecated-declarations
 LDFLAGS:=-framework GLUT -framework OpenGL -framework Cocoa \
 	-lHalf -lIlmImf
 
+LDFLAGS_STATIC:=-framework GLUT -framework OpenGL -framework Cocoa \
+	/usr/local/lib/libIlmImf.a \
+	/usr/local/lib/libHalf.a \
+	/usr/local/lib/libIex.a \
+	/usr/local/lib/libIlmThread.a \
+	-lz
+
 # Release specific flags.
 RELEASE_CXXFLAGS:=-O3
 RELEASE_LDFLAGS:=
