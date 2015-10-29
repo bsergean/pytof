@@ -19,7 +19,7 @@ from config import configHandler
 from pickle import load, dump
 
 try:
-    import Image
+    from PIL import Image
 except ImportError:
     try:
         import wxpil as Image
